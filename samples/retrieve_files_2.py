@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
         clusters = km.labels_.tolist()
 
-        return km, clusters, vocab_frame, terms
+        return km, clusters, vocab_frame, terms, dist
 
     def save_stuff(km):
 
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     titles, texts = load_stuff(args.fileName)
     if os.path.isfile('doc_cluster.pkl'):
         km = joblib.load('doc_cluster.pkl')
-        km, clusters, vocab_frame, terms = retr_model(titles,texts)
+        km, clusters, vocab_frame, terms, dist = retr_model(titles,texts)
         clusters = km.labels_.tolist()
         df_texts= {'title': titles, 'texts': texts, 'cluster': clusters }
         oframe = pd.DataFrame(df_texts, columns=['cluster','title', 'texts']).reset_index()
@@ -134,13 +134,18 @@ if __name__ == "__main__":
     print()
     # sort cluster centers by proximity to centroid
     order_centroids = km.cluster_centers_.argsort()[:, ::-1]
-
+    wclusters = []
     for i in range(num_clusters):
         print("Cluster %d words:" % i, end='')
+        ccluster = ""
+        for ind in order_centroids[i, :10]:  # replace 6 with n words per cluster
 
-        for ind in order_centroids[i, :6]:  # replace 6 with n words per cluster
-            print(' %s' % vocab_frame.ix[terms[ind].split()].values.tolist()[0][0].encode('utf-8', 'ignore'),
+            crc = vocab_frame.ix[terms[ind].split()].values.tolist()[0][0].encode('utf-8', 'ignore')
+            ccluster = ccluster + " "+ str(crc)
+
+            print(' %s' % crc,
                   end=',')
+        wclusters.append(ccluster)
         print()  # add whitespace
         print()  # add whitespace
 
@@ -152,3 +157,63 @@ if __name__ == "__main__":
 
     print()
     print()
+
+    import os  # for os.path.basename
+
+    import matplotlib.pyplot as plt
+    import matplotlib as mpl
+
+    from sklearn.manifold import MDS
+
+    MDS()
+
+    # convert two components as we're plotting points in a two-dimensional plane
+    # "precomputed" because we provide a distance matrix
+    # we will also specify `random_state` so the plot is reproducible.
+    mds = MDS(n_components=2, dissimilarity="precomputed", random_state=1)
+
+    pos = mds.fit_transform(dist)  # shape (n_components, n_samples)
+
+    xs, ys = pos[:, 0], pos[:, 1]
+    print()
+
+    # set up cluster names using a dict
+    cluster_names = {i:wclusters[i] for i in range(10) }
+
+    # create data frame that has the result of the MDS plus the cluster numbers and titles
+    df = pd.DataFrame(dict(x=xs, y=ys, label=clusters, title=titles))
+
+    # group by cluster
+    groups = df.groupby('label')
+
+    # set up plot
+    fig, ax = plt.subplots(figsize=(17, 9))  # set size
+    ax.margins(0.05)  # Optional, just adds 5% padding to the autoscaling
+
+    # iterate through groups to layer the plot
+    # note that I use the cluster_name and cluster_color dicts with the 'name' lookup to return the appropriate color/label
+    for name, group in groups:
+        ax.plot(group.x, group.y, marker='o', linestyle='', ms=12,
+                label=cluster_names[name],
+                mec='none')
+        ax.set_aspect('auto')
+        ax.tick_params( \
+            axis='x',  # changes apply to the x-axis
+            which='both',  # both major and minor ticks are affected
+            bottom='off',  # ticks along the bottom edge are off
+            top='off',  # ticks along the top edge are off
+            labelbottom='off')
+        ax.tick_params( \
+            axis='y',  # changes apply to the y-axis
+            which='both',  # both major and minor ticks are affected
+            left='off',  # ticks along the bottom edge are off
+            top='off',  # ticks along the top edge are off
+            labelleft='off')
+
+    ax.legend(numpoints=1)  # show legend with only 1 point
+
+    # add label in x,y position with the label as the film title
+    for i in range(len(df)):
+        ax.text(df.ix[i]['x'], df.ix[i]['y'], df.ix[i]['title'], size=8)
+
+    plt.show()  # show the plot
