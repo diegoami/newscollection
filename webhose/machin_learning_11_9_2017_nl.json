@@ -1,0 +1,751 @@
+{
+  "posts": [
+    {
+      "thread": {
+        "uuid": "b89146a8e1ccef129a12093c66b7c9dc4e8b035e",
+        "url": "http://omgili.com/ri/.0rSU5LtMgzJTnq.XBNh8j3cPkoBkE2TvhHZLPLwBdKwAH43IONdMPsUcEzHoe3TgcHz3c1rv2mOWh8qYDXuqH6wZoEJOoRM",
+        "site_full": "feedproxy.google.com",
+        "site": "google.com",
+        "site_section": "http://technewsdata.com/feed",
+        "site_categories": [],
+        "section_title": "Tech news data",
+        "title": "OpenAI bot remains undefeated against world’s greatest Dota 2 players",
+        "title_full": "OpenAI bot remains undefeated against world’s greatest Dota 2 players",
+        "published": "2017-08-12T20:11:00.000+03:00",
+        "replies_count": 0,
+        "participants_count": 1,
+        "site_type": "news",
+        "country": "US",
+        "spam_score": 0.0,
+        "main_image": "http://technewsdata.com/wp-content/uploads/2017/08/screen-shot-2017-08-12-at-11-48-31-am-660x330.png",
+        "performance_score": 0,
+        "domain_rank": null,
+        "social": {
+          "facebook": {
+            "likes": 0,
+            "comments": 0,
+            "shares": 0
+          },
+          "gplus": {
+            "shares": 0
+          },
+          "pinterest": {
+            "shares": 0
+          },
+          "linkedin": {
+            "shares": 0
+          },
+          "stumbledupon": {
+            "shares": 0
+          },
+          "vk": {
+            "shares": 0
+          }
+        }
+      },
+      "uuid": "b89146a8e1ccef129a12093c66b7c9dc4e8b035e",
+      "url": "http://omgili.com/ri/.0rSU5LtMgzJTnq.XBNh8j3cPkoBkE2TvhHZLPLwBdKwAH43IONdMPsUcEzHoe3TgcHz3c1rv2mOWh8qYDXuqH6wZoEJOoRM",
+      "ord_in_thread": 0,
+      "author": "techguy",
+      "published": "2017-08-12T20:11:00.000+03:00",
+      "title": "OpenAI bot remains undefeated against world’s greatest Dota 2 players",
+      "text": "Home / Gaming / OpenAI bot remains undefeated against world’s greatest Dota 2 players OpenAI bot remains undefeated against world’s greatest Dota 2 players techguy 21 hours ago Gaming Leave a comment 13 Views Last night, OpenAI’s Dota 2 bot beat the world’s most celebrated professional players in one-on-one battles, showing just how advanced these machine learning systems are getting. \nThe bot beat Danil “Dendi” Ishutin rather easily at The International, one of the biggest eSports events in the world, and remains undefeated against the world’s top Dota 2 players. \n</span></p> <p>Elon Musk’s OpenAI trained the bot by simply copying the AI and letting the two play each other for weeks on end.</p> <p>“We’ve coached it to learn just from playing against itself,” <a target=\"_blank\" href=\"https://www.youtube.com/watch?v=l92J1UvHf6M\">said OpenAI researcher Jakub Pachoki</a>. “So we didn’t hard-code in any strategy, we didn’t have it learn from human experts, just from the very beginning, it just keeps playing against a copy of itself. It starts from complete randomness and then it makes very small improvements, and eventually it’s just pro level.”</p> <p>To be clear, a 1v1 battle in Dota 2 is far less complex than an actual professional battle, which includes two teams of five players completing a variety of tasks simultaneously to achieve victory. But OpenAI said that’s working on another bot that could play against and alongside humans in a larger 5v5 battle.</p> <p>Not shockingly, Elon Musk was watching along and had some thoughts of his own, calling unregulated AI vastly more dangerous than North Korea:</p> <div class=\"embed-twitter\" readability=\"7. \"> <blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"500\" readability=\"8.25\"> <p lang=\"en\" dir=\"ltr\">OpenAI first ever to defeat world&#8217;s best players in competitive eSports. Vastly more complex than traditional board games like chess & Go.</p> <p>— Elon Musk (@elonmusk) <a href=\"https://twitter.com/elonmusk/status/896163163581825025\">August 12, 2017</a></p> </blockquote> </div> <div class=\"embed-twitter\" readability=\"9.62983425414\"> <blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"500\" readability=\"12.8397790055\"> <p lang=\"en\" dir=\"ltr\">Nobody likes being regulated, but everything (cars, planes, food, drugs, etc) that&#8217;s a danger to the public is regulated. AI should be too.</p> <p>— Elon Musk (@elonmusk) <a href=\"https://twitter.com/elonmusk/status/896169801277517824\">August 12, 2017</a></p> </blockquote> </div> <p>This isn’t the first time Elon Musk has spoken up about the dangers of AI without regulation. He <a target=\"_blank\" href=\"https://techcrunch.com/2017/07/19/elon-musk-clarifies-that-ai-regulation-should-follow-observation-and-insight/\">said</a> that the process of setting up a government body to regulate AI should start in the immediate future, speaking at the International Space Station R&D conference a few weeks ago.</p> <p>Musk has also thrown shade at Facebook CEO Mark Zuckerberg on Twitter, saying that Zuck’s understanding of AI is <a target=\"_blank\" href=\"https://techcrunch.com/2017/07/25/elon-musk-mark-zuckerberg-artificial-intelligence/\">limited</a>.</p> <p>Speaking at TC Sessions: Robotics, Rodney Brooks, founder of iRobot and Rethink Robotics, <a target=\"_blank\" href=\"https://techcrunch.com/2017/07/19/this-famous-roboticist-doesnt-think-elon-musk-understands-ai/\">disagreed</a> with Musk saying that, currently, there isn’t much to regulate.</p> <blockquote readability=\"15\"> <p>If you’re going to have a regulation now, either it applies to something and changes something in the world, or it doesn’t apply to anything. If it doesn’t apply to anything, what the hell do you have the regulation for? Tell me, what behavior do you want to change, Elon? By the way, let’s talk about regulation on self-driving Teslas, because that’s a real issue.</p> </blockquote> <p>At the same event, head of Amazon Robotics Tye Brady <a target=\"_blank\" href=\"https://techcrunch.com/video/robots-at-amazon-with-tye-brady-amazon-robotics/596e4edc9e4510657840e02f/\">said the following</a>:</p> <blockquote readability=\"9\"> <p>I’m not really a fan of regulation. I’m a fan of doing whatever the customer seeks. We have a mission in mind to do order fulfillment in the best way possible. So, yeah, I’m not a fan of regulation.</p> </blockquote> <p>Obviously, some of the world’s greatest minds in the fields of robotics/AI/ML are at an impasse, but the maturation of AI <a target=\"_blank\" href=\"https://techcrunch.com/2017/08/09/blizzard-and-deepmind-turn-starcraft-ii-into-an-ai-research-lab/\">waits for no man</a>.</p> <p><!-- End: WordPress Article Content --></p></div> <p><br /> <br /><a href=\"http://feedproxy.google.com/~r/TechCrunch/Gaming/~3/NzrZZ_SU6vA/\">Source link </a></p> <div class='amazon-auto-links'><div class=\"amazon-products-container amazon-unit-1316\" style=\"\"> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/Amazon-Fire-TV-Streaming-Media-Player/dp/B00U3FPN4U/ref=pd_zg_rss_ts_e_electronics_6?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fire TV | Streaming Media Player: by Amazon (33381) Buy new: $89.99\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/31t3CwdjAXL._SL160_.jpg\" alt=\" by Amazon (33381) Buy new: $89.99\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/Amazon-Fire-TV-Streaming-Media-Player/dp/B00U3FPN4U/ref=pd_zg_rss_ts_e_electronics_6?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fire TV | Streaming Media Player: by Amazon (33381) Buy new: $89.99\" rel=\"nofollow\" target=\"_blank\">Fire TV | Streaming Media Player</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Amazon</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Fire TV | Streaming Media Player\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Amazon ;(33381) ; ;Buy new: $89.99\"/> (33381) <a href=\"https://www.amazon.com/Amazon-Fire-TV-Streaming-Media-Player/dp/B00U3FPN4U/ref=pd_zg_rss_ts_e_electronics_6?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Fire TV | Streaming Media Player -  ;by Amazon ;(33381) ; ;Buy new: $89.99\">Buy new: </a> <font color=\"#990000\"><b>$89.99</b></font></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/Sabrent-4-Port-Individual-Switches-HB-UM43/dp/B00JX1ZS5O/ref=pd_zg_rss_ts_e_electronics_10?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Sabrent 4-Port USB 3.0 Hub with Individual Power Switches and LEDs (HB-UM43): by Sabrent Platform: Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional (7403) Buy new: $8.99 31 used & newfrom$2.00\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/41YvA6y155L._SL160_.jpg\" alt=\" by Sabrent Platform: Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional (7403) Buy new: $8.99 31 used & newfrom$2.00\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/Sabrent-4-Port-Individual-Switches-HB-UM43/dp/B00JX1ZS5O/ref=pd_zg_rss_ts_e_electronics_10?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Sabrent 4-Port USB 3.0 Hub with Individual Power Switches and LEDs (HB-UM43): by Sabrent Platform: Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional (7403) Buy new: $8.99 31 used & newfrom$2.00\" rel=\"nofollow\" target=\"_blank\">Sabrent 4-Port USB 3.0 Hub with Individual Power Switches and LEDs (HB-UM43)</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Sabrent</span> <b>Platform:</b>  ; <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/videogames/icons/browse-icon-windows._V192599296_.gif\" width=\"20\" align=\"absmiddle\" style=\"padding-bottom:4px\" height=\"20\" border=\"0\" alt=\"Sabrent 4-Port USB 3.0 Hub with Individual Power Switches and LEDs (HB-UM43)\" title=\" ;by Sabrent ;Platform: ; ;Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional ;(7403) ; ;Buy new: $8.99 ;31 used &amp; newfrom$2.00\"/>  ;Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Sabrent 4-Port USB 3.0 Hub with Individual Power Switches and LEDs (HB-UM43)\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Sabrent ;Platform: ; ;Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional ;(7403) ; ;Buy new: $8.99 ;31 used &amp; newfrom$2.00\"/> (7403) <a href=\"https://www.amazon.com/Sabrent-4-Port-Individual-Switches-HB-UM43/dp/B00JX1ZS5O/ref=pd_zg_rss_ts_e_electronics_10?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Sabrent 4-Port USB 3.0 Hub with Individual Power Switches and LEDs (HB-UM43) -  ;by Sabrent ;Platform: ; ;Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional ;(7403) ; ;Buy new: $8.99 ;31 used &amp; newfrom$2.00\">Buy new: </a> <font color=\"#990000\"><b>$8.99</b></font> <a href=\"https://www.amazon.com/gp/offer-listing/B00JX1ZS5O/ref=pd_zg_rss_ts_e_electronics_10?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Sabrent 4-Port USB 3.0 Hub with Individual Power Switches and LEDs (HB-UM43) -  ;by Sabrent ;Platform: ; ;Windows 7 / 8 / Vista Business / Vista Enterprise / Vista Home Basic / Vista Home Premium / Vista Ultimate / XP Home Edition / XP Professional ;(7403) ; ;Buy new: $8.99 ;31 used &amp; newfrom$2.00\">31 used & new</a> from <span class=\"price\">$2.00</span></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/Soluna-Solar-Eclipse-Glasses-Certified/dp/B01N9T9CZL/ref=pd_zg_rss_ts_e_electronics_2?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Soluna Solar Eclipse Glasses - CE and ISO Certified Safe Shades for Direct Sun Viewing, (10 Pack): by Soluna (679) 1 used & newfrom$109.95\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/41f5lPulvhL._SL160_.jpg\" alt=\" by Soluna (679) 1 used & newfrom$109.95\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/Soluna-Solar-Eclipse-Glasses-Certified/dp/B01N9T9CZL/ref=pd_zg_rss_ts_e_electronics_2?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Soluna Solar Eclipse Glasses - CE and ISO Certified Safe Shades for Direct Sun Viewing, (10 Pack): by Soluna (679) 1 used & newfrom$109.95\" rel=\"nofollow\" target=\"_blank\">Soluna Solar Eclipse Glasses - CE and ISO Certified Safe Shades for Direct Sun Viewing, (10 Pack)</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Soluna</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Soluna Solar Eclipse Glasses - CE and ISO Certified Safe Shades for Direct Sun Viewing, (10 Pack)\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Soluna ;(679) ; ;1 used &amp; newfrom$109.95\"/> (679) <a href=\"https://www.amazon.com/gp/offer-listing/B01N9T9CZL/ref=pd_zg_rss_ts_e_electronics_2?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Soluna Solar Eclipse Glasses - CE and ISO Certified Safe Shades for Direct Sun Viewing, (10 Pack) -  ;by Soluna ;(679) ; ;1 used &amp; newfrom$109.95\">1 used & new</a> from <span class=\"price\">$109.95</span></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/All-New-Amazon-Echo-Dot-Add-Alexa-To-Any-Room/dp/B01DFKC2SO/ref=pd_zg_rss_ts_e_electronics_3?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Echo Dot (2nd Generation) - Black: by Amazon (45748) Buy new: $49.99 11 used & newfrom$42.07\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/41iz5Tw82IL._SL160_.jpg\" alt=\" by Amazon (45748) Buy new: $49.99 11 used & newfrom$42.07\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/All-New-Amazon-Echo-Dot-Add-Alexa-To-Any-Room/dp/B01DFKC2SO/ref=pd_zg_rss_ts_e_electronics_3?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Echo Dot (2nd Generation) - Black: by Amazon (45748) Buy new: $49.99 11 used & newfrom$42.07\" rel=\"nofollow\" target=\"_blank\">Echo Dot (2nd Generation) - Black</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Amazon</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Echo Dot (2nd Generation) - Black\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Amazon ;(45748) ; ;Buy new: $49.99 ;11 used &amp; newfrom$42.07\"/> (45748) <a href=\"https://www.amazon.com/All-New-Amazon-Echo-Dot-Add-Alexa-To-Any-Room/dp/B01DFKC2SO/ref=pd_zg_rss_ts_e_electronics_3?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Echo Dot (2nd Generation) - Black -  ;by Amazon ;(45748) ; ;Buy new: $49.99 ;11 used &amp; newfrom$42.07\">Buy new: </a> <font color=\"#990000\"><b>$49.99</b></font> <a href=\"https://www.amazon.com/gp/offer-listing/B01DFKC2SO/ref=pd_zg_rss_ts_e_electronics_3?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Echo Dot (2nd Generation) - Black -  ;by Amazon ;(45748) ; ;Buy new: $49.99 ;11 used &amp; newfrom$42.07\">11 used & new</a> from <span class=\"price\">$42.07</span></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/AmazonBasics-6-Outlet-Surge-Protector-2-Pack/dp/B014EKQ5AA/ref=pd_zg_rss_ts_e_electronics_7?ie=UTF8&#038;tag=techguidmagac-20\" title=\"AmazonBasics 6-Outlet Surge Protector Power Strip 2-Pack, 200 Joule - Black: by AmazonBasics (1803) Buy new: $11.49 2 used & newfrom$8.61\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/41%2BhNvQA5gL._SL160_.jpg\" alt=\" by AmazonBasics (1803) Buy new: $11.49 2 used & newfrom$8.61\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/AmazonBasics-6-Outlet-Surge-Protector-2-Pack/dp/B014EKQ5AA/ref=pd_zg_rss_ts_e_electronics_7?ie=UTF8&#038;tag=techguidmagac-20\" title=\"AmazonBasics 6-Outlet Surge Protector Power Strip 2-Pack, 200 Joule - Black: by AmazonBasics (1803) Buy new: $11.49 2 used & newfrom$8.61\" rel=\"nofollow\" target=\"_blank\">AmazonBasics 6-Outlet Surge Protector Power Strip 2-Pack, 200 Joule - Black</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by AmazonBasics</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"AmazonBasics 6-Outlet Surge Protector Power Strip 2-Pack, 200 Joule - Black\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by AmazonBasics ;(1803) ; ;Buy new: $11.49 ;2 used &amp; newfrom$8.61\"/> (1803) <a href=\"https://www.amazon.com/AmazonBasics-6-Outlet-Surge-Protector-2-Pack/dp/B014EKQ5AA/ref=pd_zg_rss_ts_e_electronics_7?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"AmazonBasics 6-Outlet Surge Protector Power Strip 2-Pack, 200 Joule - Black -  ;by AmazonBasics ;(1803) ; ;Buy new: $11.49 ;2 used &amp; newfrom$8.61\">Buy new: </a> <font color=\"#990000\"><b>$11.49</b></font> <a href=\"https://www.amazon.com/gp/offer-listing/B014EKQ5AA/ref=pd_zg_rss_ts_e_electronics_7?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"AmazonBasics 6-Outlet Surge Protector Power Strip 2-Pack, 200 Joule - Black -  ;by AmazonBasics ;(1803) ; ;Buy new: $11.49 ;2 used &amp; newfrom$8.61\">2 used & new</a> from <span class=\"price\">$8.61</span></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/Echo-Dot-2nd-Generation-White/dp/B015TJD0Y4/ref=pd_zg_rss_ts_e_electronics_5?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Echo Dot (2nd Generation) - White: by Amazon (45751) Buy new: $49.99 6 used & newfrom$42.07\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/41pH1YS3UML._SL160_.jpg\" alt=\" by Amazon (45751) Buy new: $49.99 6 used & newfrom$42.07\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/Echo-Dot-2nd-Generation-White/dp/B015TJD0Y4/ref=pd_zg_rss_ts_e_electronics_5?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Echo Dot (2nd Generation) - White: by Amazon (45751) Buy new: $49.99 6 used & newfrom$42.07\" rel=\"nofollow\" target=\"_blank\">Echo Dot (2nd Generation) - White</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Amazon</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Echo Dot (2nd Generation) - White\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Amazon ;(45751) ; ;Buy new: $49.99 ;6 used &amp; newfrom$42.07\"/> (45751) <a href=\"https://www.amazon.com/Echo-Dot-2nd-Generation-White/dp/B015TJD0Y4/ref=pd_zg_rss_ts_e_electronics_5?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Echo Dot (2nd Generation) - White -  ;by Amazon ;(45751) ; ;Buy new: $49.99 ;6 used &amp; newfrom$42.07\">Buy new: </a> <font color=\"#990000\"><b>$49.99</b></font> <a href=\"https://www.amazon.com/gp/offer-listing/B015TJD0Y4/ref=pd_zg_rss_ts_e_electronics_5?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Echo Dot (2nd Generation) - White -  ;by Amazon ;(45751) ; ;Buy new: $49.99 ;6 used &amp; newfrom$42.07\">6 used & new</a> from <span class=\"price\">$42.07</span></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/Fujifilm-Instax-Instant-Packs-Pictures/dp/B00O4OR4GQ/ref=pd_zg_rss_ts_e_electronics_8?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fujifilm Instax Mini Instant Film (3 Twin Packs, 60 Total Pictures): by Fujifilm (2134) Buy new: $36.47 72 used & newfrom$36.45\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/31EhF15fB9L._SL160_.jpg\" alt=\" by Fujifilm (2134) Buy new: $36.47 72 used & newfrom$36.45\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/Fujifilm-Instax-Instant-Packs-Pictures/dp/B00O4OR4GQ/ref=pd_zg_rss_ts_e_electronics_8?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fujifilm Instax Mini Instant Film (3 Twin Packs, 60 Total Pictures): by Fujifilm (2134) Buy new: $36.47 72 used & newfrom$36.45\" rel=\"nofollow\" target=\"_blank\">Fujifilm Instax Mini Instant Film (3 Twin Packs, 60 Total Pictures)</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Fujifilm</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Fujifilm Instax Mini Instant Film (3 Twin Packs, 60 Total Pictures)\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Fujifilm ;(2134) ; ;Buy new: $36.47 ;72 used &amp; newfrom$36.45\"/> (2134) <a href=\"https://www.amazon.com/Fujifilm-Instax-Instant-Packs-Pictures/dp/B00O4OR4GQ/ref=pd_zg_rss_ts_e_electronics_8?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Fujifilm Instax Mini Instant Film (3 Twin Packs, 60 Total Pictures) -  ;by Fujifilm ;(2134) ; ;Buy new: $36.47 ;72 used &amp; newfrom$36.45\">Buy new: </a> <font color=\"#990000\"><b>$36.47</b></font> <a href=\"https://www.amazon.com/gp/offer-listing/B00O4OR4GQ/ref=pd_zg_rss_ts_e_electronics_8?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Fujifilm Instax Mini Instant Film (3 Twin Packs, 60 Total Pictures) -  ;by Fujifilm ;(2134) ; ;Buy new: $36.47 ;72 used &amp; newfrom$36.45\">72 used & new</a> from <span class=\"price\">$36.45</span></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/Fujifilm-INSTAX-Mini-Instant-White/dp/B00EB4ADQW/ref=pd_zg_rss_ts_e_electronics_4?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fujifilm INSTAX Mini Instant Film Twin Pack (White): by Fujifilm Platform:Not Machine Specific (3962) Buy new: $12.49$12.48 30 used & newfrom$12.48\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/513VGqOg9%2BL._SL160_.jpg\" alt=\" by Fujifilm Platform:Not Machine Specific (3962) Buy new: $12.49$12.48 30 used & newfrom$12.48\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/Fujifilm-INSTAX-Mini-Instant-White/dp/B00EB4ADQW/ref=pd_zg_rss_ts_e_electronics_4?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fujifilm INSTAX Mini Instant Film Twin Pack (White): by Fujifilm Platform:Not Machine Specific (3962) Buy new: $12.49$12.48 30 used & newfrom$12.48\" rel=\"nofollow\" target=\"_blank\">Fujifilm INSTAX Mini Instant Film Twin Pack (White)</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Fujifilm</span> <b>Platform:</b> Not Machine Specific <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Fujifilm INSTAX Mini Instant Film Twin Pack (White)\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Fujifilm ;Platform:Not Machine Specific ;(3962) ; ;Buy new: $12.49$12.48 ;30 used &amp; newfrom$12.48\"/> (3962) <a href=\"https://www.amazon.com/Fujifilm-INSTAX-Mini-Instant-White/dp/B00EB4ADQW/ref=pd_zg_rss_ts_e_electronics_4?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Fujifilm INSTAX Mini Instant Film Twin Pack (White) -  ;by Fujifilm ;Platform:Not Machine Specific ;(3962) ; ;Buy new: $12.49$12.48 ;30 used &amp; newfrom$12.48\">Buy new: </a> <strike>$12.49</strike> <font color=\"#990000\"><b>$12.48</b></font> <a href=\"https://www.amazon.com/gp/offer-listing/B00EB4ADQW/ref=pd_zg_rss_ts_e_electronics_4?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Fujifilm INSTAX Mini Instant Film Twin Pack (White) -  ;by Fujifilm ;Platform:Not Machine Specific ;(3962) ; ;Buy new: $12.49$12.48 ;30 used &amp; newfrom$12.48\">30 used & new</a> from <span class=\"price\">$12.48</span></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/All-New-Fire-TV-Stick-With-Alexa-Voice-Remote-Streaming-Media-Player/dp/B00ZV9RDKK/ref=pd_zg_rss_ts_e_electronics_1?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fire TV Stick with Alexa Voice Remote | Streaming Media Player: by Amazon (93010) Buy new: $39.99\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/41vQqNH7zQL._SL160_.jpg\" alt=\" by Amazon (93010) Buy new: $39.99\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/All-New-Fire-TV-Stick-With-Alexa-Voice-Remote-Streaming-Media-Player/dp/B00ZV9RDKK/ref=pd_zg_rss_ts_e_electronics_1?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Fire TV Stick with Alexa Voice Remote | Streaming Media Player: by Amazon (93010) Buy new: $39.99\" rel=\"nofollow\" target=\"_blank\">Fire TV Stick with Alexa Voice Remote | Streaming Media Player</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Amazon</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Fire TV Stick with Alexa Voice Remote | Streaming Media Player\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Amazon ;(93010) ; ;Buy new: $39.99\"/> (93010) <a href=\"https://www.amazon.com/All-New-Fire-TV-Stick-With-Alexa-Voice-Remote-Streaming-Media-Player/dp/B00ZV9RDKK/ref=pd_zg_rss_ts_e_electronics_1?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Fire TV Stick with Alexa Voice Remote | Streaming Media Player -  ;by Amazon ;(93010) ; ;Buy new: $39.99\">Buy new: </a> <font color=\"#990000\"><b>$39.99</b></font></div> </div> <div class=\"amazon-product-container\"> <div class=\"amazon-product-thumbnail\"> <a href=\"https://www.amazon.com/Amazon-Kindle-Paperwhite-6-Inch-4GB-eReader/dp/B00OQVZDJM/ref=pd_zg_rss_ts_e_electronics_9?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Kindle Paperwhite E-reader - Black, 6&quot; High-Resolution Display (300 ppi) with Built-in Light, Wi-Fi - Includes Special Offers: by Amazon (47931) Buy new: $119.99 10 used & newfrom$100.00\" rel=\"nofollow\" target=\"_blank\"> <img src=\"https://images-na.ssl-images-amazon.com/images/I/51nk%2BaSvOFL._SL160_.jpg\" alt=\" by Amazon (47931) Buy new: $119.99 10 used & newfrom$100.00\" /> </a> </div> <h5 class=\"amazon-product-title\"> <a href=\"https://www.amazon.com/Amazon-Kindle-Paperwhite-6-Inch-4GB-eReader/dp/B00OQVZDJM/ref=pd_zg_rss_ts_e_electronics_9?ie=UTF8&#038;tag=techguidmagac-20\" title=\"Kindle Paperwhite E-reader - Black, 6&quot; High-Resolution Display (300 ppi) with Built-in Light, Wi-Fi - Includes Special Offers: by Amazon (47931) Buy new: $119.99 10 used & newfrom$100.00\" rel=\"nofollow\" target=\"_blank\">Kindle Paperwhite E-reader - Black, 6&quot; High-Resolution Display (300 ppi) with Built-in Light, Wi-Fi - Includes Special Offers</a> </h5> <div class='amazon-product-meta'><span class=\"riRssContributor\">by Amazon</span> <img src=\"https://images-na.ssl-images-amazon.com/images/G/01/detail/stars-4-5._CB192261415_.gif\" width=\"64\" alt=\"Kindle Paperwhite E-reader - Black, 6&quot; High-Resolution Display (300 ppi) with Built-in Light, Wi-Fi - Includes Special Offers\" align=\"absbottom\" height=\"12\" border=\"0\" style=\"margin: 0; padding: 0;\" title=\" ;by Amazon ;(47931) ; ;Buy new: $119.99 ;10 used &amp; newfrom$100.00\"/> (47931) <a href=\"https://www.amazon.com/Amazon-Kindle-Paperwhite-6-Inch-4GB-eReader/dp/B00OQVZDJM/ref=pd_zg_rss_ts_e_electronics_9?ie=UTF8&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Kindle Paperwhite E-reader - Black, 6&quot; High-Resolution Display (300 ppi) with Built-in Light, Wi-Fi - Includes Special Offers -  ;by Amazon ;(47931) ; ;Buy new: $119.99 ;10 used &amp; newfrom$100.00\">Buy new: </a> <font color=\"#990000\"><b>$119.99</b></font> <a href=\"https://www.amazon.com/gp/offer-listing/B00OQVZDJM/ref=pd_zg_rss_ts_e_electronics_9?ie=UTF8&#038;condition=all&#038;tag=techguidmagac-20\" rel=\"nofollow\" target=\"_blank\" title=\"Kindle Paperwhite E-reader - Black, 6&quot; High-Resolution Display (300 ppi) with Built-in Light, Wi-Fi - Includes Special Offers -  ;by Amazon ;(47931) ; ;Buy new: $119.99 ;10 used &amp; newfrom$100.00\">10 used & new</a> from <span class=\"price\">$100.00</span></div> </div> </div> <!-- Rendered with Amazon Auto Links by miunosoft --></div> </div><!-- .entry /--> <span style=\"display:none\" class=\"updated\">2017-08-12</span> <div style=\"display:none\" class=\"vcard author\" itemprop=\"author\" itemscope itemtype=\"http://schema.org/Person\"><strong class=\"fn\" itemprop=\"name\"><a href=\"http://technewsdata.com/author/admin/\" title=\"Posts by techguy\" rel=\"author\">techguy</a></strong></div> <div class=\"share-post\"> <span class=\"share-text\">Share</span> <ul class=\"flat-social\"> <li> </li> <li><a href=\"http://twitter.com/home?status=OpenAI bot remains undefeated against world’s greatest Dota 2 players http://technewsdata.com/?p=6044 \" class=\"social-twitter\" rel=\"external\" target=\"_blank\"><i class=\"fa fa-twitter\"></i> <span>Twitter</span></a></li> <li><a href=\"https://plusone.google.com/_/+1/confirm?hl=en&url=http://technewsdata.com/?p=6044&name=OpenAI bot remains undefeated against world’s greatest Dota 2 players\" class=\"social-google-plus\" rel=\"external\" target=\"_blank\"><i class=\"fa fa-google-plus\"></i> <span>Google +</span></a></li> <li> </span></li> <li> </li> <li> </li> </ul> <div class=\"clear\"></div> </div> <!-- .share-post --> <div class=\"clear\"></div> </div><!-- .post-inner --> </article><!-- .post-listing --> <div class=\"e3lan e3lan-post\"> <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script> <!-- techdata3 --> <ins class=\"adsbygoogle\" style=\"display:inline-block;width:468px;height:60px\" data-ad-client=\"ca-pub-6529199735771685\" data-ad-slot=\"7199667901\"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> </div> <section id=\"author-box\"> <div class=\"block-head\"> <h3>About techguy </h3><div class=\"stripe-line\"></div> </div> <div class=\"post-listing\"> <div class=\"author-bio\"> <div class=\"author-avatar\"> <img alt='' src='http://2.gravatar.com/avatar/85e50b4868bfdacd8af5a84d7c553889?s=90&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/85e50b4868bfdacd8af5a84d7c553889?s=180&d=mm&r=g 2x' class='avatar avatar-90 photo' height='90' width='90' /> </div><!-- #author-avatar --> <div class=\"author-description\"> </div><!-- #author-description --> <div class=\"author-social flat-social\"> <a class=\"social-site\" href=\"http://technewsdata.com\"><i class=\"fa fa-home\"></i></a> </div> <div class=\"clear\"></div> </div> </div> </section><!-- #author-box --> <div class=\"post-navigation\"> <div class=\"post-previous\"><a href=\"http://technewsdata.com/machine-learning-can-tell-if-youre-wearing-swap-meet-louie/\" rel=\"prev\"><span>Previous</span> Machine learning can tell if you’re wearing swap-meet Louie</a></div> <div class=\"post-next\"><a href=\"http://technewsdata.com/chevrolet-eyes-more-competitive-price-points-for-camaro/\" rel=\"next\"><span>Next</span> Chevrolet Eyes More Competitive Price Points for Camaro</a></div> </div><!-- .post-navigation --> <section id=\"related_posts\"> <div class=\"block-head\"> <h3>Related Articles</h3><div class=\"stripe-line\"></div> </div> <div class=\"post-listing\"> <div class=\"related-item\"> <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/8bitdos-nes30-arcade-stick-is-a-big-beautiful-fighter-companion-2/\"> <img width=\"310\" height=\"165\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/nes30-arcade-stick1-310x165.png\" class=\"attachment-tie-medium size-tie-medium wp-post-image\" alt=\"\" /> <span class=\"fa overlay-icon\"></span> </a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/8bitdos-nes30-arcade-stick-is-a-big-beautiful-fighter-companion-2/\" rel=\"bookmark\">8bitdo’s NES30 Arcade Stick is a big, beautiful fighter companion</a></h3> <p class=\"post-meta\"><span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>2 days ago</span></p> </div> <div class=\"related-item\"> <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/discord-steals-gamers-from-skype-with-video-chat-and-screensharing/\"> <img width=\"310\" height=\"165\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/discord-video-310x165.png\" class=\"attachment-tie-medium size-tie-medium wp-post-image\" alt=\"\" /> <span class=\"fa overlay-icon\"></span> </a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/discord-steals-gamers-from-skype-with-video-chat-and-screensharing/\" rel=\"bookmark\">Discord steals gamers from Skype with video chat and screensharing</a></h3> <p class=\"post-meta\"><span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>3 days ago</span></p> </div> <div class=\"related-item\"> <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/ufo-50-is-a-50-game-love-letter-to-the-8-bit-era/\"> <img width=\"310\" height=\"165\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/ufo50-310x165.jpg\" class=\"attachment-tie-medium size-tie-medium wp-post-image\" alt=\"\" /> <span class=\"fa overlay-icon\"></span> </a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/ufo-50-is-a-50-game-love-letter-to-the-8-bit-era/\" rel=\"bookmark\">UFO 50 is a 50-game love letter to the 8-bit era</a></h3> <p class=\"post-meta\"><span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>4 days ago</span></p> </div> <div class=\"clear\"></div> </div> </section> <section id=\"check-also-box\" class=\"post-listing check-also-right\"> <a href=\"#\" id=\"check-also-close\"><i class=\"fa fa-close\"></i></a> <div class=\"block-head\"> <h3>Check Also</h3> </div> <div class=\"check-also-post\"> <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/latest-xbox-update-begins-rolling-out-to-xbox-insiders-today/\"> <img width=\"310\" height=\"165\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/1710_home_screenshot-003-310x165.png\" class=\"attachment-tie-medium size-tie-medium wp-post-image\" alt=\"\" /> <span class=\"fa overlay-icon\"></span> </a> </div><!-- post-thumbnail /--> <h2 class=\"post-title\"><a href=\"http://technewsdata.com/latest-xbox-update-begins-rolling-out-to-xbox-insiders-today/\" rel=\"bookmark\">Latest Xbox update begins rolling out to Xbox Insiders today</a></h2> <p>Xbox is changing up its user interface on Xbox in a major way again, and ...</p> </div> </section> <div id=\"comments\"> <div class=\"clear\"></div> <div id=\"respond\" class=\"comment-respond\"> <h3 id=\"reply-title\" class=\"comment-reply-title\">Leave a Reply <small><a rel=\"nofollow\" id=\"cancel-comment-reply-link\" href=\"/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players/#respond\" style=\"display:none;\">Cancel reply</a></small></h3> <form action=\"http://technewsdata.com/wp-comments-post.php\" method=\"post\" id=\"commentform\" class=\"comment-form\" novalidate> <p class=\"comment-notes\"><span id=\"email-notes\">Your email address will not be published.</span> Required fields are marked <span class=\"required\">*</span></p><p class=\"comment-form-comment\"><label for=\"comment\">Comment</label> <textarea id=\"comment\" name=\"comment\" cols=\"45\" rows=\"8\" maxlength=\"65525\" aria-required=\"true\" required=\"required\"></textarea></p><p class=\"comment-form-author\"><label for=\"author\">Name <span class=\"required\">*</span></label> <input id=\"author\" name=\"author\" type=\"text\" value=\"\" size=\"30\" maxlength=\"245\" aria-required='true' required='required' /></p> <p class=\"comment-form-email\"><label for=\"email\">Email <span class=\"required\">*</span></label> <input id=\"email\" name=\"email\" type=\"email\" value=\"\" size=\"30\" maxlength=\"100\" aria-describedby=\"email-notes\" aria-required='true' required='required' /></p> <p class=\"comment-form-url\"><label for=\"url\">Website</label> <input id=\"url\" name=\"url\" type=\"url\" value=\"\" size=\"30\" maxlength=\"200\" /></p> <p class=\"form-submit\"><input name=\"submit\" type=\"submit\" id=\"submit\" class=\"submit\" value=\"Post Comment\" /> <input type='hidden' name='comment_post_ID' value='6044' id='comment_post_ID' /> <input type='hidden' name='comment_parent' id='comment_parent' value='0' /> </p> </form> </div><!-- #respond --> </div><!-- #comments --> </div><!-- .content --> <aside id=\"sidebar\"> <div class=\"theiaStickySidebar\"> <div class=\"widget\" id=\"tabbed-widget\"> <div class=\"widget-container\"> <div class=\"widget-top\"> <ul class=\"tabs posts-taps\"> <li class=\"tabs\"><a href=\"#tab2\">Recent</a></li><li class=\"tabs\"><a href=\"#tab1\">Popular</a></li><li class=\"tabs\"><a href=\"#tab3\">Comments</a></li><li class=\"tabs\"><a href=\"#tab4\">Tags</a></li> </ul> </div> <div id=\"tab2\" class=\"tabs-wrap\"> <ul> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/chevrolet-eyes-more-competitive-price-points-for-camaro/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/_-110x75.gif\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/chevrolet-eyes-more-competitive-price-points-for-camaro/\">Chevrolet Eyes More Competitive Price Points for Camaro</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>8 mins ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/screen-shot-2017-08-12-at-11-48-31-am-110x75.png\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players/\">OpenAI bot remains undefeated against world’s greatest Dota 2 players</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>21 hours ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/machine-learning-can-tell-if-youre-wearing-swap-meet-louie/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/147817_web-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/machine-learning-can-tell-if-youre-wearing-swap-meet-louie/\">Machine learning can tell if you’re wearing swap-meet Louie</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>23 hours ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/snap-founders-wont-sell-shares-despite-plummeting-price/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/gettyimages-479963700-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/snap-founders-wont-sell-shares-despite-plummeting-price/\">Snap founders won’t sell shares despite plummeting price</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>24 hours ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/moneytis-is-like-a-travel-fare-aggregator-but-for-sending-money-abroad/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/9021168395_fb301dfc62_o-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/moneytis-is-like-a-travel-fare-aggregator-but-for-sending-money-abroad/\">Moneytis is like a travel fare aggregator, but for sending money abroad</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>24 hours ago</span> </li> </ul> </div> <div id=\"tab1\" class=\"tabs-wrap\"> <ul> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/chevrolet-eyes-more-competitive-price-points-for-camaro/\" title=\"Chevrolet Eyes More Competitive Price Points for Camaro\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/_-110x75.gif\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/chevrolet-eyes-more-competitive-price-points-for-camaro/\">Chevrolet Eyes More Competitive Price Points for Camaro</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>8 mins ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/googles-android-7-1-developer-preview-starts-rolling-out-to-beta-testers/\" title=\"Google’s Android 7.1 Developer Preview starts rolling out to beta testers\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/10/gettyimages-614613150-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/googles-android-7-1-developer-preview-starts-rolling-out-to-beta-testers/\">Google’s Android 7.1 Developer Preview starts rolling out to beta testers</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>October 24, 2016</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/one-month-with-my-iphone-7-plus-the-best-device-for-important-work/\" title=\"One month with my iPhone 7 Plus: The best device for important work\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/10/apple-iphone-7-plus-2016-product-056-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/one-month-with-my-iphone-7-plus-the-best-device-for-important-work/\">One month with my iPhone 7 Plus: The best device for important work</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>October 24, 2016</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/add-google-assistant-to-your-phone-by-tweaking-two-lines-of-code/\" title=\"Add Google Assistant to your phone by tweaking two lines of code\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/10/google-assistant-110x75.png\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/add-google-assistant-to-your-phone-by-tweaking-two-lines-of-code/\">Add Google Assistant to your phone by tweaking two lines of code</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>October 24, 2016</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/mobile-productivity-apps-that-jason-cipriani-cant-work-without/\" title=\"Mobile productivity: Apps that Jason Cipriani can&#039;t work without\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/10/iphone-7-plus-hw-3-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" srcset=\"http://technewsdata.com/wp-content/uploads/2016/10/iphone-7-plus-hw-3-110x75.jpg 110w, http://technewsdata.com/wp-content/uploads/2016/10/iphone-7-plus-hw-3-770x525.jpg 770w\" sizes=\"(max-width: 110px) 100vw, 110px\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/mobile-productivity-apps-that-jason-cipriani-cant-work-without/\">Mobile productivity: Apps that Jason Cipriani can&#039;t work without</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>October 24, 2016</span> </li> </ul> </div> <div id=\"tab3\" class=\"tabs-wrap\"> <ul> </ul> </div> <div id=\"tab4\" class=\"tabs-wrap tagcloud\"> </div> </div> </div><!-- .widget /--> <div id=\"categort-posts-widget-2\" class=\"widget categort-posts\"><div class=\"widget-top\"><h4>Networking </h4><div class=\"stripe-line\"></div></div> <div class=\"widget-container\"> <ul> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/6-percent-of-fttn-nbn-connections-cannot-hit-25mbps/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/nbn-data-technology-type-110x75.png\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/6-percent-of-fttn-nbn-connections-cannot-hit-25mbps/\">6 percent of FttN NBN connections cannot hit 25Mbps</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>2 days ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/whats-next-for-microsofts-skype-for-business-unified-communications-products/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/skypeforbusinesswhatsnext-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/whats-next-for-microsofts-skype-for-business-unified-communications-products/\">What&#039;s next for Microsoft&#039;s Skype for Business unified communications products</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>5 days ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/vodafone-chooses-nbn-modem-with-backup-4g-for-nbn-outages/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/vodafone-wifi-modem-lte-110x75.png\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/vodafone-chooses-nbn-modem-with-backup-4g-for-nbn-outages/\">Vodafone chooses NBN modem with backup 4G for NBN outages</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>6 days ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/logmein-buys-ai-chatbot-maker-nanorep/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/ai-machine-learning-110x75.png\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/logmein-buys-ai-chatbot-maker-nanorep/\">LogMeIn buys AI chatbot maker Nanorep</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>7 days ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/ubiquiti-networks-launches-high-speed-ufiber-gpon-platform/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/2017-08-0214-46-51-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/ubiquiti-networks-launches-high-speed-ufiber-gpon-platform/\">Ubiquiti Networks launches high-speed UFiber GPON Platform</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>8 days ago</span> </li> </ul> <div class=\"clear\"></div> </div></div><!-- .widget /--><div id=\"ads300_250-widget-2\" class=\"widget e3lan e3lan300_250-widget\"><div class=\"widget-top\"><h4> </h4><div class=\"stripe-line\"></div></div> <div class=\"widget-container\"> <div class=\"e3lan-widget-content e3lan300-250\"> <div class=\"e3lan-cell\"> <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script> <!-- mediafavorrightbar --> <ins class=\"adsbygoogle\" style=\"display:inline-block;width:300px;height:250px\" data-ad-client=\"ca-pub-6529199735771685\" data-ad-slot=\"3915444308\"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> </div> </div> </div></div><!-- .widget /--> </div><!-- .theiaStickySidebar /--> </aside><!-- #sidebar /--> <div class=\"clear\"></div> </div><!-- .container /--> <div class=\"e3lan e3lan-bottom\"> <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script> <!-- techdata --> <ins class=\"adsbygoogle\" style=\"display:inline-block;width:728px;height:90px\" data-ad-client=\"ca-pub-6529199735771685\" data-ad-slot=\"4952708701\"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> </div> <footer id=\"theme-footer\"> <div id=\"footer-widget-area\" class=\"footer-3c\"> <div id=\"footer-first\" class=\"footer-widgets-box\"> <div id=\"posts-list-widget-2\" class=\"footer-widget posts-list\"><div class=\"footer-widget-top\"><h4>Recent Posts </h4></div> <div class=\"footer-widget-container\"> <ul> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/chevrolet-eyes-more-competitive-price-points-for-camaro/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/_-110x75.gif\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/chevrolet-eyes-more-competitive-price-points-for-camaro/\">Chevrolet Eyes More Competitive Price Points for Camaro</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>8 mins ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/screen-shot-2017-08-12-at-11-48-31-am-110x75.png\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players/\">OpenAI bot remains undefeated against world’s greatest Dota 2 players</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>21 hours ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/machine-learning-can-tell-if-youre-wearing-swap-meet-louie/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/147817_web-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/machine-learning-can-tell-if-youre-wearing-swap-meet-louie/\">Machine learning can tell if you’re wearing swap-meet Louie</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>23 hours ago</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/snap-founders-wont-sell-shares-despite-plummeting-price/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/08/gettyimages-479963700-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/snap-founders-wont-sell-shares-despite-plummeting-price/\">Snap founders won’t sell shares despite plummeting price</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>24 hours ago</span> </li> </ul> <div class=\"clear\"></div> </div></div><!-- .widget /--><div id=\"ads300_250-widget-3\" class=\"footer-widget e3lan e3lan300_250-widget\"><div class=\"footer-widget-top\"><h4> Advertisement</h4></div> <div class=\"footer-widget-container\"> <div class=\"e3lan-widget-content e3lan300-250\"> <div class=\"e3lan-cell\"> <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script> <!-- mediafavorrightbar --> <ins class=\"adsbygoogle\" style=\"display:inline-block;width:300px;height:250px\" data-ad-client=\"ca-pub-6529199735771685\" data-ad-slot=\"3915444308\"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> </div> </div> </div></div><!-- .widget /--> </div> <div id=\"footer-second\" class=\"footer-widgets-box\"> <div id=\"posts-list-widget-3\" class=\"footer-widget posts-list\"><div class=\"footer-widget-top\"><h4>Popular Posts </h4></div> <div class=\"footer-widget-container\"> <ul> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/what-you-need-to-know-about-startup-boards/\" title=\"What you need to know about startup boards\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/11/gettyimages-585093137-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/what-you-need-to-know-about-startup-boards/\">What you need to know about startup boards</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>November 6, 2016</span> <span class=\"post-views-widget\"><span class=\"post-views\"><i class=\"fa fa-eye\"></i>5,391 </span> <span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/one-month-with-my-iphone-7-plus-the-best-device-for-important-work/\" title=\"One month with my iPhone 7 Plus: The best device for important work\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/10/apple-iphone-7-plus-2016-product-056-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/one-month-with-my-iphone-7-plus-the-best-device-for-important-work/\">One month with my iPhone 7 Plus: The best device for important work</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>October 24, 2016</span> <span class=\"post-views-widget\"><span class=\"post-views\"><i class=\"fa fa-eye\"></i>1,214 </span> <span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/sharalike-tries-to-bring-your-slideshow-into-the-virtual-world/\" title=\"Sharalike tries to bring your slideshow into the virtual world\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/10/sharalike-vr-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/sharalike-tries-to-bring-your-slideshow-into-the-virtual-world/\">Sharalike tries to bring your slideshow into the virtual world</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>October 26, 2016</span> <span class=\"post-views-widget\"><span class=\"post-views\"><i class=\"fa fa-eye\"></i>914 </span> <span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/microsoft-to-hike-uk-enterprise-prices-after-brexit-pounds-sterling/\" title=\"Microsoft to hike UK enterprise prices after Brexit pounds sterling\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/10/144710269-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/microsoft-to-hike-uk-enterprise-prices-after-brexit-pounds-sterling/\">Microsoft to hike UK enterprise prices after Brexit pounds sterling</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>October 24, 2016</span> <span class=\"post-views-widget\"><span class=\"post-views\"><i class=\"fa fa-eye\"></i>815 </span> <span> </li> </ul> <div class=\"clear\"></div> </div></div><!-- .widget /--><div id=\"text-2\" class=\"footer-widget widget_text\"><div class=\"footer-widget-top\"><h4>Advertisement</h4></div> <div class=\"footer-widget-container\"> <div class=\"textwidget\"><script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script> <!-- techdata2 --> <ins class=\"adsbygoogle\" style=\"display:inline-block;width:300px;height:250px\" data-ad-client=\"ca-pub-6529199735771685\" data-ad-slot=\"7339268701\"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div> </div></div><!-- .widget /--> </div><!-- #second .widget-area --> <div id=\"footer-third\" class=\"footer-widgets-box\"> <div id=\"posts-list-widget-4\" class=\"footer-widget posts-list\"><div class=\"footer-widget-top\"><h4>Random Posts </h4></div> <div class=\"footer-widget-container\"> <ul> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/walkme-acquires-abbi-io-to-add-mobile-ab-testing-and-engagement/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/01/walkme-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/walkme-acquires-abbi-io-to-add-mobile-ab-testing-and-engagement/\">WalkMe acquires Abbi.io to add mobile A/B testing and engagement</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>January 17, 2017</span> </li> <li > <h3><a href=\"http://technewsdata.com/mykronoz-reveals-a-full-color-smartwatch-with-mechanical-watch-arms/\">MyKronoz reveals a full-color smartwatch with mechanical watch arms</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>February 24, 2017</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/going-to-ces-join-us-at-the-official-hardware-battlefield-party-in-las-vegas/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2016/12/collegeparty-110x75.gif\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/going-to-ces-join-us-at-the-official-hardware-battlefield-party-in-las-vegas/\">Going to CES? Join us at the official Hardware Battlefield Party in Las Vegas</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>December 27, 2016</span> </li> <li > <div class=\"post-thumbnail\"> <a href=\"http://technewsdata.com/spheros-new-toy-is-a-chatty-spider-man/\" rel=\"bookmark\"><img width=\"110\" height=\"75\" src=\"http://technewsdata.com/wp-content/uploads/2017/06/spider-man-110x75.jpg\" class=\"attachment-tie-small size-tie-small wp-post-image\" alt=\"\" /><span class=\"fa overlay-icon\"></span></a> </div><!-- post-thumbnail /--> <h3><a href=\"http://technewsdata.com/spheros-new-toy-is-a-chatty-spider-man/\">Sphero’s new toy is a chatty Spider-Man</a></h3> <span class=\"tie-date\"><i class=\"fa fa-clock-o\"></i>June 15, 2017</span> </li> </ul> <div class=\"clear\"></div> </div></div><!-- .widget /--><div id=\"text-3\" class=\"footer-widget widget_text\"><div class=\"footer-widget-top\"><h4>Advertisement</h4></div> <div class=\"footer-widget-container\"> <div class=\"textwidget\"><script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script> <!-- techdata2 --> <ins class=\"adsbygoogle\" style=\"display:inline-block;width:300px;height:250px\" data-ad-client=\"ca-pub-6529199735771685\" data-ad-slot=\"7339268701\"></ins> <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div> </div></div><!-- .widget /--> </div><!-- #third .widget-area --> </div><!-- #footer-widget-area --> <div class=\"clear\"></div> </footer><!-- .Footer /--> <div class=\"clear\"></div> <div class=\"footer-bottom\"> <div class=\"container\"> <div class=\"alignright\"> Powered by <a href=\"http://www.wordpress.com\">WordPress</a> | Designed by <a href=http://technewsdata.com>Tech news data</a> </div> <div class=\"social-icons\"> <a class=\"ttip-none\" title=\"Rss\" href=\"#\" target=\"_blank\"><i class=\"fa fa-rss\"></i></a><a class=\"ttip-none\" title=\"Google+\" href=\"#\" target=\"_blank\"><i class=\"fa fa-google-plus\"></i></a><a class=\"ttip-none\" title=\"Facebook\" href=\"#\" target=\"_blank\"><i class=\"fa fa-facebook\"></i></a><a class=\"ttip-none\" title=\"Twitter\" href=\"#\" target=\"_blank\"><i class=\"fa fa-twitter\"></i></a><a class=\"ttip-none\" title=\"Pinterest\" href=\"#\" target=\"_blank\"><i class=\"fa fa-pinterest\"></i></a><a class=\"ttip-none\" title=\"LinkedIn\" href=\"#\" target=\"_blank\"><i class=\"fa fa-linkedin\"></i></a><a class=\"ttip-none\" title=\"Blogger\" href=\"#\" target=\"_blank\"><i class=\"tieicon-blogger\"></i></a><a class=\"ttip-none\" title=\"instagram\" href=\"#\" target=\"_blank\"><i class=\"tieicon-instagram\"></i></a> </div> <div class=\"alignleft\"> © Copyright 2017, All Rights Reserved </div> <div class=\"clear\"></div> </div><!-- .Container --> </div><!-- .Footer bottom --> </div><!-- .inner-Wrapper --> </div><!-- #Wrapper --> </div><!-- .Wrapper-outer --> <div id=\"topcontrol\" class=\"fa fa-angle-up\" title=\"Scroll To Top\"></div> <div id=\"fb-root\"></div> <div id=\"reading-position-indicator\"></div><script type='text/javascript'> /* <![CDATA[ */ var wpcf7 = {\"apiSettings\":{\"root\":\"http:\\/\\/technewsdata.com\\/wp-json\\/\",\"namespace\":\"contact-form-7\\/v1\"},\"recaptcha\":{\"messages\":{\"empty\":\"Please verify that you are not a robot.\"}}}; /* ]]> */ </script> <script type='text/javascript' src='http://technewsdata.com/wp-content/plugins/contact-form-7/includes/js/scripts.js'></script> <script type='text/javascript'> /* <![CDATA[ */ var wc_add_to_cart_params = {\"ajax_url\":\"\\/wp-admin\\/admin-ajax.php\",\"wc_ajax_url\":\"\\/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players\\/?wc-ajax=%%endpoint%%\",\"i18n_view_cart\":\"View cart\",\"cart_url\":\"http:\\/\\/technewsdata.com\",\"is_cart\":\"\",\"cart_redirect_after_add\":\"no\"}; /* ]]> */ </script> <script type='text/javascript' src='//technewsdata.com/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js'></script> <script type='text/javascript' src='//technewsdata.com/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js'></script> <script type='text/javascript' src='//technewsdata.com/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js'></script> <script type='text/javascript'> /* <![CDATA[ */ var woocommerce_params = {\"ajax_url\":\"\\/wp-admin\\/admin-ajax.php\",\"wc_ajax_url\":\"\\/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players\\/?wc-ajax=%%endpoint%%\"}; /* ]]> */ </script> <script type='text/javascript' src='//technewsdata.com/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js'></script> <script type='text/javascript'> /* <![CDATA[ */ var wc_cart_fragments_params = {\"ajax_url\":\"\\/wp-admin\\/admin-ajax.php\",\"wc_ajax_url\":\"\\/openai-bot-remains-undefeated-against-worlds-greatest-dota-2-players\\/?wc-ajax=%%endpoint%%\",\"fragment_name\":\"wc_fragments\"}; /* ]]> */ </script> <script type='text/javascript' src='//technewsdata.com/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js'></script> <script type='text/javascript'> /* <![CDATA[ */ var tie = {\"mobile_menu_active\":\"true\",\"mobile_menu_top\":\"\",\"lightbox_all\":\"true\",\"lightbox_gallery\":\"true\",\"woocommerce_lightbox\":\"yes\",\"lightbox_skin\":\"dark\",\"lightbox_thumb\":\"vertical\",\"lightbox_arrows\":\"\",\"sticky_sidebar\":\"1\",\"is_singular\":\"1\",\"reading_indicator\":\"true\",\"lang_no_results\":\"No Results\",\"lang_results_found\":\"Results Found\"}; /* ]]> */ </script> <script type='text/javascript' src='http://technewsdata.com/wp-content/themes/sahifa/js/tie-scripts.js'></script> <script type='text/javascript' src='http://technewsdata.com/wp-content/themes/sahifa/js/ilightbox.packed.js'></script> <script type='text/javascript' src='http://technewsdata.com/wp-content/plugins/mega_main_menu/src/js/frontend.js'></script> <script type='text/javascript' src='http://technewsdata.com/wp-includes/js/comment-reply.min.js'></script> <script type='text/javascript' src='http://technewsdata.com/wp-includes/js/wp-embed.min.js'></script> </body> </html>",
+      "highlightText": "",
+      "highlightTitle": "",
+      "language": "english",
+      "external_links": [],
+      "entities": {
+        "persons": [
+          {
+            "name": "teslas",
+            "sentiment": "none"
+          },
+          {
+            "name": "jakub pachoki",
+            "sentiment": "none"
+          },
+          {
+            "name": "musk",
+            "sentiment": "none"
+          },
+          {
+            "name": "mark zuckerberg",
+            "sentiment": "none"
+          },
+          {
+            "name": "elon",
+            "sentiment": "none"
+          },
+          {
+            "name": "danil",
+            "sentiment": "none"
+          },
+          {
+            "name": "zuck",
+            "sentiment": "none"
+          },
+          {
+            "name": "openai",
+            "sentiment": "none"
+          },
+          {
+            "name": "elon musk",
+            "sentiment": "none"
+          },
+          {
+            "name": "— elon musk",
+            "sentiment": "none"
+          },
+          {
+            "name": "tye brady",
+            "sentiment": "none"
+          },
+          {
+            "name": "rodney brooks",
+            "sentiment": "none"
+          }
+        ],
+        "organizations": [
+          {
+            "name": "dota",
+            "sentiment": "none"
+          },
+          {
+            "name": "amazonbasics",
+            "sentiment": "none"
+          },
+          {
+            "name": "google",
+            "sentiment": "none"
+          },
+          {
+            "name": "soluna",
+            "sentiment": "none"
+          },
+          {
+            "name": "robotics",
+            "sentiment": "none"
+          },
+          {
+            "name": "joule",
+            "sentiment": "none"
+          },
+          {
+            "name": "amazon robotics",
+            "sentiment": "none"
+          },
+          {
+            "name": "fire tv stick",
+            "sentiment": "none"
+          },
+          {
+            "name": "alexa voice remote",
+            "sentiment": "none"
+          },
+          {
+            "name": "skype",
+            "sentiment": "none"
+          },
+          {
+            "name": "rethink robotics",
+            "sentiment": "none"
+          },
+          {
+            "name": "elon musk",
+            "sentiment": "none"
+          },
+          {
+            "name": "facebook",
+            "sentiment": "none"
+          }
+        ],
+        "locations": [
+          {
+            "name": "amazon",
+            "sentiment": "none"
+          },
+          {
+            "name": "north korea",
+            "sentiment": "none"
+          }
+        ]
+      },
+      "rating": null,
+      "crawled": "2017-08-12T22:20:02.025+03:00"
+    },
+    {
+      "thread": {
+        "uuid": "da6a96883d652d22fa1a7ff68b81f5af9732ecbc",
+        "url": "http://omgili.com/ri/uBQNNiLKiWZg5ujybqLO6URpHot6q2VCfKCcun9U2CIV1s0U4lPaObqV.7uN_ajtKZDv8ejMIbFCrrYIRvF1zJ7sItpSiDZxFnth9qiW9uBRJUCxsMzIlUg45QfpwTeNsf3oR6DaE3e9rakqVnyL5lRabRZwog03CzJ4WyTrIWs-",
+        "site_full": "holtz.com",
+        "site": "holtz.com",
+        "site_section": "http://feeds.feedburner.com/shel_blog",
+        "site_categories": [],
+        "section_title": "Holtz Communications + Technology | Blog",
+        "title": "Friday Wrap #227: Charlottesville and tech, the state of work, Facebook’s influencer grab, and more",
+        "title_full": "Friday Wrap #227: Charlottesville and tech, the state of work, Facebook’s influencer grab, and more",
+        "published": "2017-08-18T23:50:00.000+03:00",
+        "replies_count": 0,
+        "participants_count": 0,
+        "site_type": "blogs",
+        "country": "US",
+        "spam_score": 0.0,
+        "main_image": "",
+        "performance_score": 0,
+        "domain_rank": null,
+        "social": {
+          "facebook": {
+            "likes": 0,
+            "comments": 0,
+            "shares": 0
+          },
+          "gplus": {
+            "shares": 0
+          },
+          "pinterest": {
+            "shares": 0
+          },
+          "linkedin": {
+            "shares": 0
+          },
+          "stumbledupon": {
+            "shares": 0
+          },
+          "vk": {
+            "shares": 0
+          }
+        }
+      },
+      "uuid": "da6a96883d652d22fa1a7ff68b81f5af9732ecbc",
+      "url": "http://omgili.com/ri/uBQNNiLKiWZg5ujybqLO6URpHot6q2VCfKCcun9U2CIV1s0U4lPaObqV.7uN_ajtKZDv8ejMIbFCrrYIRvF1zJ7sItpSiDZxFnth9qiW9uBRJUCxsMzIlUg45QfpwTeNsf3oR6DaE3e9rakqVnyL5lRabRZwog03CzJ4WyTrIWs-",
+      "ord_in_thread": 0,
+      "author": "",
+      "published": "2017-08-18T23:50:00.000+03:00",
+      "title": "Friday Wrap #227: Charlottesville and tech, the state of work, Facebook’s influencer grab, and more",
+      "text": "Employee Engagement Contact Friday Wrap #227: Charlottesville and tech, the state of work, Facebook’s influencer grab, and more 2017-08-18 \nPosted on August 18, 2017 1:50 pm by Shel Holtz | Employee Engagement | Virtual and Augmented Reality | Content | Instagram | Wearables | Audio | Brands | Business | Channels | Content Curation | Facebook | Legal | Marketing | Media | Mobile | Podcasting | PR | Publishing | Research | Social networks | Twitter Kindle \nI extract items for the Wrap from my link blog , which you’re welcome to follow. To make sure you never miss an issue, subscribe to my weekly email briefing . The Big Stories \nFacebook shuts down anonymous employee discussion group —During my consulting gig with the Asian Development Bank in Manila this week, the issue of anonymous employee contributions came up. It’s a topic I’ve been discussing for at least a decade. In general, I’m not a fan of anonymity on intranets. If Tom reads something brilliant Mary wrote and wants to make a connection, he’s out of luck if Mary shared her post anonymously. There are times, though, when anonymity makes sense. That was the case with a Facebook discussion group dedicated to workplace concerns and complaints. The group, Facebook Anon, began attracting right-leaning employees ahead of the 2016 presidential election, leading to potential harassment and a decision last December to shut it down. Some employees were dismayed, noting that the group gave right-leaning employees a voice. The anonymous nature of the group actually violated company policy, which requires employees to display their real names. Upon disabling the group, Facebook directed employees to other places where employees could have confidential discussions. The takeaway: Anonymity is dicey in internal discussion groups. When it makes sense, companies need to go to great lengths to make sure the purpose of the group is clear, then monitor the group (possibly with employee volunteer community moderators) to ensure posts comply with the theme). In all other cases, the company needs to be clear that posts require employees to use their real names. Read more \nWork can be abusive and stressful —Tell us something we don’t know, right? A study from RAND, Harvard Medical School, and UCLA found 20% of workers have experienced verbal abuse, threats, humiliating behavior, or unwanted sexual attention at work in the past month, or bullying, harassment, or sexual harassment in the last year. Additionally, 25% say they don’t have enough time to do their jobs and 50% say they do some work in their free time. Two-thirds of all workers say they often work under right deadlines or at high speed. Workers who have good bosses—or bosses who respect, praise, and work with them, and give good feedback—were less likely to have workers who reported verbal or physical threats. Workers mostly believe they have some autonomy on the job and are confident in their skills. Those in service jobs and without a college degree, though, say they don’t have much control over their work schedules, some getting schedule changes the day of work or the day before. Nearly 80% of workers are required to show up at the workplace during regular work hours (as opposed to having the option to work remotely), and 61% of women and 53% of men say they have very good friends at work. Fifty-five percent of workers say they are exposed to physical risks at work. The takeaway: This data should rouse anyone working on recruiting, retention, or engagement. How many employee communicators have addressed harassment or bullying in the workplace? My guess: It’s not a priority. If I managed employee communications, I’d start telling stories of harassment and discussing its impact. Similarly, I’d shine a light on managers whose styles limit this kind of behavior. Read more \nAmazon launches a social network —I have reported here that Amazon was planning to launch a new social network. Amazon Spark is now a reality. Don’t count on discussions about presidential politics or cat videos, though. According to Amazon, Spark is “a place to discover things from people who share your interests. Whether you’re looking for inspiration for home décor or seeking advice for the best long-distance running shoes, Spark makes it easy to discover—and shop—stories and ideas from a community that likes what you like.” Call it a social shopping experience, with users posting items they have or want. They can run comparison polls, asking their network for input, and curate content by following interests or people. Every item you post can be tagged, which will connect consumers to the product page. Brands and businesses can’t post to the network or even set up an account yet, but they’re welcome to use influencers to post on their behalf. All Amazon users can access Spark but you need a Prime account to post and comment. For now, you need the iPhone app to see Spark. The takeaway: As an Android user, I can’t even take a look at Spark yet, but I suspect it will become a big deal in part because of the slow, deliberate rollout. if you think Facebook is able to deliver content you care about because of the data it has about you, imagine what Amazon will be able to do with your purchase and browsing history. If it does grow, it could have an impact on Facebook and Google’s advertising. Read more News \nJustice Department demands data on visitors to anti-Trump site —The U.S. Justice Department has demanded that web host provider Dreamhost hand over data about more than 1.3 million visitors to DisruptJ20, a website opposing the Trump administration. Dreamhost is pushing back against the warrant, claiming it will let the government create a list of administration critics. The hosting company claims the warrant violates the Fourth Amendment, which prohibits unreasonable search and seizure. The Electronic Frontier Foundation is representing Dreamhost, calling the order unconstitutional. The EFF said, “No plausible explanation exists for a search warrant of this breadth, other than to cast a digital dragnet as broadly as possible.” Read more \nFacebook disrupts influencer marketing in a big way —Facebook has introduced a feature that lets influencers tag they brands they’re working with, after which the brands can pay to boost those posts without having to share them first. Brands will be able to choose which content creators can tag them. Stats will inform them about the reach, engagement, total spend, and CPM to assess how effective the influencers were at spreading their posts. Marketers are worried that Facebook will suppress influencers’ posts if the brands don’t pay to boost them, which would make it very expensive to run an influencer campaign. So far, the change affects only Facebook, but given that Facebook owns Instagram—the top venue for influencer marketing—you can expect the same feature to appear there soon. Read more \nFacebook fights click bait video —Spammers have employed an insidious bit of deceit to trick people into clicking. Their articles include an image with a play button. Share the article and people who see it will think it’s a video, but when they click, they are taken instead to the ad. I have reported before about the trick of posting a static image in video format as a way to get around Facebook’s video-favoring algorithm. Now Facebook is using AI to analyze visual content and identify these deceptive practices, saying “publishers that rely on these intentionally deceptive practices should expect the distribution of those click bait stories to markedly decrease.” Read more \nCourt tells LinkedIn it can’t stop bots —A third-party service called HiQ Labs has been using bots to scrape public data from LinkedIn, leading the business-focused social network to send the company a cease-and-desist letter. Now, a court has found HiQ is doing nothing illegal and ordered the company to remove any technical blocks it has put in place to keep the company from grabbing users’ data. HiQ uses the data to help clients “determine skills gaps or turnover risks months ahead of time, and a platform that shows you how and where to focus your efforts.” Read more \nBrand tie-ins may eclipse the actual eclipse —The total eclipse of the sun doesn’t happen until Monday, but I’m already tired of hearing what so many brands will do to leverage the astronomical event. Among the companies with advertising tie-ins: Dunkin’ Donuts, Krispy Creme, Denny’s Cracker Barrel, Malibu Rum, Royal Caribbean, The Weather Channel, Airbnb, and Warby Parker. Read more fs \nSnap execs are selling their shares —As Snap’s share price continues to fall and the post-IPO lockup has expired, at least three executives have sold their shares. The co-founders have not after committing during the most recent earnings call to hang on to their shares for the rest of the year. Read more \nThose Snap Spectacles aren’t a success —Snap Spectacles, the glasses that let you take Snap photos and videos, may have generated a lot of buzz, but they haven’t produced the sales to go with it. They have sold only 41,500 pairs in its most recent quarter, compared to 64,000 in the first quarter, a decline of about 35%. That’s not good news for Snap, which calls itself a camera company. Read more \nSnapchat shares fall 17% —More bad news for Snap: Its shares fell 17% after its most recent quarterly results fell short of Wall Street expectations. Losses quadrupled compared to the same period a year ago and investors are worried about Snapchat’s growth prospects. As of this writing, Snap has recovered a bit, up to $14.01 from the $12 it hit on August 10. That’s still $5 short of its $17 IPO price. Read more \nFacebook knows what you do on your phone —A report from claims Facebook has gathered data from 24 million users of a free VPN app created by a Facebook-owned company. The data has allowed Facebook to gain insights into people’s app and website habits, including the apps they use, how often they use them, and how long they use them for. Facebook is reportedly using this data to shape the company’s product road map. For instance, the data led the company to acquire WhatsApp and to add a Stories feature to Instagram. The data is so precise, Facebook knew how many Snapchat snaps users sent every day. Read more \nBill Gates joins Instagram —Bill Gates became an Instagram user while in Tanzania, sharing a couple photos related to his work on behalf of his foundation. Those three photos remain the only ones on the account, but he has gained more than a quarter million followers since sharing them. Read more Charlottesville and its Aftermath \nObama’s tweet is the most-liked ever —Given U.S. President Donald Trump’s Twitter obsession, he must be seething over one Barack Obama tweet in response to Charlottesville, which became the most-liked tweet ever with 3.4 million likes. Obama “now holds over half the positions on the list of the top five most-liked tweets.” Read more \nInternet firms take action —With white supremacists flexing violent muscles, Internet companies are joining the backlash against them. Twitter, LinkedIn, Spotify, Facebook, and GoDaddy have all taken steps to block or cut off hate groups and remove their material. The Nazi site Daily Stormer was dropped by GoDaddy, which had hosted the site, and CloudFlare, which protects sites from denial-of-service attacks, stopped protecting the site. Twitter has suspended accounts liked to Daily Stormer, and Facebook has been removing pages from Facebook and Instagram associated with hate speech or hate organizations. Reddit closed down a discussion community that supported the Charlottesville rally and Spotify removed musical acts that have been identified as racist “hate bands” by the Southern Poverty Law Center. Read more \nGoogle shuts down Daily Stormer domain and YouTube site —Google has withdrawn domain registration support for the neo-Nazi site, The Daily Stormer, and shut down its YouTube channel. After GoDaddy pulled the plug on The Daily Stormer, it moved to Google Domains but lasted only a few hours there before Google revoked its registration. Google asserted the content violated its terms of service that prohibit content that incites violence. Read more \nPayPal pulls services from hate sites —Payment site PayPal is pulling its services that accept payments or raise funds to promote hate, violence, and intolerance. In a statement, the company said, “We work to ensure that our services are not used to accept payments or donations for activities that promote hate, violence, or racial intolerance. This includes organizations that advocate racist views, such as the KKK, white supremacist groups, or Nazi groups.” Read more \nCrowdsourced Google Doc lists Confederate monuments —A Google Sheets document from Mic asked users to list Confederate monuments they know about that sit on public U.S. land and to list whether they still stand, have been removed, or have a protest movement in place. Nearly 200 statues have been listed in 20 states, 10 of which have already been removed. Another Google Doc—the 17-page “Things You Can Do,” includes details on how to report hate crimes, the best organizations for contributions, how to monitor upcoming rallies, and more. Read more \nEven Twitter has trouble knowing when not to tweet —Events in Charlottesville should have led marketers to suspend any frivolous or light-hearted campaigning, but even Twitter’s marketing team had trouble knowing it shouldn’t have asked users how they were spending “National Relaxation Day.” The comments were brutal, the result (one social media executive said) of “Twitter being tone-deaf on their own platform.” A number of brands that promoted tweets in the wake of the rally—tweets that wouldn’t have raised an eyebrow if shared during non-politically-charged times—provoked stinging rebukes. A co-working/co-living startup shared a photo that wasn’t exactly racially diverse to introduce its service, leading to one response that said, “Either you’re a whites-only club or you need to rethink your ad imagery.” To their credit, the company replied quickly, tweeting, “Absolutely not—really appreciate the feedback here, and we’ll definitely be reconsidering using this photo in future ads.” Read more \nAn opportunity for communicators to take action —Josh Bernoff, author and former Forrester executive, asks what communicators are doing to fight racists and Nazis and invites them to take the “pro bono pledge.” Bernoff suggests communicators share this language on their social accounts: “I offer my services pro bono to any group fighting hatred and intolerance.” Bernoff actually invites any kind of freelancer or specialist to take the pledge, noting, “You probably don’t have the time or financial resources to quit your job and become full-time anti-hate activist or lobbyist. But you can help the people who do.” Read more Tools \nTrending News coming to Facebook’s mobile apps —A “Trending News” section with its own link in the main navigation menu is coming to Facebook’s mobile apps. It’s available now for iPhone users in the U.S. and is coming soon to Android users.Trending News items come from publications, not individual users, and include a headline, photo, the name of the outlet reporting it, and how many other sources are reporting on the same topic (e.g., “Reuters and 100+ other sources”). Read more \nSnap introduces “Crowd Surf” feature for Stories —The latest salvo in the Stories wars was fired by Snap, which introduced a new feature that employs machine learning to stitch snaps submitted to Our Story into a video. Crowd Surf is designed to emulate a live event experience, using time stamp and geolocation information. The more snaps users submit the better these videos will be. If they work out, they could drive more views to Our Story, differentiate Snap from Instagram Stories, and result in partnerships between Snap and artists and music festivals and other events. Read more \nGoogle Docs gets a big update —New version-control features are part of a Google Docs update designed to improve on better and faster collaboration on Docs, Sheets, and Slides. For example, you can give different names to versions of a document, which changes to each version available for tracking under version history. Users can approve or reject all edit suggestions at once. Read more \nReadability redesigns for Facebook and Instagram apps —A redesign is meant to make Facebook and Instagram’s news feeds more legible, clickable, and commentable. On Facebook, the redesign makes it easier to see where threads start and end in comments, while on Instagram, comment reels are now threaded, making it easy to have sub-conversations. Read more \nLinkedIn lets you create video in its mobile app —There’s now a video creation tool in the LinkedIn mobile app. Only frequent contributors can see the tool now, but it will roll out broadly in the next few weeks. “LinkedIn recommends creating videos for work hacks that will increase your productivity, front row seats at a conference, an insider’s perspective on the day’s new, or whatever else you think your professional network might like.” You can also share a video from your phone’s gallery. Read more Trends \nExperts weigh in on the future of trust —Trust is not in good shape; just check this year’s Edelman Trust Barometer. The Pew Research Center canvassed a large swath of “technologists, scholars, practitioners, strategic thinkers, and other leaders” to assess the future of trust. Overall, 48% said trust will be strengthened in the near future, 28% think it will stay the same, and 24% said it will deteriorate further. Six overall themes emerged from the research. One finds that trust will improve because systems and people will adapt. Another finds little agreement on whether blockchain will help build trust. Overall, this lengthy article—featuring commentary by study participants—is a fascinating read. Read more \nGhosting gets real for Snapchat —The word was new to me: It’s the practice of ending a personal relationship with someone by suddenly and without explanation withdrawing from all communication.” Users are ghosting Snapchat, with a 22% drop in downloads over April and May. In one survey, Snapchat got 0% of influencers rating it as their top platform for generating revenue. Blogging came in first (which is noteworthy in its own right). “When ranking the second-biggest source of income, only 2% said Snapcht, while 50% said Instagram and 43% said Facebook.” Read more \nAre tech and media converging? —The Financial Times has assigned a reporter to cover the intersection of tech and entertainment, such as the Disney announcement that it would launch a streaming service to compete with Netflix. Other recent stories suggesting that media and technology are becoming the same beat include Facebook’s plan to make shows with news and entertainment companies (discoverable via the “watch” tab), and Vice’s partnership with Airbnb for a series of travel “experiences.” Read more \nWhat do influencers hate about the marketers who pay them? —According to Snapfluence, the most common complaints they hear are that marketers have unrealistic expectations about how quickly they expect influencers to create and post content, marketers fail to communication all of the directions, they require content approvals, they try to force overly salesy or spammy messaging, and they try to avoid disclosures. Read more \nBlockchain could upend digital advertising —Micropayments and smart contracts—key elements of blockchain technology—could help online ad companies regain the trust of brands that are withdrawing over issues like ad fraud, brand safety, and non-transparency. “That shift would, in turn, cause a lot of disruption, and shake up an agency and ad tech space that’s repeatedly had trouble catching up with the demands of digital transformation and a quickly fragmenting media landscape.” Read more Research \nIt’s hard to tell news from opinion —A study of 49 publications by Duke Reporters’ Lab found “inconsistent terminology and a lack of labeling” of articles, making it hard for readers to determine what’s news, analysis, and opinion. “Some organizations provide a mix of labels that conflate article types such as news and opinion with topic labels such as local, politics, and sports. The result for readers is a jumbled labeling approach that fails to consistently distinguish different types of journalism.” Of the 20 organizations that label their article types, 16 used them only in their opinion sections. Read more \nWhat’s your Facebook type? —You’re one of four Facebook types, according to a study conducted by Brigham Young University researchers? You’re either a relationship builder, a window shopper, a town crier, or a selfie. Read more \nWho listens to podcasts? —Recent data from GfK MRI finds 8.6% of U.S. adults (about 21 million people) interacted with a podcast during the last 30-day period, a 7% bump from the same period a year ago. They’re educated, professional, and 45% were aged 18-34. They’re active online but also big readers of print magazines. Seventy percent consider the smartphones to be sources of entertainment. They regularly visit news websites, and 20% are influencers. Read more AI, Chatbots, and Smart Audio \nNow you can make phone calls on Google Home —Hands-free calling is now3 a feature of the Google Home smart speaker. “OK Google, call…” will place the call for free over WiFi. Because Google Home can recognize different voices, when you say, “Call my mom,” it will know to call your mom and not your spouse or partner’s. You also won’t need to know the number of a business to place a call. If you ask to call the nearest pizzeria, Google will use your location to figure out which pizzeria is nearest. Consider this one more nail in the land line’s coffin. Read more \nVogue brings September issue to Google Home —Vogue’s September issue will be available via the Google Home smart speaker, prompting consumers to ask questions about celebrity coverage. Google and Vogue have created audio content, working with writers of the issue’s articles. One example, you can say, “OK Google, tell me more about Jennifer Lawrence.” Cover story author Jason gay will then talk about interviewing the actress. Read more \nAmazon will reward Alexa Skills developers —Developers of new Alexa Skills will earn revenue based on the engagement their voice apps generate. This makes Amazon the first of the tech companies that offer AI assistants to introduce a program to reward developers based on the engagement their apps deliver. Read more Virtual, Augmented, and Mixed Reality \nVisit an Audi showroom for a VR experience —Visits to automobile showrooms have declined as consumers have been doing their research online. To bring those consumers back, Audi has introduced a VR experience that lets visitors “see how different customizable options look on their cars before they make the purchase.” With hundreds of millions of possible configurations, the VR experience is the only way consumers can see any option they’re interested in. Read more \nGE adopts Google Glass, a turning point for AR —the return of Google Glass as an enterprise tool has been making waves, with GE’s use of the Augmented Reality device demonstrating how the technology “has finally hit a maturity level where major enterprises can feel confident it’s worth the investment.” One application: By adding a torque wrench into the process, “GE mechanics working on plane engines ensure they were torquing every fitting correctly to the specifications. Meanwhile, the mechanics were able to reference the specifications they needed to adhere to via Google Glass, without having to get up and check a reference manual.” As a result, the company has reduced errors, a potential savings of millions of dollars for the company and its customers. Team efficiency rose 8-12%, and mechanics reported that they liked working with the glasses. Read more \nFacebook acquires AR company that can remove objects from live video —German company Fayteq builds software add-ons for video editing that can remove or add whole objects captured on video. Facebook has acquired the company in order to add its technology to its live-streaming platforms. Facebook already has an AR feature in its camera. Read more Case Studies \nTeen Vogue’s political newsletter takes off thanks to Instagram Stories —“Woke Letter” is a weekly news-and-politics email newsletter from Teen Vogue that has been adding subscribers thanks to Instagram Stories, which it uses to encourage sign-ups. The Stories include images from the articles and enticing headlines, like “This 11-year-old trans military kid is standing up for her health care: Blue Girven is taking her story to Congress.” These posts have gotten more engagements than other lifestyle publishers, up 93% year-over-year with a high of more than 3.5 million engagements in June. Read more \nLuggage company crowdsources its Instagram feed —Direct-to-consumer luggage company Away has nearly 100,000 followers on Instagram thanks to crowdsourcing. Of 671 posts on its Instagram account, 600 were user-generated; they have reached 15 million users organically. Read more",
+      "highlightText": "",
+      "highlightTitle": "",
+      "language": "english",
+      "external_links": [],
+      "entities": {
+        "persons": [
+          {
+            "name": "snapcht",
+            "sentiment": "none"
+          },
+          {
+            "name": "donald trump",
+            "sentiment": "none"
+          },
+          {
+            "name": "obama",
+            "sentiment": "none"
+          },
+          {
+            "name": "mic",
+            "sentiment": "none"
+          },
+          {
+            "name": "josh bernoff",
+            "sentiment": "none"
+          },
+          {
+            "name": "warby parker",
+            "sentiment": "none"
+          },
+          {
+            "name": "trump",
+            "sentiment": "none"
+          },
+          {
+            "name": "snapchat",
+            "sentiment": "none"
+          },
+          {
+            "name": "jennifer lawrence",
+            "sentiment": "none"
+          },
+          {
+            "name": "barack obama",
+            "sentiment": "none"
+          },
+          {
+            "name": "tom",
+            "sentiment": "none"
+          },
+          {
+            "name": "denny",
+            "sentiment": "none"
+          },
+          {
+            "name": "jason",
+            "sentiment": "none"
+          },
+          {
+            "name": "shel holtz",
+            "sentiment": "none"
+          },
+          {
+            "name": "bill gates",
+            "sentiment": "none"
+          },
+          {
+            "name": "krispy creme",
+            "sentiment": "none"
+          },
+          {
+            "name": "bernoff",
+            "sentiment": "none"
+          },
+          {
+            "name": "mary",
+            "sentiment": "none"
+          },
+          {
+            "name": "stormer",
+            "sentiment": "none"
+          }
+        ],
+        "organizations": [
+          {
+            "name": "facebook",
+            "sentiment": "none"
+          },
+          {
+            "name": "godaddy",
+            "sentiment": "none"
+          },
+          {
+            "name": "google home",
+            "sentiment": "none"
+          },
+          {
+            "name": "google glass",
+            "sentiment": "none"
+          },
+          {
+            "name": "court",
+            "sentiment": "none"
+          },
+          {
+            "name": "instagram stories",
+            "sentiment": "none"
+          },
+          {
+            "name": "dunkin’ donuts",
+            "sentiment": "none"
+          },
+          {
+            "name": "electronic frontier foundation",
+            "sentiment": "none"
+          },
+          {
+            "name": "harvard medical school",
+            "sentiment": "none"
+          },
+          {
+            "name": "amazon spark",
+            "sentiment": "none"
+          },
+          {
+            "name": "southern poverty law center",
+            "sentiment": "none"
+          },
+          {
+            "name": "google sheets",
+            "sentiment": "none"
+          },
+          {
+            "name": "google",
+            "sentiment": "none"
+          },
+          {
+            "name": "malibu rum",
+            "sentiment": "none"
+          },
+          {
+            "name": "ucla",
+            "sentiment": "none"
+          },
+          {
+            "name": "asian development bank",
+            "sentiment": "none"
+          },
+          {
+            "name": "google docs",
+            "sentiment": "none"
+          },
+          {
+            "name": "duke reporters",
+            "sentiment": "none"
+          },
+          {
+            "name": "youtube",
+            "sentiment": "none"
+          },
+          {
+            "name": "linkedin",
+            "sentiment": "none"
+          },
+          {
+            "name": "instagram",
+            "sentiment": "none"
+          },
+          {
+            "name": "pew research center",
+            "sentiment": "none"
+          },
+          {
+            "name": "amazon",
+            "sentiment": "none"
+          },
+          {
+            "name": "whatsapp",
+            "sentiment": "none"
+          },
+          {
+            "name": "congress",
+            "sentiment": "none"
+          },
+          {
+            "name": "daily stormer",
+            "sentiment": "none"
+          },
+          {
+            "name": "justice department",
+            "sentiment": "none"
+          },
+          {
+            "name": "news  justice department",
+            "sentiment": "none"
+          },
+          {
+            "name": "eff",
+            "sentiment": "none"
+          },
+          {
+            "name": "forrester",
+            "sentiment": "none"
+          },
+          {
+            "name": "brigham young university",
+            "sentiment": "none"
+          },
+          {
+            "name": "audi",
+            "sentiment": "none"
+          },
+          {
+            "name": "facebook anon",
+            "sentiment": "none"
+          },
+          {
+            "name": "twitter",
+            "sentiment": "none"
+          },
+          {
+            "name": "reuters",
+            "sentiment": "none"
+          },
+          {
+            "name": "alexa skills",
+            "sentiment": "none"
+          },
+          {
+            "name": "vogue",
+            "sentiment": "none"
+          },
+          {
+            "name": "ge",
+            "sentiment": "none"
+          },
+          {
+            "name": "royal caribbean",
+            "sentiment": "none"
+          },
+          {
+            "name": "netflix",
+            "sentiment": "none"
+          },
+          {
+            "name": "fayteq",
+            "sentiment": "none"
+          },
+          {
+            "name": "paypal",
+            "sentiment": "none"
+          },
+          {
+            "name": "nazi",
+            "sentiment": "none"
+          },
+          {
+            "name": "kkk",
+            "sentiment": "none"
+          },
+          {
+            "name": "big stories  facebook",
+            "sentiment": "none"
+          },
+          {
+            "name": "teen vogue",
+            "sentiment": "none"
+          },
+          {
+            "name": "disney",
+            "sentiment": "none"
+          },
+          {
+            "name": "dreamhost",
+            "sentiment": "none"
+          },
+          {
+            "name": "google domains",
+            "sentiment": "none"
+          },
+          {
+            "name": "the financial times",
+            "sentiment": "none"
+          }
+        ],
+        "locations": [
+          {
+            "name": "charlottesville",
+            "sentiment": "none"
+          },
+          {
+            "name": "vogue",
+            "sentiment": "none"
+          },
+          {
+            "name": "u.s.",
+            "sentiment": "none"
+          },
+          {
+            "name": "reddit",
+            "sentiment": "none"
+          },
+          {
+            "name": "tanzania",
+            "sentiment": "none"
+          },
+          {
+            "name": "instagram",
+            "sentiment": "none"
+          },
+          {
+            "name": "manila",
+            "sentiment": "none"
+          },
+          {
+            "name": "airbnb",
+            "sentiment": "none"
+          },
+          {
+            "name": "spotify",
+            "sentiment": "none"
+          },
+          {
+            "name": "amazon",
+            "sentiment": "none"
+          },
+          {
+            "name": "snapfluence",
+            "sentiment": "none"
+          }
+        ]
+      },
+      "rating": null,
+      "crawled": "2017-08-19T00:11:32.000+03:00"
+    },
+    {
+      "thread": {
+        "uuid": "ae55176530a42c2b9064ce0ed70907d60a733995",
+        "url": "http://omgili.com/ri/3Ebkq4DFLEvWd6RpjSZzqOFqw.I992rAHNhgVouwpO38nzOocIck5UwmgCtgYgO8KE2x0qYr_L.YfAcbv_16ZzeCiGLpbKjaeQYb3Gj0tF.z63gQgNkDIg--",
+        "site_full": "onlinemarketingview.blogspot.com",
+        "site": "blogspot.com",
+        "site_section": "http://onlinemarketingview.blogspot.com/",
+        "site_categories": [],
+        "section_title": "Digital Business Mastery",
+        "title": "Top 5 Social Media Trends for 2017",
+        "title_full": "Top 5 Social Media Trends for 2017",
+        "published": "2017-08-28T22:52:00.000+03:00",
+        "replies_count": 0,
+        "participants_count": 1,
+        "site_type": "blogs",
+        "country": "US",
+        "spam_score": 0.0,
+        "main_image": null,
+        "performance_score": 0,
+        "domain_rank": null,
+        "social": {
+          "facebook": {
+            "likes": 0,
+            "comments": 0,
+            "shares": 0
+          },
+          "gplus": {
+            "shares": 0
+          },
+          "pinterest": {
+            "shares": 0
+          },
+          "linkedin": {
+            "shares": 0
+          },
+          "stumbledupon": {
+            "shares": 0
+          },
+          "vk": {
+            "shares": 0
+          }
+        }
+      },
+      "uuid": "ae55176530a42c2b9064ce0ed70907d60a733995",
+      "url": "http://omgili.com/ri/3Ebkq4DFLEvWd6RpjSZzqOFqw.I992rAHNhgVouwpO38nzOocIck5UwmgCtgYgO8KE2x0qYr_L.YfAcbv_16ZzeCiGLpbKjaeQYb3Gj0tF.z63gQgNkDIg--",
+      "ord_in_thread": 0,
+      "author": "S.Best (noreply@blogger.com)",
+      "published": "2017-08-28T22:52:00.000+03:00",
+      "title": "Top 5 Social Media Trends for 2017",
+      "text": "\nAre you armed and ready to take what you’ve learned from 2016 and totally rock your social media marketing goals this year? \nIf your answer isn’t a 100% yes… then keep reading.\nWe experienced many big changes in social media marketing over the past year from a drop in organic reach to virtual reality showing up on the scene. To keep you in the loop, we’ve rounded up 5 of the most important social media marketing trends you should know about. Read on to find out what they are, why they matter, and tips on them from industry experts.\n\n1. Trending Social Media Platforms First things first, what social media platforms should you be focusing on in 2017?  \nWe all know Facebook is the biggest player but how do the others stack up? By looking at these charts from DreamGrow , you’ll see that the top 4 websites are Facebook, YouTube, Instagram and then Twitter, while the leading apps are Messenger, WhatsApp, QQ Chat, and We Chat.\n\n\n\n\n\nPopularity certainly matters when choosing which platforms to engage with, but there are other factors at play such as the features offered and user demographics. We asked Jason Falls, Chief Instigator at the Conversation Research Institute , for some input on where to focus and he shared the following advice:\n“Facebook is becoming the core social ecosystem for most Americans and North Americans. It will continue to be so because it’s always stuck to its core strategy – to be a social utility. But I’d also pay attention to the growth and opportunities on Instagram and Snapchat. And don’t forget about good old trusty LinkedIn!” \nSo while making a presence on Facebook is “ price of entry” in the social media world, also consider how the other up-and-coming sites can work to your advantage. Social Media Strategist Eric Tung also made a great point when asked about where brands should be in 2017. He answered,\n“(The social media platforms you should be using in 2017) still depend on your target market. B2B enterprise software? Try LinkedIn rather than Snapchat. Restaurant? Maybe try something visual like Instagram. Not all platforms work for all brands, and companies need to realize that 1 buyer will always be better than 1000 qualified leads, and 1 qualified lead will always be better than 1000 unqualified leads.” \nVery true,   it’s important to identify your target audience and which platform they are using most. For a deeper look at the demographics of each social media platform, check out these reports from the Pew Research Center .\nOnce you know exactly where to focus your social media efforts, you should find a tool that helps you streamline posts and scheduling.\nWant to save time searching? Check out  SociHub , a brand new social media management tool that integrates with ALL of the top platforms. From content curation, to one-click-posts and built-in analytics, you’ll be on top of your social media game in no time!\nNow that you have insight on key platforms and the best social media tool for 2017, let’s take a closer look at trends in video.\n\n2. Video You probably saw this coming. All of our social media feeds are filled with video and it now consumes 1/3 of all online activity. In the coming year, it is only going to increase (as you can see in this infographic from Statista). Data traffic is steadily growing and video is a huge part of the reason why.\n\n\n\nHowever, video isn’t just popular. It also drives the results brands want including increasing click-through rates, conversions, brand awareness, engagement, and trust. There’s really no question whether or not we should be integrating video into marketing, the question is how.\nHere are a few types of videos really resonating with viewers right now.\n\n\n360-Video \n\nThe 360-video format showed up on the scene this year and is now available on Facebook and Twitter. It allows for the viewer to be more immersed in content and has shown to increase both video views and videos watched to completion. Consider the aspects of your business that you could showcase using this feature. Here are some ideas to get your wheels turning.\n\nLive Streaming Next up is live streaming. This year we saw live streaming platforms like Periscope and Meerkat gaining traction, while Facebook, YouTube, Instagram and Twitter all launched live streaming features. Facebook even paid media companies $50 million to produce live videos on their platform. This is sure to be a trend that continues into 2017 and these experts agree,\n“Users will watch streaming video 300% longer than recorded video. 2017 will be the year that brands recognize that streaming video offers them a connection with users without the production costs associated with scripting, storyboarding, filming, and editing. Although it may not be for every brand, we will see more streaming video use in 2017”- Eric T. Tung, Social Media Strategist\nIt’s a win-win! Brands can engage their audiences and cut on production costs. Jason Falls further expanded on the benefits, highlighting an important point on increasing visibility.\n“Video is going to be increasingly important as it not only stands out as signal in the sea of noise that is social content, but live video in particular is being prioritized by Facebook. So the more a brand invests in video and even the occasional live broadcast via Facebook, the more it can enhance its exposure and chances of getting its message heard.” – Jason Falls, Chief Instigator, Conversation Research Institute.\nSo if you want to engage your audience more effectively, save on production costs, and increase visibility on social media platforms, it’s time to put live video into your strategy. Research live videos from other brands for inspiration, brainstorm video ideas that will interest your audience, schedule them, and integrate live video into your content schedule.\n\nTemporary Content Last but not least of the video trends is temporary content. Snapchat and Instagram use this tactic to create a sense of urgency with their videos. The proof that it works is in Snapchat’s numbers. Their videos have increased by 400% in the past year and daily views grew from 2 billion to 10 billion. Now Instagram has adopted Snapchat’s feature with their highly engaged audience, and there is a huge opportunity for brands on both platforms. Jimmy Kim, CEO here at Snaptactix chimed in on this, pointing out how important these platforms will be for 2017.\n“Stories by both Snapchat and more importantly Instagram (will make the biggest impact on social media marketing in the coming year) – these quick 24- hour based 6 -10 second stories are going to take over the world. People want to know what we’re doing in our business or brand – and it’s important to keep the doors open and share those events with the world.” \nIf your audience is on Instagram or Snapchat, integrate temporary videos into your posts this year. You can use stories or snaps to make announcements, offer promotions, reveal new products, give behind-the-scenes looks, or any other creative ideas you come up with. Here’s some inspiration .\nWith 360 video, live streaming, and temporary content, you have the big video trends for the year. Next, we’ll get into another developing technology, A.I.!\n\n3. Artificial Intelligence A.I. made a big appearance on social media this year with the release of bots for Facebook Messenger . These bots perform functions within Messenger that can help to improve the user experience, and just 2 months after launching, Facebook VP of messaging products reported 11,000 bots have been added!\nWhat is the purpose of these bots? As Bianca Illion from Brandwatch said,\n“A number of platforms are introducing integrated bots to assist with shopping, booking and customer service. As consumers become more accustomed to talking to bots, the use of artificial intelligence will increase, allowing brands to optimize their customer service experience.”  \nThese have the potential to be used by brands to manage their social media presence, respond to comments, build networks, find shareable content, handle customer service issues, and even sell.\nIs 2017 the year for your company to invest in AI or something like Facebook’s chatbots? For an expert’s take, Jason Falls put it well when he said,\n“Chatbots are going to help revolutionize help desk and customer service functionality. They can even be used as a front-line sales function. The smarter the system or bot, the more effective they’ll be and with machine learning, that means they’ll be more and more useful. But we can’t automate everything and brands need to be cognizant of the fact that completely removing human interaction from the customer experience will backfire. Bots are cool, but only to an extent. Finding that drop off point for your brand will be a critical line to draw in 2017.” \nIn summary, be open to the technology, experiment with how you can use it, but don’t leave your customers without the human interaction they need. Learn more about bots and how brands can use them here .\nAlong with A.I., virtual reality made some huge waves this year which brings us to trend 4.\n\n4. Virtual Reality What an exciting year it was for VR and AR too! We saw augmented reality’s potential in Pokemon GO and we now have 360 video which can be watched through the Oculus VR headset. Note that Facebook acquired Oculus back in 2014, and Mark Zuckerberg said of the technology,\n“This is really a new communication platform. By feeling truly present, you can share unbounded spaces and experiences with the people in your life. Imagine sharing not just moments with your friends online, but entire experiences and adventures.” \nThis year, Zuckerburg finally revealed his plans at the Oculus Connect Conference for how Facebook is going to make VR social.\nBrands will have the opportunity to create branded experiences for customers with the social hangout spot being created. The goal is to allow people to create digital versions of themselves so they can interact with others from anywhere in the world. When in a VR live chat, participants will have avatars which can show different emotions and gestures. The location of the virtual chat can be changed to an environment like an office, a home, or even underwater. They also showed different interactions that are possible like playing cards or chess, fencing, watching videos, listening to music, and being able to draw and play with creations. Brands could potentially host virtual events, how-to tutorials, contests, and more. Oculus social product team leader said,\n“This is the first time tech has made this level of social presence possible.” \nIt is still early in the push toward VR on social media, but the possibilities for brands to interact are mind boggling. While many will not be ready to get involved right away, it will be wise to keep an eye on the developing trend and brainstorm the virtual reality experiences you could create for your audience in the future. With Facebook owning Oculus, it’s really only a matter of time.\nNow for our last trend, we are going to switch gears and talk about what happened to organic reach on Facebook over the past year.\nSpoiler alert: It wasn’t good!\n\n5. Challenges with Organic Reach 2016 was the year we saw organic reach plummet. Facebook has used an algorithm for years to decide which content users are most likely to want to see in their news feeds. This year, we saw Twitter and Instagram both adopt algorithms as well. While this can be helpful in growing a community of people which can be marketed to, it can also make it harder to actually reach them.\n\n\n\nFacebook openly admits their organic reach is dropping significantly ( SocialFlow reports a 42% drop this year!). The platform claims it is due to both an increase in the amount of content being posted and the change to the algorithm which prioritizes posts from friends and family members in news feeds. Now organic reach for a Facebook page post has been reported to average around as low as 2% . Ouch!\nAs a marketer, there are two things you can do to reach your audience as Facebook and other platforms reduce your organic reach.\n\nUse Paid Advertising to Increase Your Reach Each of the platforms has their own paid advertising set-up which you can utilize to expand your reach. Facebook is by far the most utilized, followed by LinkedIn,  Twitter, YouTube, Pinterest, then Instagram.\nHere’s a look at the ROI of the different platforms according to eMarketer .\n\n\n\nFacebook again offers the largest returns, followed by Twitter, Instagram, and then LinkedIn. So by creating engaging content and paying, you can still reach your audience and get significant returns back.\n\nCreate Really Awesome Content that Users Engage With As for creating high-quality content, there are a few tricks to the trade. Of course, it is about knowing your audience and delivering what they want to see. Jimmy here at Snaptactix says “ t he key is in staying relevant, keeping consistent, and providing value.” While Jason Falls from the Conversation Research Institute answers “ T he best way to stand out is to have what I call “Holy Smokes” content. You have to create content that is relevant to your audience and makes them say, “Holy Smokes! That’s (insert adjective here)!” The more you create that emotional connection with your content, the more your content will emerge as signal.” \nHere are a few tips to keep in mind\n\nGIFs are also popular with Tumblr seeing 23 million  posted everyday, and Facebook seeing 5 million. Use Viffy to make your own and catch your viewers eye. Use Emojis-these little images make a BIG difference in social media engagement. Scientists even found that when we see them our brains are activated in the same way as when we see a real face ! How does this impact marketing efforts? Emojis increase likes on Facebook posts by 57% , Facebook comments and shares by 33%, and engagement on Twitter by 25% ! Track  what customers like and engage with and give them more. Use storytelling to engage your customers logically and emotionally. This engages attention, makes your content more memorable, and drives more action. For a look into social media marketing campaigns that killed it last year, check out these examples .\nAnd there you have 5 of the most important trends for 2017!\n\nPrepare for Social Media Success in 2017 Now you are “ in the know”  with the top trends that are affecting social media marketing right now. Use these insights to help you plan an effective strategy for the coming year and to use social media to it’s fullest marketing potential.\nA few key takeaways to keep in mind as we wrap up:\n\nVideo is going to continue to be hugely impactful. Integrate authentic videos that show who your company is behind-the-scenes using live streaming video and temporary posting options. Plan how you can incorporate new technology innovations into your social media strategy including 360 video, virtual reality, and bots. Include paid social media marketing in your strategy using a tool like SociHub  to integrate with the platforms that remost relevant and profitable to your brand. Focus on creating stand out content amongst the social media noise. That’s all folks for this post on social media! Thank you to the social media experts who shared their insights. Furthermore, best of luck to you marketers with your strategy in 2017. \nDo you have any questions or comments? Let us know in the section below. \n\nSource ",
+      "highlightText": "",
+      "highlightTitle": "",
+      "language": "english",
+      "external_links": [],
+      "entities": {
+        "persons": [
+          {
+            "name": "jason falls",
+            "sentiment": "none"
+          },
+          {
+            "name": "eric tung",
+            "sentiment": "none"
+          },
+          {
+            "name": "meerkat",
+            "sentiment": "none"
+          },
+          {
+            "name": "mark zuckerberg",
+            "sentiment": "none"
+          },
+          {
+            "name": "– jason falls",
+            "sentiment": "none"
+          },
+          {
+            "name": "jimmy kim",
+            "sentiment": "none"
+          },
+          {
+            "name": "viffy",
+            "sentiment": "none"
+          },
+          {
+            "name": "bianca illion",
+            "sentiment": "none"
+          },
+          {
+            "name": "eric t. tung",
+            "sentiment": "none"
+          },
+          {
+            "name": "zuckerburg",
+            "sentiment": "none"
+          },
+          {
+            "name": "jimmy",
+            "sentiment": "none"
+          },
+          {
+            "name": "brandwatch",
+            "sentiment": "none"
+          }
+        ],
+        "organizations": [
+          {
+            "name": "social media trends",
+            "sentiment": "none"
+          },
+          {
+            "name": "socihub",
+            "sentiment": "none"
+          },
+          {
+            "name": "facebook vp",
+            "sentiment": "none"
+          },
+          {
+            "name": "instagram",
+            "sentiment": "none"
+          },
+          {
+            "name": "conversation research institute",
+            "sentiment": "none"
+          },
+          {
+            "name": "pew research center",
+            "sentiment": "none"
+          },
+          {
+            "name": "twitter",
+            "sentiment": "none"
+          },
+          {
+            "name": "facebook",
+            "sentiment": "none"
+          },
+          {
+            "name": "facebook and twitter",
+            "sentiment": "none"
+          },
+          {
+            "name": "trending social media platforms first",
+            "sentiment": "none"
+          },
+          {
+            "name": "youtube",
+            "sentiment": "none"
+          },
+          {
+            "name": "facebook messenger",
+            "sentiment": "none"
+          }
+        ],
+        "locations": [
+          {
+            "name": "statista",
+            "sentiment": "none"
+          },
+          {
+            "name": "periscope",
+            "sentiment": "none"
+          },
+          {
+            "name": "pinterest",
+            "sentiment": "none"
+          },
+          {
+            "name": "snaptactix",
+            "sentiment": "none"
+          },
+          {
+            "name": "facebook",
+            "sentiment": "none"
+          },
+          {
+            "name": "snapchat",
+            "sentiment": "none"
+          }
+        ]
+      },
+      "rating": null,
+      "crawled": "2017-08-28T22:53:07.006+03:00"
+    }
+  ],
+  "totalResults": 3,
+  "moreResultsAvailable": 0,
+  "next": "/filterWebContent?token=26846782-6631-4ad6-a875-8af0399e89e6&format=json&ts=1502551067068&q=%22machine+learning%22+%28social.linkedin.shares+%3C%3D+10+AND+social.facebook.likes+%3C%3D+100%29+language%3Aenglish&sort=relevancy&from=100",
+  "requestsLeft": 995
+}
