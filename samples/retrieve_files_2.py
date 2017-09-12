@@ -111,23 +111,16 @@ if __name__ == "__main__":
 
         return km, clusters, vocab_frame, terms, dist
 
-    def save_stuff(km):
 
-
-        joblib.dump(km,  'doc_cluster.pkl')
 
 
     titles, texts = load_stuff(args.fileName)
-    if os.path.isfile('doc_cluster.pkl'):
-        km = joblib.load('doc_cluster.pkl')
-        km, clusters, vocab_frame, terms, dist = retr_model(titles,texts)
-        clusters = km.labels_.tolist()
-        df_texts= {'title': titles, 'texts': texts, 'cluster': clusters }
-        oframe = pd.DataFrame(df_texts, columns=['cluster','title', 'texts']).reset_index()
-        oframe[['cluster','title']].to_csv('clusters_g.csv')
-        frame = oframe.groupby('cluster').count().reset_index()
-    else:
-        save_stuff(titles, texts)
+    km, clusters, vocab_frame, terms, dist = retr_model(titles,texts)
+    clusters = km.labels_.tolist()
+    df_texts= {'title': titles, 'texts': texts, 'cluster': clusters }
+    oframe = pd.DataFrame(df_texts, columns=['cluster','title', 'texts']).reset_index()
+    oframe[['cluster','title']].to_csv('clusters_g.csv')
+    frame = oframe.groupby('cluster').count().reset_index()
 
 
     print("Top terms per cluster:")
@@ -217,22 +210,3 @@ if __name__ == "__main__":
         ax.text(df.ix[i]['x'], df.ix[i]['y'], df.ix[i]['title'], size=8)
 
     plt.show()  # show the plot
-
-    from scipy.cluster.hierarchy import ward, dendrogram
-
-    linkage_matrix = ward(dist)  # define the linkage_matrix using ward clustering pre-computed distances
-
-    fig, ax = plt.subplots(figsize=(15, 20))  # set size
-    ax = dendrogram(linkage_matrix, orientation="right", labels=titles);
-
-    plt.tick_params( \
-        axis='x',  # changes apply to the x-axis
-        which='both',  # both major and minor ticks are affected
-        bottom='off',  # ticks along the bottom edge are off
-        top='off',  # ticks along the top edge are off
-        labelbottom='off')
-
-    plt.tight_layout()  # show plot with tight layout
-
-    # uncomment below to save figure
-    plt.savefig('ward_clusters.png', dpi=200)  # save figure as ward_clusters
