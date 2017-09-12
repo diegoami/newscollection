@@ -12,6 +12,8 @@ from sklearn import feature_extraction
 from sklearn.externals import joblib
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 if __name__ == "__main__":
 
@@ -57,6 +59,9 @@ if __name__ == "__main__":
         articles, titles, texts = [], [], []
         with open(fileName) as f:
             jsload = json.load(f)
+            posts = jsload
+            if "posts" in jsload:
+                posts = jsload["posts"]
             for post in jsload["posts"]:
                 title = post["title"]
                 text = post["text"]
@@ -106,16 +111,17 @@ if __name__ == "__main__":
     # convert the dictionary to a bag of words corpus for reference
     corpus = [dictionary.doc2bow(text) for text in texts]
 
-    lda = models.LdaModel(corpus, num_topics=5,
+    lda = models.LdaModel(corpus, num_topics=10,
                           id2word=dictionary,
-                          update_every=5,
+                          update_every=10,
                           chunksize=10000,
-                          passes=5)
+                          passes=60)
 
     lda.show_topics()
 
     topics_matrix = lda.show_topics(formatted=False, num_words=20)
     print(topics_matrix)
+
 """
     topic_words = topics_matrix[:, :, 1]
     for i in topic_words:

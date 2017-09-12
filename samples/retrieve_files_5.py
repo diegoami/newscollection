@@ -59,6 +59,9 @@ if __name__ == "__main__":
         articles, titles, texts = [], [], []
         with open(fileName) as f:
             jsload = json.load(f)
+            posts = jsload
+            if "posts" in jsload:
+                posts = jsload["posts"]
             for post in jsload["posts"]:
                 title = post["title"]
                 text = post["text"]
