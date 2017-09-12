@@ -1,101 +1,479 @@
 ,cluster,title
-0,9,Machine learning tackles quantum error correction
-1,3,Machine Learning for Humans: A Beginner's Guide to AI/ML
-2,6,DeepL schools other online translators with clever machine learning
-3,9,Mathematics of Machine Learning
-4,4,MIT researchers use machine learning to kill video buffering
-5,0,Microsoft built a hardware platform for real-time AI
-6,2,John Deere is Paying $305 Million for Blue River Technology
-7,3,IBM and MIT Bet That Materials and Quantum Advances Will Supercharge AI - MIT Technology Review
-8,1,Machines Learn a Biased View of Women
-9,2,24 technology companies losing top talent at an 'alarming rate' | Gadgets Now
-10,4,Google releases millions of bad drawings for you (and your AI) to paw through
-11,9,How Machine Learning Advances Will Improve the Fairness of Algorithms | HuffPost
-12,1,Machines Learn a Biased View of Women | WIRED
-13,2,Amazon Has Developed an AI Fashion Designer - MIT Technology Review
-14,6,Google and ProPublica team up to build a national hate crime database
-15,4,"Microsoft unveils Brainwave, a system for running super-fast AI"
-16,3,"A Survey of 3,000 Executives Reveals How Businesses Succeed with AI"
-17,3,"IBM and MIT to pursue joint research in artificial intelligence, establish new MIT–IBM Watson AI Lab"
-18,5,Possibility of hosting Amazon North American headquarters has Edmonton mayor excited
-19,3,"Racist & sexist AI bots could deny you job, insurance & loans – tech experts"
-20,4,Apple Wins Top Computer Vision & Pattern Recognition Award for First AI Research Paper
-21,3,MIT and IBM establish joint AI research lab
-22,6,Google Doubles Down on Purging Conservative Speech
-23,9,Uber's ML Platform – Michelangelo
-24,2,"Google acquires AIMatter, maker of the Fabby computer vision app"
-25,6,"ProPublica, Working with Google to 'Document Hate,' Threatens Conservative Bloggers | Lifestyle"
-26,7,Google removes 300 Android apps for secretly hijacking phones for DDoS attacks - The Verge
-27,2,"Gartner's Hype Cycle for Emerging Technologies, 2017 Adds 5G And Deep Learning For First Time"
-28,8,Facebook says 'likely' Russian operation spent money on ads with divisive political messages
-29,1,"Scanning The Future, Radiologists See Their Jobs At Risk : All Tech Considered : NPR"
-30,3,"For Superpowers, Artificial Intelligence Fuels New Global Arms Race | WIRED"
-31,9,What are algorithms?
-32,2,Meltwater bolsters its machine learning portfolio with Cosmify acquisition
-33,8,"Facebook gave special counsel Robert Mueller data on Russian ads, report says"
-34,9,AI Will Soon Identify Protesters With Their Faces Partly Concealed
-35,8,Facebook fake news
-36,4,Apple iPhone event set for September 12th
-37,4,Salesforce is using AI to democratize SQL so anyone can query databases in natural language
-38,2,Here's a Retail Job That's Still in High Demand: Data Scientist
-39,8,Facebook says 'likely' Russian operation spent money on ads with divisive political messages
-40,1,Shutterstock has reverse engineered Google's watermark-removal app
-41,6,"Google Launches Hate Crime Tracking Tool, Omits Conservative Websites"
-42,1,Why John Deere Just Spent $305 Million on a Lettuce-Farming Robot | WIRED
-43,3,AI is so hot right now researchers are posing for Yves Saint Laurent - The Verge
-44,0,The top 16 US startups to launch so far in 2017
-45,2,"We need to nationalise Google, Facebook and Amazon. Here’s why | Nick Srnicek"
-46,4,Researchers produce images of people’s faces from their genomes
-47,4,This Pen Can Diagnose Cancer in 10 Seconds
-48,8,Facebook uncovers $100G in fake ad spending tied to Russian operatives during 2016 election | Fox News
-49,3,"IBM and MIT pen 10-year, $240M AI research partnership | TechCrunch"
-50,5,"For IT Professionals, Top Institute Launches 6 Courses In New Techs"
-51,8,"Facebook to open new office in Kendall Square, adding hundreds of jobs - The Boston Globe"
-52,8,"Facebook to open new office in Kendall Square, adding hundreds of jobs"
-53,4,Uber's self-driving cars hit Toronto streets today — in manual mode
-54,4,AI that can determine a person’s sexuality from photos shows the dark side of the data age | TechCrunch
-55,3,Google Builds China Workforce to Develop Artificial Intelligence
-56,6,Google adds voice search in Indian languages: Here’s how it will work
-57,1,AI Programs Are Learning to Exclude Some African-American Voices
-58,7,WireX DDoS Botnet: An Army of Thousands of Hacked Android SmartPhones
-59,5,Infosys: Vishal Sikka resigns as MD & CEO of Infosys; stock cracks
-60,0,Asus has a motherboard that supports up to 19 GPUs
-61,9,Advanced Computer Models Suggest Most Global Warming Is From Natural Forces
-62,3,Stop pretending you really know what AI is and read this instead
-63,3,The Digital Banking Executive Securing Your Money With Blockchain - Bloomberg
-64,3,OpenAI bot remains undefeated against world’s greatest Dota 2 players | TechCrunch
-65,0,Elon Musk heralds the future of AI as a Dota 2 bot beats a human champ
-66,4,YOUTUBE launches new censorship scheme...
-67,6,Google's New Street View Cameras Will Help Algorithms Index The Real World | WIRED
-68,4,A Frightening AI Can Determine Whether a Person Is Gay With 91 Percent Accuracy
-69,6,Google has updated its Street View cameras for the first time in eight years - The Verge
-70,4,LGBT groups denounce 'dangerous' AI that uses your face to guess sexuality | World news | The Guardian
-71,0,'Did you get it all?' Experimental 'pen' could help surgeons detect remaining cancer instantly
-72,0,"Local team finds speedy test for malaria, Singapore"
-73,8,Say goodbye to video clickbait on Facebook
-74,4,Economic View: Evidence of a Toxic Environment for Women in Economics
-75,3,Elon Musk Claims Smart Robots Worse Threat than North Korea
-76,0,"People Are So Desperate For New Game of Thrones, an AI Just Wrote The Next Book For Us"
-77,7,13 everyone is going to love about iOS 11 |
-78,5,3The days of a Whole Paychecka are over. Herea s how the Amazon-Whole Foods deal affects you.
-79,3,Russia Sees Artificial Intelligence as Key to World Domination
-80,5,YouTube Removes Videos Showing Atrocities in Syria
-81,4,AI uses bitcoin trail to find and help sex-trafficking victims
-82,0,'Did you get it all?' Experimental 'pen' could help surgeons detect remaining cancer instantly
-83,7,13 things everyone is going to love about iOS 11 (AAPL)
-84,3,Superbrains getting closer? Musk ‘lines up $100m’ to fund Neuralink brain-computer interface
-85,4,"This shuttle bus will serve people with vision, hearing, and physical impairments—and drive itself"
-86,8,Anti-fake news startup Factmata has raised seed funding from Mark Cuban and others - Business Insider
-87,6,Google buys startup that turns smartphones into health diagnostic tools
-88,2,GraphPath’s “Knowledge Graph as a Service” could insert AI into global corporates
-89,5,‘Brains linked to computers will kill our inner freedom’ - Zizek to RT on biohacking & identity loss
-90,6,Android Wear 2.0 updates and latest news
-91,2,Three Indians make it to MIT TR Innovators Under 35 list - Livemint
-92,7,13 things everyone is going to love about iOS 11
-93,2,LiftIgniter raises $6.4M to bring website personalization to the rest of the Internet
-94,4,Trump’s first list of science priorities ignores climate—and departs from his own budget request
-95,8,"Facebook Wins, Democracy Loses - The New York Times"
-96,9,"Delingpole: Global Warming Is Almost Entirely Natural, Study Confirms"
-97,9,Climate change is NATURAL: Scientist blows global warming debate WIDE OPEN
-98,3,China Is Using America’s Own Plan to Dominate the Future of Artificial Intelligence | Foreign Policy
-99,4,What machines can tell from your face
+0,9,Dropbox Paper gets document previews and some other small updates
+1,9,Amazon and Microsoft agree their voice assistants will talk (to each other)
+2,0,Apple and Accenture teaming up to help enterprises build advanced mobility tools
+3,8,Tests put Galaxy Note 8 at the top of the smartphone display heap
+4,5,Where does Blue Apron go after Amazon wraps up its Whole Foods deal?
+5,8,Essential Phone begins shipping to customers
+6,4,"Majority of U.S. consumers still download zero apps per month, says comScore"
+7,4,"Wattpad moves into video with personal storytelling app, Raccoon"
+8,4,Polygram detects facial reactions to shared photos
+9,6,"In iOS 11, Safari will strip out Google AMP links for shared stories"
+10,1,English teaching service VIPKID raises $200M and reportedly hits a $1.5B valuation
+11,3,"New wearable tracker can transmit vital signs from a soft, tiny package"
+12,6,"So, when will your device actually get Android Oreo?"
+13,6,Android Oreo vs iOS 11: What’s different and what’s the same?
+14,8,Sony’s RX0 is a tiny camera with big ideas
+15,8,Apple sets iPhone event for September 12 at new Steve Jobs theater
+16,8,Marshall introduces its own Wi-Fi multi-room speaker system
+17,8,SanDisk’s 400GB microSD card is an Android phone’s best friend
+18,8,Bang & Olufsen and Sony launch AirPod rivals
+19,8,"You can now pre-order a brand new, working Street Fighter II SNES cartridge"
+20,7,"Ricoh’s new Theta V 360 camera offers 4K, spatial audio and more"
+21,4,Garmin debuts three new wearables and a mobile payment solution
+22,4,"Logitech’s latest keyboard, The Craft, adds a smart knob called The Crown"
+23,4,Libratone update will add Amazon Alexa voice control to its speakers
+24,9,Pium’s smart diffuser wants to design a new user experience for your nose
+25,0,Andy Rubin describes the taste of crow after Essential spills customer data
+26,9,This vacuum-activated modular robot is equally nasty and neat
+27,6,"Google Assistant coming soon to more speakers, appliances and other devices"
+28,4,"Apple to remove home button in upcoming high-end iPhone, report says"
+29,9,Go big and go analog with the Lomo’Instant Square camera
+30,9,"And the Emmy goes to… Apple, DJI, Microsoft and Comcast (?! 💁)"
+31,4,Google’s App Engine gets a firewall
+32,1,Cubic Telecom gets $46.5M to connect cars and other devices globally
+33,3,Lumity raises $19M to simplify employee health care choices
+34,9,Forward Networks nets $16M to help prevent network outages
+35,0,Microsoft Brainwave aims to accelerate deep learning with FPGAs
+36,5,Salesforce slides past its $10B annual run rate target
+37,8,Google launches Chrome Enterprise subscription service for Chrome OS
+38,5,Snap is in talks to buy Chinese selfie drone maker Zero Zero Robotics for $150M-$200M
+39,4,Here’s Tim Cook’s explanation on why some VPN apps were pulled in China
+40,5,Apple continues to struggle in China as revenue drops 10%
+41,5,Chat app Line is launching a taxi-booking service to rival Uber in Thailand
+42,8,Here’s an early look at the Samsung Galaxy Note 8
+43,1,"China’s Didi invests in Taxify, an Uber rival operating in Europe and Africa"
+44,9,"Singapore, like the US, says it may regulate some ICOs"
+45,5,Flipkart’s on-off-on-off-on-off deal to acquire Snapdeal is now officially dead
+46,1,SAIF Partners closes new $350M fund for India’s resurgent tech startup scene
+47,0,Meet the eight startups joining MetaProp NYC’s real estate accelerator
+48,1,Ryan Hoover’s $3M Angel Fund is going by the name Weekend Fund
+49,4,FitGenie is applying AI to automate nutrition planning
+50,9,"Tinder Gold, which lets you see who has liked you, launches today in U.S."
+51,9,Cannabis website Herb raises $4.1M
+52,0,Michael Jordan funds mercenary dev hub Gigster’s $20M enterprise pivot
+53,0,BunkerEx is an online marketplace for shipping companies that need to buy fuel
+54,0,Bunch wants to be ‘Google Analytics for company culture’
+55,0,Western Digital acquires cloud services company Upthere
+56,2,"Mark Zuckerberg and Priscilla Chan welcome their second daughter, August, into the world"
+57,4,Leela Kids opens up the world of podcasts to children
+58,0,Skidos offers an SDK to turn mobile games into ‘learning apps’
+59,9,"Ofo comes to the US, joining the bike-share fray in Seattle"
+60,4,Apple could guide you around your city using augmented reality
+61,9,Pinterest users can now pinch-to-zoom on photos in the app
+62,2,45 million people send birthday wishes on Facebook each day
+63,2,Facebook and Instagram get redesigns for readability
+64,2,Facebook adds eBay’s Daily Deals to its Marketplace on mobile
+65,2,"Facebook boosts snubbed Stories Camera with Live, GIF & text sharing"
+66,3,OneSignal raises $7M for its free push notification tools
+67,4,GoDaddy launches SmartLine to give businesses a second mobile phone number
+68,4,Snapchat “Crowd Surf” stitches together everyone’s concert videos
+69,2,"Facebook is rolling out a Trending News section on mobile, now with its own link"
+70,0,TechCrunch Disrupt SF 2017 will feature some of tech’s wildest success stories
+71,6,"Google’s voice typing tech adds support for 30 more languages, reaching further into Africa, India"
+72,5,"Snap sold fewer than 42K Spectacles, down 35% in Q2"
+73,5,Snap founders won’t sell shares despite plummeting price
+74,1,SoundCloud faces do-or-die vote by investors
+75,5,Blue Apron is having a really bad day
+76,4,Snapchat now lets you Pikachu yourself
+77,5,Another record low for Snap after 14% drop post-earnings
+78,1,SoundCloud saved by emergency funding as CEO steps aside
+79,7,Discord steals gamers from Skype with video chat and screensharing
+80,2,Facebook launches Watch tab of original video shows
+81,2,Facebook bans ‘cloaking’ of spam sites that fool filters
+82,9,This app quickly mutes 100 crowdsourced topics from your Twitter timeline
+83,2,Facebook says it’s removing accidental clicks from its ad network
+84,4,"Swarm kills the clutter, focuses on logging location"
+85,2,Facebook shuts down its Snapchat competitor Lifestage and its standalone Groups app
+86,0,"MojiLaLa, the sticker marketplace, lands $1.5M seed round from Great Oaks, betaworks"
+87,4,Lonely Planet launches an Instagram-like Trips app
+88,5,"N26 now has 500,000 customers for its bank of the future"
+89,4,Prisma shifts focus to b2b with an API for AI-powered mobile effects
+90,9,Coup launches new electric scooter service in Paris and faces off with Cityscoot
+91,0,"Codacy, a platform that helps developers check the quality of their code, raises $5.1M"
+92,7,Android newbie HMD’s Nokia 8 flagship lets you livestream ‘frontbacks’
+93,3,Digi.me and Personal merge to put you in control of the nascent ‘personal data ecosystem’
+94,9,"Wave hello to Kano’s latest learn-to-code tool, a gesture controller"
+95,4,London fintech Tail is a cashback platform built on the promise of Open Banking
+96,0,"Moneytis is like a travel fare aggregator, but for sending money abroad"
+97,4,Popular writing app Ulysses switches to subscription model
+98,9,LaterPay brings its media payment technology to the US
+99,0,Glint is a stealthy London fintech startup that promises to turn gold into a ‘new global currency’
+100,0,"After heavy restructuring, London on-demand delivery app Jinn claims to be ‘profitable’"
+101,0,"Railsbank, a new fintech startup from founder of Currencycloud, raises $1.2M led by Firestartr"
+102,1,SoftBank CEO Masayoshi Son says he wants to invest in either Uber or Lyft
+103,1,"In its push to compete in Southeast Asia, WeWork is pouring a (brand-new!) $500 million into the region"
+104,9,Uber knowingly leased recalled vehicles to its drivers in Singapore
+105,5,Report: Xiaomi is world’s top wearable maker for first time as Fitbit sales slide
+106,1,Hong Kong’s Gobee raises $9M to take on China’s bike-sharing unicorns worldwide
+107,1,Sequoia Asia venture partner Yinglan Tan has left to start his own VC firm
+108,8,LG confirms its next smartphone will feature a massive six-inch OLED screen
+109,1,Asian live-streaming service M17 raises $40M for expansion
+110,5,"Paytm, India’s top digital payment firm, plans to rival WhatsApp with messaging and games"
+111,6,Google’s next Pixel smartphone rumored for October 5 debut
+112,8,Putting the voice assistant speaker craze in context
+113,8,"Global wearables market to grow 17% in 2017, 310M devices sold, $30.5BN revenue: Gartner"
+114,8,Apple could announce the next iPhone on September 12
+115,9,Astropad’s Luna Display is the portable display solution you’ve always wanted
+116,8,Nintendo’s SNES Classic Mini will let you rewind games to tackle tricky spots
+117,9,"Pepper the robot can perform funerary rites, but it shouldn’t"
+118,9,"MIT’s Robogami lets you build custom 3D-printable robots from standard, folding parts"
+119,9,Nintendo adds PayPal support to the Nintendo Switch
+120,7,Verizon throttles video for good with its not-so-unlimited plan
+121,3,New drone perches on walls like a robotic bird
+122,9,These solar glass blocks would make great skylights for your solar roof
+123,9,This 3D-printed robotic arm is built for sign language
+124,6,Google Home now works with Spotify free accounts
+125,7,A defense company put a machine gun on a drone
+126,0,LogMeIn acquires chatbot and AI startup Nanorep for up to $50M
+127,2,Facebook buys Ozlo to boost its conversational AI efforts
+128,3,Gas pump card skimmer now phones home
+129,5,It looks like Amazon would be losing a lot of money if not for AWS
+130,5,Intel beats earnings expectations as it manages to maintain growth in its Data Center Group
+131,7,Peer5 raises $2.5M for its peer-to-peer approach to streaming video
+132,5,Mitel to buy ShoreTel for $430 million to create unified communications powerhouse
+133,0,Salesforce claims you can set up customer service in Service Cloud update in less than a day
+134,5,Slack is raising a $250 million round at $5 billion valuation
+135,0,Microsoft’s new Azure Container Instances make using containers fast and easy
+136,5,OpenText acquires forensic security vendor Guidance Software for $240 million
+137,1,Sage Group buys Intacct accounting software for $850M
+138,0,HubSpot acquires Kemvi to bring more AI into its sales and marketing platform
+139,1,SimilarWeb raises $47M at valuation approaching $800M to take on Nielsen in digital market intel
+140,3,"Iguazio nabs $33M to bring big data edge analytics to IoT, finance and other enterprises"
+141,1,"BentoBox, the website builder for restauranteurs, cooks up $4.8M Series A"
+142,5,Microsoft earnings beat expectations thanks to strong cloud performance
+143,3,Google Cloud gets a new networking algorithm that boosts internet throughput
+144,9,Apple has an official Instagram account showcasing photos shot on iPhone
+145,4,Honeydue is a money management app for couples
+146,9,Seattle study puts down some common criticisms of Airbnb-style renting as regulations loom
+147,6,Google said to launch AMP-based Snapchat Discover-like feature
+148,2,"Facebook tests ‘going live’ from Facebook Camera, Live Stories like Instagram"
+149,2,Now it’s Snapchat copying Facebook’s ads Power Editor
+150,6,Google reportedly offered $30 billion to acquire Snapchat
+151,2,Facebook begins testing Stories on the desktop
+152,4,YC-backed Muzmatch definitely doesn’t want to be Tinder for Muslims
+153,7,YouTube starts delivering ‘breaking news’ on its homepage across platforms
+154,2,How Facebook prioritizes privacy when you die
+155,6,Google to livestream Android O launch event timed for total solar eclipse
+156,7,Instagram adds a new creative way to reply to a photo or story
+157,9,An iOS 11 feature could let you quickly disable TouchID and keep cops out
+158,7,Facebook downranks video clickbait and fake play buttons
+159,8,"Essential Phone now available to order, ships soon to pre-sale customers"
+160,0,"Ember just raised $13 million for its popular, temperature-controlled mugs"
+161,9,3D-printed space habitats earn $400K in prizes at NASA competition
+162,8,You can now play your music across multiple Echo devices
+163,8,Sonos sends out invites for smart speaker reveal on October 4
+164,3,Uber shows off its autonomous driving program’s snazzy visualization tools
+165,8,Internet providers could easily snoop on your smart home
+166,3,DJI launches bug bounty program for its software and drones
+167,7,The Insta360 One is a consumer 360 camera with tons of flexibility
+168,6,Sonos is testing a speaker with a mic and voice control
+169,9,BittBoy is a retro pocket console that does a lot for very little
+170,8,Petcube Bites is a capable canine companion for when you’re not home
+171,9,DARPA project aims to make modular computers out of ‘chiplets’
+172,8,Pioneer’s AVH-2330NEX gives you both Android Auto and CarPlay — without a new car price tag
+173,9,Uber debuts new Uber for Business with custom travel programs and rules
+174,0,Microsoft acquires Cycle Computing
+175,3,Amazon Macie helps businesses protect their sensitive data in the cloud
+176,0,The US Government must work with tech companies if it wants to remain competitive in AI
+177,9,Tetra raises a $1.5M seed round to bring deep learning to voice transcription
+178,9,Microsoft wants to make blockchain networks enterprise-ready with its new Coco Framework
+179,1,Amplitude raises another $30M for its product-focused analytics tools
+180,0,AWS just proved why standards drive technology platforms
+181,0,Red Hat updates OpenShift container platform with new service catalog
+182,0,"Tableau acquires ClearGraph, a startup that lets you analyze your data using natural language"
+183,7,BlueJeans Network names industry vet Quentin Gallivan as CEO
+184,9,Salesforce AI helps brands track images on social media
+185,9,IBM touts improved distributed training time for visual recognition models
+186,2,Facebook finishes its move to neural machine translation
+187,1,Small business loan platform Kabbage nabs $250M from Softbank
+188,9,"Redkix, an email-friendly team messaging platform, launches its public beta"
+189,9,"HP’s new Nvidia-powered backpack VR PC is designed for work, not play"
+190,0,Oracle delivers bevy of updates to its cloud suite
+191,0,ProoV scores $14 million Series B for proof of concept platform
+192,9,Latch adds HomeKit-approved smart lock to its enterprise suite
+193,1,Big data analytics platform Databricks raises $140M Series D round led by Andreessen Horowitz
+194,0,Skytap raises $45M for its enterprise cloud
+195,0,"IBM, Kroger, Walmart and others team up to improve food safety with blockchains"
+196,5,In-memory database provider Redis Labs raises $44M
+197,9,GoodTime nabs $2M to match job applicants with interviewers to save time and build rapport
+198,9,LiftIgniter raises $6.4M to bring website personalization to the rest of the internet
+199,9,CoreOS’s Tectonic container platform gets full support for Microsoft Azure
+200,0,"Microsoft launches Azure Event Grid, a fully managed event routing service"
+201,7,Snapchat likely to begin scripted original content push by end of year
+202,7,LinkedIn opens video uploads to all as part of a bigger video push
+203,2,"Teens favoring Snapchat and Instagram over Facebook, says eMarketer"
+204,6,Alt-social network Gab booted from Google Play Store for hate speech
+205,4,Skype’s much-debated redesign hits the desktop
+206,9,Run to the rock
+207,9,The most-liked tweet in history says a lot about how the world is doing
+208,7,Veo uses AI to let amateur soccer clubs video matches without the need for a camera operator
+209,0,Europe’s VR landscape continues to grow rapidly despite market slowdown
+210,6,DeepL schools other online translators with clever machine learning
+211,9,"Meltwater acquires Algo, an AI-based news and data tracker"
+212,3,Jaguar Land Rover is backing DOVU to bring the Blockchain to the mobile future
+213,0,Sherpa secures $2.3M to build AI-driven insurance platform tailored to individuals
+214,0,Flytrex launches an autonomous on-demand drone delivery service in Iceland’s capital
+215,6,Google Maps suggests BlaBlaCar for long-distance rides
+216,4,Berlin-based Home is an app to help landlords manage properties and improve the rental experience
+217,1,UK’s Prodigy Finance raises $240M to crowdfund students from emerging markets
+218,4,Acasa is building a platform for ‘Generation Rent’ to manage their homes
+219,9,Online hate crime to be treated the same as face-to-face crime in the UK
+220,3,Soundcharts is an analytics tools for music artists and labels
+221,4,"Starling Bank launches Marketplace, integrates with itemised receipt and rewards startup Flux"
+222,0,"As global startup exits grow, Europe sees its profile rise"
+223,1,"Company builder Entrepreneur First raises $12.4M led by Greylock, Reid Hoffman joins board"
+224,2,Facebook fined €1.2M for privacy violations in Spain
+225,0,"Typeform, a platform for ‘conversational’ data collection, raises $35M"
+226,4,Bankin lets you save money on Yomoni
+227,3,"Europe’s top court must rule on UK spies’ bulk powers, says tribunal"
+228,4,Linxo raises $24 million for its app that brings bank accounts together
+229,0,Taxify’s London launch halted after transport regulator mounts investigation
+230,3,Equifax breach disclosure would have failed Europe’s tough new rules
+231,4,Straight outta Siberia — inDriver raises $5M for its flat-rate ride-hailing app
+232,7,Streamroot raises $3.2 million for its peer-to-peer video delivery technology
+233,9,EU defense ministers take part in first cyber war game
+234,0,European ‘social eating platform’ VizEat acquires U.S.-based EatWith
+235,1,Blackmoon to ICO its blockchain-based platform for tokenized investment funds
+236,8,"Ahead of iPhone X day, Samsung teases 2018 foldable phone launch plan"
+237,1,Zilingo raises $18M for its fashion e-commerce service in Southeast Asia
+238,8,Xiaomi takes aim at Apple with a Macbook Pro rival priced from $858
+239,8,Xiaomi unveils second bezel-less Mi Mix smartphone and new Mi Note phablet
+240,5,Bitcoin price drops following report that China is going to shut down local exchanges
+241,0,Japanese startup plans one-stop ICO platform fueled by VC investment and an ICO
+242,1,China’s UrWork invests in Indonesia’s ReWork via $3M deal as WeWork rivalry heats up
+243,1,Budget hotel network pioneer OYO raises $250M led by SoftBank’s Vision Fund
+244,0,Chatbot startup founder sees Southeast Asia potential despite slow start worldwide
+245,1,Thailand’s Event Pop raises $2M to expand its ticketing service in Southeast Asia
+246,5,Hong Kong regulator ‘concerned’ by ICO funding boom
+247,8,Xiaomi aims to upstage the iPhone with successor to acclaimed bezel-less smartphone
+248,5,China has banned ICOs
+249,1,GoGoVan becomes Hong Kong’s first $1 billion startup following merger deal
+250,1,India’s Treebo raises $34M for its budget hotel network
+251,1,Thailand’s Kasikorn Bank backs cloud accounting startup in first deal for $30M fund
+252,0,Final days to apply for Startup Battlefield Australia
+253,9,Former GrubHub employee testified drivers often complained about ‘ghost orders’
+254,9,HotelTonight to expand booking window to 100 days
+255,4,StatMuse lets you ask a sports question and hear a response from an NFL star
+256,0,Pendo acquires Insert to add mobile apps to its user analytics and engagement platform
+257,1,"Favor, the on-demand service focused on Texas, picks up $22 million Series B"
+258,0,"After scrapping Monsanto deal, Deere agrees to buy precision farming startup Blue River for $305M"
+259,0,"VR company Upload settles sexual harassment suit, though some still feel unsettled"
+260,5,23andMe hits $1.5B pre-money valuation in latest huge funding round
+261,1,"Cap tables, share structures, valuations, oh my! A case study of early-stage funding"
+262,9,Tenka Labs raises another $2M to get its kids’ LEGO engineering kits in retailers
+263,9,"Scribd offers an ‘Essential Student Bundle’, including an NYT subscription, for $1.87 per week"
+264,1,Snowflake’s newest cloud data warehouse takes aim at regulated industries
+265,3,Dataiku to enhance data tools with $28 million investment led by Battery Ventures
+266,1,Turo raises $92M and acquires Daimler’s Croove car-sharing business
+267,4,Apple just released iOS 11 beta 10 to developers
+268,3,Verizon’s new opt-in rewards program requires users to share personal data for ad-targeting
+269,2,Facebook Watch original video tab launches to all U.S. users
+270,4,"Facetune maker’s latest app, Quickshot, helps you take better photos"
+271,2,"WhatsApp announces free Business app, will charge big enterprises"
+272,8,Samsung’s Galaxy Note 8 excels as a premium productivity smartphone
+273,8,Xiaomi’s first phone running stock Android looks impressive and costs less than $250
+274,9,GetAccept raises $1.6M to help companies close sales leads faster
+275,4,"Designed for iPhone 8, Weather Atlas is a great replacement for your stock weather app"
+276,6,"Google’s Search app on iOS gets a Twitter-like Trends feature, faster Instant Answers"
+277,4,Microsoft’s new Mixer Create app lets you live stream games from your phone
+278,9,"Disruptor Beam’s ‘Walking Dead: March to War’ puts you in the middle of a zombified Washington, D.C."
+279,4,Echo’s messaging service may add support for SMS texts from your own ‘Alexa number’
+280,8,Microsoft Surface keynote coming at the end of October
+281,9,"Smile, you’re in augmented reality dentistry"
+282,9,Make your own 3D-printed mask that reacts to your emotions
+283,9,The Tortilla Drone is the flying robot we’ve all been waiting for
+284,0,Allbirds plans to expand to new materials with $17.5 million in fresh funds
+285,9,Moleskine’s next paper planner will automatically sync with Google Calendar and Apple’s iCal
+286,9,The Lily drone is kind of back
+287,5,Understanding Roku’s IPO and its growing platform revenues
+288,5,Roku files for $100M IPO
+289,1,"RIP Juicero, the $400 venture-backed juice machine"
+290,8,Bragi’s Dash and Dash Pro wireless earbuds to get Amazon Alexa
+291,7,First impressions of Essential’s 360-degree camera attachment
+292,1,Uber’s new head of Asia is a former Goldman exec who once climbed Mount Everest
+293,5,Tencent posts record $2.7B profit as mobile game revenue tops PC for first time
+294,5,Alipay partners with Yelp to continue its pursuit of Chinese tourist money
+295,5,Uber suspends its service in the Philippines following ban over unregistered drivers
+296,4,Beijing’s public transport system gets an app for paying fares — but Apple isn’t invited
+297,0,"In India, an Uber for farm machinery aims to make a difference in rural areas"
+298,5,Indian messaging app Hike acquires hardware startup Creo
+299,0,"FlySpaces, an Airbnb for office space in Southeast Asia, raises $2.1M"
+300,4,China’s top social networks face investigation for hosting porn and illicit content
+301,1,PCCW Media raises $110M for its video and music streaming services in Asia
+302,0,Indian startup Flux Auto wants to democratize self-driving tech for trucks
+303,1,SoftBank’s Vision Fund backs Flipkart in record India tech investment
+304,3,Sony wants to digitize education records using the blockchain
+305,1,SoftBank partners with China’s Ofo to bring its dock-less bikes to Japan
+306,0,SparkLabs launches its latest accelerator program in Taipei
+307,1,China’s Didi backs Uber rival Careem to expand its global footprint into the Middle East
+308,1,Iflix raises $133M for its Netflix-style service for emerging markets
+309,1,SoftBank transfers its $5B stake in Nvidia to the Vision Fund
+310,4,Tinder hits top grossing app in the App Store on heels of Tinder Gold launch
+311,9,Basis Set Ventures gets real to get to the heart of AI startups
+312,0,Egyptian technology startups stand on the shoulders of giants
+313,9,Dharma wants to let anyone borrow a small amount of cryptocurrency
+314,0,Cowboy is a new e-bike startup from founders of Take Eat Easy
+315,5,Podcast-focused media company HowStuffWorks spins out with $15M in new funding
+316,0,Thirstie is powering on-demand delivery for Dom Pérignon
+317,1,Adtech startup Adwerx raises $4.3M as it looks to expand beyond real estate
+318,9,Nuco’s Aion network provides a way to communicate between multiple blockchains
+319,0,Expedia leads $26 million round in hospitality startup ALICE
+320,0,"Homelike, a German startup that lets business travelers find an apartment, picks up €4M Series A"
+321,6,Meet Android Oreo’s all-new emoji
+322,6,Android O is officially called Android Oreo
+323,4,Apple just shared iOS 11 beta 7 to developers
+324,8,"As Android O debuts, Marshmallow still commands about a third of devices"
+325,6,Google needs to pay Apple a small fortune to remain the default search engine on iOS
+326,9,Pingpad update brings organizational layer to Slack
+327,0,Programmers can now access Test IO code QA service in Jira development tool
+328,9,"EEVO, a startup powering VR apps for the BBC and others, raises $1.3M"
+329,0,Darkstore wants to be the ‘invisible retailer’
+330,1,Zoox in talks with SoftBank to fund self-driving cars
+331,3,Data Artisans announces commercial Application Manager for open source Apache Flink
+332,5,New Uber CEO departs New York Times board
+333,0,The downside of writing up demo days
+334,0,Copycats versus disruptors in Latin America
+335,9,A Stanford professor’s advice on surviving the a**hole at your startup
+336,3,It’s time to build our own Equifax with blackjack and crypto
+337,9,Red Cross to start testing drones in disaster relief efforts
+338,7,AT&T expands free HBO to both its unlimited wireless plans
+339,8,How to watch the live stream for today’s Apple iPhone keynote
+340,7,Facebook tests pre-loaded ‘Instant Videos’
+341,0,When modern day innovators begin to stray
+342,4,Twitter has an unlaunched tweetstorm feature
+343,8,Don’t count on any Apple fireworks on Wall Street next week
+344,8,And now the names of Apple’s new iPhones look to have leaked…
+345,8,"Tons of features of iPhone 8, iPhone X detailed in leaked iOS 11 build"
+346,8,Samsung is selling Note8 pre-orders faster than any Note before it
+347,2,WhatsApp’s first ads appear on Facebook and start convos with businesses
+348,8,YouTube launches HDR playback on select mobile devices
+349,4,"Zelle, the U.S. banks’ Venmo rival, will launch its mobile app next week"
+350,9,Here’s how RED’s holographic smartphone display will work
+351,9,Fitbit is surging after it announced a big health partnership
+352,9,This tiny sensor could sleep for years between detection events
+353,9,The Jammy is a steel string guitar that fits in a pocket
+354,7,"Get ready for a new, much more powerful Apple TV"
+355,9,Zapping cobalt nanodots could lead to magnetic RAM
+356,5,Dell Foundation pledges $36 million to Harvey relief effort
+357,3,Facebook to open source LogDevice for storing logs from distributed data centers
+358,3,"Salesforce, IBM deepen partnership with new app integrations"
+359,5,Box shares down 4% despite what Levie calls “one of our strongest quarters”
+360,0,Plaid delivers bank account integration to enterprise developers
+361,9,OpenStack sees new use cases in edge computing and fast-growing interest in China
+362,3,Salesforce is using AI to democratize SQL so anyone can query databases in natural language
+363,9,Okta makes 2FA standard for all customers as it opens Oktane customer conference
+364,6,Seven moves that led to the VMware-Pivotal-Google partnership
+365,6,Pivotal-VMware-Google forge container partnership
+366,3,VMware Cloud is now live on AWS — and IT pros just did a little happy dance
+367,0,VMware expands hybrid cloud strategy with series of announcements at VMworld
+368,0,AI will fundamentally change how we manage content
+369,3,Descartes Labs raises $30 million Series B for its brand of geospatial analytics
+370,6,Marketo picks Google Cloud to migrate from on-prem data centers
+371,9,"Twitch’s new extensions let streamers customize their channel, make money from Amazon sales"
+372,4,Instagram Stories are coming to the web
+373,2,Facebook says Pages that regularly share false news won’t be able to buy ads
+374,2,Facebook hires former NYT public editor Liz Spayd to consult on transparency
+375,2,Facebook adds new ways to revisit your memories and milestones
+376,2,Facebook faces another moderation scandal over migrant torture videos
+377,9,"Facebook adds skin tones to family emoji, but it’s complicated"
+378,9,Amazon’s social media ‘Influencers’ program opens up to YouTube stars
+379,2,Facebook’s Andrew Bosworth is taking over the company’s consumer hardware efforts
+380,5,Former CIA agent hopes to buy Twitter to kick Trump off
+381,2,"Facebook now lets you take 360 photos in-app, use them as Cover Photos"
+382,3,"EU states’ data retention laws still violating privacy rights, report warns"
+383,9,Virtual science lab startup Labster bags $10M to accelerate its ed tech play
+384,0,"BandLab​ ​Technologies​ acquires Chew.tv, a video streaming service for DJs"
+385,0,UK’s FiveAI gets $35M to build a taxi service powered by its own self-driving car platform
+386,0,"Taxify launches in London, acquiring a cab firm to scale and discounting prices"
+387,9,European court rules employees must be warned if comms are monitored
+388,1,Index Ventures is coming in force to TechCrunch Disrupt Berlin this December
+389,0,"Aifloo, a Swedish startup that sells a ‘smart wristband’ to help care for the elderly, raises €5.1M"
+390,8,High-end iPhone to ship after standard models
+391,8,Fitbit is teaming up with Dexcom for glucose monitoring on the Ionic Smartwatch
+392,0,Tome Software and Trek Bicycle are looking to AI to make biking safer
+393,8,Samsung is making Apple pay a small fortune for the iPhone 8 display
+394,8,$40 keychain-size detector quickly alerts you of allergens in food
+395,8,Hackers send silent commands to speech recognition systems with ultrasound
+396,9,You can get your own mini Mars rover for Earth through this new project
+397,3,Alteryx Promote puts data science to work across the company
+398,0,Rackspace acquires Datapipe as it looks to expand its managed services business
+399,3,A perfect storm of corporate idiocy
+400,5,Cloudera acquires AI research firm Fast Forward Labs
+401,5,Okta has a great earnings day on the back of strong international growth
+402,0,Microsoft and Adobe announce an expanded partnership around Adobe Sign and Microsoft Teams
+403,9,Reddit teams with Lucidworks to build new search framework
+404,0,"IBM and MIT pen 10-year, $240M AI research partnership"
+405,9,Mesosphere adds Kubernetes support to its data center operating system
+406,0,Nginx goes beyond its server roots and launches its application platform
+407,0,HPE scoops up Cloud Technology Partners to boost hybrid cloud consulting
+408,1,Identity management startup ForgeRock snags $88 million Series D
+409,9,Study finds Reddit’s controversial ban of its most toxic subreddits actually worked
+410,2,"Even more US adults now getting news from social media, says Pew"
+411,2,Facebook adds a dedicated ‘Movies’ section offering showtimes and ticket sales
+412,4,"Twitter enables account sharing in its mobile app, powered by TweetDeck Teams"
+413,2,Instagram test feature lets users share Stories straight to Facebook
+414,9,Twitter brings its dark ‘Night mode’ theme to the web
+415,9,If a Hillary-endorsed media platform is tech’s best solution for ‘fake news’ then we’re screwed
+416,2,Facebook fights fake news with links to other angles
+417,4,‘Paranormal Activity’ director Oren Peli launches a new social app
+418,2,"Another black activist, Ijeoma Oluo, is suspended by Facebook for posting about racism"
+419,2,Facebook will soon start ranking faster loading webpages higher in News Feed
+420,9,Hustle scores $8M to kill telemarketing with personalized texts
+421,4,Instagram Stories turns 1 as daily use surpasses Snapchat
+422,9,Snap hits record low after getting rejected from the S&P 500
+423,7,Facebook said to be working on dedicated video chat device
+424,7,VSCO launches its first video editing tool
+425,5,Snap down just 1% after first wave of lockup expirations
+426,3,Welltory packs a lot of science into its app to measure your stress levels
+427,3,UK to criminalize re-identifying anonymized personal data
+428,1,Digital bank Tandem to acquire banking arm of UK’s famous luxury department store Harrods
+429,0,The growing band of startups donating their platforms to refugees
+430,4,FaceApp adds paid selfie styling effects
+431,1,"Mozoo acquires AdinCube, to create one ad platform for mobile publishers"
+432,0,"Personio, a HR startup in Munich, closes $12M Series A"
+433,8,"Fitbit turns teens off exercising, study finds"
+434,9,More political headbanging on encryption threatens privacy
+435,3,"Plume Labs launches Plume.io, an API for air pollution"
+436,1,"Carspring, a London and Berlin startup that lets you buy a used car online, raises £5M Series B"
+437,4,Klarna launches a peer-to-peer payment app called Wavy
+438,5,Wyndham buys Love Home Swap for $53M
+439,1,"Lost My Name, the tech-driven kids book publisher, raises $8.5M and partners with Roald Dahl Estate"
+440,4,Apple removes VPN apps from the App Store in China
+441,1,Expedia invests $350M in Traveloka to create Southeast Asia’s newest unicorn
+442,5,Xiaomi secures $1B loan to expand its international presence and offline retail footprint
+443,5,Baidu teams up with PayPal to take its Chinese mobile wallet global
+444,5,Flipkart is all set to buy rival Snapdeal in major Indian e-commerce consolidation
+445,5,LG says its flagship G6 smartphone isn’t selling as well as expected
+446,1,WeWork launches dedicated China business backed by $500M from investors
+447,5,"Amazon Prime Now launches in Singapore, its first market in Southeast Asia"
+448,5,Report: Xiaomi sales climb but Huawei remains China’s top smartphone brand
+449,8,Xiaomi’s take on the Amazon Echo smart speaker costs less than $50
+450,1,Tencent backs Indian education startup BYJU’s at a valuation of $800 million
+451,1,LG Display will add $7B to its OLED investment in an attempt to challenge Samsung
+452,5,Amazon prepares to enter Southeast Asia via Singapore launch
+453,0,Korean startup Urbanbase gets $1.8M to turn apartment floor plans into virtual reality
+454,1,Grab gets $2B from Didi and SoftBank to fuel bid to defeat Uber in Southeast Asia
+455,5,Hong Kong is showing promise as a destination for tech IPOs
+456,1,Via raises $250M led by Daimler to bring its carpooling technology to Europe
+457,0,"Habito, an app that helps you find the right mortgage, raises £18.5M Series B led by Atomico"
+458,3,"Building health AIs should be UK ambition, says strategy review"
+459,6,Google takes steps to comply with EC antitrust order for Google Shopping
+460,0,Renault-Nissan and Dongfeng partner to build electric cars for China
+461,6,"China doubles down on real-name registration laws, forbidding anonymous online posts"
+462,5,Indonesian Uber rival Go-Jek closes in on new $1.2 billion round
+463,5,Samsung heir handed 5-year jail sentence for bribery
+464,1,Grab is investing $100M to shut Uber out of fast-growing Myanmar
+465,1,SoftBank pours $4.4B into WeWork
+466,1,Baidu sells food delivery business to its rival Ele.me
+467,1,"Business messaging service Eko picks up $2M to fuel push into Japan, US and UK"
+468,6,Google expands its public Wi-Fi program for emerging markets to Indonesia
+469,0,Ford set to create a new joint venture to produce EVs in China
+470,5,Spotify launches in Thailand to continue its Asia push
+471,0,Auto giant Continental buys Singapore-based Quantum Inventions for $29M
+472,1,Alibaba leads $1.1B investment in Indonesia-based e-commerce firm Tokopedia
+473,5,Alibaba’s profit doubles to $2.1B after another huge quarter of business
+474,4,Google is testing a data-friendly version of its Search app
+475,9,Good games make good investments at Good Shepherd
+476,1,Sony backs Acutronic Robotics’ hardware robot operating system
+477,1,Funding your bliss: mindfulness startups scale up

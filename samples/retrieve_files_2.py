@@ -12,6 +12,7 @@ from sklearn import feature_extraction
 from sklearn.externals import joblib
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
+from os.path import basename
 
 if __name__ == "__main__":
 
@@ -58,7 +59,10 @@ if __name__ == "__main__":
         texts = []
         with open(fileName) as f:
             jsload = json.load(f)
-            for post in jsload["posts"]:
+            posts = jsload
+            if "posts" in jsload:
+                posts = jsload["posts"]
+            for post in posts:
                 title = post["title"]
                 text = post["text"]
                 titles.append(title)
@@ -70,12 +74,14 @@ if __name__ == "__main__":
         totalvocab_stemmed = []
         totalvocab_tokenized = []
         for text in texts:
-            allwords_stemmed = tokenize_and_stem(text)  # for each item in 'synopses', tokenize/stem
-            totalvocab_stemmed.extend(allwords_stemmed)  # extend the 'totalvocab_stemmed' list
+            try:
+                allwords_stemmed = tokenize_and_stem(text)  # for each item in 'synopses', tokenize/stem
+                totalvocab_stemmed.extend(allwords_stemmed)  # extend the 'totalvocab_stemmed' list
 
-            allwords_tokenized = tokenize_only(text)
-            totalvocab_tokenized.extend(allwords_tokenized)
-
+                allwords_tokenized = tokenize_only(text)
+                totalvocab_tokenized.extend(allwords_tokenized)
+            except:
+                print("Skipping text ... ")
         print(allwords_stemmed)
         print(allwords_tokenized)
 
@@ -138,7 +144,7 @@ if __name__ == "__main__":
 
             print(' %s' % crc,
                   end=',')
-        wclusters.append(ccluster)
+        wclusters.append(ccluster[:15])
         print()  # add whitespace
         print()  # add whitespace
 
@@ -210,3 +216,23 @@ if __name__ == "__main__":
         ax.text(df.ix[i]['x'], df.ix[i]['y'], df.ix[i]['title'], size=8)
 
     plt.show()  # show the plot
+
+    from scipy.cluster.hierarchy import ward, dendrogram
+
+    linkage_matrix = ward(dist)  # define the linkage_matrix using ward clustering pre-computed distances
+
+    fig, ax = plt.subplots(figsize=(30, 60))  # set size
+    ax = dendrogram(linkage_matrix, orientation="right", labels=titles);
+
+    plt.tick_params( \
+        axis='x',  # changes apply to the x-axis
+        which='both',  # both major and minor ticks are affected
+        bottom='off',  # ticks along the bottom edge are off
+        top='off',  # ticks along the top edge are off
+        labelbottom='off')
+
+    plt.tight_layout()  # show plot with tight layout
+
+    # uncomment below to save figure
+    plt.savefig(basename(args.fileName)+'.png')  # save figure as ward_clusters
+
