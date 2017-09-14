@@ -27,6 +27,10 @@ RUN conda install -y requests lxml pyyaml cssselect
 
 RUN cd && git clone https://github.com/diegoami/newscollection.git
 
+RUN pushd newscollection/scrapers && git clone https://github.com/diegoami/techcrunch-posts-scraper.git && popd
+
+
+
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
