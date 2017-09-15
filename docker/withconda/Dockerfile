@@ -20,21 +20,25 @@ RUN apt-get install -y curl grep sed dpkg && \
     rm tini.deb && \
     apt-get clean
 
+WORKDIR /app
+
+ADD . /app
+
+RUN pip install -r requirements.txt
 
 ENV PATH /opt/conda/bin:$PATH
+
+RUN cd ~ && mkdir .ssh && cp /app/.ssh/* ~/.ssh
 
 RUN conda install -y requests lxml pyyaml cssselect
 
 RUN cd ~ && git clone https://github.com/diegoami/newscollection.git
 
-RUN cd ~/newscollection/scrapers && git clone https://github.com/diegoami/techcrunch-posts-scraper.git
+RUN cd ~/newscollection/scrapers && git clone git@github.com:diegoami/techcrunch-posts-scraper.git
 
-RUN cd ~/newscollection/scrapers && python scrape.py
+RUN cd ~/newscollection/scrapers/techcrunch-posts-scraper && python scrape.py
 
-RUN git add * "Latest news" && git commit -a -m "Latest news"
-
-
-
+RUN git add * && git commit -a -m "Latest news" && git push origin master
 
 
 
