@@ -1,12 +1,14 @@
 import json
-from os.path import basename
-import argparse
+
 
 from gensim import corpora, models, similarities
 
 import os
 
 from gensim.corpora import MmCorpus
+import logging
+logging.basicConfig(filename='logs/info.log',level=logging.INFO)
+
 
 class GensimClassifier:
 
@@ -40,7 +42,7 @@ class GensimClassifier:
         self.index = similarities.MatrixSimilarity.load(self.index_filename)  # transform corpus to LSI space and index it
 
     def update_models(self):
-        # remove common words and tokenize
+
         self.load_articles()
         if os.path.isfile(self.dict_filename):
             self.dictionary = corpora.Dictionary.load(self.dict_filename)
@@ -59,8 +61,6 @@ class GensimClassifier:
             texts = [[token for token in text if frequency[token] > 1]
                      for text in texts]
 
-            from     pprint import pprint  # pretty-printer
-
             self.dictionary = corpora.Dictionary(texts)
             self.dictionary.save(self.dict_filename)  # store the dictionary, for future reference
 
@@ -73,17 +73,16 @@ class GensimClassifier:
         if os.path.isfile(self.lsi_filename):
             self.lsi = models.LsiModel.load(self.lsi_filename)
         else:
-            tfidf = models.TfidfModel(self.corpus)  # step 1 -- initialize a model
+            tfidf = models.TfidfModel(self.corpus)
             corpus_tfidf = tfidf[self.corpus]
-            lsi = models.LsiModel(corpus_tfidf, id2word=self.dictionary, num_topics=20)  # initialize an LSI transformation
-            self.lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
-            self.lsi.save(self.lsi_filename)  # same for tfidf, lda, ...
+            lsi = models.LsiModel(corpus_tfidf, id2word=self.dictionary, num_topics=200)
+            self.lsi = lsi[corpus_tfidf]
+            self.lsi.save(self.lsi_filename)
         if os.path.isfile(self.index_filename):
             self.index = similarities.MatrixSimilarity.load(self.index_filename)
         else:
-            self.index = similarities.MatrixSimilarity(self.lsi[self.corpus])  # transform corpus to LSI space and index it
+            self.index = similarities.MatrixSimilarity(self.lsi[self.corpus])
             self.index.save(self.index_filename)
-
 
     def get_vec(self,doc):
         vec_bow = self.dictionary.doc2bow(doc.lower().split())
@@ -94,15 +93,14 @@ class GensimClassifier:
         vec_lsi = self.get_vec(doc)
         sims = self.index[vec_lsi]
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
-
-        return ([{"title" : self.titles[sim[0]], "url" : self.urls[sim[0]] }  for sim in sims[:n]])
+        return ([{"title" : self.titles[sim[0]], "url" : self.urls[sim[0]] , "similarity" : sim[1]*100 }  for sim in sims[:n]])
 
     def do_print_related(self, doc):
-        print(" ============ BASE ARTICLE  ========================")
-        print(doc)
-        print(" ============ RELATED TITLES =======================")
+        logging.debug(" ============ BASE ARTICLE  ========================")
+        logging.debug(doc)
+        logging.debug(" ============ RELATED TITLES =======================")
         related_articles = self.get_related_articles(doc,10)
         for article in related_articles:
-            print(article)
+            logging.debug(article)
 
 

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "sample",
+  "description": "A sample extension to get the selected text",
+  "version": "1.0",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon" : "icn-search.png"
+  },
+  "permissions": [
+    "activeTab"
+  ]
+}

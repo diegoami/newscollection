@@ -1,0 +1,25 @@
+URL: https://techcrunch.com/
+Section:
+  - startups/
+  - mobile/
+  - gadgets/
+  - enterprise/
+  - social/
+  - europe/
+  - asia/
+Page: page/{num}/
+MinPage: 1
+MaxPage: 5
+
+Request:
+  Timeout: 4
+  HeaderFilename: 'src/header.json'
+
+PostsFilename: 'data/posts/{dt}.csv'
+SaveBatch: 5
+
+SleepTime: 0.4
+MaxLinks: 500
+
+InputFilename: /home/diegoami/PycharmProjects/Newscollection/gensim_samples/data/tech_posts_6.json
+OutputFilename: /home/diegoami/PycharmProjects/Newscollection/gensim_samples/data/tech_posts_7.json
