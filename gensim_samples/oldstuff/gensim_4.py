@@ -28,9 +28,6 @@ def load_stuff(fileName):
     return titles, texts, articles, urls
 
 
-
-
-
 if __name__ == "__main__":
 
     def get_vec(doc,):
