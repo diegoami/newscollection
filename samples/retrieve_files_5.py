@@ -12,6 +12,8 @@ from sklearn import feature_extraction
 from sklearn.externals import joblib
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+from gensim.models.tfidfmodel import TfidfModel
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
@@ -75,11 +77,21 @@ if __name__ == "__main__":
     import string
 
 
+
+
     def strip_proppers(text):
         # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
         tokens = [word for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent) if word.islower()]
         return "".join(
             [" " + i if not i.startswith("'") and i not in string.punctuation else i for i in tokens]).strip()
+
+    def do_print_titles(lis_model, dictionary, titles):
+        for title in titles:
+            print(title)
+            doc = title
+            vec_bow = dictionary.doc2bow(doc.lower().split())
+            vec_lsi = lsi_model[vec_bow]  # convert the query to LSI space`
+            print(vec_lsi)
 
 
     titles, texts, articles = load_stuff(args.fileName)
@@ -100,22 +112,41 @@ if __name__ == "__main__":
 
     tokenized_text = [tokenize_and_stem(text) for text in preprocess]
 
-    texts = [[word for word in text if word not in stopwords] for text in tokenized_text]
+    worked_texts = [[word for word in text if word not in stopwords] for text in tokenized_text]
+
 
     # create a Gensim dictionary from the texts
-    dictionary = corpora.Dictionary(texts)
+    dictionary = corpora.Dictionary(worked_texts )
 
-    corpus = [dictionary.doc2bow(text) for text in texts]
+    corpus = [dictionary.doc2bow(worked_text ) for worked_text in worked_texts]
+
 
     # convert the dictionary to a bag of words corpus for reference
 
 
-    lsi = models.LsiModel(corpus, id2word=dictionary, num_topics=12)
+    lsi_model = models.LsiModel(corpus, id2word=dictionary, num_topics=12)
+
+    query = "April is the fourth month of the year, and comes between March \
+        and May. It has 30 days. April begins on the same day of week as July in \
+        all years and also January in leap years."
+
+    query =  "IF YOU'RE LIKE most iPhone users, when you upgraded to the newest version of iOS, Apple automatically migrated your settings, apps, and text messages. While there are benefits to wiping your phone and starting over—c'mon, you don't really need all those apps—there's also the possibility that you might lose valuable info hidden within your text messages."
+
+    tfidf_model = TfidfModel(corpus)
+    corpus_tfidf = tfidf_model [corpus]
+    from gensim.similarities import MatrixSimilarity, SparseMatrixSimilarity, Similarity
+
+    index_sparse = SparseMatrixSimilarity(corpus, num_features=len(dictionary))
+
+    import sklearn
+    sklearn.externals.joblib.dump(tfidf_model , 'tfidf_model.pkl')
+    sklearn.externals.joblib.dump(lsi_model, 'lsi_model.pkl')
+    sklearn.externals.joblib.dump(texts, 'texts.pkl')
+
+    sklearn.externals.joblib.dump(worked_texts, 'worked_texts.pkl')
+    sklearn.externals.joblib.dump(titles, 'titles.pkl')
+    sklearn.externals.joblib.dump(dictionary, 'dictionary.pkl')
+    sklearn.externals.joblib.dump(corpus, 'corpus.pkl')
+    sklearn.externals.joblib.dump(index_sparse, 'index_sparse.pkl')
 
 
-    for title in titles:
-        print(title)
-        doc = title
-        vec_bow = dictionary.doc2bow(doc.lower().split())
-        vec_lsi = lsi[vec_bow]  # convert the query to LSI space`
-        print(vec_lsi)

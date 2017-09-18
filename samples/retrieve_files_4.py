@@ -63,11 +63,14 @@ if __name__ == "__main__":
             if "posts" in jsload:
                 posts = jsload["posts"]
             for post in jsload["posts"]:
-                title = post["title"]
-                text = post["text"]
-                articles.append(title +'\n' + text)
-                titles.append(title)
-                texts.append(text)
+                if ("text" in post and "title" in post):
+                    title = post["title"]
+                    text = post["text"]
+
+
+                    articles.append(title +'\n' + text)
+                    titles.append(title)
+                    texts.append(text)
         return titles, texts, articles
 
 

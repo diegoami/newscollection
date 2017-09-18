@@ -6,11 +6,13 @@ import numpy as np
 import pandas as pd
 import nltk
 import re
+import sklearn
 import os
 import codecs
 from sklearn import feature_extraction
 from sklearn.externals import joblib
 from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from os.path import basename
 
@@ -57,6 +59,8 @@ if __name__ == "__main__":
     def load_stuff(fileName):
         titles = []
         texts = []
+        #articles = []
+        urls  = []
         with open(fileName) as f:
             jsload = json.load(f)
             posts = jsload
@@ -65,9 +69,11 @@ if __name__ == "__main__":
             for post in posts:
                 title = post["title"]
                 text = post["text"]
+                urls = post["url"]
                 titles.append(title)
                 texts.append(text)
-        return titles, texts
+                #articles.append(title+"\n"+ text)
+        return titles, texts, urls
 
     def retr_model(titles,texts):
 
@@ -106,12 +112,19 @@ if __name__ == "__main__":
 
         dist = 1 - cosine_similarity(tfidf_matrix)
 
+        hashing_vectorizer = HashingVectorizer(max_df=0.8, max_features=200000,
+                                           min_df=0.2, stop_words='english',
+                                           use_idf=True, tokenizer=tokenize_and_stem, ngram_range=(1, 3))
+        hashing_matrix = hashing_vectorizer.fit_transform(texts)  # fit the vectorizer to synopses
 
+
+        sklearn.externals.joblib.dump(tfidf_matrix , 'tfidf.pkl')
 
 
         km = KMeans(n_clusters=num_clusters)
 
         km.fit(tfidf_matrix)
+
 
         clusters = km.labels_.tolist()
 
@@ -120,7 +133,7 @@ if __name__ == "__main__":
 
 
 
-    titles, texts = load_stuff(args.fileName)
+    titles, texts, urls = load_stuff(args.fileName)
     km, clusters, vocab_frame, terms, dist = retr_model(titles,texts)
     clusters = km.labels_.tolist()
     df_texts= {'title': titles, 'texts': texts, 'cluster': clusters }
@@ -220,6 +233,10 @@ if __name__ == "__main__":
     from scipy.cluster.hierarchy import ward, dendrogram
 
     linkage_matrix = ward(dist)  # define the linkage_matrix using ward clustering pre-computed distances
+
+    sklearn.externals.joblib.dump(dist, 'title_dist.pkl')
+    sklearn.externals.joblib.dump(titles, 'titles.pkl')
+    sklearn.externals.joblib.dump(urls, 'urls.pkl')
 
     fig, ax = plt.subplots(figsize=(30, 60))  # set size
     ax = dendrogram(linkage_matrix, orientation="right", labels=titles);
