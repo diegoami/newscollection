@@ -7,8 +7,7 @@ import os
 
 from gensim.corpora import MmCorpus
 import logging
-logging.basicConfig(filename='logs/info.log',level=logging.INFO)
-
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 class GensimClassifier:
 
@@ -42,47 +41,41 @@ class GensimClassifier:
         self.index = similarities.MatrixSimilarity.load(self.index_filename)  # transform corpus to LSI space and index it
 
     def update_models(self):
-
         self.load_articles()
-        if os.path.isfile(self.dict_filename):
-            self.dictionary = corpora.Dictionary.load(self.dict_filename)
-        else:
-            stoplist = set('for a of the and to in'.split())
-            texts = [[word for word in document.lower().split() if word not in stoplist]
-                     for document in self.articles]
+        documents = self.articles
+        # remove common words and tokenize
+        stoplist = set('for a of the and to in'.split())
+        texts = [[word for word in document.lower().split() if word not in stoplist]
+                 for document in documents]
 
-            # remove words that appear only once
-            from collections import defaultdict
-            frequency = defaultdict(int)
-            for text in texts:
-                for token in text:
-                    frequency[token] += 1
+        # remove words that appear only once
+        from collections import defaultdict
+        frequency = defaultdict(int)
+        for text in texts:
+            for token in text:
+                frequency[token] += 1
 
-            texts = [[token for token in text if frequency[token] > 1]
-                     for text in texts]
+        texts = [[token for token in text if frequency[token] > 1]
+                 for text in texts]
 
-            self.dictionary = corpora.Dictionary(texts)
-            self.dictionary.save(self.dict_filename)  # store the dictionary, for future reference
 
-        if os.path.isfile(self.corpus_filename):
-            self.corpus =  MmCorpus(self.corpus_filename)
-        else:
-            self.corpus = [self.dictionary.doc2bow(text) for text in texts]
-            corpora.MmCorpus.serialize(self.corpus_filename, self.corpus)
 
-        if os.path.isfile(self.lsi_filename):
-            self.lsi = models.LsiModel.load(self.lsi_filename)
-        else:
-            tfidf = models.TfidfModel(self.corpus)
-            corpus_tfidf = tfidf[self.corpus]
-            lsi = models.LsiModel(corpus_tfidf, id2word=self.dictionary, num_topics=200)
-            self.lsi = lsi[corpus_tfidf]
-            self.lsi.save(self.lsi_filename)
-        if os.path.isfile(self.index_filename):
-            self.index = similarities.MatrixSimilarity.load(self.index_filename)
-        else:
-            self.index = similarities.MatrixSimilarity(self.lsi[self.corpus])
-            self.index.save(self.index_filename)
+        dictionary = corpora.Dictionary(texts)
+        dictionary.save(self.dict_filename)  # store the dictionary, for future reference
+        corpus = [dictionary.doc2bow(text) for text in texts]
+        corpora.MmCorpus.serialize(self.corpus_filename, corpus)
+
+        tfidf = models.TfidfModel(corpus)  # step 1 -- initialize a model
+        corpus_tfidf = tfidf[corpus]
+        lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=20)  # initialize an LSI transformation
+        corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
+
+        lsi.save(self.lsi_filename)  # same for tfidf, lda, ...
+
+        index = similarities.MatrixSimilarity(lsi[corpus])  # transform corpus to LSI space and index it
+        index.save(self.index_filename)
+
+
 
     def get_vec(self,doc):
         vec_bow = self.dictionary.doc2bow(doc.lower().split())

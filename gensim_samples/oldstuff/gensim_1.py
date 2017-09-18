@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 def load_stuff(fileName):
-    articles, titles, texts, urls = [], [], []
+    articles, titles, texts, urls = [], [], [], []
     with open(fileName) as f:
         jsload = json.load(f)
         posts = jsload

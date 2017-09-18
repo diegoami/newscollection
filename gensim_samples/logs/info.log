@@ -1,2 +1,105 @@
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 220-641-344
+INFO:gensim.corpora.dictionary:adding document #0 to Dictionary(0 unique tokens: [])
+INFO:gensim.corpora.dictionary:built Dictionary(14001 unique tokens: ['dropbox', 'paper', 'gets', 'document', 'previews']...) from 613 documents (total 240506 corpus positions)
+INFO:gensim.utils:saving Dictionary object under data/tech_posts_7.json.dict, separately None
+INFO:gensim.utils:saved data/tech_posts_7.json.dict
+INFO:gensim.corpora.mmcorpus:storing corpus in Matrix Market format to data/tech_posts_7.json.mm
+INFO:gensim.matutils:saving sparse matrix to data/tech_posts_7.json.mm
+INFO:gensim.matutils:PROGRESS: saving document #0
+INFO:gensim.matutils:saved 613x14001 matrix, density=1.748% (150049/8582613)
+INFO:gensim.corpora.indexedcorpus:saving MmCorpus index to data/tech_posts_7.json.mm.index
+INFO:gensim.models.tfidfmodel:collecting document frequencies
+INFO:gensim.models.tfidfmodel:PROGRESS: processing document #0
+INFO:gensim.models.tfidfmodel:calculating IDF weights for 613 documents and 14000 features (150049 matrix non-zeros)
+INFO:gensim.models.lsimodel:using serial LSI version on this node
+INFO:gensim.models.lsimodel:updating model with new documents
+INFO:gensim.models.lsimodel:preparing a new chunk of documents
+INFO:gensim.models.lsimodel:using 100 extra samples and 2 power iterations
+INFO:gensim.models.lsimodel:1st phase: constructing (14001, 300) action matrix
+INFO:gensim.models.lsimodel:orthonormalizing (14001, 300) action matrix
+INFO:gensim.models.lsimodel:2nd phase: running dense svd on (300, 613) matrix
+INFO:gensim.models.lsimodel:computing the final decomposition
+INFO:gensim.models.lsimodel:keeping 200 factors (discarding 22.151% of energy spectrum)
+INFO:gensim.models.lsimodel:processed documents up to #613
+INFO:gensim.models.lsimodel:topic #0(4.019): 0.145*"facebook" + 0.145*"apple" + 0.123*"iphone" + 0.103*"you" + 0.093*"—" + 0.092*"your" + 0.087*"data" + 0.085*"app" + 0.076*"video" + 0.074*"google"
+INFO:gensim.models.lsimodel:topic #1(2.438): 0.449*"iphone" + 0.440*"apple" + 0.129*"8" + 0.117*"x" + 0.106*"4k" + 0.105*"apple’s" + 0.101*"ios" + 0.088*"watch" + -0.084*"southeast" + -0.082*"facebook"
+INFO:gensim.models.lsimodel:topic #2(2.282): -0.529*"facebook" + -0.227*"instagram" + -0.186*"stories" + -0.144*"facebook’s" + -0.134*"video" + -0.118*"news" + 0.107*"apple" + 0.104*"iphone" + -0.103*"snapchat" + 0.093*"southeast"
+INFO:gensim.models.lsimodel:topic #3(1.983): -0.188*"facebook" + 0.172*"data" + -0.165*"apple" + -0.152*"southeast" + -0.148*"instagram" + -0.138*"billion" + -0.136*"wework" + -0.125*"softbank" + -0.124*"iphone" + -0.119*"uber"
+INFO:gensim.models.lsimodel:topic #4(1.777): 0.306*"xiaomi" + 0.223*"speaker" + 0.191*"mi" + 0.183*"voice" + -0.181*"apple" + 0.162*"google" + 0.160*"android" + -0.149*"iphone" + 0.140*"alexa" + 0.138*"xiaomi’s"
+INFO:gensim.utils:saving TransformedCorpus object under data/tech_posts_7.json.lsi, separately None
+INFO:gensim.utils:saved data/tech_posts_7.json.lsi
+INFO:werkzeug: * Detected change in '/home/diegoami/PycharmProjects/Newscollection/gensim_samples/gensim_lib.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-641-344
+INFO:werkzeug: * Detected change in '/home/diegoami/PycharmProjects/Newscollection/gensim_samples/gensim_lib.py', reloading
+INFO:gensim.utils:loading Dictionary object from data/tech_posts_7.json.dict
+INFO:gensim.utils:loaded data/tech_posts_7.json.dict
+INFO:gensim.corpora.indexedcorpus:loaded corpus index from data/tech_posts_7.json.mm.index
+INFO:gensim.matutils:initializing corpus reader from data/tech_posts_7.json.mm
+INFO:gensim.matutils:accepted corpus with 613 documents, 14001 features, 150049 non-zero entries
+INFO:gensim.utils:loading LsiModel object from data/tech_posts_7.json.lsi
+INFO:gensim.utils:loading obj recursively from data/tech_posts_7.json.lsi.obj.* with mmap=None
+INFO:gensim.utils:loading id2word recursively from data/tech_posts_7.json.lsi.obj.id2word.* with mmap=None
+INFO:gensim.utils:loading projection recursively from data/tech_posts_7.json.lsi.obj.projection.* with mmap=None
+INFO:gensim.utils:loading corpus recursively from data/tech_posts_7.json.lsi.corpus.* with mmap=None
+INFO:gensim.utils:loading obj recursively from data/tech_posts_7.json.lsi.corpus.obj.* with mmap=None
+INFO:gensim.utils:loaded data/tech_posts_7.json.lsi
+INFO:gensim.utils:loading LsiModel object from data/tech_posts_7.json.lsi.projection
+WARNING:root:failed to load projection from data/tech_posts_7.json.lsi.projection: [Errno 2] No such file or directory: 'data/tech_posts_7.json.lsi.projection'
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-641-344
+INFO:gensim.corpora.dictionary:adding document #0 to Dictionary(0 unique tokens: [])
+INFO:gensim.corpora.dictionary:built Dictionary(14001 unique tokens: ['dropbox', 'paper', 'gets', 'document', 'previews']...) from 613 documents (total 240506 corpus positions)
+INFO:gensim.utils:saving Dictionary object under data/tech_posts_7.json.dict, separately None
+INFO:gensim.utils:saved data/tech_posts_7.json.dict
+INFO:gensim.corpora.mmcorpus:storing corpus in Matrix Market format to data/tech_posts_7.json.mm
+INFO:gensim.matutils:saving sparse matrix to data/tech_posts_7.json.mm
+INFO:gensim.matutils:PROGRESS: saving document #0
+INFO:gensim.matutils:saved 613x14001 matrix, density=1.748% (150049/8582613)
+INFO:gensim.corpora.indexedcorpus:saving MmCorpus index to data/tech_posts_7.json.mm.index
+INFO:gensim.corpora.indexedcorpus:loaded corpus index from data/tech_posts_7.json.mm.index
+INFO:gensim.matutils:initializing corpus reader from data/tech_posts_7.json.mm
+INFO:gensim.matutils:accepted corpus with 613 documents, 14001 features, 150049 non-zero entries
+INFO:gensim.models.tfidfmodel:collecting document frequencies
+INFO:gensim.models.tfidfmodel:PROGRESS: processing document #0
+INFO:gensim.models.tfidfmodel:calculating IDF weights for 613 documents and 14000 features (150049 matrix non-zeros)
+INFO:gensim.models.lsimodel:using serial LSI version on this node
+INFO:gensim.models.lsimodel:updating model with new documents
+INFO:gensim.models.lsimodel:preparing a new chunk of documents
+INFO:gensim.models.lsimodel:using 100 extra samples and 2 power iterations
+INFO:gensim.models.lsimodel:1st phase: constructing (14001, 150) action matrix
+INFO:gensim.models.lsimodel:orthonormalizing (14001, 150) action matrix
+INFO:gensim.models.lsimodel:2nd phase: running dense svd on (150, 613) matrix
+INFO:gensim.models.lsimodel:computing the final decomposition
+INFO:gensim.models.lsimodel:keeping 50 factors (discarding 47.692% of energy spectrum)
+INFO:gensim.models.lsimodel:processed documents up to #613
+INFO:gensim.models.lsimodel:topic #0(4.019): 0.145*"facebook" + 0.145*"apple" + 0.123*"iphone" + 0.103*"you" + 0.093*"—" + 0.092*"your" + 0.087*"data" + 0.084*"app" + 0.076*"video" + 0.074*"google"
+INFO:gensim.models.lsimodel:topic #1(2.437): -0.450*"iphone" + -0.439*"apple" + -0.130*"8" + -0.117*"x" + -0.106*"4k" + -0.106*"apple’s" + -0.100*"ios" + -0.087*"watch" + 0.085*"southeast" + 0.083*"facebook"
+INFO:gensim.models.lsimodel:topic #2(2.281): 0.530*"facebook" + 0.226*"instagram" + 0.186*"stories" + 0.144*"facebook’s" + 0.135*"video" + 0.119*"news" + -0.107*"apple" + -0.105*"iphone" + 0.103*"snapchat" + -0.093*"southeast"
+INFO:gensim.models.lsimodel:topic #3(1.982): -0.185*"facebook" + 0.171*"data" + -0.167*"apple" + -0.153*"southeast" + -0.148*"instagram" + -0.137*"billion" + -0.133*"wework" + -0.127*"iphone" + -0.123*"softbank" + -0.118*"uber"
+INFO:gensim.models.lsimodel:topic #4(1.773): 0.303*"xiaomi" + 0.223*"speaker" + 0.190*"mi" + 0.184*"voice" + -0.182*"apple" + 0.162*"google" + 0.158*"android" + -0.146*"iphone" + 0.142*"alexa" + 0.136*"xiaomi’s"
+INFO:gensim.utils:saving TransformedCorpus object under data/tech_posts_7.json.lsi, separately None
+INFO:gensim.utils:saved data/tech_posts_7.json.lsi
+INFO:werkzeug: * Detected change in '/home/diegoami/PycharmProjects/Newscollection/gensim_samples/gensim_lib.py', reloading
+INFO:gensim.utils:loading Dictionary object from data/tech_posts_7.json.dict
+INFO:gensim.utils:loaded data/tech_posts_7.json.dict
+INFO:gensim.corpora.indexedcorpus:loaded corpus index from data/tech_posts_7.json.mm.index
+INFO:gensim.matutils:initializing corpus reader from data/tech_posts_7.json.mm
+INFO:gensim.matutils:accepted corpus with 613 documents, 14001 features, 150049 non-zero entries
+INFO:gensim.corpora.indexedcorpus:loaded corpus index from data/tech_posts_7.json.mm.index
+INFO:gensim.matutils:initializing corpus reader from data/tech_posts_7.json.mm
+INFO:gensim.matutils:accepted corpus with 613 documents, 14001 features, 150049 non-zero entries
+INFO:gensim.utils:loading LsiModel object from data/tech_posts_7.json.lsi
+INFO:gensim.utils:loading obj recursively from data/tech_posts_7.json.lsi.obj.* with mmap=None
+INFO:gensim.utils:loading id2word recursively from data/tech_posts_7.json.lsi.obj.id2word.* with mmap=None
+INFO:gensim.utils:loading projection recursively from data/tech_posts_7.json.lsi.obj.projection.* with mmap=None
+INFO:gensim.utils:loading corpus recursively from data/tech_posts_7.json.lsi.corpus.* with mmap=None
+INFO:gensim.utils:loading obj recursively from data/tech_posts_7.json.lsi.corpus.obj.* with mmap=None
+INFO:gensim.utils:loading corpus recursively from data/tech_posts_7.json.lsi.corpus.corpus.* with mmap=None
+INFO:gensim.utils:loaded data/tech_posts_7.json.lsi
+INFO:gensim.utils:loading LsiModel object from data/tech_posts_7.json.lsi.projection
+WARNING:root:failed to load projection from data/tech_posts_7.json.lsi.projection: [Errno 2] No such file or directory: 'data/tech_posts_7.json.lsi.projection'
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 220-641-344
+INFO:werkzeug: * Detected change in '/home/diegoami/PycharmProjects/Newscollection/gensim_samples/gensim_lib.py', reloading

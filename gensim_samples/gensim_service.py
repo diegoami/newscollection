@@ -5,7 +5,7 @@ from flask_restful import Resource, Api
 import sys
 sys.path.append('..')
 from gensim_samples.gensim_lib import GensimClassifier
-
+import os, glob
 app = Flask(__name__)
 api = Api(app)
 import logging
@@ -41,10 +41,12 @@ class GensimClassifierService(Resource):
         }
 
 
-
+files = glob.glob("data/tech_posts_*.json")
+files.sort(key=os.path.getmtime)
+print("Using file {}".format(files[0]))
 
 api.add_resource(GensimClassifierService, '/',
-    resource_class_kwargs={ 'filename': 'data/tech_posts_6.json'})
+    resource_class_kwargs={ 'filename': files[0]})
 
 if __name__ == '__main__':
     app.run(debug=True)
