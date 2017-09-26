@@ -11,28 +11,13 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 class GensimClassifier:
 
-    def __init__(self,article_filename, dict_filename, corpus_filename, lsi_filename, index_filename):
+    def __init__(self, dict_filename, corpus_filename, lsi_filename, index_filename):
         self.dict_filename = dict_filename
-        self.article_filename = article_filename
+
         self.corpus_filename = corpus_filename
         self.lsi_filename = lsi_filename
         self.index_filename = index_filename
 
-    def load_articles(self):
-        self.articles, self.titles, self.texts, self.urls = [], [], [], []
-        with open(self.article_filename) as f:
-            jsload = json.load(f)
-            posts = jsload
-            if "posts" in jsload:
-                posts = jsload["posts"]
-            for post in jsload["posts"]:
-                title = post["title"]
-                text = post["text"]
-                url = post["url"]
-                self.articles.append(title + '\n' + text)
-                self.titles.append(title)
-                self.texts.append(text)
-                self.urls.append(url)
 
     def load_models(self):
         self.dictionary = corpora.Dictionary.load(self.dict_filename)  # store the dictionary, for future reference
@@ -40,9 +25,7 @@ class GensimClassifier:
         self.lsi = models.LsiModel.load(self.lsi_filename)
         self.index = similarities.MatrixSimilarity.load(self.index_filename)  # transform corpus to LSI space and index it
 
-    def update_models(self):
-        self.load_articles()
-        documents = self.articles
+    def update_models(self, documents):
         # remove common words and tokenize
         stoplist = set('for a of the and to in'.split())
         texts = [[word for word in document.lower().split() if word not in stoplist]
@@ -67,7 +50,7 @@ class GensimClassifier:
 
         tfidf = models.TfidfModel(corpus)  # step 1 -- initialize a model
         corpus_tfidf = tfidf[corpus]
-        lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=20)  # initialize an LSI transformation
+        lsi = models.LsiModel(corpus_tfidf, id2word=dictionary)  # initialize an LSI transformation
         corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
 
         lsi.save(self.lsi_filename)  # same for tfidf, lda, ...
@@ -86,7 +69,7 @@ class GensimClassifier:
         vec_lsi = self.get_vec(doc)
         sims = self.index[vec_lsi]
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
-        return ([{"title" : self.titles[sim[0]], "url" : self.urls[sim[0]] , "similarity" : sim[1]*100 }  for sim in sims[:n]])
+        return sims
 
     def do_print_related(self, doc):
         logging.debug(" ============ BASE ARTICLE  ========================")

@@ -7,7 +7,7 @@ import logging
 
 import sys
 sys.path.append('..')
-from gensim_samples.gensim_lib import GensimClassifier
+from gensim_samples.gensim_classifier import GensimClassifier
 
 logging.basicConfig(filename='logs/info.log',level=logging.INFO)
 

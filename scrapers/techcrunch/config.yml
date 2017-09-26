@@ -15,11 +15,11 @@ Request:
   Timeout: 4
   HeaderFilename: 'src/header.json'
 
-PostsFilename: 'data/posts/{dt}.csv'
+PostsFilename: 'models/posts/{dt}.csv'
 SaveBatch: 5
 
 SleepTime: 0.4
 MaxLinks: 500
 
-InputFilename: /home/diego/PycharmProjects/Newscollection/gensim_samples/data/tech_posts_8.json
-OutputFilename: /home/diego/PycharmProjects/Newscollection/gensim_samples/data/tech_posts_9.json
+InputFilename: /home/diego/PycharmProjects/Newscollection/gensim_samples/models/tech_posts_8.json
+OutputFilename: /home/diego/PycharmProjects/Newscollection/gensim_samples/models/tech_posts_9.json

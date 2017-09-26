@@ -192,7 +192,7 @@ if __name__ == "__main__":
     # set up cluster names using a dict
     cluster_names = {i:wclusters[i] for i in range(10) }
 
-    # create data frame that has the result of the MDS plus the cluster numbers and titles
+    # create models frame that has the result of the MDS plus the cluster numbers and titles
     df = pd.DataFrame(dict(x=xs, y=ys, label=clusters, title=titles))
 
     # group by cluster

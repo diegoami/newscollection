@@ -6,7 +6,7 @@ import csv
 import codecs
 def get_retrieved_urls():
     alldf = pd.DataFrame()
-    csv_files = glob.glob('data/posts/*.csv')
+    csv_files = glob.glob('models/posts/*.csv')
     posts = []
     ids = set()
     for csv_file in csv_files:
@@ -38,5 +38,5 @@ mmap = get_retrieved_urls()
 
 
 
-with  codecs.open('data/all_output_files.json', 'wb',encoding='UTF-8') as f:
+with  codecs.open('models/all_output_files.json', 'wb',encoding='UTF-8') as f:
     json.dump(mmap, f, ensure_ascii=False)

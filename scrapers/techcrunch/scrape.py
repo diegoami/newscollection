@@ -44,7 +44,7 @@ def console_log(message):
 
 class Scraper:
     """
-    Scraper implements base methods to scrape and parse data from an URL.
+    Scraper implements base methods to scrape and parse models from an URL.
     """
     def __init__(self, headers):
         self.headers = headers
@@ -69,7 +69,7 @@ class Scraper:
 
     def parse(self, raw_data):
         """
-        Parse data from a raw string to a formated tree object.
+        Parse models from a raw string to a formated tree object.
 
         :param raw_data: a string to be parsed (will be the html page as string)
         :returns: the parsed string as a lxml.html tree object
@@ -141,7 +141,7 @@ class TechCrunchScraper(Scraper):
 
     def _get_page_links(self, url, section, referer=None):
         """
-        Get the data from the section page. Includes posts' URL, category, id
+        Get the models from the section page. Includes posts' URL, category, id
         and section.
 
         :param url: the section url to be scraped
@@ -165,7 +165,7 @@ class TechCrunchScraper(Scraper):
 
             link = {
                 'id': elem.get('id'),
-                'permalink': elem.get('data-permalink'),
+                'permalink': elem.get('models-permalink'),
                 'category': category,
                 'section': section
             }
@@ -290,7 +290,7 @@ class TechCrunchScraper(Scraper):
         Save a list of dictionaries into a csv file.
 
         :param output: a list of dictionaries to be saved
-        :param filename: filename to save the data
+        :param filename: filename to save the models
         """
         with open(self.output_file_name, 'w',encoding='UTF-8') as f:
             mmap = {"posts": self.posts}
@@ -298,7 +298,7 @@ class TechCrunchScraper(Scraper):
 
     def save_flow(self, num, last=False):
         """
-        Test conditions to check wether or not to save the data.
+        Test conditions to check wether or not to save the models.
 
         :param num: the number of scraped urls until now
         :param last: if this will be the last time this method will be called
