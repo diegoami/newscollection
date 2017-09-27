@@ -47,7 +47,7 @@ class GensimClassifierService(Resource):
         }
 
 
-files = glob.glob("models/artmodel_*.dict")
+files = glob.glob("models/lsi/artmodel_*.dict")
 files.sort(key=os.path.getmtime)
 print("Using file {}".format(files[0]))
 

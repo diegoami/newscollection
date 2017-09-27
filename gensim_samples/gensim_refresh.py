@@ -26,7 +26,7 @@ if __name__ == "__main__":
     if (args.dirName):
         gensimLoader.load_articles_from_directory(dirname = args.dirName)
 
-    root_filename = 'models/artmodel_'+ datetime.now().isoformat()
+    root_filename = 'models/lsi/artmodel_'+ datetime.now().isoformat()
     gensimClassifier = GensimClassifier(dict_filename=root_filename  + '.dict',
                 corpus_filename=root_filename  + '.mm', lsi_filename=root_filename + '.lsi', index_filename=root_filename + '.index')
     gensimClassifier.update_models(gensimLoader.articles)
