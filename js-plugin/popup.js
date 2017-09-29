@@ -13,18 +13,33 @@ chrome.tabs.executeScript( {
         related_articles = response_text["related_articles"]
         text = ""
         for (i = 0; i < related_articles.length; i++) {
+            ctext=""
             article = related_articles[i]
             tags = article['tags']
-            ctext = ''
+            tag_base = article['tag_base']
+            ctext +='<B class="sourceLink">('
+            ctext += article['source']
+            ctext += ')</B>&nbsp;&nbsp;'
             ctext += '<A class="articleLink" HREF="'
             ctext +=  article['url']
             ctext +=   '">'+article['title']+'</A>'
             ctext += '(' + Number(article['similarity'].toFixed(2)) + '%)'
             ctext +=      '<br>'
-
-                '<br>';
+            if (tags.length > 0)
+                ctext += 'Tags: '
+            for (j = 0; j < tags.length; j++) {
+                tagx = tags[j]
+                tagb = tag_base[j]
+                ctext +=      '<A HREF="'
+                ctext +=    tagx
+                ctext +=   '">'+tagb+'</A>'
+                if (j+1 < tags.length )
+                    ctext += ',&nbsp;'
+            }
+            ctext +=     '<br>';
 
             text += ctext
+            text += '<br>';
 
         }
 

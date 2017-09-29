@@ -29,14 +29,14 @@ if __name__ == "__main__":
     if (args.dirName):
         gensimLoader.load_articles_from_directory(dirname = args.dirName, listname=args.listName, load_texts=True)
 
-    gensim_root_filename = 'models/lsi/artmodel_'+ datetime.now().isoformat()
-    gensimClassifier = GensimClassifier(dict_filename=gensim_root_filename + '.dict',
-                corpus_filename=gensim_root_filename + '.mm', lsi_filename=gensim_root_filename + '.lsi', index_filename=gensim_root_filename + '.index')
-    gensimClassifier.update_models(gensimLoader.articles)
+   # gensim_root_filename = 'models/lsi/artmodel_'+ datetime.now().isoformat()
+   # gensimClassifier = GensimClassifier(dict_filename=gensim_root_filename + '.dict',
+   #             corpus_filename=gensim_root_filename + '.mm', lsi_filename=gensim_root_filename + '.lsi', index_filename=gensim_root_filename + '.index')
+   # gensimClassifier.update_models(gensimLoader.articles)
 
-  #  doc2vec_root_filename = 'models/doc2vec/doc2vecmodel_' + datetime.now().isoformat()
-#    doc2vecClassifier = Doc2VecClassifier(dict_filename=doc2vec_root_filename + '.model')
- #   doc2vecClassifier.update_models(gensimLoader.articles, gensimLoader.urls)
+    doc2vec_root_filename = 'models/doc2vec/doc2vecmodel_' + datetime.now().isoformat()
+    doc2vecClassifier = Doc2VecClassifier(model_filename=doc2vec_root_filename + '.model')
+    doc2vecClassifier.update_models(gensimLoader.articles, gensimLoader.urls)
 
 
 

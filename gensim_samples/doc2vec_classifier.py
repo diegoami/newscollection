@@ -44,7 +44,7 @@ class Doc2VecClassifier:
     def load_models(self):
         self.model = Doc2Vec.load(self.model_filename)
 
-    def update_model(self, texts, urls):
+    def update_models(self, texts, urls):
 
         it = LabeledLineSentence(texts, urls)
 
@@ -69,10 +69,12 @@ class Doc2VecClassifier:
 
 
     def get_related_articles(self, doc, n):
-        vec_lsi = self.get_vec(doc)
-        sims = self.index[vec_lsi]
-        sims = sorted(enumerate(sims), key=lambda item: -item[1])
-        return sims
+        wtok = [i for i in word_tokenize(doc)]
+        infer_vector = self.model.infer_vector(wtok)
+
+        similar_documents = self.model.docvecs.most_similar([infer_vector], topn=n)
+
+        return similar_documents
 
     def do_print_related(self, doc):
         logging.debug(" ============ BASE ARTICLE  ========================")

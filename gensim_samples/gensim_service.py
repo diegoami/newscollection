@@ -14,7 +14,7 @@ app = Flask(__name__)
 api = Api(app)
 import logging
 logging.basicConfig(filename='logs/info.log',level=logging.INFO)
-gensim_modelfile = "models/lsi/artmodel_2017-09-29T18:50:06.906818"
+gensim_modelfile = "models/lsi/artmodel_2017-09-29T19:41:07.361378"
 gensimLoader = GensimLoader()
 gensimLoader.load_articles_from_directory(listname='/home/diego/qdata/techarticles/lists/article_list_29_09_2017b.json',
                                                dirname='/home/diego/qdata/techarticles/parsed_articles/')
@@ -50,8 +50,8 @@ class GensimClassifierService(Resource):
             title = gensimLoader.titles[sim[0]]
             url =  gensimLoader.urls[sim[0]]
             tags = gensimLoader.tag_list[sim[0]]
-            source = urlparse(gensimLoader.urls[sim[0]])[1],
-            tag_base =  [x.split('//')[-1] for x in gensimLoader.tag_list[sim[0]] ]
+            source = str(urlparse(gensimLoader.urls[sim[0]])[1]).upper()
+            tag_base =  [x.split('/')[-1] if len(x.split('/')[-1]) > 0 else x.split('/')[-2] for x in gensimLoader.tag_list[sim[0]] ]
 
             similarity =  sim[1] * 100
 
@@ -63,6 +63,7 @@ class GensimClassifierService(Resource):
                                  "similarity": similarity}
 
             related_articles.append(related_article)
+        print(related_articles)
         return {
 
             'related_articles': related_articles
