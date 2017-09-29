@@ -1,7 +1,11 @@
 
 
 body {
-  min-width: 400px;
+  min-width: 800px;
+  min-height:900px;
   font-size: 100%;
 }
 
+.articleLink {
+
+}

@@ -27,8 +27,8 @@ class GensimClassifier:
 
     def update_models(self, documents):
         # remove common words and tokenize
-        stoplist = set('for a of the and to in'.split())
-        texts = [[word for word in document.lower().split() if word not in stoplist]
+
+        texts = [[word for word in document.lower().split()]
                  for document in documents]
 
         # remove words that appear only once

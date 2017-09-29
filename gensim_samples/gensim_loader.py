@@ -14,7 +14,7 @@ import json
 class GensimLoader:
 
     def __init__(self):
-        self.articles, self.titles, self.texts, self.urls = [], [], [], []
+        self.articles, self.titles, self.texts, self.urls, self.tag_list = [], [], [], [], []
 
     def load_articles_from_json(self, article_filename):
         with open(article_filename) as f:
@@ -32,14 +32,21 @@ class GensimLoader:
                 self.urls.append(url)
 
 
-    def load_articles_from_directory(self, dirname):
-        gsearch_results = glob.glob(dirname+'/*.txt')
-        for gsearch_result in gsearch_results:
-            with open(gsearch_result, 'r') as f:
-                url = f.readline()
-                title = f.readline()
-                text = "\n".join(f.readlines())
-                self.articles.append(title + '\n' + text)
-                self.titles.append(title)
-                self.texts.append(text)
-                self.urls.append(url)
+    def load_articles_from_directory(self, listname, dirname, load_texts=True):
+        with open(listname, 'r') as lst_f:
+            article_map = json.load(lst_f)
+            for url in sorted(article_map):
+                record = article_map[url]
+                filename = dirname + '/' + record["filename"]
+                if (os.path.isfile(filename)):
+                    if load_texts:
+                        with open(filename, 'r') as f:
+                            text = f.read()
+                            if (len(text) > 400):
+                                self.articles.append(text)
+                                self.texts.append(text)
+                                self.titles.append(record["title"])
+                                self.urls.append(url)
+                                self.tag_list.append(record["tags"])
+
+
