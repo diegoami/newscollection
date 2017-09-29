@@ -73,7 +73,7 @@ class Doc2VecClassifier:
         infer_vector = self.model.infer_vector(wtok)
 
         similar_documents = self.model.docvecs.most_similar([infer_vector], topn=n)
-
+        print(similar_documents)
         return similar_documents
 
     def do_print_related(self, doc):

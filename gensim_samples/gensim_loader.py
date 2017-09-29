@@ -34,9 +34,9 @@ class GensimLoader:
 
     def load_articles_from_directory(self, listname, dirname, load_texts=True):
         with open(listname, 'r') as lst_f:
-            article_map = json.load(lst_f)
-            for url in sorted(article_map):
-                record = article_map[url]
+            self.article_map = json.load(lst_f)
+            for url in sorted(self.article_map):
+                record = self.article_map[url]
                 filename = dirname + '/' + record["filename"]
                 if (os.path.isfile(filename)):
                     if load_texts:
