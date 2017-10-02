@@ -8,35 +8,65 @@ import os
 from gensim.corpora import MmCorpus
 
 from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.corpus import stopwords
-import string
 
-from os import listdir
-from os.path import isfile, join
-from gensim.models.doc2vec import TaggedDocument
-from datetime import datetime
-import json
+
+
 from gensim.models import Doc2Vec
 
-
+from model_usage.clf_facade import ClfFacade
 
 MIN_FREQUENCY = 3
-MODEL_FILENAME   = 'doc2vec'
 
-class Doc2VecFacade:
 
-    def __init__(self, model_dir):
-        self.model_dir = model_dir
+class Doc2VecFacade(ClfFacade):
+
+    def __init__(self, model_filename, article_loader):
+        self.model_filename = model_filename
+        self.article_loader = article_loader
 
 
     def load_models(self):
-        self.model = Doc2Vec.load(self.model_dir + MODEL_FILENAME)
+        self.model = Doc2Vec.load(self.model_filename)
 
 
-    def get_related_articles(self, doc, n):
+    def get_related_articles_and_sims(self, doc, n):
         wtok = [i for i in word_tokenize(doc.lower())]
         infer_vector = self.model.infer_vector(wtok)
 
         similar_documents = self.model.docvecs.most_similar([infer_vector], topn=n)
-        print(similar_documents)
+
         return similar_documents
+
+
+    def get_related_articles(self, doc, n, days=None):
+        similar_documents = self.get_related_articles_and_sims(doc,n)
+
+        urls = list(zip(*similar_documents))[0]
+
+        return urls
+
+    def get_related_articles_and_score(self,  urlArg , n=5000, max=15):
+        orig_record = self.article_loader.article_map[urlArg ]
+        day = orig_record ["date_p"]
+        orig_text = orig_record ["text"]
+
+        similar_documents = self.get_related_articles_and_sims(orig_text , n)
+        rated_urls = []
+        str_exp = ""
+        for url, score in similar_documents:
+            if (url == urlArg):
+                continue
+
+            record = self.article_loader.article_map[url]
+
+            p_date = record["date_p"]
+            real_score = score * 125*abs(p_date-day).days
+            str_exp = str(round(score,2))+"*100-"+str(abs(p_date-day).days)
+            if (record["source"] == orig_record["source"]):
+                real_score -= 5
+                str_exp = str_exp + "-7"
+            if (real_score > 0):
+                rated_urls.append((url,real_score,str_exp ))
+
+        srated_urls = sorted(rated_urls, key=lambda x: x[1],reverse=True)
+        return srated_urls[:max]

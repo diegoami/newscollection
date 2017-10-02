@@ -1,13 +1,15 @@
 
 import json
 
-MIN_FREQUENCY = 3
+MIN_FREQUENCY = 1
 DICTIONARY_FILENAME   = 'dictionary'
 CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
 from gensim import corpora, models, similarities
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
 
 import os
 
@@ -28,7 +30,7 @@ class TfidfGenerator:
 
         documents = [self.article_map[article]["text"] for article in self.article_map]
 
-        texts = [[word for word in document.lower().split()]
+        texts = [[word for word in word_tokenize(document.lower())]
                  for document in documents]
 
         # remove words that appear only once
@@ -38,10 +40,9 @@ class TfidfGenerator:
             for token in text:
                 frequency[token] += 1
 
+
         texts = [[token for token in text if frequency[token] >= MIN_FREQUENCY]
                  for text in texts]
-
-
 
         dictionary = corpora.Dictionary(texts)
         dictionary.save(self.model_output_dir+DICTIONARY_FILENAME)  # store the dictionary, for future reference

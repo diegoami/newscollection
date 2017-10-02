@@ -5,4 +5,4 @@ lsi_models_dir_base : /media/diego/QData/techarticles/models/lsi/lsi_
 lsi_models_dir_link : /media/diego/QData/techarticles/models/lsi/lsi_model
 doc2vec_models_dir_base : /media/diego/QData/techarticles/models/doc2vec/doc2vec__
 doc2vec_models_dir_link : /media/diego/QData/techarticles/models/doc2vec/doc2vec_model
-
+doc2vec_models_file_link : /media/diego/QData/techarticles/models/doc2vec/doc2vec_model/doc2vec
