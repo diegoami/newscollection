@@ -14,7 +14,7 @@ import json
 class GensimLoader:
 
     def __init__(self):
-        self.articles, self.titles, self.texts, self.urls, self.tag_list = [], [], [], [], []
+        self.articles, self.titles, self.texts, self.urls = [], [], [], []
 
     def load_articles_from_json(self, article_filename):
         with open(article_filename) as f:
@@ -47,6 +47,6 @@ class GensimLoader:
                                 self.texts.append(text)
                                 self.titles.append(record["title"])
                                 self.urls.append(url)
-                                self.tag_list.append(record["tags"])
+
 
 

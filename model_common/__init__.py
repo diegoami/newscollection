@@ -1,0 +1,1 @@
+from model_common.article_loader import ArticleLoader

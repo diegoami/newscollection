@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="popup.js?v=2"></script>
+  <script src="main.js"></script>
+
+  <title>See also these news</title>
+  <link href="main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h2>Advice from TFIDF & BOW</h2>
+<textarea id="tdidf_input" name="tdidf_comment" rows="10" cols="90">TF IDF Search</textarea><BR/>
+<input type="submit" value="submit" onclick="submit_tfidf();" />
+<div id="output"></div>
+<h2>Advice from DOC2VEC</h2>
+<textarea id="doc2vec_input" name="doc2vec_comment" rows="10" cols="90">DOC2Vec Search</textarea><BR/>
+<input type="submit" value="submit" onclick="submit_doc2vec();" />
+
+<div id="output2"></div>
+</body>
+</html>

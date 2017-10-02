@@ -15,9 +15,9 @@ app = Flask(__name__)
 api = Api(app)
 import logging
 logging.basicConfig(filename='logs/info.log',level=logging.INFO)
-gensim_modelfile = "models/lsi/artmodel_2017-09-29T19:41:07.361378"
+gensim_modelfile = "models/lsi/artmodel_2017-09-30T01:27:54.236406"
 gensimLoader = GensimLoader()
-gensimLoader.load_articles_from_directory(listname='/home/diego/qdata/techarticles/lists/article_list_29_09_2017b.json',
+gensimLoader.load_articles_from_directory(listname='/home/diego/qdata/techarticles/lists/article_list_30_09_2017.json',
                                                dirname='/home/diego/qdata/techarticles/parsed_articles/')
 gensimClassifier = GensimClassifier(dict_filename=gensim_modelfile + '.dict',
                                          corpus_filename=gensim_modelfile + '.mm', lsi_filename=gensim_modelfile + '.lsi',
@@ -25,13 +25,33 @@ gensimClassifier = GensimClassifier(dict_filename=gensim_modelfile + '.dict',
 
 print("Using file {}".format(gensim_modelfile ))
 
-doc2vecClassifier = Doc2VecClassifier(model_filename='models/doc2vec/doc2vecmodel_2017-09-29T20:22:54.683845.model')
+doc2vecClassifier = Doc2VecClassifier(model_filename='models/doc2vec/doc2vecmodel_2017-09-30T01:29:19.344507.model')
 
 doc2vecClassifier.load_models()
 
 gensimClassifier.load_models()
 
 class ClassifierService(Resource):
+
+    def extract_source(self, url):
+        source = str(urlparse(url)[1]).upper()
+        return source
+
+    def extract_date(self, url):
+        arrs = str(urlparse(url)[2]).split('/')
+        index = 0
+        while not arrs[index].isdigit():
+            index += 1
+        year, month, day = arrs[index], arrs[index+1], arrs[index+2]
+        date_str = day + '-' + month + '-' + year
+
+        return date_str
+
+    def extract_tags(self, tags):
+        tag_base = [x.split('/')[-1] if len(x.split('/')[-1]) > 0 else x.split('/')[-2] for x in
+                    tags]
+        return tag_base
+
 
     @app.after_request
     def after_request(response):
@@ -63,24 +83,20 @@ class GensimClassifierService(ClassifierService):
         sims = gensimClassifier.get_related_articles(doc, n)
         related_articles = []
         for sim in sims[:n]:
-            title = gensimLoader.titles[sim[0]]
-            url = gensimLoader.urls[sim[0]]
-            tags = gensimLoader.tag_list[sim[0]]
-            source = str(urlparse(gensimLoader.urls[sim[0]])[1]).upper()
-            tag_base = [x.split('/')[-1] if len(x.split('/')[-1]) > 0 else x.split('/')[-2] for x in
-                        gensimLoader.tag_list[sim[0]]]
-
-            similarity = sim[1] * 100
-
-            related_article = {"title": title,
-                               "url": url,
-                               "tags": tags,
-                               "source": source,
-                               "tag_base": tag_base,
-                               "similarity": similarity}
-
+            related_article = {}
+            related_article["url"] = url = gensimLoader.urls[sim[0]]
+            link_obj = gensimLoader.article_map[url]
+            related_article["title"] = link_obj["title"]
+            related_article["tags"] = link_obj["tags"]
+            related_article["source"] = self.extract_source(url)
+            related_article["tag_base"] = self.extract_tags(related_article["tags"])
+            related_article["date"] = self.extract_date(related_article["url"])
+            related_article["similarity"] = sim[1] * 100
+            related_article["authors"] = link_obj["authors"]
+            related_article["author_base"] =  self.extract_tags(related_article["authors"])
             related_articles.append(related_article)
         return related_articles
+
 
     def post(self):
         return self.common_post()
@@ -90,25 +106,19 @@ class Doc2VecClassifierService(ClassifierService):
         sims = doc2vecClassifier.get_related_articles(doc, n)
         related_articles = []
         for sim in sims[:n]:
-            url = sim[0]
+            related_article = {}
+            related_article["url"] = url = sim[0]
             link_obj = gensimLoader.article_map[url]
-
-            title = link_obj["title"]
-            tags = link_obj["tags"]
-            source = str(urlparse(url)[1]).upper()
-            tag_base = [x.split('/')[-1] if len(x.split('/')[-1]) > 0 else x.split('/')[-2] for x in
-                        tags]
-
-            similarity = sim[1] * 100
-
-            related_article = {"title": title,
-                               "url": url,
-                               "tags": tags,
-                               "source": source,
-                               "tag_base": tag_base,
-                               "similarity": similarity}
-
+            related_article["title"] = link_obj["title"]
+            related_article["tags"] = link_obj["tags"]
+            related_article["source"] = self.extract_source(url)
+            related_article["tag_base"] = self.extract_tags(related_article["tags"])
+            related_article["date"] = self.extract_date(related_article["url"])
+            related_article["similarity"] = sim[1] * 100
+            related_article["authors"] = link_obj["authors"]
+            related_article["author_base"] =  self.extract_tags(related_article["authors"])
             related_articles.append(related_article)
+
         return related_articles
 
 
