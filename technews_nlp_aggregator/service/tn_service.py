@@ -4,7 +4,7 @@ from flask_restful import Resource, Api
 
 import sys
 sys.path.append('..')
-
+from datetime import date
 import abc
 from urllib.parse import urlparse
 
@@ -21,6 +21,7 @@ import yaml
 config = yaml.safe_load(open('config.yml'))
 
 
+
 articleLoader = ArticleLoader(listname=config["list_name"],dirname=config["parsed_articles_dir"])
 articleLoader.load_articles_from_directory(True)
 doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
@@ -29,6 +30,9 @@ tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
 tfidfFacade.load_models()
 
 class ClassifierService(Resource):
+    def __init__(self):
+        self.classifier = None
+        self.interest_map = {}
 
     def extract_source(self, url):
         source = str(urlparse(url)[1]).upper()
@@ -57,11 +61,13 @@ class ClassifierService(Resource):
         response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
         return response
 
-    @abc.abstractmethod
     def retrieve_related_articles(self, doc, n):
-        return []
+        if self.classifier:
+            return self.classifier.get_related_articles_and_score_doc(doc, n)
+        else:
+            return []
 
-    def common_post(self):
+    def retrieve_articles_srv(self):
         request_body = request.get_json()
         text = request_body["text"]
         n_articles = request_body["n_articles"]
@@ -73,56 +79,113 @@ class ClassifierService(Resource):
             'related_articles': related_articles
         }
 
-    def publish_related_articles(self, doc, n):
-        sims = self.retrieve_related_articles(doc, n)
-        logging.info(" ======== SIMS ==============")
-        logging.info(sims)
+    def retrieve_interesting_articles(self, start, end, n):
 
+        if self.classifier:
+            logging.info("retrieve_ineresting_article "+str(start) + " "+str(end))
+            return self.classifier.interesting_articles_for_day(start, end)
+        else:
+            return []
+
+
+    def retrieve_interesting_articles_srv(self):
+
+        def conv_to_date(str_date):
+            return date(*(map(int,str_date.split('-'))))
+
+        request_body = request.get_json()
+        logging.debug(request_body)
+        start_s, end_s = request_body["start"], request_body["end"]
+        start, end = conv_to_date(start_s), conv_to_date(end_s)
+        if (start, end) in self.interest_map:
+            interesting_articles = self.interest_map(start,end)
+        else:
+
+
+            sims_all = self.retrieve_interesting_articles(start, end)
+            sims = [(x[0],x[1]) for x in sims_all]
+            interesting_articles = self.extract_releated_articles(sims)
+            self.interest_map[(start, end) ] = interesting_articles
+        return {
+
+            'interesting_articles ': interesting_articles
+        }
+
+    def publish_related_articles(self, doc, n):
+        sims_all = self.retrieve_related_articles(doc, n)
+        logging.info(" ======== SIMS ==============")
+
+        sims = sims_all[:n]
+        logging.info(sims)
+        related_articles = self.extract_releated_articles(sims)
+
+        return related_articles
+
+    def extract_releated_articles(self, sims):
         related_articles = []
-        for sim in sims[:n]:
+        for url, score in sims:
             related_article = {}
-            related_article["url"] = url = sim[0]
+            related_article["url"] = url
             link_obj = articleLoader.article_map[url]
             related_article["title"] = link_obj["title"]
             related_article["tags"] = link_obj["tags"]
             related_article["source"] = self.extract_source(url)
             related_article["tag_base"] = self.extract_tags(related_article["tags"])
             related_article["date"] = self.extract_date(related_article["url"])
-            related_article["similarity"] = sim[1]*100
+            related_article["similarity"] = score * 100
             related_article["authors"] = link_obj["authors"]
-            related_article["author_base"] =  self.extract_tags(related_article["authors"])
+            related_article["author_base"] = self.extract_tags(related_article["authors"])
             related_articles.append(related_article)
         logging.info(" ======== RELATED ARTICLES ==============")
         logging.info(related_articles)
-
         return related_articles
 
 
-class GensimClassifierService(ClassifierService):
+class TfidfRetrieveRelatedService(ClassifierService):
 
-
-    def retrieve_related_articles(self, doc, n):
-        return tfidfFacade.get_related_articles_and_score_doc(doc, n)
-
-    def post(self):
-        return self.common_post()
-
-class Doc2VecClassifierService(ClassifierService):
-
-    def retrieve_related_articles(self, doc, n):
-        return doc2VecFacade.get_related_articles_and_score_doc(doc, n)
-
+    def __init__(self):
+        super().__init__()
+        self.classifier = tfidfFacade
 
     def post(self):
-        return self.common_post()
+        return self.retrieve_articles_srv()
 
+class Doc2VecRetrieveRelatedService(ClassifierService):
+    def __init__(self):
+        super().__init__()
+        self.classifier = doc2VecFacade
+#
+    def post(self):
+        return self.retrieve_articles_srv()
+
+class TfidfRetrieveInterestingService(ClassifierService):
+    def __init__(self):
+        super().__init__()
+        self.classifier = tfidfFacade
+
+    def post(self):
+        return self.retrieve_interesting_articles_srv()
+
+class Doc2VecRetrieveInterestingService(ClassifierService):
+    def __init__(self):
+        super().__init__()
+        self.classifier = doc2VecFacade
+
+
+    def post(self):
+        return self.retrieve_interesting_articles_srv()
 
 #files = glob.glob("models/lsi/artmodel_*.dict")
 #files.sort(key=os.path.getmtime)
 
-api.add_resource(GensimClassifierService, '/tfidf/v1/related/')
+api.add_resource(TfidfRetrieveRelatedService, '/tfidf/v1/related/')
 
-api.add_resource(Doc2VecClassifierService, '/doc2vec/v1/related/')
+api.add_resource(Doc2VecRetrieveRelatedService, '/doc2vec/v1/related/')
+
+
+api.add_resource(TfidfRetrieveInterestingService, '/tfidf/v1/interesting/')
+
+api.add_resource(Doc2VecRetrieveInterestingService, '/doc2vec/v1/interesting/')
 
 
 

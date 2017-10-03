@@ -67,6 +67,7 @@ class ClfFacade:
             len_article = len(self.article_loader.article_map[url]["text"])
             #sum_score += len_article / 400
             #str_score = str_score + "+"+str(len_article)+"/500"
-            all_links.append((url, round(sum_score,2), str_score, [x[0] for x in ars_score ]))
+            #all_links.append((url, round(sum_score,2), str_score, [x[0] for x in ars_score ]))
+            all_links.append((url, round(sum_score, 2), str_score, [x[0] for x in ars_score]))
         sall_links = sorted(all_links, key = lambda x: x[1], reverse=True)
         return sall_links
