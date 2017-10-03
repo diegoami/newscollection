@@ -79,7 +79,7 @@ class ClfFacade:
         urls_of_day = self.article_loader.articles_in_interval(start, end)
         all_links = []
         for url in urls_of_day:
-            ars_score = self.get_related_articles_and_score(url,2500,4)
+            ars_score = self.get_related_articles_and_score(url,5000,4)
             sum_score = sum([x[1] for x in ars_score])
 
 

@@ -21,7 +21,7 @@ app = Flask(__name__)
 api = Api(app)
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
+from datetime import timedelta
 
 class ClassifierService(Resource):
     def __init__(self):
@@ -40,10 +40,15 @@ class ClassifierService(Resource):
         if self.classifier:
             request_body = request.get_json()
             text = request_body["text"]
-            n_articles = request_body["n_articles"]
+            n_articles = int(request_body["n_articles"])
             logging.debug(request_body)
             if "start" in request_body and "end" in request_body:
-                sims_all = self.classifier.get_related_articles_from_to(text,  n_articles, conv_to_date(request_body["start"]), conv_to_date(request_body["end"]) )
+                start, end = conv_to_date(request_body["start"]), conv_to_date(request_body["end"])
+                if start and end:
+                    sims_all = self.classifier.get_related_articles_from_to(text,  n_articles, conv_to_date(request_body["start"]), conv_to_date(request_body["end"]) )
+                else:
+                    sims_all = self.classifier.get_related_articles_and_score_doc(text, n_articles)
+
             else:
                 sims_all = self.classifier.get_related_articles_and_score_doc(text, n_articles)
             sims = sims_all[:n_articles]
@@ -60,9 +65,12 @@ class ClassifierService(Resource):
             found_urls = []
             request_body = request.get_json()
             logging.debug(request_body)
-            n_articles = request_body["n_articles"]
+            n_articles = int(request_body["n_articles"])
             start_s, end_s = request_body["start"], request_body["end"]
             start, end = conv_to_date(start_s), conv_to_date(end_s)
+            if (start == None) or (end == None):
+                end = date.today()
+                start = end-timedelta(days=5)
             if (start, end, n_articles) in self.interest_map:
                 interesting_articles = self.interest_map(start,end,n_articles)
             else:
@@ -71,7 +79,7 @@ class ClassifierService(Resource):
                 interesting_articles = extract_interesting_articles(articleLoader, sims_filtered )
                 self.interest_map[(start, end, n_articles )] = interesting_articles
             return {
-                'interesting_articles ': interesting_articles
+                'interesting_articles': interesting_articles
             }
         else:
             return {}
@@ -121,6 +129,6 @@ api.add_resource(Doc2VecRetrieveInterestingService, '/doc2vec/v1/interesting/')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=80)
 
 

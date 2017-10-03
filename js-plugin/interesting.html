@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8">
 
-  <script src="main.js?v=3"></script>
+  <script src="main.js?v=7"></script>
 
   <title>See also these news</title>
   <link href="main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<H3> Enter text from a tech article here</H3>
-<textarea id="tdidf_input" name="tdidf_comment" rows="30" cols="90">Enter article text here</textarea><BR/>
+<H3> Search for controversial articles in range of dates </H3>
 N Articles:<input type="text" id="n_articles" value="15"><br/>
 From:<input type="text" id="start" value="2017-MM-DD"><I>Starts from 2017-01-01</I><br/>
 To:<input type="text" id="end" value="2017-MM-DD"><br/>
 
-<input type="submit" value="submit" onclick="submit_all();" />
-<h2>Advice from TFIDF & BOW</h2>
+<input type="submit" value="submit" onclick="submit_interesting();" />
+<h2>Controversial from TFIDF & BOW</h2>
 <div id="output"></div>
-<h2>Advice from DOC2VEC</h2>
-<I>This will perform poorly for short texts</I>
+<h2>Controversial from DOC2VEC</h2>
 
 <div id="output2"></div>
 </body>

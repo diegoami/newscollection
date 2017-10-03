@@ -73,4 +73,7 @@ def extract_source( url):
 
 
 def conv_to_date(str_date):
-    return date(*(map(int, str_date.split('-'))))
+    try:
+        return date(*(map(int, str_date.split('-'))))
+    except:
+        return None
