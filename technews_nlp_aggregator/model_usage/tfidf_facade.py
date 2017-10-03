@@ -48,22 +48,13 @@ class TfidfFacade(ClfFacade):
         return urls[:n]
 
     def get_related_articles_and_score_doc(self, doc, n):
-        logging.info(" ======== DOC ===========")
-        logging.info(doc)
 
         sims = self.get_related_sims(doc, n)
-        logging.info(" ======== SIMS ===========")
-        logging.info(sims)
 
         article_map = self.article_loader.article_map
         url_list = self.article_loader.url_list
-        logging.info(" ======== URL LIST===========")
-
-        logging.info(url_list )
         related_articles = list(zip([url_list[sim[0]] for sim in sims],[sim[1] for sim in sims]))
-        logging.info(" ======== RELATED ARTICLES IN ZIP ===========")
 
-        logging.info(related_articles)
         return related_articles[:n]
 
     def get_related_articles_and_score(self,  urlArg, n=5000, max=15):
@@ -85,12 +76,12 @@ class TfidfFacade(ClfFacade):
 
             p_date = record["date_p"]
             real_score = score * 100 - abs(p_date - day).days
-            str_exp = str(round(score, 2)) + "*100-" + str(abs(p_date - day).days)
+           # str_exp = str(round(score, 2)) + "*100-" + str(abs(p_date - day).days)
             if (record["source"] == orig_record["source"]):
                 real_score -= 5
-                str_exp = str_exp + "-5"
+               # str_exp = str_exp + "-5"
             if (real_score > 0):
-                rated_urls.append((url, real_score, str_exp ))
+                rated_urls.append((url, real_score ))
 
         srated_urls = sorted(rated_urls, key=lambda x: x[1], reverse=True)
         return srated_urls[:max]

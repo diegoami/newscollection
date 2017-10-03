@@ -16,8 +16,8 @@ while True:
     print_articles(articles2)
     print(" ============= TOGETHER ==================")
 
-    article_all = {}
-    for article in articles1 + articles2:
-        if article[0] in article_all:
-            article_all[article[0]][2] += article[2]
+  #  article_all = {}
+ #   for article in articles1 + articles2:
+ #       if article[0] in article_all:
+ #           article_all[article[0]][2] += article[2]
     time.sleep(0.75)

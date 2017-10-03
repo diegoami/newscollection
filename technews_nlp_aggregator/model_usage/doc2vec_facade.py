@@ -45,7 +45,7 @@ class Doc2VecFacade(ClfFacade):
 
         similar_documents = self.get_related_articles_and_sims(orig_text , n)
         rated_urls = []
-        str_exp = ""
+
         for url, score in similar_documents:
             if (url == urlArg):
                 continue
@@ -54,12 +54,12 @@ class Doc2VecFacade(ClfFacade):
 
             p_date = record["date_p"]
             real_score = score * 125-abs(p_date-day).days
-            str_exp = str(round(score,2))+"*100-"+str(abs(p_date-day).days)
+
             if (record["source"] == orig_record["source"]):
                 real_score -= 5
-                str_exp = str_exp + "-7"
+
             if (real_score > 0):
-                rated_urls.append((url,real_score,str_exp ))
+                rated_urls.append((url,real_score))
 
         srated_urls = sorted(rated_urls, key=lambda x: x[1],reverse=True)
         return srated_urls[:max]
