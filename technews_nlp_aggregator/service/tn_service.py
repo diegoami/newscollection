@@ -18,7 +18,7 @@ from technews_nlp_aggregator.model_common import ArticleLoader
 from technews_nlp_aggregator.model_usage import Doc2VecFacade, TfidfFacade
 import yaml
 
-config = yaml.safe_load(open('../config.yml'))
+config = yaml.safe_load(open('config.yml'))
 
 
 articleLoader = ArticleLoader(listname=config["list_name"],dirname=config["parsed_articles_dir"])
