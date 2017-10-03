@@ -1,19 +1,7 @@
-import json
-
-
-from gensim import corpora, models, similarities
-
-import os
-
-from gensim.corpora import MmCorpus
-
-from nltk.tokenize import sent_tokenize, word_tokenize
-
-
-
 from gensim.models import Doc2Vec
+from nltk.tokenize import word_tokenize
 
-from model_usage.clf_facade import ClfFacade
+from technews_nlp_aggregator.model_usage.clf_facade import ClfFacade
 
 MIN_FREQUENCY = 3
 
@@ -37,6 +25,11 @@ class Doc2VecFacade(ClfFacade):
 
         return similar_documents
 
+
+
+    def get_related_articles_and_score_doc(self, doc, n):
+
+        return self.get_related_articles_and_sims(doc, n)
 
     def get_related_articles(self, doc, n, days=None):
         similar_documents = self.get_related_articles_and_sims(doc,n)

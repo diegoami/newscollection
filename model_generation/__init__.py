@@ -1,2 +1,0 @@
-from model_generation.doc2vec_generator import Doc2VecGenerator
-from model_generation.tfidf_generator import TfidfGenerator

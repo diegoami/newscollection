@@ -1,0 +1,2 @@
+from technews_nlp_aggregator.model_common.article_loader import ArticleLoader
+

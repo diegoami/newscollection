@@ -1,23 +1,17 @@
-
-import json
-import nltk
-
-
 MIN_FREQUENCY = 3
 DICTIONARY_FILENAME   = 'dictionary'
 CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
-from gensim import corpora, models, similarities
-from nltk.tokenize import sent_tokenize, word_tokenize
-
-
-from model_usage.clf_facade import ClfFacade
-import os
-
-from gensim.corpora import MmCorpus
 import logging
+
+from gensim import corpora, models, similarities
+from gensim.corpora import MmCorpus
+from nltk.tokenize import word_tokenize
+
+from technews_nlp_aggregator.model_usage.clf_facade import ClfFacade
+
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 class TfidfFacade(ClfFacade):
@@ -51,7 +45,26 @@ class TfidfFacade(ClfFacade):
         url_list = self.article_loader.url_list
         urls= [url_list[sim[0]] for sim in sims]
         #articles = [article_map[article_map.keys()[x]] for x in sims]
-        return urls
+        return urls[:n]
+
+    def get_related_articles_and_score_doc(self, doc, n):
+        logging.info(" ======== DOC ===========")
+        logging.info(doc)
+
+        sims = self.get_related_sims(doc, n)
+        logging.info(" ======== SIMS ===========")
+        logging.info(sims)
+
+        article_map = self.article_loader.article_map
+        url_list = self.article_loader.url_list
+        logging.info(" ======== URL LIST===========")
+
+        logging.info(url_list )
+        related_articles = list(zip([url_list[sim[0]] for sim in sims],[sim[1] for sim in sims]))
+        logging.info(" ======== RELATED ARTICLES IN ZIP ===========")
+
+        logging.info(related_articles)
+        return related_articles[:n]
 
     def get_related_articles_and_score(self,  urlArg, n=5000, max=15):
         orig_record = self.article_loader.article_map[urlArg ]

@@ -1,4 +1,4 @@
-from test.test_bootstrap import *
+from technews_nlp_aggregator.test_query.test_bootstrap import *
 
 article1 = """
 Team17 announced today that it’ll publish Pathea Games’s My Time at Portia, a colorful open-world role-playing game. This marks its first partnership with a Chinese studio, and it follows an announcement earlier this year about the first time it signed on with a Brazilian developer. My Time at Portia is raising money on the crowdfunding platform Kickstarter, and aims to be in early access in 2018. It will be available on PC and Mac to start, and Team17 will help bring the game to consoles later on.
@@ -70,3 +70,4 @@ show_related_articles(doc2VecFacade, article2)
 
 show_related_articles(tfidfFacade, article1)
 show_related_articles(tfidfFacade, article2)
+

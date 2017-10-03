@@ -55,7 +55,7 @@ function create_inner_text(response_text) {
 function execute_tfidf(data) {
     var xhr = new XMLHttpRequest();
 
-    xhr.open('POST', 'http://127.0.0.1:5000/gensim/', true);
+    xhr.open('POST', 'http://127.0.0.1:5000/tfidf/v1/related/', true);
     xhr.setRequestHeader('Content-type', 'application/json');
 
     xhr.onreadystatechange = function () {
@@ -69,7 +69,7 @@ function execute_tfidf(data) {
 
 function execute_doc2vec(data) {
     var xhr2 = new XMLHttpRequest();
-    xhr2.open('POST', 'http://127.0.0.1:5000/doc2vec/', true);
+    xhr2.open('POST', 'http://127.0.0.1:5000/doc2vec/v1/related/', true);
     xhr2.setRequestHeader('Content-type', 'application/json');
 
     xhr2.onreadystatechange = function () {

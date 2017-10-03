@@ -1,0 +1,4 @@
+from technews_nlp_aggregator.model_generation.doc2vec_generator import Doc2VecGenerator
+from technews_nlp_aggregator.model_generation.tfidf_generator import TfidfGenerator
+
+

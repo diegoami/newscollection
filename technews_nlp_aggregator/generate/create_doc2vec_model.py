@@ -1,9 +1,10 @@
-import os
 import logging
+import os
+
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-from model_common import ArticleLoader
-from model_generation import Doc2VecGenerator
+from technews_nlp_aggregator.model_common import ArticleLoader
+from technews_nlp_aggregator.model_generation import Doc2VecGenerator
 from datetime import datetime
 import yaml
 
