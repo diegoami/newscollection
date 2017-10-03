@@ -82,5 +82,3 @@ class TfidfFacade(ClfFacade):
         srated_urls = sorted(rated_urls, key=lambda x: x[1], reverse=True)
         return srated_urls[:max]
 
- #   def interested_article_for_day(self, day):
-     #   articles_for_day

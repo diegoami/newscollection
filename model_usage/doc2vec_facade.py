@@ -60,7 +60,7 @@ class Doc2VecFacade(ClfFacade):
             record = self.article_loader.article_map[url]
 
             p_date = record["date_p"]
-            real_score = score * 125*abs(p_date-day).days
+            real_score = score * 125-abs(p_date-day).days
             str_exp = str(round(score,2))+"*100-"+str(abs(p_date-day).days)
             if (record["source"] == orig_record["source"]):
                 real_score -= 5
