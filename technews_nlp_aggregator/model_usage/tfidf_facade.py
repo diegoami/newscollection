@@ -33,11 +33,32 @@ class TfidfFacade(ClfFacade):
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
 
+    def get_vec_docid(self, id):
+
+        vec_bow = self.corpus[id]
+        vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
+        return vec_lsi
+
+    def get_related_sims_docid(self, id, n):
+        vec_lsi = self.get_vec_docid(id)
+        sims = self.index[vec_lsi]
+        sims = sorted(enumerate(sims), key=lambda item: -item[1])
+        return sims[1:n]
+
+
     def get_related_sims(self, doc, n):
         vec_lsi = self.get_vec(doc)
         sims = self.index[vec_lsi]
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
         return sims[:n]
+
+    def get_related_articles_docid(self, docid, n):
+        sims = self.get_related_sims_docid(docid, n)
+        article_map = self.article_loader.article_map
+        url_list = self.article_loader.url_list
+        urls = [url_list[sim[0]] for sim in sims]
+        # articles = [article_map[article_map.keys()[x]] for x in sims]
+        return urls[:n]
 
     def get_related_articles(self, doc, n):
         sims = self.get_related_sims(doc,n)
@@ -57,11 +78,15 @@ class TfidfFacade(ClfFacade):
 
         return related_articles[:n]
 
-    def get_related_articles_and_score(self,  urlArg, n=5000, max=15):
-        orig_record = self.article_loader.article_map[urlArg ]
+
+
+    def get_related_articles_and_score_docid(self,  docid, n=5000, max=15):
+        urlArg = self.article_loader.url_list[docid]
+        orig_record = self.article_loader.article_map[
+            urlArg
+        ]
         day = orig_record ["date_p"]
-        orig_text = orig_record ["text"]
-        similar_documents = self.get_related_sims(orig_text, n)
+        similar_documents = self.get_related_sims_docid(docid, n)
         rated_urls = []
 
         for index, score in similar_documents:
@@ -86,3 +111,15 @@ class TfidfFacade(ClfFacade):
         srated_urls = sorted(rated_urls, key=lambda x: x[1], reverse=True)
         return srated_urls[:max]
 
+    def interesting_articles_for_day(self, start, end, max=15):
+        docs_of_day = self.article_loader.docs_in_interval(start, end)
+        all_links = []
+        for docid in docs_of_day:
+            ars_score = self.get_related_articles_and_score_docid(docid, 5000, 4)
+            sum_score = sum([x[1] for x in ars_score])
+            url = self.article_loader.url_list[docid]
+
+
+            all_links.append((url, round(sum_score, 2), [x[0] for x in ars_score]))
+        sall_links = sorted(all_links, key=lambda x: x[1], reverse=True)[:max]
+        return sall_links

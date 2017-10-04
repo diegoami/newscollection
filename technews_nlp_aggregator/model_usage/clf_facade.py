@@ -74,17 +74,6 @@ class ClfFacade:
         batch3 = self.get_related_articles_in_interval(article, date_record, 1000, 15, 15)
         return (batch1 + batch2 + batch3)[:max]
 
-
+    @abc.abstractmethod
     def interesting_articles_for_day(self, start, end, max=15):
-        urls_of_day = self.article_loader.articles_in_interval(start, end)
-        all_links = []
-        for url in urls_of_day:
-            ars_score = self.get_related_articles_and_score(url,5000,4)
-            sum_score = sum([x[1] for x in ars_score])
-
-
-            len_article = len(self.article_loader.article_map[url]["text"])
-
-            all_links.append((url, round(sum_score, 2),  [x[0] for x in ars_score]))
-        sall_links = sorted(all_links, key = lambda x: x[1], reverse=True)[:max]
-        return sall_links
+        pass

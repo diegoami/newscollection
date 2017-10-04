@@ -12,7 +12,7 @@ import yaml
 config = yaml.safe_load(open('config.yml'))
 
 articleLoader = ArticleLoader(listname=config["list_name"],dirname=config["parsed_articles_dir"])
-articleLoader.load_articles_from_directory(True)
+articleLoader.load_articles_from_directory(False)
 doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
 doc2VecFacade.load_models()
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
@@ -71,13 +71,10 @@ class ClassifierService(Resource):
             if (start == None) or (end == None):
                 end = date.today()
                 start = end-timedelta(days=5)
-            if (start, end, n_articles) in self.interest_map:
-                interesting_articles = self.interest_map(start,end,n_articles)
-            else:
-                sims_all =  self.classifier.interesting_articles_for_day(start, end, n_articles )
-                sims_filtered = filter_double(articleLoader, sims_all )
-                interesting_articles = extract_interesting_articles(articleLoader, sims_filtered )
-                self.interest_map[(start, end, n_articles )] = interesting_articles
+            sims_all =  self.classifier.interesting_articles_for_day(start, end, n_articles )
+            sims_filtered = filter_double(articleLoader, sims_all )
+            interesting_articles = extract_interesting_articles(articleLoader, sims_filtered )
+
             return {
                 'interesting_articles': interesting_articles
             }

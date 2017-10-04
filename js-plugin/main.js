@@ -1,3 +1,7 @@
+
+xhr2_waiting = 0
+xhr_waiting = 0
+
 function submit_all() {
     var selectionText = document.getElementById('tdidf_input').value
     var n_articles_value = document.getElementById('n_articles').value
@@ -5,10 +9,28 @@ function submit_all() {
     var end = document.getElementById('end').value
 
     var data = {text : selectionText , n_articles : n_articles_value, start: start, end: end}
-
     execute_tfidf(data);
     execute_doc2vec(data);
+
 }
+
+
+function check_enable_button() {
+    if ((xhr_waiting == 0) && (xhr2_waiting == 0)) {
+        document.getElementById("submit_interesting").value = "Submit"
+        document.getElementById("submit_interesting").disabled = false
+    }
+
+}
+
+
+function disable_button() {
+    if ((xhr_waiting == 1) || (xhr2_waiting == 1)) {
+        document.getElementById("submit_interesting").value = "Please wait...."
+        document.getElementById("submit_interesting").disabled = true
+    }
+}
+
 
 function submit_interesting() {
     var n_articles_value = document.getElementById('n_articles').value
@@ -17,9 +39,16 @@ function submit_interesting() {
 
     var data = { n_articles : n_articles_value, start: start, end: end}
 
+    if (xhr2_waiting == 0) {
+        xhr2_waiting = 1
+        execute_doc2vec_interesting(data);
+    }
+    if (xhr_waiting == 0) {
+        xhr_waiting = 1;
+        execute_tfidf_interesting(data);
+    }
 
-    execute_tfidf_interesting(data);
-    execute_doc2vec_interesting(data);
+    disable_button()
 }
 
 function create_short_text_for_article(article) {
@@ -96,9 +125,10 @@ function create_inner_text(related_articles) {
 
         text += ctext
         text += '<br>';
-        text += '<I>Other sources</I><BR>';
+
         var connected_articles = article['connected_articles']
         if (connected_articles && connected_articles.length > 0) {
+            text += '<I>Other sources</I><BR>';
             for (j = 0; j < connected_articles.length; j++) {
                 var connected_article = connected_articles[j]
                 var cctext = create_short_text_for_article(connected_article)
@@ -144,7 +174,6 @@ function execute_doc2vec(data) {
 }
 
 
-
 function execute_tfidf_interesting(data) {
     var xhr = new XMLHttpRequest();
 
@@ -156,6 +185,9 @@ function execute_tfidf_interesting(data) {
         var interesting_articles = response_text["interesting_articles"]
         var text = create_inner_text(interesting_articles);
         document.getElementById("output").innerHTML = text;
+        xhr_waiting = 0
+        check_enable_button()
+
     }
 
     xhr.send(JSON.stringify(data));
@@ -171,6 +203,9 @@ function execute_doc2vec_interesting(data) {
         var interesting_articles = response_text["interesting_articles"]
         var text = create_inner_text(interesting_articles);
         document.getElementById("output2").innerHTML = text;
+        xhr2_waiting = 0
+        check_enable_button()
+
     }
 
     xhr2.send(JSON.stringify(data));

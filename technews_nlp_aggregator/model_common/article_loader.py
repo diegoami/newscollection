@@ -39,6 +39,8 @@ class ArticleLoader:
     def articles_in_interval(self,start, end):
         return [k for k,v in self.article_map.items() if start <= v["date_p"] <= end]
 
+    def docs_in_interval(self, start, end):
+        return [i for i,k in enumerate(self.url_list) if start <= self.article_map[k]["date_p"] <= end]
 
     def load_articles_from_directory(self, load_texts=True):
         with open(self.listname, 'r') as lst_f:
