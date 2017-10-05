@@ -145,7 +145,7 @@ function create_inner_text(related_articles) {
 function execute_tfidf(data) {
     var xhr = new XMLHttpRequest();
 
-    xhr.open('POST', 'http://127.0.0.1:5000/tfidf/v1/related/', true);
+    xhr.open('POST', 'http://127.0.0.1:8080/tfidf/v1/related/', true);
     xhr.setRequestHeader('Content-type', 'application/json');
 
     xhr.onreadystatechange = function () {
@@ -160,7 +160,7 @@ function execute_tfidf(data) {
 
 function execute_doc2vec(data) {
     var xhr2 = new XMLHttpRequest();
-    xhr2.open('POST', 'http://127.0.0.1:5000/doc2vec/v1/related/', true);
+    xhr2.open('POST', 'http://127.0.0.1:8080/doc2vec/v1/related/', true);
     xhr2.setRequestHeader('Content-type', 'application/json');
 
     xhr2.onreadystatechange = function () {
@@ -177,7 +177,7 @@ function execute_doc2vec(data) {
 function execute_tfidf_interesting(data) {
     var xhr = new XMLHttpRequest();
 
-    xhr.open('POST', 'http://127.0.0.1:5000/tfidf/v1/interesting/', true);
+    xhr.open('POST', 'http://127.0.0.1:8080/tfidf/v1/interesting/', true);
     xhr.setRequestHeader('Content-type', 'application/json');
 
     xhr.onreadystatechange = function () {
@@ -195,7 +195,7 @@ function execute_tfidf_interesting(data) {
 
 function execute_doc2vec_interesting(data) {
     var xhr2 = new XMLHttpRequest();
-    xhr2.open('POST', 'http://127.0.0.1:5000/doc2vec/v1/interesting/', true);
+    xhr2.open('POST', 'http://127.0.0.1:8080/doc2vec/v1/interesting/', true);
     xhr2.setRequestHeader('Content-type', 'application/json');
 
     xhr2.onreadystatechange = function () {
