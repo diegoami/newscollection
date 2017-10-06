@@ -45,7 +45,7 @@ class Doc2VecFacade(ClfFacade):
 
 
 
-    def get_related_articles_and_score_url(self, urlArg, n=5000, max=15):
+    def get_related_articles_and_score_url(self, urlArg, n=6000, max=15):
         orig_record = self.article_loader.article_map[urlArg]
         day = orig_record["date_p"]
 
@@ -77,7 +77,7 @@ class Doc2VecFacade(ClfFacade):
         urls_of_day = self.article_loader.articles_in_interval(start, end)
         all_links = []
         for url in urls_of_day:
-            ars_score = self.get_related_articles_and_score_url(url,5000,4)
+            ars_score = self.get_related_articles_and_score_url(url,6000,4)
             sum_score = sum([x[1] for x in ars_score])
 
 

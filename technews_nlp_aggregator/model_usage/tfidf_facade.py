@@ -80,7 +80,7 @@ class TfidfFacade(ClfFacade):
 
 
 
-    def get_related_articles_and_score_docid(self,  docid, n=5000, max=15):
+    def get_related_articles_and_score_docid(self,  docid, n=6000, max=15):
         urlArg = self.article_loader.url_list[docid]
         orig_record = self.article_loader.article_map[
             urlArg
@@ -115,7 +115,7 @@ class TfidfFacade(ClfFacade):
         docs_of_day = self.article_loader.docs_in_interval(start, end)
         all_links = []
         for docid in docs_of_day:
-            ars_score = self.get_related_articles_and_score_docid(docid, 5000, 4)
+            ars_score = self.get_related_articles_and_score_docid(docid, 6000, 4)
             sum_score = sum([x[1] for x in ars_score])
             url = self.article_loader.url_list[docid]
 
