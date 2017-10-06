@@ -45,7 +45,7 @@ class Doc2VecFacade(ClfFacade):
 
 
 
-    def get_related_articles_and_score_url(self, urlArg, n=6000, max=15):
+    def get_related_articles_and_score_url(self, urlArg, n=6000, max=15 ):
         orig_record = self.article_loader.article_map[urlArg]
         day = orig_record["date_p"]
 
