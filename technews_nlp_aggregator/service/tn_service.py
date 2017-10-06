@@ -84,6 +84,7 @@ class ClassifierService(Resource):
 
 class TfidfRetrieveRelatedService(ClassifierService):
 
+
     def __init__(self):
         super().__init__()
         self.classifier = tfidfFacade
@@ -92,6 +93,8 @@ class TfidfRetrieveRelatedService(ClassifierService):
         return self.retrieve_articles_srv()
 
 class Doc2VecRetrieveRelatedService(ClassifierService):
+
+
     def __init__(self):
         super().__init__()
         self.classifier = doc2VecFacade
@@ -100,6 +103,8 @@ class Doc2VecRetrieveRelatedService(ClassifierService):
         return self.retrieve_articles_srv()
 
 class TfidfRetrieveInterestingService(ClassifierService):
+
+
     def __init__(self):
         super().__init__()
         self.classifier = tfidfFacade
@@ -108,6 +113,9 @@ class TfidfRetrieveInterestingService(ClassifierService):
         return self.retrieve_interesting_articles_srv()
 
 class Doc2VecRetrieveInterestingService(ClassifierService):
+
+
+
     def __init__(self):
         super().__init__()
         self.classifier = doc2VecFacade

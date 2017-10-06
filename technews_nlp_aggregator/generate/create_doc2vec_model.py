@@ -9,7 +9,7 @@ from datetime import datetime
 import yaml
 
 
-config = yaml.safe_load(open('config.yml'))
+config = yaml.safe_load(open('../../config.yml'))
 models_dir = config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'
 
 os.mkdir(models_dir)
