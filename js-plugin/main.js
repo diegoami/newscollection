@@ -1,8 +1,8 @@
 
 xhr2_waiting = 0
 xhr_waiting = 0
-//hostname = window.location.hostname
-hostname = '127.0.0.1'
+hostname = window.location.hostname
+//hostname = '127.0.0.1'
 //hostname = 'ec2-35-156-126-138.eu-central-1.compute.amazonaws.com'
 
 
