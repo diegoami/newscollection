@@ -56,7 +56,7 @@ This works also as a recommandation system, because it should find articles talk
 
 You can copy the text of a technical article into this text page : http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com/newscollection/search.html  and find similar articles in the dataset, possibly limiting the search in a date interval.
 
-This comes in the form also of a Chrome plugin that can be downloaded from here: http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com/newscollection/js-plugin/tnaggregator-chrome-plugin.zip and installed manually under chrome://extensions. If the user selects the text of a tech article and clicks on the Chrome extension, a popup will appear showing the related articles that could be found in the database.
+This comes in the form also of a Chrome plugin that can be downloaded from here: http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com/newscollection/tnaggregator-chrome-plugin.zip and installed manually under chrome://extensions. If the user selects the text of a tech article and clicks on the Chrome extension, a popup will appear showing the related articles that could be found in the database.
 
 ### Interesting articles
 
