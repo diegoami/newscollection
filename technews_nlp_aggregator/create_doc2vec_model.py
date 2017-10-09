@@ -3,13 +3,13 @@ import os
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-from technews_nlp_aggregator.model_common import ArticleLoader
-from technews_nlp_aggregator.model_generation import Doc2VecGenerator
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader
+from technews_nlp_aggregator.nlp_model.generation import Doc2VecGenerator
 from datetime import datetime
 import yaml
 
 
-config = yaml.safe_load(open('../../config.yml'))
+config = yaml.safe_load(open('../config.yml'))
 models_dir = config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'
 
 os.mkdir(models_dir)

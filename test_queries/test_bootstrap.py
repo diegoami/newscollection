@@ -1,8 +1,8 @@
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-from technews_nlp_aggregator.model_common import ArticleLoader
-from technews_nlp_aggregator.model_usage import Doc2VecFacade, TfidfFacade
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader
+from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
 import yaml
 
 

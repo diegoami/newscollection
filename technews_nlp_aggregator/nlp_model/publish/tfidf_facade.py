@@ -10,7 +10,7 @@ from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
 from nltk.tokenize import word_tokenize
 
-from technews_nlp_aggregator.model_usage.clf_facade import ClfFacade
+from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 

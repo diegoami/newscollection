@@ -1,4 +1,4 @@
-from technews_nlp_aggregator.test_query.test_bootstrap import *
+from test_queries.test_bootstrap import *
 
 article1 = """
 Team17 announced today that it’ll publish Pathea Games’s My Time at Portia, a colorful open-world role-playing game. This marks its first partnership with a Chinese studio, and it follows an announcement earlier this year about the first time it signed on with a Brazilian developer. My Time at Portia is raising money on the crowdfunding platform Kickstarter, and aims to be in early access in 2018. It will be available on PC and Mac to start, and Team17 will help bring the game to consoles later on.
@@ -32,7 +32,7 @@ Still, the marketing problem is only part of the set of challenges facing indie 
 article2 = """
  Uber’s top boss in Britain will quit the taxi hailing app just as the firm battles to overturn a decision to strip it of its license in London, according to an email seen by Reuters.
 
-The British capital’s transport regulator deemed Uber unfit to run a taxi service last month and decided not to renew its license to operate, citing the firm’s approach to reporting serious criminal offences and background checks on drivers.
+The British capital’s transport regulator deemed Uber unfit to run a taxi web last month and decided not to renew its license to operate, citing the firm’s approach to reporting serious criminal offences and background checks on drivers.
 
 But in an email seen by Reuters on Monday, Uber’s Northern European Manager Jo Bertram, who has responsibility for Britain among other countries, said the firm needed a new manager in the region to tackle the issues it faces.
 

@@ -1,5 +1,3 @@
-from technews_nlp_aggregator.test_query.test_bootstrap import *
-from datetime import date
 #print(tfidfFacade.index.index.shape)
 #print(tfidfFacade.corpus.index.shape)
 #print(tfidfFacade.corpus[0])

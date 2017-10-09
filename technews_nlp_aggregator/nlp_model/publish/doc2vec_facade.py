@@ -1,7 +1,7 @@
 from gensim.models import Doc2Vec
 from nltk.tokenize import word_tokenize
 
-from technews_nlp_aggregator.model_usage.clf_facade import ClfFacade
+from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 
 MIN_FREQUENCY = 3
 

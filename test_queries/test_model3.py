@@ -1,6 +1,6 @@
 import time
 
-from technews_nlp_aggregator.test_query.test_bootstrap import *
+from test_queries.test_bootstrap import *
 
 while True:
     random_article_url = articleLoader.get_random_article()

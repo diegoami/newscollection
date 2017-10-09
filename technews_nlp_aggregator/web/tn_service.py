@@ -1,13 +1,13 @@
 
-from flask import Flask, request
-from flask_restful import Resource, Api
 from datetime import date
-from urllib.parse import urlparse
-from technews_nlp_aggregator.model_common import ArticleLoader
-from technews_nlp_aggregator.model_usage import Doc2VecFacade, TfidfFacade
-from technews_nlp_aggregator.service.util import extract_date, extract_tags, extract_source, extract_related_articles, conv_to_date, filter_double, extract_interesting_articles
 
 import yaml
+from flask import Flask, request
+from flask_restful import Resource, Api
+
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader
+from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
+from technews_nlp_aggregator.web.util import extract_related_articles, filter_double, extract_interesting_articles
 
 config = yaml.safe_load(open('config.yml'))
 

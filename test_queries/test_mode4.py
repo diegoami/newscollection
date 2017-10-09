@@ -1,6 +1,6 @@
 from datetime import date
 
-from technews_nlp_aggregator.test_query.test_bootstrap import *
+from test_queries.test_bootstrap import *
 
 end = date(2017, 9, 30)
 start = date(2017, 9, 20)
