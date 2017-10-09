@@ -90,7 +90,7 @@ class Scraper:
 
 class TechCrunchScraper(Scraper):
     """
-    This is the main class used to scrape posts from the TechCrunch website.
+    This is the main class used to scrape posts from the TechCrunch js-plugin.
     It will execute several methods. The process includes:
 
     1. Get all links for a custom page and section and yield them
@@ -177,7 +177,7 @@ class TechCrunchScraper(Scraper):
 
     def get_links(self):
         """
-        Controller to get the links from the website sections
+        Controller to get the links from the js-plugin sections
 
         :returns: yield a dicionary containing the url and other metadata of
             the post.

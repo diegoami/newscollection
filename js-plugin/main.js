@@ -1,12 +1,23 @@
 
 xhr2_waiting = 0
 xhr_waiting = 0
-hostname = window.location.hostname
-port = '8080'
+
 //port = 4568
 //hostname = '127.0.0.1'
 //hostname = 'ec2-35-156-126-138.eu-central-1.compute.amazonaws.com'
+function get_local_hostname_port() {
+    return {
+        hostname : window.location.hostname,
+        port : 8080
+    };
+}
 
+function get_remote_hostname_port() {
+    return {
+        hostname : 'ec2-35-156-126-138.eu-central-1.compute.amazonaws.com',
+        port : 8080
+    };
+}
 
 function submit_all() {
     var selectionText = document.getElementById('tdidf_input').value
@@ -15,8 +26,9 @@ function submit_all() {
     var end = document.getElementById('end').value
 
     var data = {text : selectionText , n_articles : n_articles_value, start: start, end: end}
-    execute_tfidf(data);
-    execute_doc2vec(data);
+    var local_h = get_local_hostname_port()
+    execute_tfidf(data, local_h.hostname, local_h.port);
+    execute_doc2vec(data, local_h.hostname, local_h.port);
 
 }
 
@@ -44,14 +56,14 @@ function submit_interesting() {
     var end = document.getElementById('end').value
 
     var data = { n_articles : n_articles_value, start: start, end: end}
-
+    var local_h = get_local_hostname_port()
     if (xhr2_waiting == 0) {
         xhr2_waiting = 1
-        execute_doc2vec_interesting(data);
+        execute_doc2vec_interesting(data, local_h.hostname, local_h.port);
     }
     if (xhr_waiting == 0) {
         xhr_waiting = 1;
-        execute_tfidf_interesting(data);
+        execute_tfidf_interesting(data, local_h.hostname, local_h.port);
     }
 
     disable_button()
@@ -148,7 +160,7 @@ function create_inner_text(related_articles) {
     return text
 }
 
-function execute_tfidf(data) {
+function execute_tfidf(data, hostname, port) {
     var xhr = new XMLHttpRequest();
 
     xhr.open('POST', 'http://'+hostname+':'+port+'/tfidf/v1/related/', true);
@@ -164,7 +176,7 @@ function execute_tfidf(data) {
     xhr.send(JSON.stringify(data));
 }
 
-function execute_doc2vec(data) {
+function execute_doc2vec(data, hostname, port) {
     var xhr2 = new XMLHttpRequest();
     xhr2.open('POST', 'http://'+hostname+':'+port+'/doc2vec/v1/related/', true);
     xhr2.setRequestHeader('Content-type', 'application/json');
@@ -180,7 +192,7 @@ function execute_doc2vec(data) {
 }
 
 
-function execute_tfidf_interesting(data) {
+function execute_tfidf_interesting(data, hostname, port) {
     var xhr = new XMLHttpRequest();
 
     xhr.open('POST', 'http://'+hostname+':'+port+'/tfidf/v1/interesting/', true);
@@ -199,7 +211,7 @@ function execute_tfidf_interesting(data) {
     xhr.send(JSON.stringify(data));
 }
 
-function execute_doc2vec_interesting(data) {
+function execute_doc2vec_interesting(data, hostname, port) {
     var xhr2 = new XMLHttpRequest();
     xhr2.open('POST', 'http://'+hostname+':'+port+'/doc2vec/v1/interesting/', true);
     xhr2.setRequestHeader('Content-type', 'application/json');
