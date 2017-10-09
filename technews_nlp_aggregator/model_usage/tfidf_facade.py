@@ -52,24 +52,14 @@ class TfidfFacade(ClfFacade):
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
         return sims[:n]
 
-    def get_related_articles_docid(self, docid, n):
-        sims = self.get_related_sims_docid(docid, n)
-        article_map = self.article_loader.article_map
-        url_list = self.article_loader.url_list
-        urls = [url_list[sim[0]] for sim in sims]
-        # articles = [article_map[article_map.keys()[x]] for x in sims]
-        return urls[:n]
-
     def get_related_articles(self, doc, n):
         sims = self.get_related_sims(doc,n)
         article_map = self.article_loader.article_map
         url_list = self.article_loader.url_list
         urls= [url_list[sim[0]] for sim in sims]
-        #articles = [article_map[article_map.keys()[x]] for x in sims]
         return urls[:n]
 
     def get_related_articles_and_score_doc(self, doc, n):
-
         sims = self.get_related_sims(doc, n)
 
         article_map = self.article_loader.article_map
@@ -77,8 +67,6 @@ class TfidfFacade(ClfFacade):
         related_articles = list(zip([url_list[sim[0]] for sim in sims],[sim[1] for sim in sims]))
 
         return related_articles[:n]
-
-
 
     def get_related_articles_and_score_docid(self,  docid, n=6000, max=15):
         urlArg = self.article_loader.url_list[docid]

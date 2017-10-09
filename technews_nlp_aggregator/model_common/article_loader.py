@@ -38,11 +38,6 @@ class ArticleLoader:
         return self.url_list[rand_len]
 
 
-    def articles_of_day(self,day):
-        return [k for k,v in self.article_map.items() if v["date_p"] == day]
-
-
-
     def articles_in_interval(self,start, end):
         return [k for k,v in self.article_map.items() if start <= v["date_p"] <= end]
 

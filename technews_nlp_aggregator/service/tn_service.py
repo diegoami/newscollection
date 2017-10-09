@@ -26,7 +26,6 @@ from datetime import timedelta
 class ClassifierService(Resource):
     def __init__(self):
         self.classifier = None
-        self.interest_map = {}
 
     @app.after_request
     def after_request(response):
@@ -62,7 +61,6 @@ class ClassifierService(Resource):
 
     def retrieve_interesting_articles_srv(self):
         if self.classifier:
-            found_urls = []
             request_body = request.get_json()
             logging.debug(request_body)
             n_articles = int(request_body["n_articles"])

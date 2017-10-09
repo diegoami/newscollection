@@ -81,6 +81,9 @@ class GensimClassifierService(ClassifierService):
 
     def retrieve_related_articles(self, doc, n):
         sims = gensimClassifier.get_related_articles(doc, n)
+        return self.aggregate_related_articles(n, sims)
+
+    def aggregate_related_articles(self, n, sims):
         related_articles = []
         for sim in sims[:n]:
             related_article = {}
@@ -93,10 +96,9 @@ class GensimClassifierService(ClassifierService):
             related_article["date"] = self.extract_date(related_article["url"])
             related_article["similarity"] = sim[1] * 100
             related_article["authors"] = link_obj["authors"]
-            related_article["author_base"] =  self.extract_tags(related_article["authors"])
+            related_article["author_base"] = self.extract_tags(related_article["authors"])
             related_articles.append(related_article)
         return related_articles
-
 
     def post(self):
         return self.common_post()

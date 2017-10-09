@@ -1,24 +1,6 @@
-import json
-
-
-from gensim import corpora, models, similarities
-
-import os
-
-from gensim.corpora import MmCorpus
-
 from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.corpus import stopwords
-import string
-
-from os import listdir
-from os.path import isfile, join
 from gensim.models.doc2vec import TaggedDocument
-from datetime import datetime
-import json
 from gensim.models import Doc2Vec
-
-
 
 MIN_FREQUENCY = 3
 MODEL_FILENAME   = 'doc2vec'
