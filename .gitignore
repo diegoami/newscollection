@@ -2,5 +2,6 @@
 id_rsa
 id_rsa.pub
 known_hosts
-
+__pycache__/
+*.pyc
 

@@ -1,16 +1,13 @@
-import json
-from os.path import basename
 import argparse
 
-from gensim import corpora, models, similarities
 import logging
 
 import sys
 sys.path.append('..')
-from gensim_samples.gensim_classifier import GensimClassifier
-from gensim_samples.gensim_loader import GensimLoader
+from sandbox.gensim_samples import GensimClassifier
+from sandbox.gensim_samples import GensimLoader
 
-from gensim_samples.doc2vec_classifier import Doc2VecClassifier
+from sandbox.gensim_samples import Doc2VecClassifier
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 

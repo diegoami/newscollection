@@ -1,13 +1,10 @@
-import json
-from os.path import basename
 import argparse
-
-from gensim import corpora, models, similarities
 import logging
-
 import sys
+from os.path import basename
+
 sys.path.append('..')
-from gensim_samples.gensim_classifier import GensimClassifier
+from sandbox.gensim_samples import GensimClassifier
 
 logging.basicConfig(filename='logs/info.log',level=logging.INFO)
 

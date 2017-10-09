@@ -1,7 +1,8 @@
-from gensim_samples.gensim_loader import GensimLoader
-from gensim.models import word2vec
 import logging
 import sys
+
+from sandbox.gensim_samples import GensimLoader
+
 sys.path.append('/home/diegoami/PycharmProjects/Newscollection')
 from gensim.models.word2vec import Word2Vec
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)

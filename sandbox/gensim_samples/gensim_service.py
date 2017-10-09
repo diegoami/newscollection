@@ -1,16 +1,16 @@
 
+import sys
+
 from flask import Flask, request
 from flask_restful import Resource, Api
 
-import sys
 sys.path.append('..')
-from gensim_samples.gensim_classifier import GensimClassifier
-from gensim_samples.gensim_loader import GensimLoader
-from gensim_samples.doc2vec_classifier import Doc2VecClassifier
-from os.path import basename
+from sandbox.gensim_samples import GensimClassifier
+from sandbox.gensim_samples import GensimLoader
+from sandbox.gensim_samples import Doc2VecClassifier
 import abc
 from urllib.parse import urlparse
-import os, glob
+
 app = Flask(__name__)
 api = Api(app)
 import logging

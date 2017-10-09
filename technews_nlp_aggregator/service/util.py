@@ -2,12 +2,6 @@ from urllib.parse import urlparse
 from datetime import date
 
 
-def extract_tags(tags):
-    tag_base = [x.split('/')[-1] if len(x.split('/')[-1]) > 0 else x.split('/')[-2] for x in
-                tags]
-    return tag_base
-
-
 def extract_date(url):
     arrs = str(urlparse(url)[2]).split('/')
     index = 0
@@ -17,6 +11,13 @@ def extract_date(url):
     date_str = day + '-' + month + '-' + year
 
     return date_str
+
+def extract_tags(tags):
+    tag_base = [x.split('/')[-1] if len(x.split('/')[-1]) > 0 else x.split('/')[-2] for x in
+                tags]
+    return tag_base
+
+
 
 def extract_related_articles(articleLoader, sims):
     related_articles = []
