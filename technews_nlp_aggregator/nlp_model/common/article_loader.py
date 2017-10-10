@@ -32,10 +32,11 @@ class ArticleLoader:
         return [i for i,k in enumerate(self.url_list) if start <= self.article_map[k]["date_p"] <= end]
 
 
-    def load_all_articles(self, load_texts=True):
+
+    def load_all_articles(self, load_text=True, load_meta=True):
         self.article_map = OrderedDict()
         self.url_list    = []
-        all_articles =  self.articlesRepo.load_articles()
+        all_articles =  self.articlesRepo.load_articles(load_text, load_meta)
         for article in all_articles:
             url = article["url"]
             self.article_map[url] = article

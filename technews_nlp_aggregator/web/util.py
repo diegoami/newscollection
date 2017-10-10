@@ -29,6 +29,8 @@ def fill_article(articleLoader, score, url):
     related_article = {}
     related_article["url"] = url
     link_obj = articleLoader.article_map[url]
+    related_article["id"] = link_obj["id"]
+
     related_article["title"] = link_obj["title"]
     related_article["tags"] = link_obj["tags"]
     related_article["source"] = extract_source(url)

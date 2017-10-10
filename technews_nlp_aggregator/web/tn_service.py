@@ -15,9 +15,8 @@ db_config = yaml.safe_load(open(config["db_key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
-articleLoader.load_all_articles()
 
-articleLoader.load_all_articles(False)
+articleLoader.load_all_articles(load_text=False, load_meta=False)
 doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
 doc2VecFacade.load_models()
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
@@ -58,6 +57,9 @@ class ClassifierService(Resource):
             sims = sims_all[:n_articles]
             logging.info(sims)
             related_articles = extract_related_articles(articleLoader, sims)
+            for related_article in related_articles:
+                articleLoader.articlesRepo.load_meta(related_article)
+
             return {
                 'related_articles': related_articles
             }
@@ -77,6 +79,8 @@ class ClassifierService(Resource):
             sims_all =  self.classifier.interesting_articles_for_day(start, end, n_articles )
             sims_filtered = filter_double(articleLoader, sims_all )
             interesting_articles = extract_interesting_articles(articleLoader, sims_filtered )
+            for interesting_article in interesting_articles :
+                articleLoader.articlesRepo.load_meta(interesting_article)
 
             return {
                 'interesting_articles': interesting_articles
