@@ -113,6 +113,12 @@ create table TODELETE
 	TOD_AIN_ID int not null
 )
 ;
+create table TODELETE_TXT
+(
+	TOD_TXT_ID int null
+)
+;
+
 
 
 ALTER TABLE AUTHORS CONVERT TO CHARACTER SET utf8;

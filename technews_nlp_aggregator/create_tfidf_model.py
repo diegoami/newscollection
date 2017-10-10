@@ -9,10 +9,13 @@ from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleData
 from datetime import datetime
 import yaml
 
+config = yaml.safe_load(open('config.yml'))
+db_config = yaml.safe_load(open(config["db_key_file"]))
 
-config = yaml.safe_load(open('../config.yml'))
+articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
+articleLoader = ArticleLoader(articleDatasetRepo)
+articleLoader.load_all_articles()
 
-articleDatasetRepo = ArticleDatasetRepo(config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles()
 models_dir = config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'

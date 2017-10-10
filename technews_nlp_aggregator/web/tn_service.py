@@ -11,8 +11,9 @@ from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
 from technews_nlp_aggregator.web.util import extract_related_articles, filter_double, extract_interesting_articles
 from technews_nlp_aggregator.common.util import conv_to_date
 config = yaml.safe_load(open('config.yml'))
+db_config = yaml.safe_load(open(config["db_key_file"]))
 
-articleDatasetRepo = ArticleDatasetRepo(config["db_url"])
+articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles()
 
