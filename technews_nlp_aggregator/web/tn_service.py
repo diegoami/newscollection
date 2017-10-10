@@ -6,12 +6,16 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader
+from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
 from technews_nlp_aggregator.web.util import extract_related_articles, filter_double, extract_interesting_articles
-
+from technews_nlp_aggregator.common.util import conv_to_date
 config = yaml.safe_load(open('config.yml'))
 
-articleLoader = ArticleLoader(listname=config["list_name"],dirname=config["parsed_articles_dir"])
+articleDatasetRepo = ArticleDatasetRepo(config["db_url"])
+articleLoader = ArticleLoader(articleDatasetRepo)
+articleLoader.load_all_articles()
+
 articleLoader.load_all_articles(False)
 doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
 doc2VecFacade.load_models()
