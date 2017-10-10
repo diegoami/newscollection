@@ -5,6 +5,9 @@ from technews_nlp_aggregator.common.util import extract_date, extract_last_part,
 import sys, traceback
 
 class ArticleDatasetRepo(ArticleRepo):
+    tags_query = 'SELECT TAG_NAME, TAG_URL FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND AIN_ID = :id'
+    authors_query = 'SELECT AUT_NAME, AUT_URL FROM ARTICLE_INFO, ARTICLE_AUTHORS, AUTHORS WHERE AAU_AIN_ID = AIN_ID AND AUT_ID = AAU_AUT_ID AND AIN_ID = :id'
+
     def __init__(self, db_connection):
         self.db_connection = db_connection
         self.db = dataset.connect(self.db_connection ,  engine_kwargs = {
@@ -134,7 +137,7 @@ class ArticleDatasetRepo(ArticleRepo):
 
 
     def load_articles(self):
-        article_info_rows = self.article_info_tbl.find()
+        article_info_rows = self.article_info_tbl.find(order_by=['AIN_DATE', 'AIN_TITLE'])
         article_records = []
         for article_info_row in article_info_rows:
             article_record = {
@@ -143,7 +146,21 @@ class ArticleDatasetRepo(ArticleRepo):
                 "date_p": article_info_row["AIN_DATE"],
                 "title" : article_info_row["AIN_TITLE"]
             }
+            article_record["date"] = article_record["date_p"].isoformat()
+            id = article_record["id"]
+            url = article_info_row["AIN_URL"]
+            article_text_row = self.article_text_tbl.find_one(ATX_AIN_ID=id)
+            article_record["text"] = article_text_row["ATX_TEXT"]
+            article_record["tags"], article_record["tag_base"] = [], []
+            for tag_row in self.db.query(self.tags_query,id=id):
+                article_record["tags"].append(tag_row["TAG_URL"])
+                article_record["tag_base"].append(tag_row["TAG_NAME"])
+            article_record["authors"], article_record["author_base"] = [], []
+            for author_row in self.db.query(self.authors_query, id=id):
+                article_record["authors"].append(author_row["AUT_URL"])
+                article_record["author_base"].append(author_row["AUT_NAME"])
+            sourceindex = url.index(".com")
+            article_record["source"] = url[:sourceindex]
 
-            #article_text = self.article_text_tbl.find_one(TAG_URL=tag)
             article_records.append(article_record)
         return article_records

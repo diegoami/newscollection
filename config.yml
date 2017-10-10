@@ -1,11 +1,11 @@
 root_dir  : /media/diego/QData/techarticles/
 list_name : /media/diego/QData/techarticles/lists/article_list.json
 parsed_articles_dir : /media/diego/QData/techarticles/parsed_articles/
-lsi_models_dir_base : /media/diego/QData/techarticles/nlp_model/lsi/lsi_
-lsi_models_dir_link : /media/diego/QData/techarticles/nlp_model/lsi/lsi_model
-doc2vec_models_dir_base : /media/diego/QData/techarticles/nlp_model/doc2vec/doc2vec__
-doc2vec_models_dir_link : /media/diego/QData/techarticles/nlp_model/doc2vec/doc2vec_model
-doc2vec_models_file_link : /media/diego/QData/techarticles/nlp_model/doc2vec/doc2vec_model/doc2vec
+lsi_models_dir_base : /media/diego/QData/techarticles/models/lsi/lsi_
+lsi_models_dir_link : /media/diego/QData/techarticles/models/lsi/lsi_model
+doc2vec_models_dir_base : /media/diego/QData/techarticles/models/doc2vec/doc2vec__
+doc2vec_models_dir_link : /media/diego/QData/techarticles/models/doc2vec/doc2vec_model
+doc2vec_models_file_link : /media/diego/QData/techarticles/models/doc2vec/doc2vec_model/doc2vec
 raw_base_dir        : /media/diego/QData/techarticles/raw_articles/
 parsed_base_dir     : /media/diego/QData/techarticles/parsed_articles/
 search_results_dir  : /media/diego/QData/techarticles/search_results/

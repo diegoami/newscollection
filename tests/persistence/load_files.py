@@ -6,3 +6,4 @@ articleDatasetRepo = ArticleDatasetRepo(config["db_url"])
 articles = articleDatasetRepo.load_articles()
 for article in articles[:10]:
     print(article)
+

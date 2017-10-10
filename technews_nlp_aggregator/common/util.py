@@ -38,6 +38,8 @@ def conv_to_date(str_date):
         return None
 
 
+
+
 def extract_date(url):
     arrs = str(urlparse(url)[2]).split('/')
     index = 0
