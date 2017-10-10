@@ -1,4 +1,4 @@
-from technews_nlp_aggregator.common import extract_source, extract_date, extract_tags
+from technews_nlp_aggregator.common import extract_source, extract_date_str, extract_tags
 
 
 
@@ -33,7 +33,7 @@ def fill_article(articleLoader, score, url):
     related_article["tags"] = link_obj["tags"]
     related_article["source"] = extract_source(url)
     related_article["tag_base"] = extract_tags(related_article["tags"])
-    related_article["date"] = extract_date(related_article["url"])
+    related_article["date"] = extract_date_str(related_article["url"])
     related_article["similarity"] = score * 100
     related_article["authors"] = link_obj["authors"]
     related_article["author_base"] = extract_tags(related_article["authors"])
