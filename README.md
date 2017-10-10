@@ -38,7 +38,8 @@ I am planning to update models with articles as they are published and add the f
 * Mashable     (http://www.mashable.com/tech)
 * Bgr          (http://www.bgr.com)
 
-So far it is about 30.000 articles - my target is having a database of about 100.000 articles and keep it updated. I have already built a scraper for that, whose source can be found here : https://github.com/diegoami/newscollection-scraper
+So far it is about 30.000 articles - my target is having a database of about 100.000 articles and keep it updated.
+I have already built a scraper and a database for that.
 
 ## Currently deployed
 
