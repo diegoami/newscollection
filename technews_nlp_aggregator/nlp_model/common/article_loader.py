@@ -14,8 +14,6 @@ class ArticleLoader:
 
     def __init__(self, articlesRepo):
         self.articlesRepo = articlesRepo
-        self.article_map = {}
-        self.url_list = []
 
 
 
@@ -26,18 +24,12 @@ class ArticleLoader:
 
 
     def articles_in_interval(self,start, end):
-        return [k for k,v in self.article_map.items() if start <= v["date_p"] <= end]
+        return self.articlesDF[(self.articlesDF['date_p'] >= start) & (self.articlesDF['date_p'] <= end) ]
 
-    def docs_in_interval(self, start, end):
-        return [i for i,k in enumerate(self.url_list) if start <= self.article_map[k]["date_p"] <= end]
 
 
 
     def load_all_articles(self, load_text=True, load_meta=True):
-        self.article_map = OrderedDict()
-        self.url_list    = []
-        all_articles =  self.articlesRepo.load_articles(load_text, load_meta)
-        for article in all_articles:
-            url = article["url"]
-            self.article_map[url] = article
-            self.url_list.append(url)
+
+        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text, load_meta=load_meta)
+        return self.articlesDF

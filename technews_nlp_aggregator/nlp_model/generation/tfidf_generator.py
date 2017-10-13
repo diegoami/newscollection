@@ -21,14 +21,14 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 class TfidfGenerator:
 
 
-    def __init__(self, article_map, model_output_dir):
-        self.article_map = article_map
-        self.model_output_dir = model_output_dir
+    def __init__(self, articleDF, model_output_dir):
 
+        self.model_output_dir = model_output_dir
+        self.articleDF = articleDF
 
     def create_model(self):
 
-        documents = [self.article_map[article]["text"] for article in self.article_map]
+        documents = self.articleDF['text'].tolist()
 
         texts = [[word for word in word_tokenize(document.lower())]
                  for document in documents]

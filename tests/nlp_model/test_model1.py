@@ -57,15 +57,13 @@ In the email, she declined to say where she would be moving to.
 
 def show_related_articles(facade, article):
     #related_articles_doc2vec = facade.get_related_articles(article, 10000)
-    related_articles_doc2vec = facade.get_related_articles_in_interval(article, n=10000, days=20, max=15)
+    related_articles = facade.get_related_articles_in_interval(article, n=10000, reference_day=None, days=20, max=15)
 
     print(" ==== related_articles  ==== ")
-    for article in related_articles_doc2vec:
-        print(article, articleLoader.article_map[article])
+    print(related_articles)
 
-
-show_related_articles(doc2VecFacade, article1)
-show_related_articles(doc2VecFacade, article2)
+#show_related_articles(doc2VecFacade, article1)
+#show_related_articles(doc2VecFacade, article2)
 
 
 show_related_articles(tfidfFacade, article1)

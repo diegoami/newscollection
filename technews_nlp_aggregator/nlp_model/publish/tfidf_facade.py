@@ -10,6 +10,10 @@ from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
 from nltk.tokenize import word_tokenize
 
+import pandas as pd
+
+import datetime
+
 from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -52,52 +56,35 @@ class TfidfFacade(ClfFacade):
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
         return sims[:n]
 
-    def get_related_articles(self, doc, n):
-        sims = self.get_related_sims(doc,n)
-        article_map = self.article_loader.article_map
-        url_list = self.article_loader.url_list
-        urls= [url_list[sim[0]] for sim in sims]
-        return urls[:n]
+
+    def get_related_articles_from_to(self, doc, max, start, end,  n=10000):
+        similar_documents = self.get_related_articles_and_score_doc(doc, n)
+        id_articles, score_ids = zip(*similar_documents )
+        articlesFoundDF = self.article_loader.articlesDF.iloc[ list(id_articles),:]
+
+        articlesFilteredDF = articlesFoundDF[(articlesFoundDF['date_p']>= start) & (articlesFoundDF ['date_p'] <= end) ]
+
+
+        return articlesFilteredDF
 
     def get_related_articles_and_score_doc(self, doc, n):
         sims = self.get_related_sims(doc, n)
 
-        article_map = self.article_loader.article_map
-        url_list = self.article_loader.url_list
-        related_articles = list(zip([url_list[sim[0]] for sim in sims],[sim[1] for sim in sims]))
+        related_articles = sims
 
         return related_articles[:n]
 
-    def get_related_articles_and_score_docid(self,  docid, n=6000, max=15):
-        urlArg = self.article_loader.url_list[docid]
-        orig_record = self.article_loader.article_map[
-            urlArg
-        ]
-        day = orig_record ["date_p"]
+    def get_related_articles_and_score_docid(self,  docid, n=10000, max=15):
+        #day = orig_record ["date_p"]
         similar_documents = self.get_related_sims_docid(docid, n)
-        rated_urls = []
+        id_articles, score_ids = zip(*similar_documents )
+        df_similar = self.article_loader.articlesDF.iloc[id_articles, :]
+        df_similar['score'] = pd.Series(score_ids )
+        df_similar['from_today'] = datetime.datetime.now().date() - df_similar['p_date']
 
-        for index, score in similar_documents:
-            url = self.article_loader.url_list[index]
-            if (url == urlArg):
-                continue
+        df_similar['score_total'] = df_similar['score']*100-df_similar['from_today']
 
-            record = self.article_loader.article_map[url]
-            if (day == None):
-                day = record["date_p"]
-
-
-            p_date = record["date_p"]
-            real_score = score * 100 - abs(p_date - day).days
-           # str_exp = str(round(score, 2)) + "*100-" + str(abs(p_date - day).days)
-            if (record["source"] == orig_record["source"]):
-                real_score -= 5
-               # str_exp = str_exp + "-5"
-            if (real_score > 0):
-                rated_urls.append((url, real_score ))
-
-        srated_urls = sorted(rated_urls, key=lambda x: x[1], reverse=True)
-        return srated_urls[:max]
+        return df_similar
 
     def interesting_articles_for_day(self, start, end, max=15):
         docs_of_day = self.article_loader.docs_in_interval(start, end)

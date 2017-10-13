@@ -3,22 +3,20 @@ from .article_repo import ArticleRepo
 import dataset
 from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis
 import sys, traceback
+from _mysql import connect
+from sqlalchemy import create_engine
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
+import pandas as pd
 
 class ArticleDatasetRepo(ArticleRepo):
     tags_query = 'SELECT TAG_NAME, TAG_URL FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND AIN_ID = :id'
     authors_query = 'SELECT AUT_NAME, AUT_URL FROM ARTICLE_INFO, ARTICLE_AUTHORS, AUTHORS WHERE AAU_AIN_ID = AIN_ID AND AUT_ID = AAU_AUT_ID AND AIN_ID = :id'
 
-    retrieve_all_query = \
-        'SELECT AIN_ID, AIN_URL, AIN_DATE, AIN_TITLE, AIN_FILENAME, ATX_TEXT, AUT_NAME, AUT_URL, TAG_NAME, TAG_URL ' \
-        'FROM ARTICLE_INFO, ARTICLE_TEXT,    ARTICLE_TAGS, ARTICLE_AUTHORS, AUTHORS, TAGS WHERE ' \
-        ' ATX_AIN_ID = AIN_ID AND ATA_AIN_ID = AIN_ID AND ATA_TAG_ID= TAG_ID AND AAU_AIN_ID = AUT_ID AND ATA_AIN_ID = AIN_ID ORDER BY AIN_DATE, AIN_TITLE'
+
 
     def __init__(self, db_connection):
         self.db_connection = db_connection
-        logging.info(db_connection)
         self.db = dataset.connect(self.db_connection ,  engine_kwargs = {
             'connect_args' : {'charset' : 'utf8'}
         })
@@ -30,6 +28,7 @@ class ArticleDatasetRepo(ArticleRepo):
 
         self.article_tags_tbl = self.db['ARTICLE_TAGS']
         self.article_authors_tbl = self.db['ARTICLE_AUTHORS']
+        self.engine = create_engine(self.db_connection,encoding='UTF-8')
 
 
     def extract_date(filename):
@@ -58,7 +57,7 @@ class ArticleDatasetRepo(ArticleRepo):
 
     def save_article(self, url, to_add, text):
         if not "date" in to_add:
-               to_add["date"] = extract_date(to_add["url"])
+            to_add["date"] = extract_date(to_add["url"])
         source = extract_host(url)
         try:
             self.db.begin()
@@ -145,83 +144,46 @@ class ArticleDatasetRepo(ArticleRepo):
         self.db.commit()
 
 
-    def load_articles_all(self):
-        all_rows= self.db.query(self.retrieve_all_query)
-        article_records = []
-        current_id = None
-        new_record = True
-        article_record = {}
-        count = 0
-        for row in all_rows:
-            id  = row["AIN_ID"]
-            url = row["AIN_URL"]
-            if (current_id != id):
-                current_id = id
-                new_record = True
-                article_record = {}
-                article_record["author"], article_record["author_base"], article_record["tag"], article_record["tag_base"] = [], [], [], []
-                article_records.append(article_record)
-            else:
-                new_record = False
-            article_record["id"] = id
-            article_record["url"] = url
-            article_record["date_p"] = row["AIN_DATE"]
-            article_record["date"] = article_record["date_p"].isoformat()
-            article_record["text"] = row["ATX_TEXT"]
-            tag, tag_base = row["TAG_URL"], article_record["TAG_NAME"]
-            author, author_base = row["AUT_URL"], row["AUT_NAME"]
-            if tag not in article_record["tag"]:
-                article_record["tag"].append(tag)
-                article_record["tag_base"].append(tag_base)
-            if author not in article_record["tag"]:
-                article_record["author"].append(author)
-                article_record["author_base"].append(author_base)
 
-            sourceindex = url.index(".com")
-            article_record["source"] = url[:sourceindex]
-            count += 1
-            if (count % 200 == 0):
-                logging.info("Processed {} articles" % count)
+    def load_text(self, article_sub_DF, all=False):
+        con = self.engine.connect()
+        if "text" not in article_sub_DF.columns:
+            articleids = article_sub_DF['article_id']
+            article_text_sql = 'SELECT ATX_ID, ATX_TEXT, ATX_AIN_ID FROM ARTICLE_TEXT WHERE ATX_AIN_ID '+ ( (' IN '+str(tuple(articleids))) if not all else '')
+            articleTextDF = pd.read_sql(article_text_sql , con, index_col='ATX_ID')
+            articleTextDF.columns = [ 'text', 'article_id' ]
+            article_sub_DF = article_sub_DF.merge(articleTextDF, on='article_id')
+            article_sub_DF.reset_index(drop=False)
 
+        con.close()
+        return article_sub_DF
 
-        return article_records
+    def load_meta(self, article_sub_DF, all=False):
 
-    def load_text(self, article_record):
-        if "text" not in article_record:
-            article_text_row = self.article_text_tbl.find_one(ATX_AIN_ID=article_record["id"])
-            article_record["text"] = article_text_row["ATX_TEXT"]
+        articleids = article_sub_DF['article_id']
+        if ("tag" not in article_sub_DF.columns):
 
-    def load_meta(self, article_record):
-        if (len(article_record["tags"]) == 0):
-            for tag_row in self.db.query(self.tags_query, id=article_record["id"]):
-                article_record["tags"].append(tag_row["TAG_URL"])
-                article_record["tag_base"].append(tag_row["TAG_NAME"])
-        if (len(article_record["authors"]) == 0):
-            for author_row in self.db.query(self.authors_query, id=id):
-                article_record["authors"].append(author_row["AUT_URL"])
-                article_record["author_base"].append(author_row["AUT_NAME"])
+            article_tags_sql = 'SELECT TAG_ID, TAG_NAME, TAG_URL, ATA_IN_ID FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND ATA_AIN_ID '+ ( (' IN '+tuple(articleids)) if not all else '')
+            articleTagsDF = pd.read_sql(article_tags_sql, self.db_connection, index_col='TAG_ID')
+            articleTagsDF.columns = ['tag', 'tag_url', 'article_id']
+            article_sub_DF = article_sub_DF.merge(articleTagsDF, on='article_id')
 
-    def load_articles(self, load_text=True, load_meta=True):
-        article_info_rows = self.article_info_tbl.all(order_by=['AIN_DATE', 'AIN_TITLE'])
-        article_records = []
-        for article_info_row in article_info_rows:
-            article_record = {
-                "id"  :  article_info_row["AIN_ID"],
-                "url" :  article_info_row["AIN_URL"],
-                "date_p": article_info_row["AIN_DATE"],
-                "title" : article_info_row["AIN_TITLE"]
-            }
-            article_record["date"] = article_record["date_p"].isoformat()
-            id = article_record["id"]
-            url = article_info_row["AIN_URL"]
-            if (load_text):
-                self.load_text(article_record)
-            article_record["tags"], article_record["tag_base"] = [], []
-            article_record["authors"], article_record["author_base"] = [], []
-            if (load_meta):
-                self.load_meta(article_record)
-            sourceindex = url.index(".com")
-            article_record["source"] = url[:sourceindex]
+        if ("author" not in article_sub_DF.columns):
+            article_authors_sql = 'SELECT AUT_ID, AUT_NAME, AUT_URL FROM ARTICLE_INFO, ARTICLE_AUTHORS, AUTHORS WHERE AAU_AIN_ID = AIN_ID AND AUT_ID = AAU_AUT_ID AND AUT_AIN_ID' + ( (' IN '+tuple(articleids)) if not all else '')
+            articleAuthorsDF = pd.read_sql(article_authors_sql,self.db_connection, index_col='AUT_ID')
+            articleAuthorsDF.columns = ['author', 'author_url', 'article_id']
+            article_sub_DF = article_sub_DF.merge(articleAuthorsDF , on='article_id')
+        article_sub_DF.set_index(['article_id', 'tag', 'author'], drop=True)
+        return article_sub_DF
 
-            article_records.append(article_record)
-        return article_records
+    def load_articles(self, load_text=False, load_meta=False):
+        con = self.engine.connect()
+
+        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO ORDER BY AIN_DATE, AIN_TITLE"
+        articleDF = pd.read_sql(article_info_sql, con)
+        articleDF.columns = ['article_id' , 'url', 'title', 'date_p' ]
+        articleDF.reset_index(drop=True)
+        if (load_text):
+            articleDF = self.load_text(articleDF, all=True)
+        con.close()
+        return articleDF

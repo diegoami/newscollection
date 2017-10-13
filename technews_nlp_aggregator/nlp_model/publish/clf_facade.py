@@ -1,5 +1,5 @@
 import abc
-from datetime import date
+from datetime import date, timedelta
 
 class ClfFacade:
 
@@ -7,61 +7,19 @@ class ClfFacade:
         self.model_filename = model_filename
         self.article_loader = article_loader
 
-    @abc.abstractmethod
-    def load_models(self):
-        pass
 
-    @abc.abstractmethod
-    def get_related_sims(self, doc, n):
-        pass
 
-    @abc.abstractmethod
-    def get_related_articles(self, doc, n):
-        pass
-
-    @abc.abstractmethod
-    def get_related_articles_and_score(self, doc, n):
-        pass
-
-    @abc.abstractmethod
-    def get_related_articles_and_score(self, urlArg, n=5000, max=15):
-        pass
-
-    @abc.abstractmethod
-    def get_related_articles_and_score_doc(self, doc, n):
-        pass
-
-    def get_related_articles_from_to(self, doc, max, start, end,  n=10000):
-        urls_scores = self.get_related_articles_and_score_doc(doc,n)
-        article_map = self.article_loader.article_map
-
-        recent_urls = []
-        for url, score in urls_scores:
-            record = article_map[url]
-
-            if (start <= record["date_p"] <= end):
-                recent_urls.append((url, score))
-            if (len(recent_urls) >= max):
-                break
-        return recent_urls
 
 
     def get_related_articles_in_interval(self, doc, reference_day=None, n=10000, days=5, max=15):
-        urls = self.get_related_articles(doc,n)
-        article_map = self.article_loader.article_map
+
+
         if not reference_day:
             reference_day= date.today()
-        recent_urls = []
-        for url in urls:
-            record = article_map[url]
+        start = reference_day - timedelta(days=days)
+        end = reference_day + timedelta(days=days)
 
-            diff_in_days = abs(reference_day -record["date_p"]).days
-
-            if (diff_in_days <= days):
-                recent_urls.append(url)
-            if (len(recent_urls) >= max):
-                break
-        return recent_urls
+        return self.get_related_articles_from_to(doc, max, start, end, n )
 
 
     def find_related_articles(self, url,  max=15):

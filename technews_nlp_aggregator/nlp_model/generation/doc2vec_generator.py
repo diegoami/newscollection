@@ -25,17 +25,14 @@ class LabeledLineSentence(object):
 class Doc2VecGenerator:
 
 
-    def __init__(self, article_map, model_output_dir):
-        self.article_map = article_map
-        self.model_output_dir = model_output_dir
+    def __init__(self, articlesDF, model_output_dir):
 
+        self.model_output_dir = model_output_dir
+        self.articlesDF = articlesDF
 
     def create_model(self):
-        urls  = [self.article_map[article]["url"] for article in self.article_map]
 
-        texts = [self.article_map[article]["text"] for article in self.article_map]
-
-        it = LabeledLineSentence(texts, urls)
+        it = LabeledLineSentence(self.articlesDF['text'].to_list(), self.articlesDF['article_id'].to_list())
 
         self.model = Doc2Vec(size=300, window=10, min_count=MIN_FREQUENCY, workers=11, alpha=0.025, min_alpha=0.025,
                              iter=10)  # use fixed learning rate
