@@ -9,8 +9,9 @@ from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleData
 from datetime import datetime
 import yaml
 
+import yaml
 
-config = yaml.safe_load(open('config.yml'))
+config = yaml.safe_load(open('../config.yml'))
 db_config = yaml.safe_load(open(config["db_key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
@@ -22,8 +23,8 @@ models_dir = config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'
 
 os.mkdir(models_dir)
 
-tfidfGenerator = Doc2VecGenerator(articleDF , models_dir)
-tfidfGenerator.create_model()
+doc2VecGenerator = Doc2VecGenerator(articleDF , models_dir)
+doc2VecGenerator.create_model()
 
 if os.path.islink(config["doc2vec_models_dir_link"]):
     os.unlink(config["doc2vec_models_dir_link"])

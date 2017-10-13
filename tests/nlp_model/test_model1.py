@@ -62,8 +62,8 @@ def show_related_articles(facade, article):
     print(" ==== related_articles  ==== ")
     print(related_articles)
 
-#show_related_articles(doc2VecFacade, article1)
-#show_related_articles(doc2VecFacade, article2)
+show_related_articles(doc2VecFacade, article1)
+show_related_articles(doc2VecFacade, article2)
 
 
 show_related_articles(tfidfFacade, article1)

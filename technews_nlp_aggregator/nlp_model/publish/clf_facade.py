@@ -1,5 +1,7 @@
 import abc
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
+import pandas as pd
+
 
 class ClfFacade:
 
@@ -22,15 +24,25 @@ class ClfFacade:
         return self.get_related_articles_from_to(doc, max, start, end, n )
 
 
-    def find_related_articles(self, url,  max=15):
-        record = self.article_loader.article_map[url]
-        article = record["text"]
-        date_record = record["date_p"]
+    def find_related_articles(self, id,  max=15):
+        article = self.article_loader.articlesDF.iloc[id,:]
+        article_text = article['text']
+        date_p = article['date_p']
 
-        batch1 = self.get_related_articles_in_interval(article, date_record, 4000, 5, 15)
-        batch2 = self.get_related_articles_in_interval(article, date_record, 2000, 10, 15)
-        batch3 = self.get_related_articles_in_interval(article, date_record, 1000, 15, 15)
+        batch1 = self.get_related_articles_in_interval(article_text, date_p, 4000, 5, 15)
+        batch2 = self.get_related_articles_in_interval(article_text, date_p, 2000, 10, 15)
+        batch3 = self.get_related_articles_in_interval(article_text, date_p, 1000, 15, 15)
         return (batch1 + batch2 + batch3)[:max]
+
+
+    def enrich_with_score(self, similar_documents, we_score):
+        id_articles, score_ids = zip(*similar_documents)
+        df_similar = self.article_loader.articlesDF.iloc[id_articles, :]
+        df_similar['score'] = pd.Series(score_ids)
+        df_similar['from_today'] = datetime.datetime.now().date() - df_similar['p_date']
+        df_similar['score_total'] = df_similar['score'] * we_score - df_similar['from_today']
+        df_similar_ss = df_similar.sort_values(by='score_total', ascending=False)
+        return df_similar_ss
 
     @abc.abstractmethod
     def interesting_articles_for_day(self, start, end, max=15):

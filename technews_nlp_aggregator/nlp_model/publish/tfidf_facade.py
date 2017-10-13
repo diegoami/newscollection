@@ -57,34 +57,29 @@ class TfidfFacade(ClfFacade):
         return sims[:n]
 
 
-    def get_related_articles_from_to(self, doc, max, start, end,  n=10000):
-        similar_documents = self.get_related_articles_and_score_doc(doc, n)
-        id_articles, score_ids = zip(*similar_documents )
-        articlesFoundDF = self.article_loader.articlesDF.iloc[ list(id_articles),:]
-
-        articlesFilteredDF = articlesFoundDF[(articlesFoundDF['date_p']>= start) & (articlesFoundDF ['date_p'] <= end) ]
-
-
-        return articlesFilteredDF
-
     def get_related_articles_and_score_doc(self, doc, n):
         sims = self.get_related_sims(doc, n)
-
         related_articles = sims
-
         return related_articles[:n]
 
     def get_related_articles_and_score_docid(self,  docid, n=10000, max=15):
-        #day = orig_record ["date_p"]
-        similar_documents = self.get_related_sims_docid(docid, n)
-        id_articles, score_ids = zip(*similar_documents )
-        df_similar = self.article_loader.articlesDF.iloc[id_articles, :]
-        df_similar['score'] = pd.Series(score_ids )
-        df_similar['from_today'] = datetime.datetime.now().date() - df_similar['p_date']
+        docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
+        docidx = docrow.index[0]
+        similar_documents = self.get_related_sims_docid(docidx , n)
+        df_similar_docs = self.enrich_with_score(similar_documents,100)
 
-        df_similar['score_total'] = df_similar['score']*100-df_similar['from_today']
+        return df_similar_docs.iloc[:max,:]
 
-        return df_similar
+
+    def get_related_articles_from_to(self, doc, max, start, end, n=10000):
+        similar_documents = self.get_related_articles_and_score_doc(doc, n)
+        id_articles, score_ids = zip(*similar_documents)
+        articlesFilteredDF = self.article_loader.articlesDF.iloc[list(id_articles), :]
+
+        articlesFoundDF = articlesFilteredDF[(articlesFilteredDF ['date_p'] >= start) & (articlesFilteredDF['date_p'] <= end)]
+        #articlesFilteredDF.setIndex('article_id', drop=True)
+
+        return articlesFoundDF
 
     def interesting_articles_for_day(self, start, end, max=15):
         docs_of_day = self.article_loader.docs_in_interval(start, end)

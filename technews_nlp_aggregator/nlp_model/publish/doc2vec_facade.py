@@ -31,8 +31,8 @@ class Doc2VecFacade(ClfFacade):
         return self.get_related_articles_and_sims(doc, n)
 
 
-    def get_related_articles_and_sims_url(self, url, n):
-        similar_documents = self.model.docvecs.most_similar([url], topn=n)[1:]
+    def get_related_articles_and_sims_id(self, id, n):
+        similar_documents = self.model.docvecs.most_similar([id], topn=n)[1:]
 
         return similar_documents
 
@@ -44,34 +44,21 @@ class Doc2VecFacade(ClfFacade):
         return urls
 
 
-
-    def get_related_articles_and_score_url(self, urlArg, n=6000, max=15 ):
-        orig_record = self.article_loader.article_map[urlArg]
-        day = orig_record["date_p"]
-
-
-        similar_documents = self.get_related_articles_and_sims_url(urlArg, n)
-        rated_urls = []
-
-        for url, score in similar_documents:
+    def get_related_articles_from_to(self, doc, max, start, end, n=10000):
+        similar_documents = self.get_related_articles_and_score_doc(doc, n)
+        id_articles, score_ids = zip(*similar_documents)
+        articlesDocVecDf = self.article_loader.articlesDF.set_index('article_id',drop=True)
+        articlesFoundDF = articlesDocVecDf .loc[list(id_articles), :]
+        articlesFilteredDF = articlesFoundDF [( articlesFoundDF ['date_p'] >= start) & ( articlesFoundDF ['date_p'] <= end)]
+        return articlesFilteredDF
 
 
-            if (url == urlArg):
-                continue
-
-            record = self.article_loader.article_map[url]
-
-            p_date = record["date_p"]
-            real_score = score * 125 - abs(p_date - day).days
-
-            if (record["source"] == orig_record["source"]):
-                real_score -= 5
-
-            if (real_score > 0):
-                rated_urls.append((url, real_score))
-
-        srated_urls = sorted(rated_urls, key=lambda x: x[1], reverse=True)
-        return srated_urls[:max]
+    def get_related_articles_and_score_docid(self, docid, n=6000, max=15 ):
+        docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
+        day = docrow ["date_p"]
+        similar_documents = self.get_related_articles_and_sims_id(docid, n)
+        df_similar_docs = self.enrich_with_score(similar_documents, 100)
+        return df_similar_docs.iloc[:max, :]
 
     def interesting_articles_for_day(self, start, end, max=15):
         urls_of_day = self.article_loader.articles_in_interval(start, end)
