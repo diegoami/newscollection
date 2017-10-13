@@ -24,15 +24,15 @@ class ClfFacade:
         return self.get_related_articles_from_to(doc, max, start, end, n )
 
 
-    def find_related_articles(self, id,  max=15):
-        article = self.article_loader.articlesDF.iloc[id,:]
-        article_text = article['text']
-        date_p = article['date_p']
+    def find_related_articles(self, indx,  max=15):
+
+        article_text = self.article_loader.articlesDF['text'].iloc[indx]
+        date_p = self.article_loader.articlesDF['date_p'].iloc[indx]
 
         batch1 = self.get_related_articles_in_interval(article_text, date_p, 4000, 5, 15)
         batch2 = self.get_related_articles_in_interval(article_text, date_p, 2000, 10, 15)
         batch3 = self.get_related_articles_in_interval(article_text, date_p, 1000, 15, 15)
-        return (batch1 + batch2 + batch3)[:max]
+        return pd.concat([batch1,batch2,batch3])
 
 
     def enrich_with_score(self, similar_documents, we_score):

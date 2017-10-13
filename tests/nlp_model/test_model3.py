@@ -3,12 +3,10 @@ import time
 from tests.bootstrap.test_bootstrap import *
 
 while True:
-    random_article = articleLoader.get_random_article()
+    random_article_id = articleLoader.get_random_article()
     print(" ============= ARTICLE ==================")
-    print(random_article)
 
-    random_article_id = random_article['article_id']
-    random_article_id_indx = random_article.index[0]
+
     print(" ============= DOC2VEC ==================")
     articles1 = doc2VecFacade.get_related_articles_and_docid(random_article_id , 2000,30)
     print_articles(articles1)
