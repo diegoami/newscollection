@@ -145,45 +145,71 @@ class ArticleDatasetRepo(ArticleRepo):
 
 
 
-    def load_text(self, article_sub_DF, all=False):
+    def load_text(self, article_sub_DF, all=False,load_text=True):
         con = self.engine.connect()
         if "text" not in article_sub_DF.columns:
-            articleids = article_sub_DF['article_id']
-            article_text_sql = 'SELECT ATX_ID, ATX_TEXT, ATX_AIN_ID FROM ARTICLE_TEXT WHERE ATX_AIN_ID '+ ( (' IN '+str(tuple(articleids))) if not all else '')
+            articleids = article_sub_DF.index
+            if (load_text):
+                article_text_sql = 'SELECT ATX_ID, ATX_TEXT, ATX_AIN_ID FROM ARTICLE_TEXT  '+ ( ('WHERE ATX_AIN_ID IN '+str(tuple(articleids))) if not all else '')
+            else:
+                article_text_sql = 'SELECT ATX_ID, \'\', ATX_AIN_ID FROM ARTICLE_TEXT  ' + (
+                ('WHERE ATX_AIN_ID IN ' + str(tuple(articleids))) if not all else '')
             articleTextDF = pd.read_sql(article_text_sql , con, index_col='ATX_ID')
             articleTextDF.columns = [ 'text', 'article_id' ]
+
             article_sub_DF = article_sub_DF.merge(articleTextDF, on='article_id')
-            article_sub_DF.reset_index(drop=False)
 
         con.close()
         return article_sub_DF
 
+
+    def load_meta_record(self, article_record):
+        if (len(article_record["tags"]) == 0):
+            for tag_row in self.db.query(self.tags_query, id=article_record["article_id"]):
+                article_record["tags"].append(tag_row["TAG_URL"])
+                article_record["tag_base"].append(tag_row["TAG_NAME"])
+        if (len(article_record["authors"]) == 0):
+            for author_row in self.db.query(self.authors_query, id=article_record["article_id"]):
+                article_record["authors"].append(author_row["AUT_URL"])
+                article_record["author_base"].append(author_row["AUT_NAME"])
+
+
+
+
+    def load_articles(self, load_text=False, load_meta=False):
+        con = self.engine.connect()
+
+        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO ORDER BY AIN_ID"
+        articleDF = pd.read_sql(article_info_sql, con)
+        print(articleDF.head())
+
+        articleDF.columns = ['article_id' , 'url', 'title', 'date_p' ]
+
+        articleDF = self.load_text(articleDF, all=True,load_text=load_text)
+ #       articleDF.set_index('article_id', inplace=True)
+        articleDF.reset_index(inplace=True, drop=True)
+        print(articleDF.head())
+        con.close()
+        return articleDF
+"""
     def load_meta(self, article_sub_DF, all=False):
 
         articleids = article_sub_DF['article_id']
         if ("tag" not in article_sub_DF.columns):
-
-            article_tags_sql = 'SELECT TAG_ID, TAG_NAME, TAG_URL, ATA_IN_ID FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND ATA_AIN_ID '+ ( (' IN '+tuple(articleids)) if not all else '')
+            article_tags_sql = 'SELECT TAG_ID, TAG_NAME, TAG_URL, ATA_AIN_ID FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND ATA_AIN_ID ' + (
+            (' IN ' + tuple(articleids)) if not all else '')
             articleTagsDF = pd.read_sql(article_tags_sql, self.db_connection, index_col='TAG_ID')
             articleTagsDF.columns = ['tag', 'tag_url', 'article_id']
             article_sub_DF = article_sub_DF.merge(articleTagsDF, on='article_id')
 
         if ("author" not in article_sub_DF.columns):
-            article_authors_sql = 'SELECT AUT_ID, AUT_NAME, AUT_URL FROM ARTICLE_INFO, ARTICLE_AUTHORS, AUTHORS WHERE AAU_AIN_ID = AIN_ID AND AUT_ID = AAU_AUT_ID AND AUT_AIN_ID' + ( (' IN '+tuple(articleids)) if not all else '')
-            articleAuthorsDF = pd.read_sql(article_authors_sql,self.db_connection, index_col='AUT_ID')
+            article_authors_sql = 'SELECT AUT_ID, AUT_NAME, AUT_URL, AUT_IN_ID FROM ARTICLE_INFO, ARTICLE_AUTHORS, AUTHORS WHERE AAU_AIN_ID = AIN_ID AND AUT_ID = AAU_AUT_ID AND AUT_AIN_ID' + (
+            (' IN ' + tuple(articleids)) if not all else '')
+            articleAuthorsDF = pd.read_sql(article_authors_sql, self.db_connection, index_col='AUT_ID')
             articleAuthorsDF.columns = ['author', 'author_url', 'article_id']
-            article_sub_DF = article_sub_DF.merge(articleAuthorsDF , on='article_id')
-        article_sub_DF.set_index(['article_id', 'tag', 'author'], drop=True)
+            article_sub_DF = article_sub_DF.merge(articleAuthorsDF, on='article_id')
+
         return article_sub_DF
 
-    def load_articles(self, load_text=False, load_meta=False):
-        con = self.engine.connect()
 
-        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO ORDER BY AIN_DATE, AIN_TITLE"
-        articleDF = pd.read_sql(article_info_sql, con)
-        articleDF.columns = ['article_id' , 'url', 'title', 'date_p' ]
-        articleDF.reset_index(drop=True)
-        if (load_text):
-            articleDF = self.load_text(articleDF, all=True)
-        con.close()
-        return articleDF
+"""

@@ -20,7 +20,7 @@ class ArticleLoader:
     def get_random_article(self):
         url_len = len(self.articlesDF)
         rand_index = randint(0,url_len)
-        return rand_index
+        return rand_index, self.articlesDF.loc[rand_index]
 
 
     def articles_in_interval(self,start, end):

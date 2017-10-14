@@ -35,9 +35,13 @@ def print_articles(articles):
     for article in articles:
         print(article)
 
-
+print(articleLoader.articlesDF.head())
 while True:
-    random_article_id= articleLoader.get_random_article()
+    #random_article_id, random_article=  articleLoader.get_random_article()
+    #random_article_id = random_article.index[0]
+    random_article_id = 15073
+    print(articleLoader.articlesDF.loc[random_article_id])
+    #print(random_article)
     print(" ============= ARTICLE ==================")
 
     print(" ============= DOC2VEC ==================")

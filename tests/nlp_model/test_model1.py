@@ -54,18 +54,43 @@ In the email, she declined to say where she would be moving to.
 
 """
 
+article3 = """
 
+The Pixel laptop is no more. At Mobile World Congress, Google’s senior vice president for hardware Rick Osterloh said the company will stop making Chromebooks under the Pixel name, which has recently become more synonymous with the company’s flagship smartphone. According to TechCrunch, Osterloh said Google may still use the Pixel branding for future products that integrate Google’s software with its own hardware, but that is unlikely to come in the form of a laptop computer.
+
+At MWC, Osterloh also admitted that the Pixel smartphones have been experiencing supply and demand issues — which is an understatement, to say the least. Google discontinued its latest version of the Pixel Chromebook last summer after letting it sell out in stores and online. The Pixel C tablet, however, still appears available for sale.
+"""
+
+
+article4 ="""
+Instagram accidentally advertises itself on Facebook with rape threat photo
+8
+Instagram is the latest social media platform to have its algorithms accidentally promote hate speech and fail to filter it out. The social media platform used an offensive photo that read, “I Will Rape You” to advertise itself on Facebook, according to The Guardian.
+
+Guardian reporter Olivia Solon recently learned that Instagram was advertising itself with a screenshot she had taken of a hateful email she had received that read, “I will rape you before I kill you, you filthy whore!” The subject line of the email was “Olivia, you fucking bitch!!!!!!!!”
+
+Instagram reportedly turned the screenshot into an advertisement displayed to Solon’s sister on Facebook with the line, “See Olivia Solon’s photo and posts from friends on Instagram.” The photo was posted on Instagram and Facebook almost a year ago and received three likes and more than a dozen comments on Instagram, which was enough social engagement to trigger Instagram’s algorithm.
+
+Twitter Ads info and privacy
+Last week, Facebook, which owns Instagram, came under fire for allowing advertisers to target users interested in the “jew hater” and “how to burn jews” categories that some listed on their profiles. In response to the complaints, the social media platform restricted the interests users can list to meet community standards and added more human oversight to the automated processes. “We never intended or anticipated this functionality being used this way — and that is on us,” Facebook’s Sheryl Sandberg wrote in a post yesterday.
+
+Although this is only one instance of Instagram promoting offensive content, it suggests that Instagram’s algorithms may not be set up to filter out hateful images and could be mistakenly posting other hateful messages as ads elsewhere online. Instagram responded with a statement: “We are sorry this happened — it’s not the experience we want someone to have. This notification post was surfaced as part of an effort to encourage engagement on Instagram. Posts are generally received by a small percentage of a person’s Facebook friends.”
+"""
 def show_related_articles(facade, article):
     #related_articles_doc2vec = facade.get_related_articles(article, 10000)
-    related_articles = facade.get_related_articles_in_interval(article, n=10000, reference_day=None, days=20, max=15)
+    related_articles = facade.get_related_articles_in_interval(article, n=10000, reference_day=None, days=60, max=15)
 
     print(" ==== related_articles  ==== ")
     print(related_articles)
 
-show_related_articles(doc2VecFacade, article1)
-show_related_articles(doc2VecFacade, article2)
+#show_related_articles(doc2VecFacade, article1)
+#show_related_articles(doc2VecFacade, article2)
+#show_related_articles(doc2VecFacade, article3)
+show_related_articles(doc2VecFacade, article4)
 
+#show_related_articles(tfidfFacade, article1)
+#show_related_articles(tfidfFacade, article2)
+#show_related_articles(tfidfFacade, article3)
+show_related_articles(tfidfFacade, article4)
 
-show_related_articles(tfidfFacade, article1)
-show_related_articles(tfidfFacade, article2)
 

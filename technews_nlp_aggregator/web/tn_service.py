@@ -16,7 +16,7 @@ db_config = yaml.safe_load(open(config["db_key_file"]))
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
 
-articleLoader.load_all_articles(load_text=False, load_meta=False)
+articleLoader.load_all_articles(load_text=True)
 doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
 doc2VecFacade.load_models()
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
@@ -48,17 +48,17 @@ class ClassifierService(Resource):
             if "start" in request_body and "end" in request_body:
                 start, end = conv_to_date(request_body["start"]), conv_to_date(request_body["end"])
                 if start and end:
-                    sims_all = self.classifier.get_related_articles_from_to(text,  n_articles, conv_to_date(request_body["start"]), conv_to_date(request_body["end"]) )
+                    articlesDF = self.classifier.get_related_articles_from_to(text,  n_articles, conv_to_date(request_body["start"]), conv_to_date(request_body["end"]) )
                 else:
-                    sims_all = self.classifier.get_related_articles_and_score_doc(text, n_articles)
+                    articlesDF= self.classifier.get_related_articles_in_interval(text, n=10000, reference_day=None, days=30, max=n_articles)
 
             else:
-                sims_all = self.classifier.get_related_articles_and_score_doc(text, n_articles)
-            sims = sims_all[:n_articles]
-            logging.info(sims)
-            related_articles = extract_related_articles(articleLoader, sims)
-            for related_article in related_articles:
-                articleLoader.articlesRepo.load_meta(related_article)
+                articlesDF = self.classifier.get_related_articles_in_interval(text, n=10000, reference_day=None, days=30, max=n_articles)
+            sims = zip(articlesDF.index,articlesDF['score'])
+            related_articles = extract_related_articles(articleLoader , sims)
+            #articleRecords = articlesDF.to_dict()
+            for articleRecord in related_articles:
+                articleLoader.articlesRepo.load_meta_record(articleRecord)
 
             return {
                 'related_articles': related_articles
@@ -80,7 +80,7 @@ class ClassifierService(Resource):
             sims_filtered = filter_double(articleLoader, sims_all )
             interesting_articles = extract_interesting_articles(articleLoader, sims_filtered )
             for interesting_article in interesting_articles :
-                articleLoader.articlesRepo.load_meta(interesting_article)
+                articleLoader.articlesRepo.load_meta_record(interesting_article)
 
             return {
                 'interesting_articles': interesting_articles

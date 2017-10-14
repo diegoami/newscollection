@@ -32,7 +32,7 @@ class Doc2VecGenerator:
 
     def create_model(self):
 
-        it = LabeledLineSentence(self.articlesDF['text'].tolist(), self.articlesDF['article_id'].tolist())
+        it = LabeledLineSentence(self.articlesDF['text'].tolist(), self.articlesDF.index.tolist())
 
         self.model = Doc2Vec(size=300, window=10, min_count=MIN_FREQUENCY, workers=11, alpha=0.025, min_alpha=0.025,
                              iter=10)  # use fixed learning rate

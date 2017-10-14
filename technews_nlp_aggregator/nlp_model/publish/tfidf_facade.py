@@ -47,7 +47,7 @@ class TfidfFacade(ClfFacade):
         vec_lsi = self.get_vec_docid(id)
         sims = self.index[vec_lsi]
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
-        return sims[1:n]
+        return sims[:n]
 
 
     def get_related_sims(self, doc, n):
@@ -63,33 +63,15 @@ class TfidfFacade(ClfFacade):
         return related_articles[:n]
 
     def get_related_articles_and_score_docid(self,  docid, n=10000, max=15):
-        docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
-        docidx = docrow.index[0]
-        similar_documents = self.get_related_sims_docid(docidx , n)
-        df_similar_docs = self.enrich_with_score(similar_documents,100)
+
+        docrow = self.article_loader.articlesDF.loc[docid]
+        #print(docrow["title"])
+
+        similar_documents = self.get_related_sims_docid(docid , n)
+        #print(similar_documents)
+        df_similar_docs = self.enrich_with_score(similar_documents,200,docrow['date_p'])
 
         return df_similar_docs.iloc[:max,:]
 
 
-    def get_related_articles_from_to(self, doc, max, start, end, n=10000):
-        similar_documents = self.get_related_articles_and_score_doc(doc, n)
-        id_articles, score_ids = zip(*similar_documents)
-        articlesFilteredDF = self.article_loader.articlesDF.iloc[list(id_articles), :]
 
-        articlesFoundDF = articlesFilteredDF[(articlesFilteredDF ['date_p'] >= start) & (articlesFilteredDF['date_p'] <= end)]
-        #articlesFilteredDF.setIndex('article_id', drop=True)
-
-        return articlesFoundDF
-
-    def interesting_articles_for_day(self, start, end, max=15):
-        docs_of_day = self.article_loader.docs_in_interval(start, end)
-        all_links = []
-        for docid in docs_of_day:
-            ars_score = self.get_related_articles_and_score_docid(docid, 6000, 4)
-            sum_score = sum([x[1] for x in ars_score])
-            url = self.article_loader.url_list[docid]
-
-
-            all_links.append((url, round(sum_score, 2), [x[0] for x in ars_score]))
-        sall_links = sorted(all_links, key=lambda x: x[1], reverse=True)[:max]
-        return sall_links
