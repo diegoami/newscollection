@@ -23,7 +23,7 @@ function submit_all() {
     var selectionText = document.getElementById('tdidf_input').value
     var n_articles_value = document.getElementById('n_articles').value
     var start = document.getElementById('start').value
-    var end = document.getElementById('end').value
+    var end = document.getElementById('start').value
 
     var data = {text : selectionText , n_articles : n_articles_value, start: start, end: end}
     var local_h = get_local_hostname_port()
@@ -53,7 +53,7 @@ function disable_button() {
 function submit_interesting() {
     var n_articles_value = document.getElementById('n_articles').value
     var start = document.getElementById('start').value
-    var end = document.getElementById('end').value
+    var end = document.getElementById('start').value
 
     var data = { n_articles : n_articles_value, start: start, end: end}
     var local_h = get_local_hostname_port()
