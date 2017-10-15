@@ -181,14 +181,9 @@ class ArticleDatasetRepo(ArticleRepo):
 
         article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO ORDER BY AIN_ID"
         articleDF = pd.read_sql(article_info_sql, con)
-        print(articleDF.head())
-
         articleDF.columns = ['article_id' , 'url', 'title', 'date_p' ]
-
         articleDF = self.load_text(articleDF, all=True,load_text=load_text)
- #       articleDF.set_index('article_id', inplace=True)
-        articleDF.reset_index(inplace=True, drop=True)
-        print(articleDF.head())
+ #      articleDF.reset_index(inplace=True, drop=True)
         con.close()
         return articleDF
 """

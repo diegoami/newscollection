@@ -6,7 +6,9 @@ raw_base_dir    =  config['raw_base_dir']
 parsed_base_dir =  config['parsed_base_dir']
 link_file       =  config['link_file']
 pattern         =  config['search_pattern']
-connection_url  =  config['db_url']
+db_config = yaml.safe_load(open(config["db_key_file"]))
+
+connection_url = db_config["db_url"]
 
 from technews_nlp_aggregator.scraping.google_search_wrapper import Iterator
 from technews_nlp_aggregator.scraping.technews_retriever import Converter
