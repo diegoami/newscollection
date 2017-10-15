@@ -1,6 +1,4 @@
 
-import json
-
 MIN_FREQUENCY = 1
 DICTIONARY_FILENAME   = 'dictionary'
 CORPUS_FILENAME       = 'corpus'
@@ -8,12 +6,9 @@ LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
 from gensim import corpora, models, similarities
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.corpus import stopwords
 
-import os
+from technews_nlp_aggregator.nlp_model.common import Tokenizer
 
-from gensim.corpora import MmCorpus
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
@@ -25,24 +20,11 @@ class TfidfGenerator:
 
         self.model_output_dir = model_output_dir
         self.articleDF = articleDF
+        self.tokenizer  = Tokenizer()
 
     def create_model(self):
+        texts = self.tokenizer(self.articleDF)
 
-        documents = self.articleDF['text'].tolist()
-
-        texts = [[word for word in word_tokenize(document.lower())]
-                 for document in documents]
-
-        # remove words that appear only once
-        from collections import defaultdict
-        frequency = defaultdict(int)
-        for text in texts:
-            for token in text:
-                frequency[token] += 1
-
-
-        texts = [[token for token in text if frequency[token] >= MIN_FREQUENCY]
-                 for text in texts]
 
         dictionary = corpora.Dictionary(texts)
         dictionary.save(self.model_output_dir+DICTIONARY_FILENAME)  # store the dictionary, for future reference
