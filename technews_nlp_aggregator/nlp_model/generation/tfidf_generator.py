@@ -16,14 +16,15 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 class TfidfGenerator:
 
 
-    def __init__(self, articleDF, model_output_dir):
+    def __init__(self, articleDF, model_output_dir, tokenizer=None):
 
         self.model_output_dir = model_output_dir
         self.articleDF = articleDF
-        self.tokenizer  = Tokenizer()
+
+        self.tokenizer  = Tokenizer() if not tokenizer else tokenizer
 
     def create_model(self):
-        texts = self.tokenizer(self.articleDF)
+        texts = self.tokenizer.tokenize_ddf(self.articleDF)
 
 
         dictionary = corpora.Dictionary(texts)
@@ -33,7 +34,7 @@ class TfidfGenerator:
 
         tfidf = models.TfidfModel(corpus)  # step 1 -- initialize a model
         corpus_tfidf = tfidf[corpus]
-        lsi = models.LsiModel(corpus_tfidf, id2word=dictionary)  # initialize an LSI transformation
+        lsi = models.LsiModel(corpus_tfidf, num_topics=1000, id2word=dictionary, chunksize=50000)  # initialize an LSI transformation
         corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
 
         lsi.save(self.model_output_dir+LSI_FILENAME)  # same for tfidf, lda, ...

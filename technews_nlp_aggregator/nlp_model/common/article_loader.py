@@ -26,8 +26,8 @@ class ArticleLoader:
 
 
 
-    def load_all_articles(self, load_text=True, load_meta=True):
-        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text, load_meta=load_meta)
+    def load_all_articles(self, load_text=True, load_meta=True, limit=None):
+        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text, load_meta=load_meta, limit=limit)
         self.articlesDF =  exclude_articles(self.articlesDF )
 
 
