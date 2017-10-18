@@ -9,7 +9,7 @@ import logging
 from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
 from nltk.tokenize import word_tokenize
-
+from technews_nlp_aggregator.nlp_model.common import Tokenizer
 import pandas as pd
 
 import datetime
@@ -18,6 +18,7 @@ from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
+tokenizer = Tokenizer()
 class TfidfFacade(ClfFacade):
 
     def __init__(self, model_dir, article_loader):
@@ -32,7 +33,7 @@ class TfidfFacade(ClfFacade):
 
 
     def get_vec(self,doc):
-        words = [word for word in word_tokenize(doc.lower())]
+        words = tokenizer.tokenize_doc('', doc)
         vec_bow = self.dictionary.doc2bow(words)
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
@@ -73,5 +74,15 @@ class TfidfFacade(ClfFacade):
 
         return df_similar_docs.iloc[:max,:]
 
+    def compare_articles_from_dates(self,  start, end):
+        articles_and_sim = {}
+        docs_of_day = self.article_loader.articles_in_interval(start, end)
+        for id, row in docs_of_day.iterrows():
+            vec_lsi = self.get_vec_docid(id)
+            sims = self.index[vec_lsi]
+            sims_s = sorted(enumerate(sims), key=lambda item: -item[1])
+            for ss in sims_s:
+                other_id, sim_score = ss
+                articles_and_sim[(id, other_id)] = sim_score
 
-
+        return articles_and_sim

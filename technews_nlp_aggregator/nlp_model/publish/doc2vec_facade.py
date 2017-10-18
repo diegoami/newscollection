@@ -3,10 +3,11 @@ from nltk.tokenize import word_tokenize
 import datetime
 from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 import pandas as pd
+from technews_nlp_aggregator.nlp_model.common import Tokenizer
 
 MIN_FREQUENCY = 3
 
-
+tokenizer = Tokenizer()
 class Doc2VecFacade(ClfFacade):
 
     def __init__(self, model_filename, article_loader):
@@ -14,12 +15,13 @@ class Doc2VecFacade(ClfFacade):
         self.article_loader = article_loader
 
 
+
     def load_models(self):
         self.model = Doc2Vec.load(self.model_filename)
 
 
     def get_related_articles_and_sims(self, doc, n):
-        wtok = [i for i in word_tokenize(doc.lower())]
+        wtok = self.tokenizer.tokenize_doc('', doc)
         infer_vector = self.model.infer_vector(wtok)
 
         similar_documents = self.model.docvecs.most_similar([infer_vector], topn=n)

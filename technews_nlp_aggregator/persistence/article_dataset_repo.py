@@ -176,10 +176,12 @@ class ArticleDatasetRepo(ArticleRepo):
 
 
 
-    def load_articles(self, load_text=False, load_meta=False):
+    def load_articles(self, load_text=False, load_meta=False, limit = None):
         con = self.engine.connect()
 
         article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO ORDER BY AIN_ID"
+        if (limit):
+            article_info_sql += ' LIMIT '+str(limit)
         articleDF = pd.read_sql(article_info_sql, con)
         articleDF.columns = ['article_id' , 'url', 'title', 'date_p' ]
         articleDF = self.load_text(articleDF, all=True,load_text=load_text)

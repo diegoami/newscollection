@@ -2,22 +2,25 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models.doc2vec import TaggedDocument
 from gensim.models import Doc2Vec
 
-MIN_FREQUENCY = 3
+from technews_nlp_aggregator.nlp_model.common import Tokenizer
+
 MODEL_FILENAME   = 'doc2vec'
 
 
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
+tokenizer = Tokenizer()
 
 class LabeledLineSentence(object):
-    def __init__(self, doc_list, labels_list):
-        self.labels_list = labels_list
-        self.doc_list = doc_list
+    def __init__(self, df):
+        self.df = df
+        self.labels_list = df['text'].tolist()
+        self.titles_list = df['title'].tolist()
+        self.doc_list = df.index.tolist()
 
     def __iter__(self):
-        for idx, doc in enumerate(self.doc_list):
-            wtok = [i for i in word_tokenize(doc.lower())]
+        for idx, title, doc in zip(self.doc_list, self.titles_list, self.doc_list):
+            wtok = tokenizer.tokenize_doc(title, doc)
             tags = [self.labels_list[idx]]
 
             yield TaggedDocument(words=wtok, tags=tags)
@@ -30,11 +33,12 @@ class Doc2VecGenerator:
         self.model_output_dir = model_output_dir
         self.articlesDF = articlesDF
 
+
     def create_model(self):
 
-        it = LabeledLineSentence(self.articlesDF['text'].tolist(), self.articlesDF.index.tolist())
+        it = LabeledLineSentence(self.articlesDF)
 
-        self.model = Doc2Vec(size=300, window=10, min_count=MIN_FREQUENCY, workers=11, alpha=0.025, min_alpha=0.025,
+        self.model = Doc2Vec(size=300, window=10,  workers=11, alpha=0.025, min_alpha=0.025,
                              iter=10)  # use fixed learning rate
         self.model.build_vocab(it)
 

@@ -1,10 +1,7 @@
-import json
-import os
-from collections import OrderedDict
+
 import logging
 from random import randint
-from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
-
+from . import exclude_articles
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
@@ -29,7 +26,9 @@ class ArticleLoader:
 
 
 
-    def load_all_articles(self, load_text=True, load_meta=True):
+    def load_all_articles(self, load_text=True, load_meta=True, limit=None):
+        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text, load_meta=load_meta, limit=limit)
+        self.articlesDF =  exclude_articles(self.articlesDF )
 
-        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text, load_meta=load_meta)
+
         return self.articlesDF
