@@ -21,7 +21,6 @@ articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
 articlesDF = articleLoader.load_all_articles(load_text=True)
 tokenizer = Tokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),token_excluder=TechArticlesTokenExcluder())
-tokenized_docs = tokenizer.tokenize_ddf(articlesDF)
 models_dir = config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'
 
 os.mkdir(models_dir)
