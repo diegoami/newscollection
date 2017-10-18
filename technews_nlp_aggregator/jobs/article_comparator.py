@@ -16,10 +16,9 @@ class ArticleComparatorJob:
 
     def __init__(self, db_connection, facade, thresholds):
         self.similarArticlesRepo = SimilarArticlesRepo(db_connection)
-        self.articleDatasetRepo = ArticleDatasetRepo(db_connection)
-        self.articleLoader = ArticleLoader(self.articleDatasetRepo)
-        self.articleLoader.load_all_articles(False)
+
         self.facade = facade
+        self.article_loader = self.facade.article_loader
 
         self.thresholds = thresholds
 
@@ -28,7 +27,7 @@ class ArticleComparatorJob:
 
     def find_articles(self, start, end):
         articles_Found = self.facade.compare_articles_from_dates(start, end, self.thresholds )
-        articlesDF = self.articleLoader.articlesDF
+        articlesDF = self.article_loader.articlesDF
         for art_cp, score in articles_Found.items():
             id, other_id = art_cp
             article, otherarticle = articlesDF.loc[id], articlesDF.loc[other_id]

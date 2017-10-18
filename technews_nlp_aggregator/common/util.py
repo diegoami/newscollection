@@ -1,5 +1,5 @@
 from urllib.parse import urlparse, unquote
-from datetime import date
+from datetime import date, datetime, timedelta
 import re
 
 
@@ -69,3 +69,11 @@ def remove_emojis(text):
 
     text = re_pattern .sub('', text)
     return text
+
+
+def daterange(start_date, end_date):
+    if start_date <= end_date:
+        for n1, n2 in zip(range((end_date - start_date).days + 1),range(1,(end_date - start_date).days + 2)):
+            yield start_date + timedelta(n1), start_date + timedelta(n2)
+    else:
+        raise(ValueError)

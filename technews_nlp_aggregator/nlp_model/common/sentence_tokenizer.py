@@ -1,4 +1,6 @@
 from nltk.tokenize import sent_tokenize
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 sentence_excludes = [
     'This post originally appeared',
     'Command Line delivers daily updates',
@@ -79,9 +81,12 @@ class SimpleSentenceTokenizer:
 
 class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
     def remove_useless_sentences(self, sentences):
+
         sentences =  [ s for s in sentences if not any([x for x in sentence_excludes if s.startswith(x)])]
         sentences =  [ s for s in sentences if not any([x for x in sentence_excludes if x in s])]
+
         return sentences
+
     def process(self, title, document):
 
         sentences = sent_tokenize(document)

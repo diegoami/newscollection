@@ -7,7 +7,7 @@ INDEX_FILENAME        = 'index'
 
 from gensim import corpora, models, similarities
 
-from technews_nlp_aggregator.nlp_model.common import Tokenizer
+from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
 
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -21,7 +21,7 @@ class TfidfGenerator:
         self.model_output_dir = model_output_dir
         self.articleDF = articleDF
 
-        self.tokenizer  = Tokenizer() if not tokenizer else tokenizer
+        self.tokenizer  = DefaultTokenizer() if not tokenizer else tokenizer
 
     def create_model(self):
         texts = self.tokenizer.tokenize_ddf(self.articleDF)

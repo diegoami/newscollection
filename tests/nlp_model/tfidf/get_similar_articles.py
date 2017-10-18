@@ -38,7 +38,7 @@ start = date(2017, 10, 10)
 end = date(2017, 10, 11)
 
 
-articles_Found = tfidfFacade.compare_articles_from_dates(start, end,(.78,.995))
+articles_Found = tfidfFacade.compare_articles_from_dates(start, end,(.75,.995))
 for art_cp, score in articles_Found.items():
     id, other_id = art_cp
     article, otherarticle = articleLoader.articlesDF.loc[id], articleLoader.articlesDF.loc[other_id]

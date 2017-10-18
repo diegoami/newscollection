@@ -6,13 +6,24 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
-similarArticlesSQL = \
+similarArticlesSQLTdf = \
 """
    SELECT A1.AIN_DATE AS DATE_1, A2.AIN_DATE AS DATE_2, A1.AIN_TITLE AS TITLE_1, A2.AIN_TITLE AS TITLE_2, A1.AIN_URL AS URL_1, A2.AIN_URL AS URL_2, S.SST_SIMILARITY AS SIMILARITY, S.SST_AGENT AS SOURCE
    FROM          ARTICLE_INFO A1, 
                  ARTICLE_INFO A2, 
                  SAME_STORY S                       
-   WHERE S.SST_AIN_ID_1 = A1.AIN_ID   AND  S.SST_AIN_ID_2   = A2.AIN_ID 
+   WHERE S.SST_AIN_ID_1 = A1.AIN_ID   AND  S.SST_AIN_ID_2   = A2.AIN_ID AND S.SST_AGENT LIKE 'TF%'
+   ORDER BY S.SST_SIMILARITY DESC  
+"""
+
+
+similarArticlesSQLDoc2Vec = \
+"""
+   SELECT A1.AIN_DATE AS DATE_1, A2.AIN_DATE AS DATE_2, A1.AIN_TITLE AS TITLE_1, A2.AIN_TITLE AS TITLE_2, A1.AIN_URL AS URL_1, A2.AIN_URL AS URL_2, S.SST_SIMILARITY AS SIMILARITY, S.SST_AGENT AS SOURCE
+   FROM          ARTICLE_INFO A1, 
+                 ARTICLE_INFO A2, 
+                 SAME_STORY S                       
+   WHERE S.SST_AIN_ID_1 = A1.AIN_ID   AND  S.SST_AIN_ID_2   = A2.AIN_ID AND SST_AGENT LIKE 'DOC%'
    ORDER BY S.SST_SIMILARITY DESC  
 """
 
@@ -93,9 +104,9 @@ class SimilarArticlesRepo:
                 traceback.print_exc()
                 self.db.rollback()
 
-    def list_similar_articles(self):
+    def list_similar_articles(self, listType="TDF"):
         similar_stories = []
-        for row in self.db.query(similarArticlesSQL):
+        for row in self.db.query(similarArticlesSQLTdf if listType=="TDF" else similarArticlesSQLDoc2Vec):
             similar_story = dict(row)
             similar_stories.append(similar_story)
         return similar_stories

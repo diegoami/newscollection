@@ -1,6 +1,6 @@
 
 
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader, Tokenizer, SentenceTokenizer
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, SentenceTokenizer
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 import yaml
 from collections import Counter

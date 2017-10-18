@@ -2,7 +2,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models.doc2vec import TaggedDocument
 from gensim.models import Doc2Vec
 
-from technews_nlp_aggregator.nlp_model.common import Tokenizer
+from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
 
 MODEL_FILENAME   = 'doc2vec'
 
@@ -30,13 +30,13 @@ class Doc2VecGenerator:
 
         self.model_output_dir = model_output_dir
         self.articlesDF = articlesDF
-        self.tokenizer = Tokenizer() if not tokenizer else tokenizer
+        self.tokenizer = DefaultTokenizer() if not tokenizer else tokenizer
 
     def create_model(self):
         texts = self.tokenizer.tokenize_ddf(self.articlesDF)
         it = LabeledLineSentence(texts, self.articlesDF.index )
 
-        self.model = Doc2Vec(size=300, window=10,  workers=11, alpha=0.025, min_alpha=0.025,
+        self.model = Doc2Vec(size=500, window=10,  workers=11, alpha=0.025, min_alpha=0.025,
                              iter=10)  # use fixed learning rate
         self.model.build_vocab(it)
 
