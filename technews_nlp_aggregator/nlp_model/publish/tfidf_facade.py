@@ -74,15 +74,23 @@ class TfidfFacade(ClfFacade):
 
         return df_similar_docs.iloc[:max,:]
 
+
     def compare_articles_from_dates(self,  start, end):
         articles_and_sim = {}
         docs_of_day = self.article_loader.articles_in_interval(start, end)
+        dindex = docs_of_day.index
         for id, row in docs_of_day.iterrows():
             vec_lsi = self.get_vec_docid(id)
             sims = self.index[vec_lsi]
-            sims_s = sorted(enumerate(sims), key=lambda item: -item[1])
-            for ss in sims_s:
-                other_id, sim_score = ss
-                articles_and_sim[(id, other_id)] = sim_score
-
+            for other_id in dindex:
+                sim_score = sims[other_id]
+                if (sim_score > 0.78 and  sim_score < 0.995 and id != other_id):
+                    if (id < other_id):
+                        first_id, second_id = id, other_id
+                    else:
+                        first_id, second_id = other_id, id
+                    articles_and_sim[(first_id, second_id)] = sim_score
         return articles_and_sim
+
+
+

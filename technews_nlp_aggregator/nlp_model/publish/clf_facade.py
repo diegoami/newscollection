@@ -3,7 +3,7 @@ from datetime import date, timedelta, datetime
 import pandas as pd
 
 
-class ClfFacade:
+class   ClfFacade:
 
     def __init__(self, model_filename, article_loader):
         self.model_filename = model_filename
