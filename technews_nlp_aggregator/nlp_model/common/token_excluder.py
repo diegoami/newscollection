@@ -2,9 +2,9 @@
 excl_1 = [',', 'the', '.', 'to', 'and', 'a', 'of', '’', 'in', 'that', 's', 'it', 'is', 'for', 'with', 'on', 'you', 'as', '“', '”', 'be', 'this', 'but', 'are', 'from',  'its', 'at', 'can', 'an', 'have', 'we', 'has', 'i', 'by', 't',  'your', 'or', 'was', 'they', '—', ':', '(', ')', 'their', 'like', 'which', 'not', 'one', 'also','will']
 excl_2 = ['about', 'if', 'what', 'up', 'so', 'there', 'all', 'he', 'said', 'other', 'some', 'just', 'when', 'into',  'been', 'how', 'now', 'than', 'them',  'said',  'while', 'who', 'our',   'get', 're', 'could',  'use', 'would', 'way', 'only', 'make', '?', 'his']
 
-excl_3 = [ 'do', 'these', 'says', 'were', 'had',  'see', 'after', 'us', 'no', 'where', 'may', 'through', 'those',  'my', 'don', 'two',  'because',  'll', 'same', 'take',  'around', 'need', 'made',  '–',  'then', 'both', 'any', ';', 'using', 'before', 'going', 'being',  'here', 'able',  'down', 'lot', 'right']
+excl_3 = [ 'do', 'these', 'says', 'were', 'had',  'see', 'after', 'us', 'no', 'where', 'may', 'through', 'those',  'my', 'don', 'two',  'because',  'll', 'same', 'take',  'around', 'need', 'made',  '–',  'then', 'both', 'any', ';', 'using', 'before', 'going', 'being',  'here', 'able',  'down', 'lot', 'right', 'she', 'her']
 
-excl_4 = ['-','@','\'s','``','\'\'']
+excl_4 = ['-','@','\'s','``','\'\'' ,'&', '\'', '`']
 
 not_excl_1 =['more', 'new', '$', 'company', 'out','people','google','time', 'data', 'app', 'game', 'service', 'video'
              'companies', 'apple', 'over', 'million','first', 'year', 'even', 'most', 'much', 'users', 'well', 'today', 'technology', 'last', 'want'

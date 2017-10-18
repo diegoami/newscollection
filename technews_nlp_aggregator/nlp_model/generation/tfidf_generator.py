@@ -34,7 +34,7 @@ class TfidfGenerator:
 
         tfidf = models.TfidfModel(corpus)  # step 1 -- initialize a model
         corpus_tfidf = tfidf[corpus]
-        lsi = models.LsiModel(corpus_tfidf, num_topics=1000, id2word=dictionary, chunksize=50000)  # initialize an LSI transformation
+        lsi = models.LsiModel(corpus_tfidf, num_topics=500, id2word=dictionary, chunksize=50000)  # initialize an LSI transformation
         corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
 
         lsi.save(self.model_output_dir+LSI_FILENAME)  # same for tfidf, lda, ...

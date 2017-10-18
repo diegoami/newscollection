@@ -24,6 +24,7 @@ class TfidfFacade(ClfFacade):
     def __init__(self, model_dir, article_loader):
         self.model_dir = model_dir
         self.article_loader = article_loader
+        self.name = 'TFIDF-V1-500'
 
     def load_models(self):
         self.dictionary = corpora.Dictionary.load(self.model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference
@@ -75,7 +76,7 @@ class TfidfFacade(ClfFacade):
         return df_similar_docs.iloc[:max,:]
 
 
-    def compare_articles_from_dates(self,  start, end):
+    def compare_articles_from_dates(self,  start, end, thresholds):
         articles_and_sim = {}
         docs_of_day = self.article_loader.articles_in_interval(start, end)
         dindex = docs_of_day.index
@@ -84,7 +85,7 @@ class TfidfFacade(ClfFacade):
             sims = self.index[vec_lsi]
             for other_id in dindex:
                 sim_score = sims[other_id]
-                if (sim_score > 0.78 and  sim_score < 0.995 and id != other_id):
+                if (sim_score >= thresholds[0] and  sim_score < thresholds[1] and id != other_id):
                     if (id < other_id):
                         first_id, second_id = id, other_id
                     else:

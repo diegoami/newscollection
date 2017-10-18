@@ -33,16 +33,16 @@ otherMatrix.normalize = True
 otherMatrix.chunksize = matrix.chunksize
 otherMatrix.index = matrix.index
 
-
-end = date(2017, 10, 10)
 start = date(2017, 10, 10)
 
+end = date(2017, 10, 11)
 
-articles_Found = tfidfFacade.compare_articles_from_dates(start, end)
+
+articles_Found = tfidfFacade.compare_articles_from_dates(start, end,(.78,.995))
 for art_cp, score in articles_Found.items():
     id, other_id = art_cp
     article, otherarticle = articleLoader.articlesDF.loc[id], articleLoader.articlesDF.loc[other_id]
-    print(article['title'], article['date_p'], otherarticle['title'], otherarticle['date_p'], score, sep=',')
+    print(article['date_p'], otherarticle['date_p'], article['title'], otherarticle['title'], score, sep=',')
 
 
 """

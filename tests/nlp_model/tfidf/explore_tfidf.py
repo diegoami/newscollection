@@ -20,5 +20,5 @@ articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles(False)
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
 tfidfFacade.load_models()
-tfidfFacade.lsi.show_topics(num_topics=300, num_words=30, log=True)
+tfidfFacade.lsi.show_topics(num_topics=200, num_words=100, log=True)
 

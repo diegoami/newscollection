@@ -19,18 +19,19 @@ db_config = yaml.safe_load(open(config["db_key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
-articleDF = articleLoader.load_all_articles(load_text=True, load_meta=False)
-articlesDF = articleLoader.load_all_articles(load_text=True,limit=300)
+articlesDF = articleLoader.load_all_articles(load_text=True)
 tokenizer = Tokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),token_excluder=TechArticlesTokenExcluder())
 tokenized_docs = tokenizer.tokenize_ddf(articlesDF)
 models_dir = config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'
 
 os.mkdir(models_dir)
 
-tfidfGenerator = TfidfGenerator(articleDF, models_dir, tokenizer)
+tfidfGenerator = TfidfGenerator(articlesDF, models_dir, tokenizer)
 tfidfGenerator.create_model()
+
 
 if os.path.islink(config["lsi_models_dir_link"]):
     os.unlink(config["lsi_models_dir_link"])
 
 os.symlink(models_dir,config["lsi_models_dir_link"])
+
