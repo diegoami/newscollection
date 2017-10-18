@@ -21,7 +21,7 @@ thresholds = (0.78, 0.995)
 for startday in range(1,15):
     print("Executing  {} ".format(str(startday)))
     start = date(2017, 10, startday )
-    end = date(2017, 10, startday +1 )
+    end = date(2017, 10, startday + 1 )
 
     articleComparatorJob = ArticleComparatorJob(db_url, tfidfFacade, thresholds)
     articleComparatorJob.find_articles(start, end)
