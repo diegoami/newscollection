@@ -96,3 +96,8 @@ class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
             return real_sentences
         else:
             return [title + "." ]+ real_sentences
+
+    def clean_sentences(self, document):
+        sentences = sent_tokenize(document)
+        real_sentences = self.remove_useless_sentences(sentences)
+        return " ".join(real_sentences)

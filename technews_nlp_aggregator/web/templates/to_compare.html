@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=6"  >
+    <meta charset="UTF-8">
+    <title>Articles to compare</title>
+
+</head>
+<body>
+<h2>Compare these two articles</h2>
+<H3>These two articles...</H3>
+
+<div class="buttonrow">
+<form id="samestory" class="buttoncolumn" action="/samestory/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
+    <input type="submit" value="are about the same story">
+</form>
+<form id="stronglyrelated" class="buttoncolumn" action="/stronglyrelated/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
+    <input type="submit" value="are very strongly related, but are not about the same story">
+</form>
+<form id="related" class="buttoncolumn" action="/related/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
+    <input type="submit" value="are somewhat related">
+</form>
+<form id="unrelated" class="buttoncolumn" action="/related/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
+    <input type="submit" value="are totally unrelated">
+</form>
+<form id="skip" class="buttoncolumn" action="/randomrelated">
+    <input type="submit" value="Skip">
+</form>
+</div>
+<div class="row">
+  <div class="column left">
+    <h2>{{A1.AIN_TITLE}}</h2>
+    <p>URL : <A HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A></p>
+    <p>{{A1.ATX_TEXT}}</p>
+  </div>
+    <div class="column middle"></div>
+  <div class="column right">
+
+    <h2>{{A2.AIN_TITLE}}</h2>
+    <p>URL : <A HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A></p>
+    <p>{{A2.ATX_TEXT}}</p>
+ </div>
+</div>
+<BR>
+<BR>
+
+
+</body>
+</html>

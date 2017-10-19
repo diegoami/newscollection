@@ -29,8 +29,8 @@ def find_with_model(model, thresholds,begin, finish ):
         articleComparatorJob.find_articles(start.date(), end.date())
 
 
-find_with_model(model = tfidfFacade, thresholds = (0.75, 0.995),
-                begin = datetime(year=2017, month=3, day=1), finish = datetime(year=2017, month=3, day=31))
+#find_with_model(model = tfidfFacade, thresholds = (0.75, 0.995),
+#                begin = datetime(year=2017, month=3, day=1), finish = datetime(#year=2017, month=3, day=31))
 
-find_with_model(model = doc2VecFacade, thresholds = (0.55, 0.99),
-                begin = datetime(year=2017, month=3, day=1), finish = datetime(year=2017, month=3, day=31))
+find_with_model(model = doc2VecFacade, thresholds = (0.48, 0.99),
+                begin = datetime(year=2017, month=3, day=1), finish = datetime(year=2017, month=10, day=14))

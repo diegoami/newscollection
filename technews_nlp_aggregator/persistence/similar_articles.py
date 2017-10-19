@@ -6,6 +6,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
+from technews_nlp_aggregator.nlp_model.common import  TechArticlesSentenceTokenizer
 from technews_nlp_aggregator.common.util import extract_source
 similarArticlesSQL = \
 """
@@ -24,6 +25,8 @@ class SimilarArticlesRepo:
 
         self.same_story_tbl = self.db['SAME_STORY']
         self.same_story_jobs_tbl = self.db['SAME_STORY_JOBS']
+        self.same_story_user_tbl = self.db['SAME_STORY_USER']
+
 
     def association_exists(self, first_id, second_id, agent):
         found_row = self.same_story_tbl.find_one(SST_AIN_ID_1=first_id, SST_AIN_ID_2=second_id, SST_AGENT=agent)
@@ -48,6 +51,28 @@ class SimilarArticlesRepo:
         except:
             traceback.print_exc()
             self.db.rollback()
+
+
+    def persist_user_association(self, first_id, second_id, similarity, origin):
+        if (first_id > second_id):
+            first_id, second_id = second_id, first_id
+        try:
+            self.db.begin()
+
+            row = self.same_story_user_tbl.insert(
+                        dict({
+                            "SSU_AIN_ID_1" : first_id,
+                            "SSU_AIN_ID_2" : second_id,
+                            "SSU_ORIGIN" : origin,
+                            "SSU_SIMILARITY": similarity,
+                            "SSU_UPDATED"   : datetime.now()
+                        })
+            )
+            self.db.commit()
+        except:
+            traceback.print_exc()
+            self.db.rollback()
+
 
     def persist_association(self, first_id, second_id, agent, similarity):
         if (first_id > second_id):
@@ -91,10 +116,14 @@ class SimilarArticlesRepo:
                 traceback.print_exc()
                 self.db.rollback()
 
+
+
     def list_similar_articles(self):
         similar_stories = []
         for row in self.db.query(similarArticlesSQL):
             similar_story = dict({
+                "ID_1": row["ID_1"],
+                "ID_2": row["ID_2"],
                 "DATE_1"  : row["DATE_1"],
                 "TITLE_1" : row["TITLE_1"],
                 "TITLE_2" : row["TITLE_2"],
@@ -106,6 +135,7 @@ class SimilarArticlesRepo:
                 "D_SCORE" : row["D_SCORE"]
 
             })
-            similar_stories.append(similar_story)
+            if (similar_story["SOURCE_1"] != similar_story["SOURCE_2"]):
+                similar_stories.append(similar_story)
 
         return similar_stories

@@ -14,12 +14,8 @@ articleLoader = ArticleLoader(articleDatasetRepo)
 articlesDF = articleLoader.load_all_articles(load_text=True)
 sentenceTokenizer = TechArticlesSentenceTokenizer()
 lastsentences_map = {}
-for index, row in articlesDF.iterrows():
-
-    sentences = sentenceTokenizer.process(row['title'], row['text'])
-    lastsentence = sentences[-1]
-    lgmap = lastsentences_map.get(lastsentence) or 0
-    lastsentences_map[lastsentence] = lgmap+1
-
-sorted_x = sorted(lastsentences_map .items(), key=operator.itemgetter(1), reverse=True)
-print(sorted_x[:100])
+first_artDF = articlesDF.iloc[:200,:]
+for index, row in first_artDF .iterrows():
+    cleaned_text = sentenceTokenizer.clean_sentences(row['text'])
+    print(cleaned_text)
+    print()

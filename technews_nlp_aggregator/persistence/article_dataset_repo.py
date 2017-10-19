@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import pandas as pd
+from technews_nlp_aggregator.nlp_model.common import TechArticlesSentenceTokenizer
 
 class ArticleDatasetRepo(ArticleRepo):
     tags_query = 'SELECT TAG_NAME, TAG_URL FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND AIN_ID = :id'
@@ -29,7 +30,7 @@ class ArticleDatasetRepo(ArticleRepo):
         self.article_tags_tbl = self.db['ARTICLE_TAGS']
         self.article_authors_tbl = self.db['ARTICLE_AUTHORS']
         self.engine = create_engine(self.db_connection,encoding='UTF-8')
-
+        self.sentence_tokenizer = TechArticlesSentenceTokenizer()
 
     def extract_date(filename):
         arrs = filename.split('_')
@@ -188,6 +189,19 @@ class ArticleDatasetRepo(ArticleRepo):
  #      articleDF.reset_index(inplace=True, drop=True)
         con.close()
         return articleDF
+
+
+    def load_articles_with_text(self, id1, id2):
+
+        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
+        article1 = self.db.query(article_info_sql, {"id" : id1}).next()
+        article2 = self.db.query(article_info_sql, {"id" : id2}).next()
+        article1["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article1["ATX_TEXT"] )
+        article2["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article2["ATX_TEXT"] )
+
+        return article1, article2
+
+
 """
     def load_meta(self, article_sub_DF, all=False):
 

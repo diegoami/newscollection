@@ -1,0 +1,39 @@
+.column {
+
+
+}
+
+.buttoncolumn {
+    float: left;
+    padding: 20px;
+
+}
+
+
+.left {
+  width: 45%;
+  float: left;
+}
+
+.middle {
+  width: 10%;
+}
+
+.right {
+  width: 45%;
+  float: right;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Clear floats after the columns */
+.buttonrow:after {
+    content: "";
+    display: table;
+    clear: both;
+}
