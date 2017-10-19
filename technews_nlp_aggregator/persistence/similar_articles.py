@@ -6,25 +6,12 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
-similarArticlesSQLTdf = \
+from technews_nlp_aggregator.common.util import extract_source
+similarArticlesSQL = \
 """
-   SELECT A1.AIN_DATE AS DATE_1, A2.AIN_DATE AS DATE_2, A1.AIN_TITLE AS TITLE_1, A2.AIN_TITLE AS TITLE_2, A1.AIN_URL AS URL_1, A2.AIN_URL AS URL_2, S.SST_SIMILARITY AS SIMILARITY, S.SST_AGENT AS SOURCE
-   FROM          ARTICLE_INFO A1, 
-                 ARTICLE_INFO A2, 
-                 SAME_STORY S                       
-   WHERE S.SST_AIN_ID_1 = A1.AIN_ID   AND  S.SST_AIN_ID_2   = A2.AIN_ID AND S.SST_AGENT LIKE 'TF%'
-   ORDER BY S.SST_SIMILARITY DESC  
-"""
-
-
-similarArticlesSQLDoc2Vec = \
-"""
-   SELECT A1.AIN_DATE AS DATE_1, A2.AIN_DATE AS DATE_2, A1.AIN_TITLE AS TITLE_1, A2.AIN_TITLE AS TITLE_2, A1.AIN_URL AS URL_1, A2.AIN_URL AS URL_2, S.SST_SIMILARITY AS SIMILARITY, S.SST_AGENT AS SOURCE
-   FROM          ARTICLE_INFO A1, 
-                 ARTICLE_INFO A2, 
-                 SAME_STORY S                       
-   WHERE S.SST_AIN_ID_1 = A1.AIN_ID   AND  S.SST_AIN_ID_2   = A2.AIN_ID AND SST_AGENT LIKE 'DOC%'
-   ORDER BY S.SST_SIMILARITY DESC  
+SELECT T.ID_1, T.ID_2, T.DATE_1, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, T.SIMILARITY AS T_SCORE, D.SIMILARITY AS D_SCORE FROM TFIDF_SCORE T
+LEFT JOIN DOC2VEC_SCORE D ON D.ID_1=T.ID_1 AND D.ID_2=T.ID_2
+ORDER BY T.DATE_1 DESC, T.SIMILARITY DESC
 """
 
 class SimilarArticlesRepo:
@@ -104,9 +91,21 @@ class SimilarArticlesRepo:
                 traceback.print_exc()
                 self.db.rollback()
 
-    def list_similar_articles(self, listType="TDF"):
+    def list_similar_articles(self):
         similar_stories = []
-        for row in self.db.query(similarArticlesSQLTdf if listType=="TDF" else similarArticlesSQLDoc2Vec):
-            similar_story = dict(row)
+        for row in self.db.query(similarArticlesSQL):
+            similar_story = dict({
+                "DATE_1"  : row["DATE_1"],
+                "TITLE_1" : row["TITLE_1"],
+                "TITLE_2" : row["TITLE_2"],
+                "URL_1"   : row["URL_1"],
+                "SOURCE_1" : extract_source(row["URL_1"]),
+                "URL_2"   : row["URL_2"],
+                "SOURCE_2": extract_source(row["URL_2"]),
+                "T_SCORE" : row["T_SCORE"],
+                "D_SCORE" : row["D_SCORE"]
+
+            })
             similar_stories.append(similar_story)
+
         return similar_stories

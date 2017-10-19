@@ -12,6 +12,7 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 
 from technews_nlp_aggregator.persistence.similar_articles import  SimilarArticlesRepo
+
 config = yaml.safe_load(open('config.yml'))
 db_config = yaml.safe_load(open(config["db_key_file"]))
 db_url    = db_config["db_url"]
@@ -30,5 +31,5 @@ def index():
 
 @app.route('/duplicates')
 def duplicates():
-    dup_articles = similarArticlesRepo.list_similar_articles(listType="TDF")
+    dup_articles = similarArticlesRepo.list_similar_articles()
     return render_template('duplicates.html', dup_articles =dup_articles)

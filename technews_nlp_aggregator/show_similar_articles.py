@@ -11,6 +11,8 @@ db_url    = db_config["db_url"]
 
 similarArticlesRepo = SimilarArticlesRepo(db_url)
 
-all_similar_articles = similarArticlesRepo.list_similar_articles(listType="DOC2VEC")
-for article in all_similar_articles:
-    print(article)
+all_similar_articles = similarArticlesRepo.list_similar_articles()
+print(len(all_similar_articles ))
+
+#for article in all_similar_articles:
+#    print(article)
