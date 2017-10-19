@@ -32,7 +32,7 @@ Still, the marketing problem is only part of the set of challenges facing indie 
 article2 = """
  Uber’s top boss in Britain will quit the taxi hailing app just as the firm battles to overturn a decision to strip it of its license in London, according to an email seen by Reuters.
 
-The British capital’s transport regulator deemed Uber unfit to run a taxi web last month and decided not to renew its license to operate, citing the firm’s approach to reporting serious criminal offences and background checks on drivers.
+The British capital’s transport regulator deemed Uber unfit to run a taxi rest last month and decided not to renew its license to operate, citing the firm’s approach to reporting serious criminal offences and background checks on drivers.
 
 But in an email seen by Reuters on Monday, Uber’s Northern European Manager Jo Bertram, who has responsibility for Britain among other countries, said the firm needed a new manager in the region to tackle the issues it faces.
 

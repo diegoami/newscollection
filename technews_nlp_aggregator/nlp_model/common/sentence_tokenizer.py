@@ -8,7 +8,7 @@ sentence_excludes = [
     'Stay tuned with our weekly recap',
     'Latest headlines delivered',
     'Copyright',
-    'Intel’s web sites and communications are subject to our Privacy Notice and Terms of Use.',
+    'Intel’s rest sites and communications are subject to our Privacy Notice and Terms of Use.',
     'The views expressed are the author\'s own',
     'This story originally appeared on',
     'You can also listen on',

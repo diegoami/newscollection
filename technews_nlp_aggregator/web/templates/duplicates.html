@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Duplicate Articles</title>
+
+</head>
+<body>
+<<table border="1">>
+
+  <tr>
+    <th>Date</th>
+    <th><span>Article1</span></th>
+    <th>Article2</th>
+  </tr>
+
+    {% for _ in dup_articles: %}
+    <tr>
+      <td>{{_.DATE_1}}</td>
+        <td><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
+        <td><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
+
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

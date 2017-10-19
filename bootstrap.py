@@ -1,5 +1,5 @@
 import sys
-from technews_nlp_aggregator.web.tn_service import *
+from technews_nlp_aggregator.rest.tn_service import *
 sys.path.append('.')
 
 sys.path.append('technews_nlp_aggregator')

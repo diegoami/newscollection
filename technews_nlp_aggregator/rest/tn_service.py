@@ -8,7 +8,7 @@ from flask_restful import Resource, Api
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
-from technews_nlp_aggregator.web.util import extract_related_articles, filter_double, extract_interesting_articles
+from technews_nlp_aggregator.rest.util import extract_related_articles, filter_double, extract_interesting_articles
 from technews_nlp_aggregator.common.util import conv_to_date
 config = yaml.safe_load(open('config.yml'))
 db_config = yaml.safe_load(open(config["db_key_file"]))
