@@ -10,9 +10,12 @@ from technews_nlp_aggregator.nlp_model.common import  TechArticlesSentenceTokeni
 from technews_nlp_aggregator.common.util import extract_source
 similarArticlesSQL = \
 """
-SELECT T.ID_1, T.ID_2, T.DATE_1, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, T.SIMILARITY AS T_SCORE, D.SIMILARITY AS D_SCORE FROM TFIDF_SCORE T
+SELECT T.ID_1, T.ID_2, T.DATE_1, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, ROUND(T.SIMILARITY,3) AS T_SCORE
+  , ROUND(D.SIMILARITY,3) AS D_SCORE, ROUND(U.SSU_SIMILARITY_AVG,3) AS U_SCORE FROM TFIDF_SCORE T
 LEFT JOIN DOC2VEC_SCORE D ON D.ID_1=T.ID_1 AND D.ID_2=T.ID_2
-ORDER BY T.DATE_1 DESC, T.SIMILARITY DESC
+LEFT JOIN (SELECT AVG(SSU_SIMILARITY) SSU_SIMILARITY_AVG, SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2) U
+ON D.ID_1=U.SSU_AIN_ID_1 AND D.ID_2=U.SSU_AIN_ID_2
+ORDER BY T.DATE_1 DESC, T.ID_1 DESC, T.SIMILARITY DESC
 """
 
 controversialArticlesSQL = \
@@ -144,7 +147,8 @@ class SimilarArticlesRepo:
                 "URL_2"   : row["URL_2"],
                 "SOURCE_2": extract_source(row["URL_2"]),
                 "T_SCORE" : row["T_SCORE"],
-                "D_SCORE" : row["D_SCORE"]
+                "D_SCORE" : row["D_SCORE"],
+                "U_SCORE": row["U_SCORE"]
 
             })
             if (similar_story["SOURCE_1"] != similar_story["SOURCE_2"]):

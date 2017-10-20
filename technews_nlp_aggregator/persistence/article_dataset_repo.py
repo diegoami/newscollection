@@ -189,13 +189,18 @@ class ArticleDatasetRepo(ArticleRepo):
 
 
     def load_articles_with_text(self, id1, id2):
-        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
+        article_info_sql= "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
+        article_score_sql = "SELECT SCORE FROM TFIDF_SCORE_NORM T WHERE T.ID = :id AND T.OTHER_ID = :id2"
+
         article1 = self.db.query(article_info_sql, {"id" : id1}).next()
         article2 = self.db.query(article_info_sql, {"id" : id2}).next()
+        scorequery = self.db.query(article_score_sql, {"id" : id1, "id2" : id2})
+        scoreres = scorequery.next()
+        score = scoreres["SCORE"]
         article1["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article1["ATX_TEXT"] )
         article2["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article2["ATX_TEXT"] )
 
-        return article1, article2
+        return article1, article2, score
 
 
 """

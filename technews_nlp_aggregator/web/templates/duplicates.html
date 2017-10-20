@@ -25,6 +25,7 @@
     <th>Article2</th>
     <th>TFIDF Score</th>
     <th>Doc2Vec Score</th>
+    <th>User Score</th>
     <th>Analyze</th>
 
   </tr>
@@ -38,6 +39,7 @@
             <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
             <td>{{_.T_SCORE}}</td>
             <td>{{_.D_SCORE}}</td>
+            <td>{{_.U_SCORE}}</td>
             <td><A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">Analyze</A></td>
         </tr>
         {% endif %}

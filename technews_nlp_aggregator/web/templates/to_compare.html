@@ -8,11 +8,18 @@
 </head>
 <body>
 <h2>Compare these two articles</h2>
+<P>
+
+    TFIDF Score: <B>{{SCORE}}</B>
+</P>
 <H3>These two articles...</H3>
 
 <div class="buttonrow">
 <form id="samestory" class="buttoncolumn" action="/samestory/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
-    <input type="submit" value="are about the same story">
+    <input type="submit" value="are pretty much the same story">
+</form>
+<form id="slantstory" class="buttoncolumn" action="/slantstory/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
+    <input type="submit" value="are the same story but with a different slant">
 </form>
 <form id="stronglyrelated" class="buttoncolumn" action="/stronglyrelated/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
     <input type="submit" value="are very strongly related, but are not about the same story">

@@ -57,8 +57,8 @@ def duplicates(page_id=0):
 
 @app.route('/compare/<int:id1>/<int:id2>')
 def compare(id1, id2):
-    article1, article2 = articleDatasetRepo.load_articles_with_text(id1, id2)
-    return render_template('to_compare.html', A1=article1, A2=article2)
+    article1, article2, score = articleDatasetRepo.load_articles_with_text(id1, id2)
+    return render_template('to_compare.html', A1=article1, A2=article2, SCORE=score)
 
 @app.route('/randomrelated')
 def randomrelated():
@@ -77,9 +77,13 @@ def save_user_association(id1,id2, similarity):
 def samestory(id1, id2):
     return save_user_association(id1,id2, 0.9)
 
+@app.route('/slantstory/<int:id1>/<int:id2>')
+def slantstory(id1, id2):
+    return save_user_association(id1,id2, 0.8)
+
 @app.route('/stronglyrelated/<int:id1>/<int:id2>')
 def stronglyrelated(id1, id2):
-    return save_user_association(id1, id2, 0.75)
+    return save_user_association(id1, id2, 0.7)
 
 @app.route('/related/<int:id1>/<int:id2>')
 def related(id1, id2):
