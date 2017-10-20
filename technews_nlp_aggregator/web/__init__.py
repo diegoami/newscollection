@@ -105,20 +105,28 @@ def retrieve_articles_srv():
             start_s = form["start"]
             end_s = form["end"]
 
-            if start_s and end_s :
-                start, end = conv_to_date(start_s), conv_to_date(end_s)
-                if start and end:
-                    articlesDF = classifier.get_related_articles_from_to(text, n_articles,
-                                                                              start_s, end_s)
-                else:
-                    articlesDF = classifier.get_related_articles_in_interval(text, n=10000, reference_day=None,
-                                                                                  days=30, max=n_articles)
-            else:
-                articlesDF = classifier.get_related_articles_in_interval(text, n=10000, reference_day=None, days=30,
-                                                                              max=n_articles)
-            sims = zip(articlesDF.index, articlesDF['score'])
-            related_articles = extract_related_articles(articleLoader, sims)
-            return render_template('search.html', articles=related_articles )
+            related_articles_tdf = retrieve_articles(tfidfFacade, text, n_articles, start_s, end_s)
+            related_articles_doc2vec = retrieve_articles(doc2VecFacade, text, n_articles, start_s, end_s)
+
+            return render_template('search.html', tdf_articles=related_articles_tdf, doc2vec_articles=related_articles_doc2vec, search_text=text )
+
+
+def retrieve_articles(classifier, text, n_articles, start_s, end_s):
+    if start_s and end_s:
+        start, end = conv_to_date(start_s), conv_to_date(end_s)
+        if start and end:
+            articlesDF = classifier.get_related_articles_from_to(text, n_articles,
+                                                                 start, end)
+        else:
+            articlesDF = classifier.get_related_articles_in_interval(text, n=10000, reference_day=None,
+                                                                     days=30, max=n_articles)
+    else:
+        articlesDF = classifier.get_related_articles_in_interval(text, n=10000, reference_day=None, days=30,
+                                                                 max=n_articles)
+    sims = zip(articlesDF.index, articlesDF['score'])
+    related_articles = extract_related_articles(articleLoader, sims)
+    return related_articles
+
 
 """
 @app.before_request
