@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=6"  >
     <meta charset="UTF-8">
     <title>Duplicate Articles</title>
 
 </head>
 <body>
-
+<div class="topnav">
+  <a href="/search">Enter article text</a>
+  <a href="/search_url">Enter URL</a>
+  <a class="active" href="/duplicates/0">Show all similar articles</a>
+  <a href="/randomrelated">Help identify similar articles</a>
+</div>
     {% if page_id > 0: %}
         <A HREF="/duplicates/{{page_id-1}}">Back</A>
     {% endif %}

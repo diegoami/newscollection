@@ -2,11 +2,24 @@
 <html lang="en">
 <head>
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=6"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=6"  >
+
+    <meta charset="UTF-8">
     <meta charset="UTF-8">
     <title>Articles to compare</title>
 
 </head>
 <body>
+
+
+<div class="topnav">
+  <a href="/search">Enter article text</a>
+  <a href="/search_url">Enter URL</a>
+  <a href="/duplicates/0">Show all similar articles</a>
+  <a class="active" href="/randomrelated">Help identify similar articles</a>
+</div>
+
 <h2>Compare these two articles</h2>
 <P>
 

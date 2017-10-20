@@ -2,24 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=8"  >
   <script src="main.js?v=4"></script>
 
   <title>Find related news</title>
   <link href="main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+
+<div class="topnav">
+  <a href="/search">Enter article text</a>
+  <a class="active" href="/search_url">Enter URL</a>
+  <a href="/duplicates/0">Show all similar articles</a>
+  <a href="/randomrelated">Help identify similar articles</a>
+</div>
+
 <H3> Add the url of an article in the database</H3>
+<div>
 <FORM ACTION="/retrieve_similar_url" METHOD="POST">
-<INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url}}">
+<P>
+<label for="tdidf_input">Url in database: </label><INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url}}">
 </INPUT>
-<BR/>
-N Articles:<input type="text" id="n_articles" name="n_articles" value="50"><br/>
+</P>
+<P>
+<label for="n_articles">N articles in page: </label><input type="text" id="n_articles" name="n_articles" value="50"><br/></P>
 
-
+<p>
 <input type="submit" value="submit"  />
+</p>
 </FORM>
-
+</div>
 {% if tdf_articles: %}
 <h2>Advice from TFIDF & BOW</h2>
 

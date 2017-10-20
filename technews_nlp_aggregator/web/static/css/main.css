@@ -2,6 +2,7 @@
 
 body {
 
+  background-color:  #ccffbb;
   font-size: 100%;
 }
 
@@ -21,3 +22,11 @@ body {
 .sourceSmall {
   font-size: 1em;
 }
+
+form  { display: table;      }
+p     { display: table-row;  }
+label {
+  display: table-cell;
+  font-size: 1.2em;
+}
+input { display: table-cell; }

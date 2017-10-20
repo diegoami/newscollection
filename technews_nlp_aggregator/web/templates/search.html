@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=8"  >
 
   <script src="main.js?v=4"></script>
 
@@ -9,23 +11,35 @@
   <link href="main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+
+<div class="topnav">
+  <a class="active" href="/search">Enter article text</a>
+  <a href="/search_url">Enter URL</a>
+  <a href="/duplicates/0">Show all similar articles</a>
+  <a href="/randomrelated">Help identify similar articles</a>
+</div>
+
 <H3> Enter text from a tech article here</H3>
+<div>
 <FORM ACTION="/retrieve_similar" METHOD="POST">
-<textarea id="tdidf_input" name="tdidf_input" rows="30" cols="90">
-{% if search_text: %}
-   {{search_text}}
-{% else %}
-    Enter text here
+<p>
+<label for="tdidf_input">Enter text here</label>
+
+<textarea id="tdidf_input" name="tdidf_input" rows="30" cols="90">{% if search_text: %}
+{{search_text}}
 {% endif %}
-
 </textarea>
-<BR/>
-N Articles:<input type="text" id="n_articles" name="n_articles" value="50"><br/>
-From:<input type="text" id="start" name="start" value="2017-MM-DD"><I>Starts from 2017-01-01</I><br/>
-To:<input type="text" id="end" name="end" value="2017-MM-DD"><I>Until 2017-10-14</I><br/><br/>
+</p>
+    <p><label for="n_articles">N Articles per page:</label><input type="text" id="n_articles" name="n_articles" value="50"></p>
 
+<p><label for="start">From:</label><input type="text" id="start" name="start" value="2017-08-01"><I>Starts from 2017-01-01</I></p>
+<p><label for="end">To:</label><input type="text" id="end" name="end" value="2017-10-14"><I>Until 2017-10-14</I><br/><br/></p>
+
+<p>
 <input type="submit" value="submit"  />
+</p>
 </FORM>
+</div>
 {% if tdf_articles: %}
 <h2>Advice from TFIDF & BOW</h2>
 
