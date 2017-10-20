@@ -65,6 +65,22 @@ class TfidfFacade(ClfFacade):
         related_articles = sims
         return related_articles[:n]
 
+
+    def get_related_articles_and_score_url(self,  url, n=10000, max=15):
+
+        docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['url'] == url]
+        if (len(docrow) > 0):
+            #print(docrow["title"])
+
+            similar_documents = self.get_related_sims_docid(docrow.index[0] , n)
+            #print(similar_documents)
+            df_similar_docs = self.enrich_with_score(similar_documents,200,docrow.iloc[0]['date_p'])
+
+            return df_similar_docs.iloc[:max,:]
+        else:
+            return None
+
+
     def get_related_articles_and_score_docid(self,  docid, n=10000, max=15):
 
         docrow = self.article_loader.articlesDF.loc[docid]

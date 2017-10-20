@@ -93,9 +93,12 @@ def unrelated(id1, id2):
 def search():
     return render_template('search.html')
 
+@app.route('/search_url')
+def search_url():
+    return render_template('search_url.html')
 
 @app.route('/retrieve_similar', methods=['POST'])
-def retrieve_articles_srv():
+def retrieve_similar():
     if request.method == 'POST':
         form = request.form
         if form:
@@ -109,6 +112,20 @@ def retrieve_articles_srv():
             related_articles_doc2vec = retrieve_articles(doc2VecFacade, text, n_articles, start_s, end_s)
 
             return render_template('search.html', tdf_articles=related_articles_tdf, doc2vec_articles=related_articles_doc2vec, search_text=text )
+
+
+@app.route('/retrieve_similar_url', methods=['POST'])
+def retrieve_similar_url():
+    if request.method == 'POST':
+        form = request.form
+        if form:
+            url = form["tdidf_input"]
+            n_articles = int(form["n_articles"])
+
+            related_articles_tdf = retrieve_articles_url(tfidfFacade, url , n_articles)
+            related_articles_doc2vec=retrieve_articles_url(doc2VecFacade, url , n_articles)
+
+            return render_template('search_url.html', tdf_articles=related_articles_tdf, doc2vec_articles=related_articles_doc2vec, search_url=url )
 
 
 def retrieve_articles(classifier, text, n_articles, start_s, end_s):
@@ -126,6 +143,15 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
     sims = zip(articlesDF.index, articlesDF['score'])
     related_articles = extract_related_articles(articleLoader, sims)
     return related_articles
+
+
+def retrieve_articles_url(classifier, url, n_articles):
+
+    articlesDF = classifier.get_related_articles_and_score_url(url, n=10000, max=n_articles)
+    sims = zip(articlesDF.index, articlesDF['score'])
+    related_articles = extract_related_articles(articleLoader, sims)
+    return related_articles
+
 
 
 """

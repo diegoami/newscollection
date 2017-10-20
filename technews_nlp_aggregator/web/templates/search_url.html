@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <script src="main.js?v=4"></script>
+
+  <title>Find related news</title>
+  <link href="main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<H3> Add the url of an article in the database</H3>
+<FORM ACTION="/retrieve_similar_url" METHOD="POST">
+<INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url}}">
+</INPUT>
+<BR/>
+N Articles:<input type="text" id="n_articles" name="n_articles" value="50"><br/>
+
+
+<input type="submit" value="submit"  />
+</FORM>
+
+{% if tdf_articles: %}
+<h2>Advice from TFIDF & BOW</h2>
+
+<table border="1">
+
+<tr>
+    <th>Article Id</th>
+    <th><span>Title</span></th>
+    <th><span>Date</span></th>
+    <th>TFIDF Score</th>
+
+  </tr>
+
+    {% for _ in tdf_articles: %}
+
+        <tr>
+
+            <td>{{_.id}}</td>
+            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+            <td>{{_.date_p}}</td>
+            <td>{{_.similarity}}</td>
+        </tr>
+
+
+    {% endfor %}
+</table>
+{% endif %}
+{% if doc2vec_articles: %}
+<h2>Advice from DOC2VEC</h2>
+
+<I>This will perform poorly for short texts</I>
+
+
+<table border="1">
+  <tr>
+    <th>Article Id</th>
+    <th><span>Title</span></th>
+    <th><span>Date</span></th>
+    <th>TFIDF Score</th>
+  </tr>
+
+    {% for _ in doc2vec_articles: %}
+        <tr>
+
+            <td>{{_.id}}</td>
+            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+            <td>{{_.date_p}}</td>
+            <td>{{_.similarity}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+</body>
+</html>

@@ -53,6 +53,20 @@ class Doc2VecFacade(ClfFacade):
 
 
 
+
+    def get_related_articles_and_score_url(self, url, n=6000, max=15 ):
+        #docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
+        docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['url'] == url]
+        if (len(docrow) > 0):
+            id = docrow.index[0]
+            #id = self.article_loader.articlesDF.loc[docrow.index[0]]
+
+            similar_documents = self.get_related_articles_and_sims_id(id, n)
+            df_similar_docs = self.enrich_with_score(similar_documents, 200, docrow.iloc[0]["date_p"])
+            return df_similar_docs.iloc[:max, :]
+        else:
+            return None
+
     def get_related_articles_and_score_docid(self, id, n=6000, max=15 ):
         #docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
         docrow = self.article_loader.articlesDF.loc[id]
