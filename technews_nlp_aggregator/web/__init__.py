@@ -156,6 +156,21 @@ def retrieve_articles_url(classifier, url, n_articles):
         articleLoader.articlesRepo.load_meta_record(articleRecord)
     return related_articles
 
+@app.route('/controversial', methods=['GET','POST'])
+def retrieve_controversials():
+    if request.method == 'POST':
+        form = request.form
+        if form:
+
+            start_s = form["start"]
+            end_s = form["end"]
+            if start_s and end_s:
+                start, end = conv_to_date(start_s), conv_to_date(end_s)
+                controversial_articles = similarArticlesRepo.list_controversial_articles(start, end)
+                return render_template('interesting.html', controversial=controversial_articles )
+
+    else:
+        return render_template('interesting.html')
 
 
 """

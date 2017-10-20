@@ -30,6 +30,8 @@ N Articles:<input type="text" id="n_articles" name="n_articles" value="50"><br/>
     <th><span>Title</span></th>
     <th><span>Date</span></th>
     <th>TFIDF Score</th>
+    <th>Authors</th>
+    <th>Tags</th>
 
   </tr>
 
@@ -41,6 +43,14 @@ N Articles:<input type="text" id="n_articles" name="n_articles" value="50"><br/>
             <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td>{{_.date_p}}</td>
             <td>{{_.similarity}}</td>
+              <td>{% for author in _.authors: %}
+                    <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
+                {% endfor %}
+            </td>
+            <td>{% for tag in _.tags: %}
+                    <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
+                {% endfor %}
+            </td>
         </tr>
 
 
@@ -58,7 +68,10 @@ N Articles:<input type="text" id="n_articles" name="n_articles" value="50"><br/>
     <th>Article Id</th>
     <th><span>Title</span></th>
     <th><span>Date</span></th>
-    <th>TFIDF Score</th>
+    <th>Doc2Vec Score</th>
+    <th>Authors</th>
+    <th>Tags</th>
+
   </tr>
 
     {% for _ in doc2vec_articles: %}
@@ -68,6 +81,14 @@ N Articles:<input type="text" id="n_articles" name="n_articles" value="50"><br/>
             <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td>{{_.date_p}}</td>
             <td>{{_.similarity}}</td>
+            <td>{% for author in _.authors: %}
+                    <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
+                {% endfor %}
+            </td>
+            <td>{% for tag in _.tags: %}
+                    <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
+                {% endfor %}
+            </td>
         </tr>
     {% endfor %}
 </table>

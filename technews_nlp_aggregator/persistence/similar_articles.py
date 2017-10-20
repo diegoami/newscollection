@@ -17,10 +17,14 @@ ORDER BY T.DATE_1 DESC, T.SIMILARITY DESC
 
 controversialArticlesSQL = \
 """
-SELECT T.ID_1, T.ID_2, T.DATE_1, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, T.SIMILARITY AS T_SCORE, D.SIMILARITY AS D_SCORE FROM TFIDF_SCORE T
-LEFT JOIN DOC2VEC_SCORE D ON D.ID_1=T.ID_1 AND D.ID_2=T.ID_2
-ORDER BY T.DATE_1 DESC, T.SIMILARITY DESC
+SELECT ID, DATE, TITLE, URL, SUM_SCORE FROM CONTROVERSIAL_ARTICLES C WHERE DATE BETWEEN :start AND :end
 """
+
+relatedArticlesSQL = \
+"""
+SELECT OTHER_ID AS O_ID, OTHER_DATE AS DATE, OTHER_TITLE AS TITLE, OTHER_URL AS URL, SCORE FROM TFIDF_SCORE_NORM WHERE ID = :id
+"""
+
 
 
 class SimilarArticlesRepo:
@@ -147,3 +151,15 @@ class SimilarArticlesRepo:
                 similar_stories.append(similar_story)
 
         return similar_stories
+
+    def list_controversial_articles(self, start, end):
+        controversial_stories = []
+        for row in self.db.query(controversialArticlesSQL, {"start" : start, "end" : end}):
+            controversial_story= dict(row)
+            controversial_stories.append(controversial_story)
+        for controversial_story in controversial_stories:
+            controversial_story["similar"] = []
+            similar_articles = self.db.query(relatedArticlesSQL, {"id": controversial_story["ID"] })
+            for similar_article in similar_articles:
+               controversial_story["similar"].append(dict(similar_article))
+        return controversial_stories
