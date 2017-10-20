@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <script src="main.js?v=4"></script>
+
+  <title>Find related news</title>
+  <link href="main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<H3> Enter text from a tech article here</H3>
+<FORM ACTION="/retrieve_similar" METHOD="POST">
+<textarea id="tdidf_input" name="tdidf_input" rows="30" cols="90">Enter article text here</textarea><BR/>
+N Articles:<input type="text" id="n_articles" name="n_articles" value="15"><br/>
+From:<input type="text" id="start" name="start" value="2017-MM-DD"><I>Starts from 2017-01-01</I><br/>
+To:<input type="text" id="end" name="end" value="2017-MM-DD"><I>Until 2017-10-14</I><br/><br/>
+
+<input type="submit" value="submit"  />
+</FORM>
+<h2>Advice from TFIDF & BOW</h2>
+<table border="1">
+
+<tr>
+    <th>Article Id</th>
+    <th><span>Title</span></th>
+    <th><span>Date</span></th>
+    <th>TFIDF Score</th>
+
+  </tr>
+
+    {% for _ in articles: %}
+
+        <tr>
+
+            <td>{{_.id}}</td>
+            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+            <td>{{_.date_p}}</td>
+            <td>{{_.similarity}}</td>
+        </tr>
+
+
+    {% endfor %}
+</table>
+<h2>Advice from DOC2VEC</h2>
+<I>This will perform poorly for short texts</I>
+
+
+</body>
+</html>

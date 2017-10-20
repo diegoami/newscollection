@@ -4,30 +4,43 @@
 from flask import Flask
 from flask import render_template
 from flask import request
-
-
-from datetime import date
-
+from random import randint
 import yaml
-from flask import Flask
 from technews_nlp_aggregator.persistence.similar_articles import  SimilarArticlesRepo
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader
+from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
+from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
+from technews_nlp_aggregator.rest.util import extract_related_articles, filter_double, extract_interesting_articles
+from technews_nlp_aggregator.common.util import conv_to_date
+
+from . import views
+
+
+config = yaml.safe_load(open('config.yml'))
+db_config = yaml.safe_load(open(config["db_key_file"]))
+
+articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
+articleLoader = ArticleLoader(articleDatasetRepo)
+
+articleLoader.load_all_articles(load_text=True)
+doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
+doc2VecFacade.load_models()
+tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
+tfidfFacade.load_models()
+
+
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 config = yaml.safe_load(open('config.yml'))
 db_config = yaml.safe_load(open(config["db_key_file"]))
 db_url    = db_config["db_url"]
 similarArticlesRepo = SimilarArticlesRepo(db_url)
-
+classifier = tfidfFacade
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 app = Flask(__name__)
 
-from random import randint
-from . import app
-from . import views
-
-@app.route('/')
-def index():
-    return "Hello World!"
 
 
 @app.route('/duplicates/<int:page_id>')
@@ -75,3 +88,45 @@ def related(id1, id2):
 @app.route('/unrelated/<int:id1>/<int:id2>')
 def unrelated(id1, id2):
     return save_user_association(id1, id2, 0.25)
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
+
+@app.route('/retrieve_similar', methods=['POST'])
+def retrieve_articles_srv():
+    if request.method == 'POST':
+        form = request.form
+        if form:
+            text = form["tdidf_input"]
+            n_articles = int(form["n_articles"])
+
+            start_s = form["start"]
+            end_s = form["end"]
+
+            if start_s and end_s :
+                start, end = conv_to_date(start_s), conv_to_date(end_s)
+                if start and end:
+                    articlesDF = classifier.get_related_articles_from_to(text, n_articles,
+                                                                              start_s, end_s)
+                else:
+                    articlesDF = classifier.get_related_articles_in_interval(text, n=10000, reference_day=None,
+                                                                                  days=30, max=n_articles)
+            else:
+                articlesDF = classifier.get_related_articles_in_interval(text, n=10000, reference_day=None, days=30,
+                                                                              max=n_articles)
+            sims = zip(articlesDF.index, articlesDF['score'])
+            related_articles = extract_related_articles(articleLoader, sims)
+            return render_template('search.html', articles=related_articles )
+
+"""
+@app.before_request
+def before_request():
+    method = request.form.get('_method', '').upper()
+    if method:
+        request.environ['REQUEST_METHOD'] = method
+        ctx = app._request_ctx_stack.top
+        ctx.url_adapter.default_method = method
+        assert request.method == method
+"""
