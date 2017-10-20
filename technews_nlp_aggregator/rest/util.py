@@ -34,14 +34,10 @@ def fill_article(articleLoader, score, id):
     related_article["date_p"] = str(link_obj["date_p"])
 
     related_article["title"] = str(link_obj["title"])
-    related_article["tags"], related_article["tag_base"]  = [], []
     related_article["source"] = extract_source(related_article["url"])
 
     related_article["date"] = extract_date_str(related_article["url"])
-
-
     related_article["similarity"] = score * 100
-    related_article["authors"], related_article["author_base"]  = [], []
 
     return related_article
 

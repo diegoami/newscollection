@@ -142,6 +142,8 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
                                                                  max=n_articles)
     sims = zip(articlesDF.index, articlesDF['score'])
     related_articles = extract_related_articles(articleLoader, sims)
+    for articleRecord in related_articles:
+        articleLoader.articlesRepo.load_meta_record(articleRecord)
     return related_articles
 
 
@@ -150,6 +152,8 @@ def retrieve_articles_url(classifier, url, n_articles):
     articlesDF = classifier.get_related_articles_and_score_url(url, n=10000, max=n_articles)
     sims = zip(articlesDF.index, articlesDF['score'])
     related_articles = extract_related_articles(articleLoader, sims)
+    for articleRecord in related_articles:
+        articleLoader.articlesRepo.load_meta_record(articleRecord)
     return related_articles
 
 

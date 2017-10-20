@@ -165,14 +165,11 @@ class ArticleDatasetRepo(ArticleRepo):
 
 
     def load_meta_record(self, article_record):
-        if (len(article_record["tags"]) == 0):
-            for tag_row in self.db.query(self.tags_query, id=article_record["article_id"]):
-                article_record["tags"].append(tag_row["TAG_URL"])
-                article_record["tag_base"].append(tag_row["TAG_NAME"])
-        if (len(article_record["authors"]) == 0):
-            for author_row in self.db.query(self.authors_query, id=article_record["article_id"]):
-                article_record["authors"].append(author_row["AUT_URL"])
-                article_record["author_base"].append(author_row["AUT_NAME"])
+        article_record["tags"], article_record["authors"] = [], []
+        for tag_row in self.db.query(self.tags_query, id=article_record["article_id"]):
+            article_record["tags"].append({"url": tag_row["TAG_URL"],"name": tag_row["TAG_NAME"]} )
+        for author_row in self.db.query(self.authors_query, id=article_record["article_id"]):
+            article_record["authors"].append({"url": author_row["AUT_URL"],"name": author_row["AUT_NAME"]} )
 
 
 
@@ -192,7 +189,6 @@ class ArticleDatasetRepo(ArticleRepo):
 
 
     def load_articles_with_text(self, id1, id2):
-
         article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
         article1 = self.db.query(article_info_sql, {"id" : id1}).next()
         article2 = self.db.query(article_info_sql, {"id" : id2}).next()
