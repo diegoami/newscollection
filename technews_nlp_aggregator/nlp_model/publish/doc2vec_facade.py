@@ -82,7 +82,7 @@ class Doc2VecFacade(ClfFacade):
         for id, row in docs_of_day.iterrows():
             dists = self.model.docvecs.most_similar([id], topn=15000, indexer=DocVec2Indexer(self.model.docvecs, id, dindex))
             for other_id, dist in zip(dindex, dists):
-                if (dist >= thresholds[0] and  dist < thresholds[1] and id != other_id):
+                if (dist >= thresholds[0] and  dist <= thresholds[1] and id != other_id):
                     if (id < other_id):
                         first_id, second_id = id, other_id
                     else:

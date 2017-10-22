@@ -34,10 +34,7 @@ Currently the dataset includes all technical articles that have been published b
 I am planning to update models with articles as they are published and add the following sources
 
 * Ars Technica (http://www.arstechnica.com)
-* Engadget     (http://www.engadget.com)
-* Mashable     (http://www.mashable.com/tech)
-* Bgr          (http://www.bgr.com)
-
+* Wired (http://www.wired.com)
 So far it is about 30.000 articles - my target is having a database of about 100.000 articles and keep it updated.
 I have already built a scraper and a database for that.
 
@@ -45,7 +42,7 @@ I have already built a scraper and a database for that.
 
 ### Prototype
 
-A prototype is currently accessible at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com/newscollection/
+A prototype is currently accessible at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080 or
 
 
 ### Finding Related articles
@@ -54,10 +51,9 @@ The idea behind this is that after you find an article on the web, you would wan
 
 This works also as a recommandation system, because it should find articles talking about related topics.
 
+You can copy the text of a technical article into this text page : http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search  and find similar articles in the dataset, possibly limiting the search in a date interval. From there you can copy the URL of an article in the database and see
 
-You can copy the text of a technical article into this text page : http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com/newscollection/search.html  and find similar articles in the dataset, possibly limiting the search in a date interval.
-
-This comes in the form also of a Chrome plugin that can be downloaded from here: http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com/newscollection/tnaggregator-chrome-plugin.zip and installed manually under chrome://extensions. If the user selects the text of a tech article and clicks on the Chrome extension, a popup will appear showing the related articles that could be found in the database.
+Alternatively, you can see how articles in the database related to each other entering the url of an article in
 
 ### Interesting articles
 

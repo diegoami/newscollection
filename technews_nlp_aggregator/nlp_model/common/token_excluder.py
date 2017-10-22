@@ -22,7 +22,7 @@ class SimpleTokenExcluder:
         return token_list
 
     def is_token_allowed(self, token):
-        return False
+        return True
 
 
 class TechArticlesTokenExcluder:
