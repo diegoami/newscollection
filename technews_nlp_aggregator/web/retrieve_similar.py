@@ -1,4 +1,4 @@
-from technews_nlp_aggregator.rest.util import extract_related_articles, filter_double, extract_interesting_articles
+from .util import extract_related_articles, filter_double, extract_interesting_articles
 from technews_nlp_aggregator.common.util import conv_to_date
 from . import app, render_template, tfidfFacade, doc2VecFacade, articleLoader, request
 from datetime import date

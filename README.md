@@ -42,7 +42,7 @@ I have already built a scraper and a database for that.
 
 ### Prototype
 
-A prototype is currently accessible at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080 or
+A prototype is currently accessible at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080
 
 
 ### Finding Related articles
@@ -51,13 +51,15 @@ The idea behind this is that after you find an article on the web, you would wan
 
 This works also as a recommandation system, because it should find articles talking about related topics.
 
-You can copy the text of a technical article into this text page : http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search  and find similar articles in the dataset, possibly limiting the search in a date interval. From there you can copy the URL of an article in the database and see
+You can copy the text of a technical article into this text page : http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search  and find similar articles in the dataset, possibly limiting the search in a date interval. From there you can copy the URL of an article in the database and see related articles in http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search_url
 
 Alternatively, you can see how articles in the database related to each other entering the url of an article in
 
-### Interesting articles
+### Similar articles and conteroversial topics
 
-The second application is finding "controversial" topics in a date range. From the page http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com/newscollection/interesting.html you can select a date range and request to system to find topics that have been handled in several articles from different sources in this period. **This is still slow and needs improvement**
+The second application is finding "controversial" topics in a date range. From the page http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/duplicates/0' you can browse through the articles that have been paired because the system considers it likely that they are talking  about the same topic, possibly under a different slant - each with a score.
+
+You can help validate this pairings using the tool at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080
 
 ## Technologys used
 
