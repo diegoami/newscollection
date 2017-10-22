@@ -1,5 +1,5 @@
-from .services import *
 from random import randint
+from . import app, render_template, tfidfFacade, doc2VecFacade, articleLoader, request, similarArticlesRepo, articleDatasetRepo
 
 
 @app.route('/duplicates/<int:page_id>')

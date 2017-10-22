@@ -28,6 +28,7 @@ class TfidfGenerator:
 
 
         dictionary = corpora.Dictionary(texts)
+        dictionary.filter_extremes(no_below=4, no_above=0.8)
         dictionary.save(self.model_output_dir+DICTIONARY_FILENAME)  # store the dictionary, for future reference
         corpus = [dictionary.doc2bow(text) for text in texts]
         corpora.MmCorpus.serialize(self.model_output_dir+CORPUS_FILENAME, corpus)
