@@ -1,12 +1,11 @@
-from .article_repo import ArticleRepo
-from datetime import datetime
-import dataset
-import sys, traceback
 import logging
+import traceback
+from datetime import datetime
+
+import dataset
+
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-
-from technews_nlp_aggregator.nlp_model.common import  TechArticlesSentenceTokenizer
 from technews_nlp_aggregator.common.util import extract_source
 similarArticlesSQL = \
 """
@@ -32,26 +31,35 @@ SELECT OTHER_ID AS O_ID, OTHER_DATE AS DATE, OTHER_TITLE AS TITLE, OTHER_URL AS 
 
 class SimilarArticlesRepo:
 
+    def get_connection(self):
+        con = dataset.connect(self.db_connection, engine_kwargs={
+            'connect_args': {'charset': 'utf8'}
+        })
+        return con
+
+
+
     def __init__(self, db_connection):
         self.db_connection = db_connection
-        self.db = dataset.connect(self.db_connection ,  engine_kwargs = {
-            'connect_args' : {'charset' : 'utf8'}
-        })
 
-        self.same_story_tbl = self.db['SAME_STORY']
-        self.same_story_jobs_tbl = self.db['SAME_STORY_JOBS']
-        self.same_story_user_tbl = self.db['SAME_STORY_USER']
+       # self.same_story_tbl = self.db['SAME_STORY']
+      #  self.same_story_jobs_tbl = self.db['SAME_STORY_JOBS']
+      #  self.same_story_user_tbl = self.db['SAME_STORY_USER']
+
 
 
     def association_exists(self, first_id, second_id, agent):
-        found_row = self.same_story_tbl.find_one(SST_AIN_ID_1=first_id, SST_AIN_ID_2=second_id, SST_AGENT=agent)
+        con = self.get_connection()
+        found_row = con['SAME_STORY'].find_one(SST_AIN_ID_1=first_id, SST_AIN_ID_2=second_id, SST_AGENT=agent)
         return found_row
 
     def persist_job(self, start, end, agentname, thresholds):
+        con = self.get_connection()
         try:
-            self.db.begin()
 
-            row = self.same_story_jobs_tbl.insert(
+            con.begin()
+
+            row = con['SAME_STORY_JOBS'].insert(
                 dict({
                     "SSJ_START": start,
                     "SSJ_END": end,
@@ -62,19 +70,21 @@ class SimilarArticlesRepo:
                     "SSJ_EXEC_DATE" : datetime.now()
                 })
             )
-            self.db.commit()
+            con.commit()
         except:
             traceback.print_exc()
-            self.db.rollback()
+            con.rollback()
 
 
     def persist_user_association(self, first_id, second_id, similarity, origin):
         if (first_id > second_id):
             first_id, second_id = second_id, first_id
-        try:
-            self.db.begin()
+        con = self.get_connection()
 
-            row = self.same_story_user_tbl.insert(
+        try:
+            con.begin()
+
+            row = con['SAME_STORY_USER'].insert(
                         dict({
                             "SSU_AIN_ID_1" : first_id,
                             "SSU_AIN_ID_2" : second_id,
@@ -83,10 +93,10 @@ class SimilarArticlesRepo:
                             "SSU_UPDATED"   : datetime.now()
                         })
             )
-            self.db.commit()
+            con.commit()
         except:
             traceback.print_exc()
-            self.db.rollback()
+            con.rollback()
 
 
     def persist_association(self, first_id, second_id, agent, similarity):
@@ -95,11 +105,11 @@ class SimilarArticlesRepo:
         rowFound = self.association_exists(first_id, second_id, agent)
 
         if (not rowFound ):
-
+            con = self.get_connection()
             try:
-                self.db.begin()
+                con.begin()
 
-                row = self.same_story_tbl.insert(
+                row = con['SAME_STORY_USER'].insert(
                             dict({
                                 "SST_AIN_ID_1" : first_id,
                                 "SST_AIN_ID_2" : second_id,
@@ -108,15 +118,16 @@ class SimilarArticlesRepo:
                                 "SST_UPDATED"   : datetime.now()
                             })
                 )
-                self.db.commit()
+                con.commit()
             except:
                 traceback.print_exc()
-                self.db.rollback()
+                con.rollback()
         else:
             pk = rowFound['SST_ID']
+            con = self.get_connection()
             try:
-                self.db.begin()
-                row = self.same_story_tbl.update(
+                con.begin()
+                row = con['SAME_STORY_USER'].update(
                     dict({
                         "SST_ID" : pk,
                         "SST_AIN_ID_1": first_id,
@@ -126,16 +137,17 @@ class SimilarArticlesRepo:
                         "SST_UPDATED":  datetime.now()
                     }), ['SST_ID']
                 )
-                self.db.commit()
+                con.commit()
             except:
                 traceback.print_exc()
-                self.db.rollback()
+                con.rollback()
 
 
 
     def list_similar_articles(self):
         similar_stories = []
-        for row in self.db.query(similarArticlesSQL):
+        con = self.get_connection()
+        for row in con.query(similarArticlesSQL):
             similar_story = dict({
                 "ID_1": row["ID_1"],
                 "ID_2": row["ID_2"],
@@ -156,14 +168,4 @@ class SimilarArticlesRepo:
 
         return similar_stories
 
-    def list_controversial_articles(self, start, end):
-        controversial_stories = []
-        for row in self.db.query(controversialArticlesSQL, {"start" : start, "end" : end}):
-            controversial_story= dict(row)
-            controversial_stories.append(controversial_story)
-        for controversial_story in controversial_stories:
-            controversial_story["similar"] = []
-            similar_articles = self.db.query(relatedArticlesSQL, {"id": controversial_story["ID"] })
-            for similar_article in similar_articles:
-               controversial_story["similar"].append(dict(similar_article))
-        return controversial_stories
+
