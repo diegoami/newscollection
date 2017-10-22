@@ -69,3 +69,9 @@ I am also considering following developments
 * Categorize articles / texts based on tags and authors of articles in the database, to try and help to get recommendations
 
 * Implement a real smart search engine over the database of technical articles
+
+* Summarize articles
+
+* Finds differences about articles describing the same story
+
+* Trying to find out which one is more interesting
