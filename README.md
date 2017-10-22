@@ -10,16 +10,6 @@ The general idea is to build a technology news portal aggregating tech news from
 * get a different angle about a specific news item or topic from a different source
 * find controversial news in a period of time, that have been treated seperately from several sources.
 
-## Possible development
-
-I am also considering following developments
-
-* Work as a recommender system - find articles whose topics is related to the one you have selected
-  * at first these recommendations would be stateless, but it can be extended to remember previous user choices
-
-* Categorize articles / texts based on tags and authors of articles in the database, to try and help to get recommendations
-
-* Implement a real smart search engine over the database of technical articles
 
 ## Dataset
 
@@ -44,6 +34,12 @@ I have already built a scraper and a database for that.
 
 A prototype is currently accessible at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080
 
+### Similar articles and conteroversial topics
+
+You can find "controversial" topics in the datbase. From the page http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/duplicates/0' you can browse through the articles that have been paired because the system considers it likely that they are talking  about the same topic, possibly under a different slant - each with a score.
+
+You can help validate this pairings using the tool at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/randomrelated
+
 
 ### Finding Related articles
 
@@ -53,35 +49,24 @@ This works also as a recommandation system, because it should find articles talk
 
 You can copy the text of a technical article into this text page : http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search  and find similar articles in the dataset, possibly limiting the search in a date interval. From there you can copy the URL of an article in the database and see related articles in http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search_url
 
-Alternatively, you can see how articles in the database related to each other entering the url of an article in
+Alternatively, you can see how articles in the database related to each other entering the url of an article in the page mentioned above: http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search_url
 
-### Similar articles and conteroversial topics
-
-The second application is finding "controversial" topics in a date range. From the page http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/duplicates/0' you can browse through the articles that have been paired because the system considers it likely that they are talking  about the same topic, possibly under a different slant - each with a score.
-
-You can help validate this pairings using the tool at http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080
 
 ## Technologys used
 
-I am still in the exploring phase as to what technology I should use. So far I built the prototype using Gensim in connection with Tfidf / BoW (first approach) and Doc2Vec. The results are already decent but it seems that there is great room for improvement. In particular:
+I am still in the exploring phase as to what technology I should use. So far I built the prototype using Gensim in connection with Tfidf / BoW (first approach) and Doc2Vec. The results are already decent but it seems that there is great room for improvement
 
-* Tfidf/BoW seems to be very slow but it comes probably also from a suboptimal implementation of my part
-* Doc2vec's results are very misleading for short sentences and short articles, as the length of an article seems to be one of the main features to decide whether articles are similar
+## Validation
 
-## Issues
+I have included the possibility to let users give feedback whet
 
-* I am looking for ways to include other features to improve the score of similarity between two articles, apart from the text itself. In particular
+## Possible developments
 
-  * Articles published around the same date are more likely to be related
-  * So are articles having similar tags and from the same author and source
+I am also considering following developments
 
-* On the other hand, when wishing to show articles about the same topic from different sources, I would want to penalize articles from the same source or author, as I am looking for a different angle.
+* Work as a recommender system - find articles whose topics is related to the one you have selected
+  * at first these recommendations would be stateless, but it can be extended to remember previous user choices
 
-* I am also striving to be able to limit search only on a subset of the dataset, (especially date) even after having trained the models on all of the articles.
+* Categorize articles / texts based on tags and authors of articles in the database, to try and help to get recommendations
 
-* The update of articles in the database is still not automatized
-
-
-
-
-
+* Implement a real smart search engine over the database of technical articles
