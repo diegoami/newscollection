@@ -1,8 +1,7 @@
 # TECH NEWS AGGREGATOR
 
-## Background
 
-### General purpose
+## General purpose
 
 The general idea is to build a technology news portal aggregating tech news from several sources and draw conclusions from them
 
