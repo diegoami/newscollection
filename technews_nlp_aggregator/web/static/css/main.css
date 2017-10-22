@@ -30,3 +30,35 @@ label {
   font-size: 1.2em;
 }
 input { display: table-cell; }
+
+input[type=submit] {
+    padding:5px 10px;
+    background-color: #555555;
+    cursor:pointer;
+    color: white;
+    height: 50px;
+}
+
+.errors {
+  color: red;
+}
+
+table {
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+
+tr:nth-child(even) {background-color:  #FAFAD2}
+tr:nth-child(odd)  {background-color:  #FFFFCC}
+
+
+th {
+  background-color:  #9999CC;
+}

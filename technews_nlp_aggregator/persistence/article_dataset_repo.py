@@ -165,14 +165,15 @@ class ArticleDatasetRepo(ArticleRepo):
 
 
     def load_meta_record(self, article_record):
-        article_record["tags"], article_record["authors"] = [], []
-        for tag_row in self.db.query(self.tags_query, id=article_record["article_id"]):
-            article_record["tags"].append({"url": tag_row["TAG_URL"],"name": tag_row["TAG_NAME"]} )
-        for author_row in self.db.query(self.authors_query, id=article_record["article_id"]):
-            article_record["authors"].append({"url": author_row["AUT_URL"],"name": author_row["AUT_NAME"]} )
+        article_record["tags"], article_record["authors"] = self.retrieve_tags_authors(article_record["article_id"])
 
-
-
+    def retrieve_tags_authors(self, article_id):
+        tags, authors = [], []
+        for tag_row in self.db.query(self.tags_query, id=article_id):
+            tags.append({"url": tag_row["TAG_URL"], "name": tag_row["TAG_NAME"]})
+        for author_row in self.db.query(self.authors_query, id=article_id):
+            authors.append({"url": author_row["AUT_URL"], "name": author_row["AUT_NAME"]})
+        return tags, authors
 
     def load_articles(self, load_text=False, load_meta=False, limit = None):
         con = self.engine.connect()

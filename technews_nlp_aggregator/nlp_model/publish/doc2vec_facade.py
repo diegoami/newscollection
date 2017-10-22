@@ -54,7 +54,7 @@ class Doc2VecFacade(ClfFacade):
 
 
 
-    def get_related_articles_and_score_url(self, url, n=6000, max=15 ):
+    def get_related_articles_and_score_url(self, url, n=10000, max=15 ):
         #docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
         docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['url'] == url]
         if (len(docrow) > 0):

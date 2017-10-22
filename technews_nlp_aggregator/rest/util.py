@@ -37,7 +37,7 @@ def fill_article(articleLoader, score, id):
     related_article["source"] = extract_source(related_article["url"])
 
     related_article["date"] = extract_date_str(related_article["url"])
-    related_article["similarity"] = score * 100
+    related_article["similarity"] = round(score * 100,2)
 
     return related_article
 

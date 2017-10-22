@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=6"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=11"  >
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=6"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=22"  >
 
     <meta charset="UTF-8">
     <meta charset="UTF-8">
@@ -18,15 +18,16 @@
   <a href="/search_url">Enter URL</a>
   <a href="/duplicates/0">Show all similar articles</a>
   <a class="active" href="/randomrelated">Help identify similar articles</a>
+  <a href="https://github.com/diegoami/newscollection">Github repository</a>
 </div>
-
-<h2>Compare these two articles</h2>
-<P>
-
-    TFIDF Score: <B>{{SCORE}}</B>
-</P>
+{% if err_messages: %}
+     <ul class="errors">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
 <H3>These two articles...</H3>
-
 <div class="buttonrow">
 <form id="samestory" class="buttoncolumn" action="/samestory/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
     <input type="submit" value="are pretty much the same story">
@@ -50,15 +51,38 @@
 <div class="row">
   <div class="column left">
     <h2>{{A1.AIN_TITLE}}</h2>
-    <p>URL : <A HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A></p>
-    <p>{{A1.ATX_TEXT}}</p>
+    <p><I>URL:</I> <A HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A></p>
+    <P><I>Date:</I> {{A1.AIN_DATE}}</P>
+    <P><I>Authors:</I>
+       {% for author in A1.AUTHORS: %}
+            <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
+       {% endfor %}
+    </P>
+      <P><I>Tags:</I>
+       {% for tag in A1.TAGS: %}
+            <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
+       {% endfor %}
+    </P>
+      <p class="article_text"><B>Text:</B>{{A1.ATX_TEXT}}</p>
   </div>
     <div class="column middle"></div>
   <div class="column right">
-
     <h2>{{A2.AIN_TITLE}}</h2>
-    <p>URL : <A HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A></p>
-    <p>{{A2.ATX_TEXT}}</p>
+    <p><I>URL:</I> <A HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A></p>
+      <P><I>Date:</I> {{A2.AIN_DATE}}</P>
+      <P><I>Authors: </I>
+       {% for author in A2.AUTHORS: %}
+            <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
+       {% endfor %}
+    </P>
+      <P><I>Tags:</I>
+        {% for tag in A2.TAGS: %}
+            <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
+       {% endfor %}
+    </P>
+
+    <P class="article_text"><B>Text:</B> {{A2.ATX_TEXT}}</P>
+
  </div>
 </div>
 <BR>

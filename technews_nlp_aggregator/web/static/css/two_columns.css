@@ -1,26 +1,29 @@
 .column {
 
-
 }
 
 .buttoncolumn {
     float: left;
-    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: auto;
+    text-align: center;
+
 
 }
 
 
 .left {
-  width: 45%;
+  width: 47%;
   float: left;
 }
 
 .middle {
-  width: 10%;
+  width: 6%;
 }
 
 .right {
-  width: 45%;
+  width: 47%;
   float: right;
 }
 
@@ -36,4 +39,11 @@
     content: "";
     display: table;
     clear: both;
+}
+
+.article_text {
+
+
+    background: #FFE4B5;
+
 }

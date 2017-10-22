@@ -17,6 +17,9 @@ def duplicates(page_id=0):
 @app.route('/compare/<int:id1>/<int:id2>')
 def compare(id1, id2):
     article1, article2, score = articleDatasetRepo.load_articles_with_text(id1, id2)
+    article1["TAGS"], article1["AUTHORS"] = articleDatasetRepo.retrieve_tags_authors(id1)
+    article2["TAGS"], article2["AUTHORS"] = articleDatasetRepo.retrieve_tags_authors(id2)
+
     return render_template('to_compare.html', A1=article1, A2=article2, SCORE=score)
 
 @app.route('/randomrelated')
@@ -26,6 +29,7 @@ def randomrelated():
     rlena = randint(0,len_similar_articles)
     similar_article_pair = all_similar_articles[rlena]
     id1, id2 = similar_article_pair["ID_1"], similar_article_pair["ID_2"]
+
     return compare(id1, id2)
 
 def save_user_association(id1,id2, similarity):
