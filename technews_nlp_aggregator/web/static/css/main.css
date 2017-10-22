@@ -62,3 +62,9 @@ tr:nth-child(odd)  {background-color:  #FFFFCC}
 th {
   background-color:  #9999CC;
 }
+
+div.home p {
+    margin-bottom:1.5em;
+    padding-bottom: 15px;
+    font-size: 1.5em;
+}
