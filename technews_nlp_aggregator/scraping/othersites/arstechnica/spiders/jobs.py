@@ -8,7 +8,7 @@ import json
 
 from technews_nlp_aggregator.scraping.technews_retriever import url_to_filename
 from datetime import datetime,date
-
+from string import punctuation
 
 from itertools import chain
 
@@ -24,6 +24,9 @@ class JobsSpider(scrapy.Spider):
     )
     finished = False
 
+    def __init__(self, article_repo):
+        super().__init__()
+        self.article_repo = article_repo
 
 
     def parse(self, response):
@@ -57,7 +60,9 @@ class JobsSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title = response.xpath('//h1[@itemprop="headline"]/text()').extract_first()
-        all_paragraphs = response.xpath('//div[@itemprop="articleBody"]/p/text()').extract()
+        #all_paragraphs = response.xpath('//div[@itemprop="articleBody"]//p/text()|//div[@itemprop="articleBody"]//p/em//text()|//div[@itemprop="articleBody"]//p/a//text()|//div[@itemprop="articleBody"]//p/i//text()').extract()
+        all_paragraphs = response.xpath(
+            '//div[@itemprop="articleBody"]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()').extract()
         article_authors = response.xpath('//a[@rel="author"]/@href').extract()
 
         article_datetime_tsstring = response.xpath('//time/@datetime').extract_first()
@@ -65,8 +70,19 @@ class JobsSpider(scrapy.Spider):
 
         article_date_str = article_datetime_tsstring.split('T')[0]
         article_date = date(*map(int,article_date_str.split('-')))
-        all_paragraph_text = "\n".join(
-            [x for x in all_paragraphs if len(x) > 0 and not x[0] == '\n'])
+        all_paragraph_text = ""
+        skip_next = False
+        for paragraph in all_paragraphs:
+            if len(paragraph) == 0 or paragraph[0] == '\n':
+                continue
+            if (paragraph[-1] in ".!?"):
+                paragraph = paragraph + "\n"
+            elif (paragraph[-1] in punctuation):
+                paragraph = paragraph + " "
+
+            all_paragraph_text = all_paragraph_text+paragraph
+
         sleep(1)
-        yield {"title": article_title, "text": all_paragraph_text, "authors": article_authors, "date" :article_date}
+        print(all_paragraph_text)
+        yield {"url" : url, "title": article_title, "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}
 
