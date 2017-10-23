@@ -45,9 +45,12 @@ def extract_date(url):
     index = 0
     while not arrs[index].isdigit():
         index += 1
-    year, month, day = map(int, (arrs[index], arrs[index + 1], arrs[index + 2]))
+    if (all([arrs[index].isdigit(), arrs[index + 1].isdigit(), arrs[index + 2].isdigit()])):
+        year, month, day = map(int, (arrs[index], arrs[index + 1], arrs[index + 2]))
     #date_str = day + '-' + month + '-' + year
-    return date(year, month, day)
+        return date(year, month, day)
+    else:
+        return None
 
 def extract_last_part(url):
     usplt = url.split('/')

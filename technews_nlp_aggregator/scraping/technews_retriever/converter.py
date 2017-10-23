@@ -1,7 +1,7 @@
 from os.path import basename
 from bs4 import BeautifulSoup
 from . import url_to_filename, remove_query_part
-from datetime import date
+from datetime import date, datetime
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 from technews_nlp_aggregator.common import extract_date
 
@@ -17,7 +17,7 @@ class Converter:
 
     def retrieve_title_and_text(self, article, braw_article):
 
-        article_title, all_paragraph_text = None, None
+        article_title, all_paragraph_text, article_date = None, None, None
         bs_article = BeautifulSoup(article)
         if (braw_article.startswith("techcrunch") or braw_article.startswith("jp_techcrunch")):
             article_entry = bs_article.find('div', {'class': 'article-entry'})
@@ -71,6 +71,21 @@ class Converter:
                 for article_authors_root in article_authors_roots:
                     if article_authors_root.get('href'):
                         article_authors.append(article_authors_root["href"])
+        elif (braw_article.startswith("arstechnica_com")):
+            article_entry = bs_article.find('div', {'itemprop': 'articleBody'})
+            article_title_t = bs_article.find('h1', {'itemprop': 'headline'})
+
+            article_tags = []
+            article_authors = []
+            article_authors_roots = bs_article.find_all('a', {'rel': 'author'})
+            for article_authors_root in article_authors_roots:
+                if article_authors_root.get('href'):
+                    article_authors.append(article_authors_root["href"])
+            article_date_root = bs_article.find('time')
+
+            article_datetime_tsstring = article_date_root.get('datetime')
+            article_date_str = article_datetime_tsstring.split('T')[0]
+            article_date = datetime.strptime(article_date_str,'YYYY-MM-DD')
 
         if (article_title_t and article_entry):
             all_paragraphs = bs_article.find_all('p')
@@ -78,7 +93,7 @@ class Converter:
                 [x.text for x in all_paragraphs if len(x.text) > 0 and not x.text[0] == '\n'])
             article_title = article_title_t.text
 
-        return {"title": article_title, "text": all_paragraph_text, "tags": article_tags, "authors": article_authors}
+        return {"title": article_title, "text": all_paragraph_text, "tags": article_tags, "authors": article_authors, "date" :article_date}
 
     def retrieve_tags(self, article_tag_roots):
         tags = []
@@ -117,7 +132,7 @@ class Converter:
  #                           self.article_repo.save_text_to_file(filename, article["title"], article["text"])
   #                      if (not link_file_exists):
                         article["filename"] = filename
-                        article["date"] = extract_date( url)
+                        article["date"] = extract_date( url) if not article.get("date") else article.get("date")
                         article["url"] = url
                         to_add = {k: v for k, v in article.items() if k != "text"}
                         self.article_repo.save_article(url, to_add, article["text"])

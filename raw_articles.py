@@ -13,6 +13,6 @@ exclusions = ["jp_techcrunch"]
 it = Iterator( config['search_pattern'])
 it.load()
 
-raw_retr = Raw_Retriever(iterator=it, exclusions=exclusions, raw_base_dir=config['raw_base_dir'])
+raw_retr = Raw_Retriever( exclusions=exclusions, raw_base_dir=config['raw_base_dir'])
 
-raw_retr.download_files()
+raw_retr.download_files(iterator=it)
