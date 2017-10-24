@@ -71,17 +71,17 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
     if start_s and end_s:
         start, end = conv_to_date(start_s), conv_to_date(end_s)
         if not start:
-            start = date(2017,1,1)
+            start = date.min
         if not end:
-            end = date(2017,12, 31)
+            end = date.max
 
-        articlesDF = classifier.get_related_articles_from_to(text, n_articles,
+        articlesIndeces, scores = classifier.get_related_articles_from_to(text, n_articles,
                                                                  start, end)
 
     else:
-        articlesDF = classifier.get_related_articles_in_interval(text, n=10000, reference_day=None, days=30,
-                                                                 max=n_articles)
-    sims = zip(articlesDF.index, articlesDF['score'])
+        articlesIndeces, scores = classifier.get_related_articles_from_to(text, n_articles,
+                                                                 None, None)
+    sims = zip(articlesIndeces, scores)
     related_articles = extract_related_articles(articleLoader, sims)
     for articleRecord in related_articles:
         articleLoader.articlesRepo.load_meta_record(articleRecord)
@@ -90,10 +90,9 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
 
 
 def retrieve_articles_url(classifier, url, n_articles):
-
-    articlesDF = classifier.get_related_articles_and_score_url(url, n=10000, max=n_articles)
-    if (articlesDF is not None):
-        sims = zip(articlesDF.index, articlesDF['score'])
+    articlesIndeces, scores = classifier.get_related_articles_and_score_url(url)
+    if (articlesIndeces is not None):
+        sims = zip(articlesIndeces.index, scores)
         related_articles = extract_related_articles(articleLoader, sims)
         for articleRecord in related_articles:
             articleLoader.articlesRepo.load_meta_record(articleRecord)

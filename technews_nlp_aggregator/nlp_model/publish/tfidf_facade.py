@@ -11,9 +11,9 @@ from gensim.corpora import MmCorpus
 from nltk.tokenize import word_tokenize
 from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
 import pandas as pd
-
+from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 import datetime
-
+import numpy as np
 from . import ClfFacade
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -31,7 +31,7 @@ class TfidfFacade(ClfFacade):
         self.dictionary = corpora.Dictionary.load(self.model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference
         self.corpus = MmCorpus(self.model_dir + '/'+ CORPUS_FILENAME )
         self.lsi = models.LsiModel.load(self.model_dir + '/'+ LSI_FILENAME)
-        self.index = similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME)  # transform corpus to LSI space and index it
+        self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and index it
 
 
     def get_vec(self,doc):
@@ -48,49 +48,45 @@ class TfidfFacade(ClfFacade):
 
     def get_related_sims_docid(self, id, n):
         vec_lsi = self.get_vec_docid(id)
-        sims = self.index[vec_lsi]
+        sims = self.matrix_wrapper[vec_lsi]
         sims = sorted(enumerate(sims), key=lambda item: -item[1])
         return sims[:n]
 
-
-    def get_related_sims(self, doc, n):
+    def get_related_articles_and_score_doc(self, doc, start=None, end=None):
         vec_lsi = self.get_vec(doc)
-        sims = self.index[vec_lsi]
-        sims = sorted(enumerate(sims), key=lambda item: -item[1])
-        return sims[:n]
-
-
-    def get_related_articles_and_score_doc(self, doc, n):
-        sims = self.get_related_sims(doc, n)
-        related_articles = sims
-        return related_articles[:n]
-
-
-    def get_related_articles_and_score_url(self,  url, n=10000, max=15):
-
-        docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['url'] == url]
-        if (len(docrow) > 0):
-            #print(docrow["title"])
-
-            similar_documents = self.get_related_sims_docid(docrow.index[0] , n)
-            #print(similar_documents)
-            df_similar_docs = self.enrich_with_score(similar_documents,200,docrow.iloc[0]['date_p'])
-
-            return df_similar_docs.iloc[:max,:]
+        if (start and end):
+            interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
+            scores = self.matrix_wrapper[(vec_lsi, interval_condition) ]
+            articlesFilteredDF = self.article_loader.articlesDF[interval_condition ]
         else:
-            return None
+            scores = self.matrix_wrapper[(vec_lsi,None)]
+            articlesFilteredDF = self.article_loader.articlesDF
+        args_scores = np.argsort(-scores)
+        return args_scores, scores[args_scores]
 
 
-    def get_related_articles_and_score_docid(self,  docid, n=10000, max=15):
+    def get_related_articles_from_to(self, doc,  start, end):
+        articlesFoundDF, scores = self.get_related_articles_and_score_doc(doc, start, end )
 
-        docrow = self.article_loader.articlesDF.loc[docid]
-        #print(docrow["title"])
+        return articlesFoundDF, scores
 
-        similar_documents = self.get_related_sims_docid(docid , n)
-        #print(similar_documents)
-        df_similar_docs = self.enrich_with_score(similar_documents,200,docrow['date_p'])
+    def get_related_articles_and_score_url(self,  url):
 
-        return df_similar_docs.iloc[:max,:]
+
+        url_condition = self.article_loader.articlesDF['url'] == url
+        vec_lsi = self.get_vec_docid(id)
+        sims = self.matrix_wrapper[vec_lsi]
+        docrow = self.article_loader.articlesDF[url_condition]
+        if (len(docrow) > 0):
+            docid = docrow.index[0]
+            vec_lsi = self.get_vec_docid(id)
+            scores = self.matrix_wrapper[(vec_lsi,None)]
+            args_scores = np.argsort(-scores)
+            return args_scores, scores[args_scores]
+        else:
+            return None, None
+
+
 
 
     def compare_articles_from_dates(self,  start, end, thresholds):

@@ -91,12 +91,13 @@ class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
 
         sentences = sent_tokenize(document)
         real_sentences = self.remove_useless_sentences(sentences)
-
-        if (sentences[0].startswith(title)):
-            return real_sentences
+        if (len(real_sentences) > 0):
+            if (real_sentences[0].startswith(title)):
+                return real_sentences
+            else:
+                return [title + "." ]+ real_sentences
         else:
-            return [title + "." ]+ real_sentences
-
+            return None
     def clean_sentences(self, document):
         sentences = sent_tokenize(document)
         real_sentences = self.remove_useless_sentences(sentences)

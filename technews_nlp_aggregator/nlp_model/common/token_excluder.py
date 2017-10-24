@@ -6,7 +6,7 @@ excl_2 = ['about', 'if', 'what', 'up', 'so', 'there', 'all', 'he', 'said', 'othe
 
 excl_3 = [ 'do', 'these', 'says', 'were', 'had',  'see', 'after', 'us', 'no', 'where', 'may', 'through', 'those',  'my', 'don', 'two',  'because',  'll', 'same', 'take',  'around',  'made',  '–',  'then', 'both', 'any', ';',  'before', 'going', 'being',  'here', 'able',  'down', 'lot', 'right', 'she', 'her']
 
-excl_4 = ['-','@','\'s','``','\'\'' ,'&', '\'', '`', '!', '[', ']']
+excl_4 = ['-','@','\'s','``','\'\'' ,'&', '\'', '`', '!', '[', ']', '‘']
 
 not_excl_1 =['need', 'using', 'more', 'new', '$', 'company', 'out','people','google','time', 'data', 'app', 'game', 'service', 'video'
              'companies', 'apple', 'over', 'million', 'first', 'year', 'even', 'most', 'much', 'users', 'well', 'today', 'technology', 'last', 'want'

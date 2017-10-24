@@ -56,23 +56,11 @@ class   ClfFacade:
         df_similar_ss = df_similar.sort_values(by='score_total', ascending=False)
         return df_similar_ss
 
-    def interesting_articles_for_day(self, start, end, max=15):
-        docs_of_day = self.article_loader.articles_in_interval(start, end)
-        docs_of_day_idx = list(docs_of_day.index)
-        all_links = []
-        for docid in docs_of_day_idx:
-            ars_score = self.get_related_articles_and_score_docid(docid, 6000, 4)
-            sum_score = ars_score['score_total'].sum()
-            ars_score_idxs = list(ars_score.index)
-          #  ars_score_urls = list(ars_score['url'])
 
-            all_links.append((docid , round(sum_score, 2), ars_score_idxs ))
-        sall_links = sorted(all_links, key=lambda x: x[1], reverse=True)[:max]
-        return sall_links
 
 
     def get_related_articles_from_to(self, doc, max, start, end, n=10000):
-        similar_documents = self.get_related_articles_and_score_doc(doc, n)
+        similar_documents = self.get_related_articles_and_score_doc(doc, n, start, end)
         id_articles, score_ids = zip(*similar_documents)
         articlesFilteredDF = pd.DataFrame(self.article_loader.articlesDF.loc[list(id_articles), :])
         articlesFilteredDF['score'] = list(score_ids)

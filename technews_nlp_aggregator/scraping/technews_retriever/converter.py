@@ -106,6 +106,7 @@ class Converter:
 
     def convert_articles(self, stopat=None, showEntry = False):
         count = 0
+        self.article_repo.init_con_find()
         for lurl, v in self.iterator:
             url = remove_query_part(lurl)
 
@@ -121,7 +122,7 @@ class Converter:
 
             if (os.path.isfile(raw_article)):
 
-                if (self.article_repo.file_name_exists(filename) and link_file_exists):
+                if (link_file_exists):
                     continue
                 with open(raw_article, 'r') as f:
                     article_full_text = f.read()
@@ -149,4 +150,4 @@ class Converter:
             else:
                 print("This file could not be found: " + raw_article)
 
-            self.article_repo.save_articles()
+        self.article_repo.close_con_find()

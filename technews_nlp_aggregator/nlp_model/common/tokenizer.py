@@ -18,7 +18,12 @@ class DefaultTokenizer:
         documents = articleDF['text'].tolist()
         titles = articleDF['title'].tolist()
         logging.info("Tokenizing documents... this might take a while")
-        texts = [self.tokenize_doc(title, document) for title, document in zip(titles, documents)]
+        texts = []
+
+        for title, document in zip(titles, documents):
+            tokdoc = self.tokenize_doc(title, document)
+            if tokdoc:
+                texts.append(tokdoc)
         logging.info("Done with tokenizing")
         # remove words that appear only once
 
@@ -26,16 +31,19 @@ class DefaultTokenizer:
 
     def tokenize_doc(self, title, document):
         all_sentences = self.sentence_tokenizer.process(title, document)
+        if all_sentences:
 
-        tokenized_sentences = []
-        for sentence in all_sentences:
-            tokenized_sentences.append([word for word in word_tokenize(sentence.lower()) ])
+            tokenized_sentences = []
+            for sentence in all_sentences:
+                tokenized_sentences.append([word for word in word_tokenize(sentence.lower()) ])
 
-        words = []
-        for tokenized_sentence in tokenized_sentences:
-            for token in tokenized_sentence:
-                if self.token_excluder.is_token_allowed(token):
-                    words.append(token)
+            words = []
+            for tokenized_sentence in tokenized_sentences:
+                for token in tokenized_sentence:
+                    if self.token_excluder.is_token_allowed(token):
+                        words.append(token)
 
-        return words
+            return words
+        else:
+            return None
 

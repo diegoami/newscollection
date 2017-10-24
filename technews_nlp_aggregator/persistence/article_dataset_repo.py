@@ -34,11 +34,19 @@ class ArticleDatasetRepo(ArticleRepo):
         self.engine = create_engine(self.db_connection,encoding='UTF-8')
         self.sentence_tokenizer = TechArticlesSentenceTokenizer()
 
-
+    def init_con_find(self):
+        self.con_find = self.get_connection()
 
     def url_exists(self, url):
-        con = self.get_connection()
-        return con['ARTICLE_INFO'].find_one(AIN_URL=url)
+        if self.con_find == None:
+            self.init_con_find()
+        found_one =  self.con_find['ARTICLE_INFO'].find_one(AIN_URL=url)
+
+        result = found_one is not None
+        return result
+
+    def close_con_find(self):
+        self.con_find = None
 
     def file_name_exists(self, filename):
         row = self.get_connection()['ARTICLE_INFO'].find_one(AIN_FILENAME=filename)

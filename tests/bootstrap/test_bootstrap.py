@@ -23,9 +23,6 @@ doc2VecFacade.load_models()
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
 tfidfFacade.load_models()
 
-def print_articles(articles):
-    for article in articles:
-        print(article)
 
 
 
