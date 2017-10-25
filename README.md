@@ -13,16 +13,17 @@ The general idea is to build a technology news portal aggregating tech news from
 ## Dataset
 
 
-Currently the dataset includes all technical articles that have been published between 01/01/2017 and 04/10/2017 on following tech sources
+Currently the dataset includes all technical articles that have been published between 01/01/2017 and 25/10/2017 on following tech sources
 
 * [Techcrunch](http://www.techcrunch.com)
 * [The Verge](http://www.theverge.com)
 * [The next web](http://www.thenextweb.com)
 * [Venture beat](http://www.venturebeat.com)
-
-I am planning to update models with articles as they are published and add the following sources
-
 * [Ars Technica](http://www.arstechnica.com)
+
+I am planning to update models with articles as they are published and add at least the following sources
+
+
 * [Wired](http://www.wired.com)
 
 So far it is about 30.000 articles - my target is having a database of about 100.000 articles and keep it updated.
