@@ -3,27 +3,21 @@ import time
 from tests.bootstrap.test_bootstrap import *
 
 #while True:
-#random_article_id, random_article = articleLoader.get_random_article()
-random_article_id = 15073
-random_article = articleLoader.articlesDF.loc[random_article_id]
+random_article_id, random_article = articleLoader.get_random_article()
+#random_article_id = 15073
+random_article_url = random_article ['url']
 # print(random_article)
 print(" ============= ARTICLE ==================")
 print(random_article["title"])
 
-#print(" ============= DOC2VEC ==================")
-#articles1 = doc2VecFacade.get_related_articles_and_score_docid(random_article_id , 2000,30)
-#print(articles1)
+print(" ============= DOC2VEC ==================")
+articles1, scores1 = doc2VecFacade.get_related_articles_and_score_url(random_article_url )
+for idx, scr in zip(articles1[:100], scores1[:200] ):
+    print(articleLoader.articlesDF.iloc[idx]['title'], scr)
 print(" ============= TFIDF==================")
 
-articles2 = tfidfFacade.get_related_articles_and_score_docid(random_article_id , 15,10 )
-print(list(articles2["title"]))
-print(list(articles2["text"]))
+articles2, scores2 = tfidfFacade.get_related_articles_and_score_url(random_article_url  )
+for idx, scr in  zip(articles2[:100], scores2[:200] ):
+    print(articleLoader.articlesDF.iloc[idx]['title'], scr)
 
-print(articles2)
-print(" ============= TOGETHER ==================")
 
-#  article_all = {}
-#   for article in articles1 + articles2:
-#       if article[0] in article_all:
-#           article_all[article[0]][2] += article[2]
-time.sleep(0.75)

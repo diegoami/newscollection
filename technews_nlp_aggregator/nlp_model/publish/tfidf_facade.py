@@ -46,11 +46,7 @@ class TfidfFacade(ClfFacade):
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
 
-    def get_related_sims_docid(self, id, n):
-        vec_lsi = self.get_vec_docid(id)
-        sims = self.matrix_wrapper[vec_lsi]
-        sims = sorted(enumerate(sims), key=lambda item: -item[1])
-        return sims[:n]
+
 
     def get_related_articles_and_score_doc(self, doc, start=None, end=None):
         vec_lsi = self.get_vec(doc)
@@ -62,7 +58,7 @@ class TfidfFacade(ClfFacade):
             scores = self.matrix_wrapper[(vec_lsi,None)]
             articlesFilteredDF = self.article_loader.articlesDF
         args_scores = np.argsort(-scores)
-        return args_scores, scores[args_scores]
+        return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
 
     def get_related_articles_from_to(self, doc,  start, end):
@@ -71,18 +67,14 @@ class TfidfFacade(ClfFacade):
         return articlesFoundDF, scores
 
     def get_related_articles_and_score_url(self,  url):
-
-
         url_condition = self.article_loader.articlesDF['url'] == url
-        vec_lsi = self.get_vec_docid(id)
-        sims = self.matrix_wrapper[vec_lsi]
         docrow = self.article_loader.articlesDF[url_condition]
         if (len(docrow) > 0):
             docid = docrow.index[0]
-            vec_lsi = self.get_vec_docid(id)
+            vec_lsi = self.get_vec_docid(docid)
             scores = self.matrix_wrapper[(vec_lsi,None)]
             args_scores = np.argsort(-scores)
-            return args_scores, scores[args_scores]
+            return self.article_loader.articlesDF.iloc[args_scores].index, scores[args_scores]
         else:
             return None, None
 
@@ -91,19 +83,17 @@ class TfidfFacade(ClfFacade):
 
     def compare_articles_from_dates(self,  start, end, thresholds):
         articles_and_sim = {}
-        docs_of_day = self.article_loader.articles_in_interval(start, end)
-        dindex = docs_of_day.index
-        for id, row in docs_of_day.iterrows():
+        interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
+        articlesFilteredDF = self.article_loader.articlesDF[interval_condition]
+        dindex = articlesFilteredDF.index
+        for id in dindex:
             vec_lsi = self.get_vec_docid(id)
-            sims = self.index[vec_lsi]
-            for other_id in dindex:
-                sim_score = sims[other_id]
-                if (sim_score >= thresholds[0] and  sim_score < thresholds[1] and id != other_id):
-                    if (id < other_id):
-                        first_id, second_id = id, other_id
-                    else:
-                        first_id, second_id = other_id, id
-                    articles_and_sim[(first_id, second_id)] = sim_score
+            scores = self.matrix_wrapper[(vec_lsi,interval_condition)]
+            scores_in_threshold_condition = (scores >= thresholds[0]) &  (scores <= thresholds[1])
+            scores_in_threshold = scores[scores_in_threshold_condition]
+            id_in_threshold = articlesFilteredDF.index[scores_in_threshold_condition]
+
+            articles_and_sim[id] = zip(id_in_threshold, scores_in_threshold)
         return articles_and_sim
 
 

@@ -5,27 +5,13 @@ from technews_nlp_aggregator.common import extract_source, extract_date_str, ext
 def extract_related_articles(articleLoader, sims):
     related_articles = []
     for id, score in sims:
-        related_article = fill_article(articleLoader, score, id)
+        related_article = fill_article(articleLoader, id, score)
         related_articles.append(related_article)
 
     return related_articles
 
-def extract_interesting_articles(articleLoader, sims):
-    related_articles = []
-    for url, score, connected_urls in sims:
-        related_article = fill_article(articleLoader, score, url)
-        connected_articles = []
-        for connected_url in connected_urls:
-            if (connected_url == url):
-                continue
-            connected_article = fill_article(articleLoader, 0, connected_url)
-            connected_articles.append(connected_article)
-        related_article["connected_articles"] = connected_articles
-        related_articles.append(related_article)
 
-    return related_articles
-
-def fill_article(articleLoader, score, id):
+def fill_article(articleLoader, id, score):
     related_article = {}
     link_obj = articleLoader.articlesDF.loc[id]
     related_article["id"] = str(id)

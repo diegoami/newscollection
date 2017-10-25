@@ -2,7 +2,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
-from technews_nlp_aggregator.nlp_model.publish import TfidfFacade
+from technews_nlp_aggregator.nlp_model.publish import TfidfFacade, Doc2VecFacade
 import yaml
 
 
@@ -18,7 +18,8 @@ articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles(False)
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
 tfidfFacade.load_models()
-
+doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
+doc2VecFacade.load_models()
 
 article1 = """
 Team17 announced today that it’ll publish Pathea Games’s My Time at Portia, a colorful open-world role-playing game. This marks its first partnership with a Chinese studio, and it follows an announcement earlier this year about the first time it signed on with a Brazilian developer. My Time at Portia is raising money on the crowdfunding platform Kickstarter, and aims to be in early access in 2018. It will be available on PC and Mac to start, and Team17 will help bring the game to consoles later on.
@@ -81,19 +82,18 @@ def show_related_articles(facade, article):
     #related_articles_doc2vec = facade.get_related_articles(article, 10000)
     start = date(2017, 3, 1)
     end = date(2017, 10, 21)
-    articles, scores = facade.get_related_articles_and_score_doc(article, start=start, end=end)
+    articles_indices, scores = facade.get_related_articles_and_score_doc(article, start=start, end=end)
 
 
     print(" ==== related_articles  ==== ")
-    for article, score in islice(zip(articles['title'], scores),100):
-
-        print(article, score)
-
-
-#show_related_articles(doc2VecFacade, article1)
-#show_related_articles(doc2VecFacade, article2)
+    for article_idx, score in islice(zip(articles_indices, scores),100):
+        print(articleLoader.articlesDF.iloc[article_idx]['title'], score)
 
 
-show_related_articles(tfidfFacade, article1)
-show_related_articles(tfidfFacade, article2)
+show_related_articles(doc2VecFacade, article1)
+show_related_articles(doc2VecFacade, article2)
+
+#
+#show_related_articles(tfidfFacade, article1)
+#show_related_articles(tfidfFacade, article2)
 

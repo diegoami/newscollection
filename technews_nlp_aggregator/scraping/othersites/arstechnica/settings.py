@@ -10,6 +10,7 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'arstechnica'
+LOG_LEVEL = 'INFO'
 
 SPIDER_MODULES = ['technews_nlp_aggregator.scraping.othersites.arstechnica.spiders']
 NEWSPIDER_MODULE = 'technews_nlp_aggregator.scraping.othersites.arstechnica.spiders'

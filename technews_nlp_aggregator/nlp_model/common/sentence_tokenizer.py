@@ -59,7 +59,12 @@ sentence_excludes = [
     'This post is not sponsored, but',
     'This post was originally published by',
     'Thanks!',
-    'The article originally appeared at'
+    'The article originally appeared at',
+    'Listing image by',
+    'Intel’s web sites and communications are subject to our Privacy',
+    'This post originated on Ars Technica UK',
+    'Advance Publications owns Condé Nast',
+    'We have Verge Extras, which experiments with audio and podcasting'
 
 ]
 
@@ -69,7 +74,8 @@ sentence_inside_excludes = [
     'By checking this box, you are confirming you are an adult',
     'Stay tuned with our weekly recap',
     'check out our interview with',
-    'Latest headlines delivered to you daily'
+    'Latest headlines delivered to you daily',
+    'Good Deals is a weekly roundup of the best deals on the internet'
 
 ]
 

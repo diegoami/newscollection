@@ -59,7 +59,8 @@ class JobsSpider(scrapy.Spider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title = response.xpath('//h1[@itemprop="headline"]//text()').extract_first()
+        article_title_parts = response.xpath('//h1[@itemprop="headline"]//text()').extract()
+        article_title = "".join(article_title_parts)
         #all_paragraphs = response.xpath('//div[@itemprop="articleBody"]//p/text()|//div[@itemprop="articleBody"]//p/em//text()|//div[@itemprop="articleBody"]//p/a//text()|//div[@itemprop="articleBody"]//p/i//text()').extract()
         all_paragraphs = response.xpath(
             '//div[@itemprop="articleBody"]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()').extract()
@@ -84,5 +85,5 @@ class JobsSpider(scrapy.Spider):
 
         sleep(1)
 
-        yield {"url" : url, "title": article_title, "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}
+        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}
 

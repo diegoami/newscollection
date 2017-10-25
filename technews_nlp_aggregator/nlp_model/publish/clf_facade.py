@@ -57,14 +57,3 @@ class   ClfFacade:
         return df_similar_ss
 
 
-
-
-    def get_related_articles_from_to(self, doc, max, start, end, n=10000):
-        similar_documents = self.get_related_articles_and_score_doc(doc, n, start, end)
-        id_articles, score_ids = zip(*similar_documents)
-        articlesFilteredDF = pd.DataFrame(self.article_loader.articlesDF.loc[list(id_articles), :])
-        articlesFilteredDF['score'] = list(score_ids)
-        articlesFoundDF = articlesFilteredDF[(articlesFilteredDF ['date_p'] >= start) & (articlesFilteredDF['date_p'] <= end)]
-        #articlesFilteredDF.setIndex('article_id', drop=True)
-
-        return articlesFoundDF[:max]

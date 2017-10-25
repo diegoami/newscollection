@@ -1,4 +1,4 @@
-from .util import extract_related_articles, filter_double, extract_interesting_articles
+from .util import extract_related_articles, filter_double
 from technews_nlp_aggregator.common.util import conv_to_date
 from . import app, render_template, tfidfFacade, doc2VecFacade, articleLoader, request
 from datetime import date
@@ -68,21 +68,19 @@ def common_retrieve_url(form, url=None):
 
 
 def retrieve_articles(classifier, text, n_articles, start_s, end_s):
-    if start_s and end_s:
-        start, end = conv_to_date(start_s), conv_to_date(end_s)
-        if not start:
-            start = date.min
-        if not end:
-            end = date.max
+    if start_s:
+        start = conv_to_date(start_s)
+    if end_s:
+        end = conv_to_date(end_s)
+    if not start:
+        start = date.min
+    if not end:
+        end = date.max
 
-        articlesIndeces, scores = classifier.get_related_articles_from_to(text, n_articles,
-                                                                 start, end)
-
-    else:
-        articlesIndeces, scores = classifier.get_related_articles_from_to(text, n_articles,
-                                                                 None, None)
-    sims = zip(articlesIndeces, scores)
+    articlesIndeces, scores = classifier.get_related_articles_from_to(text, start, end)
+    sims = zip(articlesIndeces[n_articles], scores[n_articles])
     related_articles = extract_related_articles(articleLoader, sims)
+
     for articleRecord in related_articles:
         articleLoader.articlesRepo.load_meta_record(articleRecord)
     return related_articles
@@ -92,7 +90,7 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
 def retrieve_articles_url(classifier, url, n_articles):
     articlesIndeces, scores = classifier.get_related_articles_and_score_url(url)
     if (articlesIndeces is not None):
-        sims = zip(articlesIndeces.index, scores)
+        sims = zip(articlesIndeces.index[:n_articles], scores[:n_articles])
         related_articles = extract_related_articles(articleLoader, sims)
         for articleRecord in related_articles:
             articleLoader.articlesRepo.load_meta_record(articleRecord)

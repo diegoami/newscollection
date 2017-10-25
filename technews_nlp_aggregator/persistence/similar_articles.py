@@ -48,8 +48,8 @@ class SimilarArticlesRepo:
 
 
 
-    def association_exists(self, first_id, second_id, agent):
-        con = self.get_connection()
+    def association_exists(self, con, first_id, second_id, agent):
+
         found_row = con['SAME_STORY'].find_one(SST_AIN_ID_1=first_id, SST_AIN_ID_2=second_id, SST_AGENT=agent)
         return found_row
 
@@ -102,46 +102,50 @@ class SimilarArticlesRepo:
     def persist_association(self, first_id, second_id, agent, similarity):
         if (first_id > second_id):
             first_id, second_id = second_id, first_id
-        rowFound = self.association_exists(first_id, second_id, agent)
-
-        if (not rowFound ):
+        try:
             con = self.get_connection()
-            try:
-                con.begin()
+            rowFound = self.association_exists(con, first_id, second_id, agent)
 
-                row = con['SAME_STORY_USER'].insert(
-                            dict({
-                                "SST_AIN_ID_1" : first_id,
-                                "SST_AIN_ID_2" : second_id,
-                                "SST_AGENT" : agent,
-                                "SST_SIMILARITY": similarity,
-                                "SST_UPDATED"   : datetime.now()
-                            })
-                )
-                con.commit()
-            except:
-                traceback.print_exc()
-                con.rollback()
-        else:
-            pk = rowFound['SST_ID']
-            con = self.get_connection()
-            try:
-                con.begin()
-                row = con['SAME_STORY_USER'].update(
-                    dict({
-                        "SST_ID" : pk,
-                        "SST_AIN_ID_1": first_id,
-                        "SST_AIN_ID_2": second_id,
-                        "SST_AGENT": agent,
-                        "SST_SIMILARITY": similarity,
-                        "SST_UPDATED":  datetime.now()
-                    }), ['SST_ID']
-                )
-                con.commit()
-            except:
-                traceback.print_exc()
-                con.rollback()
+            if (not rowFound ):
 
+                try:
+                    con.begin()
+
+                    row = con['SAME_STORY'].insert(
+                                dict({
+                                    "SST_AIN_ID_1" : first_id,
+                                    "SST_AIN_ID_2" : second_id,
+                                    "SST_AGENT" : agent,
+                                    "SST_SIMILARITY": similarity,
+                                    "SST_UPDATED"   : datetime.now()
+                                })
+                    )
+                    con.commit()
+                except:
+                    traceback.print_exc()
+                    con.rollback()
+            else:
+                pk = rowFound['SST_ID']
+
+                try:
+                    con.begin()
+                    row = con['SAME_STORY'].update(
+                        dict({
+                            "SST_ID" : pk,
+                            "SST_AIN_ID_1": first_id,
+                            "SST_AIN_ID_2": second_id,
+                            "SST_AGENT": agent,
+                            "SST_SIMILARITY": similarity,
+                            "SST_UPDATED":  datetime.now()
+                        }), ['SST_ID']
+                    )
+                    con.commit()
+                except:
+                    traceback.print_exc()
+                    con.rollback()
+            con.commit()
+        except:
+            con.rollback()
 
 
     def list_similar_articles(self):

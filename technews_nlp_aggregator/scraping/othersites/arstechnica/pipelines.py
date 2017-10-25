@@ -9,5 +9,8 @@ from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 
 class ArstechnicaPipeline(object):
     def process_item(self, item, spider):
-        spider.article_repo.save_article( item["url"], item, item["text"])
+        exists = spider.article_repo.update_article(item["url"], item)
+        if not exists:
+
+            spider.article_repo.save_article( item["url"], item, item["text"])
         return item

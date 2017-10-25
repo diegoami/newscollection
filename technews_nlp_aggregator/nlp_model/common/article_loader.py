@@ -29,5 +29,7 @@ class ArticleLoader:
             self.articlesDF.drop('text', inplace=True, axis=1)
 
         self.articlesDF.reset_index(inplace=True)
+        self.tagsDF, self.articleTagsDF = self.articlesRepo.load_tags_tables()
+        self.authorsDF, self.articleAuthorsDF = self.articlesRepo.load_tags_tables()
 
         return self.articlesDF

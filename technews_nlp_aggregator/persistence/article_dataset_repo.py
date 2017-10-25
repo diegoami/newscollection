@@ -57,6 +57,37 @@ class ArticleDatasetRepo(ArticleRepo):
             return False
 
 
+    def update_article(self, url, to_add):
+        result = False
+        if not "date" in to_add:
+            to_add["date"] = extract_date(to_add["url"])
+        source = extract_host(url)
+        try:
+            con = self.get_connection()
+            con.begin()
+            row = con['ARTICLE_INFO'].find_one(AIN_URL=to_add["url"])
+            if row:
+                pk = row["AIN_ID"]
+                new_title = remove_emojis(to_add["title"])
+                print("Updating {} to title {}".format(pk, new_title))
+
+                pk = con['ARTICLE_INFO'].update(
+                    dict({
+                        "AIN_ID": pk,
+                        "AIN_URL" : to_add["url"],
+                        "AIN_DATE" : to_add["date"],
+                        "AIN_TITLE" : new_title,
+                        "AIN_FILENAME": to_add["filename"]
+                    }),['AIN_ID']
+                )
+                result = True
+            con.commit()
+
+        except:
+            traceback.print_exc()
+            con.rollback()
+
+        return result
 
     def save_article(self, url, to_add, text):
         if not "date" in to_add:
@@ -204,4 +235,33 @@ class ArticleDatasetRepo(ArticleRepo):
 
         return article1, article2, score
 
+
+    def load_tags_tables(self):
+        econ = self.engine.connect()
+
+        tags_sql = "SELECT TAG_ID, TAG_NAME, TAG_URL FROM TAGS"
+        tags_articles_sql = "SELECT ATA_ID, ATA_AIN_ID, ATA_TAG_ID FROM ARTICLE_TAGS"
+
+        tagsDF = pd.read_sql(tags_sql , econ)
+        tagsDF.columns = ['tag_id', 'name', 'url']
+        articleTagsDF = pd.read_sql(tags_articles_sql, econ)
+        articleTagsDF.columns = ['tag_article_id', 'article_id', 'tag_id']
+
+        econ.close()
+        return tagsDF, articleTagsDF
+
+
+    def load_authors_tables(self):
+        econ = self.engine.connect()
+
+        authors_sql = "SELECT AUT_ID, AUT_NAME, AUT_URL FROM AUTHORS"
+        authors_articles_sql = "SELECT AAU_ID, AAU_AIN_ID, AAU_AUT_ID FROM ARTICLE_AUTHORS"
+
+        authorsDF = pd.read_sql(authors_sql, econ)
+        authorsDF.columns = ['author_id', 'name', 'url']
+        articleAuthorsDF = pd.read_sql(authors_articles_sql, econ)
+        articleAuthorsDF.columns = ['author_article_id', 'article_id', 'author_id']
+
+        econ.close()
+        return authorsDF, articleAuthorsDF
 
