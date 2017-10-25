@@ -77,12 +77,13 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
     if not end:
         end = date.max
 
-    articlesIndeces, scores = classifier.get_related_articles_from_to(text, start, end)
-    sims = zip(articlesIndeces[n_articles], scores[n_articles])
+    articlesIndeces, scores = classifier.get_related_articles_and_score_doc(text, start, end)
+    sims = zip(articlesIndeces[:n_articles], scores[:n_articles])
     related_articles = extract_related_articles(articleLoader, sims)
 
-    for articleRecord in related_articles:
-        articleLoader.articlesRepo.load_meta_record(articleRecord)
+
+
+
     return related_articles
 
 
@@ -90,10 +91,9 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
 def retrieve_articles_url(classifier, url, n_articles):
     articlesIndeces, scores = classifier.get_related_articles_and_score_url(url)
     if (articlesIndeces is not None):
-        sims = zip(articlesIndeces.index[:n_articles], scores[:n_articles])
+        sims = zip(articlesIndeces[:n_articles], scores[:n_articles])
         related_articles = extract_related_articles(articleLoader, sims)
-        for articleRecord in related_articles:
-            articleLoader.articlesRepo.load_meta_record(articleRecord)
+
 
         return related_articles
     else:

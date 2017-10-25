@@ -30,6 +30,14 @@ class ArticleLoader:
 
         self.articlesDF.reset_index(inplace=True)
         self.tagsDF, self.articleTagsDF = self.articlesRepo.load_tags_tables()
-        self.authorsDF, self.articleAuthorsDF = self.articlesRepo.load_tags_tables()
+        self.authorsDF, self.articleAuthorsDF = self.articlesRepo.load_authors_tables()
 
         return self.articlesDF
+
+    def retrieve_meta(self, id):
+        article_id = self.articlesDF.loc[id]['article_id']
+        tags_of_article = self.articleTagsDF[self.articleTagsDF['article_id'] ==  article_id].merge(self.tagsDF,on='tag_id')
+        tags_to_export = tags_of_article [['url','name']]
+        authors_of_article =  self.articleAuthorsDF[self.articleAuthorsDF['article_id'] ==  id].merge(self.authorsDF, on='author_id')
+        authors_to_export  = authors_of_article[['url','name']]
+        return tags_to_export.to_dict(orient='records'), authors_of_article.to_dict(orient='records')

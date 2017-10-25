@@ -99,53 +99,42 @@ class SimilarArticlesRepo:
             con.rollback()
 
 
-    def persist_association(self, first_id, second_id, agent, similarity):
+    def persist_association(self, con, first_id, second_id, agent, similarity):
         if (first_id > second_id):
             first_id, second_id = second_id, first_id
-        try:
-            con = self.get_connection()
-            rowFound = self.association_exists(con, first_id, second_id, agent)
 
-            if (not rowFound ):
 
-                try:
-                    con.begin()
+        rowFound = self.association_exists(con, first_id, second_id, agent)
 
-                    row = con['SAME_STORY'].insert(
-                                dict({
-                                    "SST_AIN_ID_1" : first_id,
-                                    "SST_AIN_ID_2" : second_id,
-                                    "SST_AGENT" : agent,
-                                    "SST_SIMILARITY": similarity,
-                                    "SST_UPDATED"   : datetime.now()
-                                })
-                    )
-                    con.commit()
-                except:
-                    traceback.print_exc()
-                    con.rollback()
-            else:
-                pk = rowFound['SST_ID']
+        if (not rowFound ):
 
-                try:
-                    con.begin()
-                    row = con['SAME_STORY'].update(
+
+
+
+            row = con['SAME_STORY'].insert(
                         dict({
-                            "SST_ID" : pk,
-                            "SST_AIN_ID_1": first_id,
-                            "SST_AIN_ID_2": second_id,
-                            "SST_AGENT": agent,
+                            "SST_AIN_ID_1" : first_id,
+                            "SST_AIN_ID_2" : second_id,
+                            "SST_AGENT" : agent,
                             "SST_SIMILARITY": similarity,
-                            "SST_UPDATED":  datetime.now()
-                        }), ['SST_ID']
-                    )
-                    con.commit()
-                except:
-                    traceback.print_exc()
-                    con.rollback()
-            con.commit()
-        except:
-            con.rollback()
+                            "SST_UPDATED"   : datetime.now()
+                        })
+            )
+
+
+        else:
+            pk = rowFound['SST_ID']
+            row = con['SAME_STORY'].update(
+                dict({
+                    "SST_ID" : pk,
+                    "SST_AIN_ID_1": first_id,
+                    "SST_AIN_ID_2": second_id,
+                    "SST_AGENT": agent,
+                    "SST_SIMILARITY": similarity,
+                    "SST_UPDATED":  datetime.now()
+                }), ['SST_ID']
+            )
+
 
 
     def list_similar_articles(self):

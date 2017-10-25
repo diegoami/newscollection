@@ -61,10 +61,7 @@ class TfidfFacade(ClfFacade):
         return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
 
-    def get_related_articles_from_to(self, doc,  start, end):
-        articlesFoundDF, scores = self.get_related_articles_and_score_doc(doc, start, end )
 
-        return articlesFoundDF, scores
 
     def get_related_articles_and_score_url(self,  url):
         url_condition = self.article_loader.articlesDF['url'] == url

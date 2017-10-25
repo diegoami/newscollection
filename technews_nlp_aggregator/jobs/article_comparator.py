@@ -9,7 +9,7 @@ import yaml
 from datetime import date
 
 
-
+import traceback
 
 
 class ArticleComparatorJob:
@@ -28,11 +28,19 @@ class ArticleComparatorJob:
     def find_articles(self, start, end):
         articles_and_sims= self.facade.compare_articles_from_dates(start, end, self.thresholds )
         articlesDF = self.article_loader.articlesDF
+        con = self.similarArticlesRepo.get_connection()
+
         for id, sims in articles_and_sims.items():
-            for other_id, score in sims:
-                article, otherarticle = articlesDF.loc[id], articlesDF.loc[other_id]
-                article_id, article_other_id = article['article_id'] , otherarticle ['article_id']
-                self.similarArticlesRepo.persist_association(article_id, article_other_id, self.facade.name, score )
-        #self.save_job_execution(start, end)
+            try:
+                con.begin()
+
+                for other_id, score in sims:
+                    article, otherarticle = articlesDF.loc[id], articlesDF.loc[other_id]
+                    article_id, article_other_id = article['article_id'] , otherarticle ['article_id']
+                    self.similarArticlesRepo.persist_association(con, article_id, article_other_id, self.facade.name, score )
+                con.commit()
+            except:
+                traceback.print_exc()
+                con.rollback()
 
 
