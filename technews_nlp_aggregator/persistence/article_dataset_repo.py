@@ -227,13 +227,13 @@ class ArticleDatasetRepo(ArticleRepo):
         con = self.get_connection()
         article1 = con.query(article_info_sql, {"id" : id1}).next()
         article2 = con.query(article_info_sql, {"id" : id2}).next()
-        scorequery = con.query(article_score_sql, {"id" : id1, "id2" : id2})
-        scoreres = scorequery.next()
-        score = scoreres["SCORE"]
+        #scorequery = con.query(article_score_sql, {"id" : id1, "id2" : id2})
+        #scoreres = scorequery[0]
+        #score = scoreres["SCORE"] if scoreres else None
         article1["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article1["ATX_TEXT"] )
         article2["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article2["ATX_TEXT"] )
 
-        return article1, article2, score
+        return article1, article2
 
 
     def load_tags_tables(self):

@@ -1,3 +1,6 @@
+
+
+
 find_similar = function(url) {
     var mainForm = document.getElementById("mainForm");
     mainForm.action = '/retrieve_similar_url';
@@ -7,3 +10,4 @@ find_similar = function(url) {
     mainForm.submit();
 
 }
+

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=26"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=33"  >
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=2"></script>
 
 
@@ -59,10 +59,11 @@
 <tr>
     <th>Article Id</th>
     <th><span>Title</span></th>
-    <th><span>Date</span></th>
+    <th class="date"><span>Date</span></th>
     <th>TFIDF Score</th>
     <th>Authors</th>
     <th>Tags</th>
+    <th class="icon">Similar</th>
 
   </tr>
 
@@ -71,8 +72,8 @@
         <tr>
 
             <td>{{_.id}}</td>
-            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A> - <I><A HREF="javascript:find_similar('{{_.url}}')">Find similar</A></I> </td>
-            <td>{{_.date_p}}</td>
+            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+            <td class="date">{{_.date_p}}</td>
             <td>{{_.similarity}}</td>
             <td>{% for author in _.authors: %}
                     <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
@@ -82,6 +83,12 @@
                     <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
                 {% endfor %}
             </td>
+             <td class="icon">
+                <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
+                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                </A>
+            </td>
+
 
         </tr>
 
@@ -99,10 +106,11 @@
   <tr>
     <th>Article Id</th>
     <th><span>Title</span></th>
-    <th><span>Date</span></th>
+    <th class="date"><span>Date</span></th>
     <th>DOC2VEC Score</th>
     <th>Authors</th>
     <th>Tags</th>
+    <th class="icon">Similar</th>
 
   </tr>
 
@@ -111,7 +119,7 @@
 
             <td>{{_.id}}</td>
             <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A> - <I><A HREF="javascript:find_similar('{{_.url}}')">Find similar</A></I></td>
-            <td>{{_.date_p}}</td>
+            <td class="date">{{_.date_p}}</td>
             <td>{{_.similarity}}</td>
             <td>{% for author in _.authors: %}
                     <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
@@ -120,6 +128,11 @@
             <td>{% for tag in _.tags: %}
                     <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
                 {% endfor %}
+            </td>
+             <td class="icon">
+                <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
+                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                </A>
             </td>
 
         </tr>

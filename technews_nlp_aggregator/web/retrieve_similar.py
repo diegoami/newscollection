@@ -48,23 +48,32 @@ def retrieve_similar_url():
             if form.get('random_url'):
                 index, article = articleLoader.get_random_article()
 
-                return common_retrieve_url(form, article['url'])
+                return common_retrieve_url(form, article['url'], article['article_id'])
             else:
-                return common_retrieve_url(form)
+                url = form["tdidf_input"]
+                if url:
+                    article_id = articleLoader.get_id_from_url(url)
+                    if (not article_id):
+                        return render_template('search_url.html', messages=['Could not find the URL in the database'])
+                    else:
+                        return common_retrieve_url(form, url, article_id)
+                else:
+                    return render_template('search_url.html',
+                                           messages=['Please enter the URL of an article in the database'])
 
 
-def common_retrieve_url(form, url=None):
-    url = form["tdidf_input"] if not url else url
-    if (not url or len(url.strip()) == 0):
-        return render_template('search_url.html', messages=['Please enter the URL of an article in the database'])
-    n_articles = int(form["n_articles"])
+def common_retrieve_url(form, url=None, article_id=None):
+    if form.get("n_articles"):
+        n_articles = int(form["n_articles"])
+    else:
+        n_articles = 50
     related_articles_tdf = retrieve_articles_url(tfidfFacade, url, n_articles)
     related_articles_doc2vec = retrieve_articles_url(doc2VecFacade, url, n_articles)
     if related_articles_tdf and related_articles_doc2vec:
         return render_template('search_url.html', tdf_articles=related_articles_tdf,
-                               doc2vec_articles=related_articles_doc2vec, search_url=url)
+                               doc2vec_articles=related_articles_doc2vec, search_url=url, article_id=article_id)
     else:
-        return render_template('search_url.html', messages=['Could not find the URL in the database'])
+        return render_template('search_url.html', messages=['Could not find related URLs in the database'])
 
 
 def retrieve_articles(classifier, text, n_articles, start_s, end_s):
