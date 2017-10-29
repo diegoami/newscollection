@@ -15,7 +15,7 @@ import yaml
 import nltk
 
 from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.corpus import stopwords
+
 
 
 config = yaml.safe_load(open('../../config.yml'))

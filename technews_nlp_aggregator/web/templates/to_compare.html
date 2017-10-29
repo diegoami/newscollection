@@ -10,24 +10,9 @@
     <title>Articles to compare</title>
 
 </head>
-<body>
+<body onload="javascript:select_header('topnav_compare')">
 
-
-<div class="topnav">
-  <a href="/">Home</a>
-  <a href="/duplicates/0">Show all similar articles</a>
-  <a class="active" href="/randomrelated">Help validate results</a>
-  <a href="/search_url">Enter URL</a>
-  <a href="/search">Enter article text</a>
-  <a href="https://github.com/diegoami/newscollection" target="_blank">Github repository</a>
-</div>
-{% if err_messages: %}
-     <ul class="errors">
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
+{% include 'header.html' %}
 <H3>These two articles...</H3>
 <div class="buttonrow">
 <form id="samestory" class="buttoncolumn" action="/samestory/{{A1.AIN_ID}}/{{A2.AIN_ID}}">

@@ -1,7 +1,11 @@
-from .util import extract_related_articles, filter_double
+from .util import extract_related_articles
 from technews_nlp_aggregator.common.util import conv_to_date
-from . import app, render_template, tfidfFacade, doc2VecFacade, articleLoader, request
+from flask import render_template,  request
+
+
 from datetime import date
+from . import render_template, tfidfFacade, doc2VecFacade, articleLoader, request, app
+
 
 @app.route('/search')
 def search():

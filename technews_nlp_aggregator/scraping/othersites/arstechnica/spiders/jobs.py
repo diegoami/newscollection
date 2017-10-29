@@ -22,11 +22,12 @@ class JobsSpider(scrapy.Spider):
     start_urls = (
         'https://arstechnica.com/','http://arstechnica.com/'
     )
-    finished = False
+
 
     def __init__(self, article_repo):
         super().__init__()
         self.article_repo = article_repo
+        self.finished = False
 
 
     def parse(self, response):

@@ -1,7 +1,7 @@
 from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models.doc2vec import TaggedDocument
 from gensim.models import Doc2Vec
-
+import pickle
 from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
 
 MODEL_FILENAME   = 'doc2vec'
@@ -12,9 +12,9 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 
 class LabeledLineSentence(object):
-    def __init__(self, texts, idxlist):
-        self.texts = texts
+    def __init__(self, idxlist, texts):
         self.doc_list = idxlist
+        self.texts = texts
 
     def __iter__(self):
         for idx, text in zip(self.doc_list, self.texts):
@@ -26,28 +26,24 @@ class LabeledLineSentence(object):
 class Doc2VecGenerator:
 
 
-    def __init__(self, articlesDF, model_output_dir, tokenizer=None):
+    def __init__(self, model_output_dir):
 
         self.model_output_dir = model_output_dir
-        self.articlesDF = articlesDF
-        self.tokenizer = DefaultTokenizer() if not tokenizer else tokenizer
 
-    def create_model(self):
-        texts = self.tokenizer.tokenize_ddf(self.articlesDF)
-        it = LabeledLineSentence(texts, self.articlesDF.index )
 
-        self.model = Doc2Vec(size=500, window=10,  workers=11, alpha=0.025, min_alpha=0.025,
-                             iter=10)  # use fixed learning rate
-        self.model.build_vocab(it)
+    def create_model(self, texts):
+
+        self.it = LabeledLineSentence( range(len(texts)), texts)
+
+        self.model = Doc2Vec(size=300, window=10,  workers=11, alpha=0.1,
+                             iter=50, min_count=4, sample=0)  # use fixed learning rate
+        self.model.build_vocab(self.it)
+
+    def train_model(self):
 
         logging.info("Starting to train......")
 
-        # for epoch in range(10):
-        #    logging.info("On epoch "+str(epoch))
-        # model.train(it)
-        # model.alpha -= 0.002 # decrease the learning rate
-        # model.min_alpha = model.alpha # fix the learning rate, no deca
-        self.model.train(it, total_examples=self.model.corpus_count, epochs=self.model.iter)
+        self.model.train(self.it, total_examples=self.model.corpus_count, epochs=self.model.iter)
         #   logging.info("Finished training epoch " + str(epoch))
 
         logging.info("Training completed, saving to  " + self.model_output_dir)

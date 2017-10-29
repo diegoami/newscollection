@@ -93,6 +93,7 @@ class ArticleDatasetRepo(ArticleRepo):
         if not "date" in to_add:
             to_add["date"] = extract_date(to_add["url"])
         source = extract_host(url)
+        found = False
         try:
             con = self.get_connection()
             con.begin()
@@ -109,6 +110,7 @@ class ArticleDatasetRepo(ArticleRepo):
                 )
             else:
                 pk = row["AIN_ID"]
+                found = True
             if (pk):
                 if not con['ARTICLE_TEXT'].find_one(ATX_AIN_ID=str(pk)):
                     text = remove_emojis(text)
@@ -174,7 +176,7 @@ class ArticleDatasetRepo(ArticleRepo):
             traceback.print_exc()
             con.rollback()
 
-
+        return found
 
     def load_text(self, article_sub_DF, all=False,load_text=True):
         econ = self.engine.connect()
@@ -216,25 +218,21 @@ class ArticleDatasetRepo(ArticleRepo):
         articleDF = pd.read_sql(article_info_sql,  econ)
         articleDF.columns = ['article_id' , 'url', 'title', 'date_p' ]
         articleDF = self.load_text(articleDF, all=True,load_text=load_text)
- #      articleDF.reset_index(inplace=True, drop=True)
         econ.close()
         return articleDF
 
-
     def load_articles_with_text(self, id1, id2):
-        article_info_sql= "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
-        article_score_sql = "SELECT SCORE FROM TFIDF_SCORE_NORM T WHERE T.ID = :id AND T.OTHER_ID = :id2"
         con = self.get_connection()
-        article1 = con.query(article_info_sql, {"id" : id1}).next()
-        article2 = con.query(article_info_sql, {"id" : id2}).next()
-        #scorequery = con.query(article_score_sql, {"id" : id1, "id2" : id2})
-        #scoreres = scorequery[0]
-        #score = scoreres["SCORE"] if scoreres else None
-        article1["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article1["ATX_TEXT"] )
-        article2["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article2["ATX_TEXT"] )
-
+        article1 = self.load_article_with_text(id1, con)
+        article2 = self.load_article_with_text(id2, con)
         return article1, article2
 
+    def load_article_with_text(self, id, con=None):
+        article_info_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
+        con = self.get_connection() if not con else con
+        article = con.query(article_info_sql, {"id": id}).next()
+        article["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article["ATX_TEXT"])
+        return article
 
     def load_tags_tables(self):
         econ = self.engine.connect()

@@ -10,26 +10,8 @@
   <title>Find related news</title>
 
 </head>
-<body>
-
-<div class="topnav">
-  <a href="/">Home</a>
-
-  <a href="/duplicates/0">Show all similar articles</a>
-  <a href="/randomrelated">Help validate results</a>
-  <a href="/search_url">Enter URL</a>
-
-  <a class="active" href="/search">Enter article text</a>
-
-  <a href="https://github.com/diegoami/newscollection" target="_blank">Github repository</a>
-</div>
-{% if messages: %}
-     <ul class="errors">
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
+<body onload="javascript:select_header('topnav_search')">
+{% include 'header.html' %}
 <H3> Enter text from a tech article here</H3>
 <div>
 <FORM id="mainForm"  ACTION="/retrieve_similar" METHOD="POST">

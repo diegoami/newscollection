@@ -8,25 +8,8 @@
 
   <title>Find related news</title>
  </head>
-<body>
-
-<div class="topnav">
-  <a href="/">Home</a>
-  <a href="/duplicates/0">Show all similar articles</a>
-  <a href="/randomrelated">Help validate results</a>
-  <a class="active" href="/search_url">Enter URL</a>
-  <a href="/search">Enter article text</a>
-
-    <a href="https://github.com/diegoami/newscollection" target="_blank">Github repository</a>
-</div>
-{% if messages: %}
-     <ul class="errors">
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-<div>
+<body onload="javascript:select_header('topnav_search_url')">
+{% include 'header.html' %}
 <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
 <P>
 <label for="tdidf_input">Url in database: </label><INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url}}">

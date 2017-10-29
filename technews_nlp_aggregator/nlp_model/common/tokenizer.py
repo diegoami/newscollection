@@ -1,18 +1,21 @@
 
 
 
-from nltk.tokenize import sent_tokenize, word_tokenize
-MIN_FREQUENCY = 3
 from . import SimpleSentenceTokenizer, TechArticlesSentenceTokenizer
-from .token_excluder import TechArticlesTokenExcluder, SimpleTokenExcluder
+from . import TechArticlesTokenExcluder, SimpleTokenExcluder
+from . import NltkWordTokenizer
 import logging
+
+
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 class DefaultTokenizer:
 
-    def __init__(self, sentence_tokenizer=None, token_excluder=None):
+    def __init__(self, sentence_tokenizer=None, token_excluder=None, word_tokenizer=None):
         self.sentence_tokenizer = TechArticlesSentenceTokenizer() if not sentence_tokenizer else sentence_tokenizer
         self.token_excluder = TechArticlesTokenExcluder() if not token_excluder else token_excluder
+        self.word_tokenizer = NltkWordTokenizer() if not word_tokenizer else word_tokenizer
 
     def tokenize_ddf(self, articleDF):
         documents = articleDF['text'].tolist()
@@ -33,10 +36,7 @@ class DefaultTokenizer:
         all_sentences = self.sentence_tokenizer.process(title, document)
         if all_sentences:
 
-            tokenized_sentences = []
-            for sentence in all_sentences:
-                tokenized_sentences.append([word for word in word_tokenize(sentence.lower()) ])
-
+            tokenized_sentences = self.word_tokenizer.tokenize_sentence(all_sentences)
             words = []
             for tokenized_sentence in tokenized_sentences:
                 for token in tokenized_sentence:
@@ -46,4 +46,6 @@ class DefaultTokenizer:
             return words
         else:
             return None
+
+
 

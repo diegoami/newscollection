@@ -8,11 +8,9 @@ import logging
 
 from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
-from nltk.tokenize import word_tokenize
 from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
-import pandas as pd
+
 from .tfidf_matrix_wrapper import TfidfMatrixWrapper
-import datetime
 import numpy as np
 from . import ClfFacade
 

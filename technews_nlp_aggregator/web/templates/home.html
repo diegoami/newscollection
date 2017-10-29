@@ -7,16 +7,8 @@
     <title>Duplicate Articles</title>
 
 </head>
-<body>
-<div class="topnav">
-  <a href="/" class="active">Home</a>
-  <a href="/duplicates/0">Show all similar articles</a>
-  <a href="/randomrelated">Help validate results</a>
-   <a href="/search_url">Enter URL</a>
-  <a href="/search">Enter article text</a>
-
-    <a href="https://github.com/diegoami/newscollection" target="_blank">Github repository</a>
-</div>
+<body onload="javascript:select_header('topnav_home')">
+{% include 'header.html' %}
 <H2>Welcome to Tech News Controversies!</H2>
 <div class="home">
 <P> This site aggregates articles from technology news portals and tries to find out <A HREF="/duplicates/0">those that are reporting on the same story</A>.</P>

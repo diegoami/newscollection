@@ -8,24 +8,8 @@
     <title>Duplicate Articles</title>
 
 </head>
-<body>
-<div class="topnav">
-
-  <a href="/">Home</a>
-  <a class="active" href="/duplicates/0">Show all similar articles</a>
-  <a href="/randomrelated">Help validate results</a>
-  <a href="/search_url">Enter URL</a>
-  <a href="/search">Enter article text</a>
-  <a href="https://github.com/diegoami/newscollection" target="_blank">Github repository</a>
-</div>
-<BR>
-{% if err_messages: %}
-     <ul class="errors">
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
+<body onload="javascript:select_header('topnav_duplicated')">
+{% include 'header.html' %}
 <table>
 
   <tr>

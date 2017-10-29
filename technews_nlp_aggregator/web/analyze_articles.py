@@ -1,6 +1,7 @@
 from random import randint
-from . import app, render_template, tfidfFacade, doc2VecFacade, articleLoader, request, similarArticlesRepo, articleDatasetRepo
+from flask import render_template,  request
 
+from . import app, render_template, similarArticlesRepo, articleDatasetRepo
 
 @app.route('/duplicates/<int:page_id>')
 def duplicates(page_id=0):

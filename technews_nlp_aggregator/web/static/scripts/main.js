@@ -11,3 +11,8 @@ find_similar = function(url) {
 
 }
 
+select_header = function(element) {
+
+    var topNav_element = document.getElementById(element);
+    topNav_element.setAttribute("class", "active");
+}
