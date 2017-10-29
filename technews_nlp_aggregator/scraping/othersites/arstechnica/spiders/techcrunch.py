@@ -62,7 +62,7 @@ class TechcrunchSpider(scrapy.Spider):
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'article-entry')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()").extract()
         article_authors = response.xpath('//a[@rel="author"]/@href').extract()
-        article_tags = response.xpath('//div[@class="article-entry"]/a/@href').extract()
+        article_tags = response.xpath("//div[contains(@class, 'loaded') or @class='tag-item']/a/@href").extract()
 
 
         article_date = extract_date( url)
