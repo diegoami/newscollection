@@ -6,7 +6,7 @@ from time import sleep
 
 from datetime import datetime,date
 from string import punctuation
-
+from . import extract_date
 from itertools import chain
 
 
@@ -17,7 +17,7 @@ class TechcrunchSpider(scrapy.Spider):
     urls_V = set()
     allowed_domains = ["techcrunch.com"]
     start_urls = (
-        'https://arstechnica.com/','http://arstechnica.com/'
+        'https://techcrunch.com/','http://techcrunch.com/'
     )
 
 
@@ -31,12 +31,11 @@ class TechcrunchSpider(scrapy.Spider):
 
 
 
-        url1s = response.xpath('//a[@class="overlay"]/@href').extract()
-        url2s = response.xpath('//h2/a/@href').extract()
+        urls = response.xpath('//h2[@class="post-title"]/a/@href').extract()
 
-        pages = response.xpath('//div[@class="prev-next-links"]/a/@href').extract()
+        pages = response.xpath('//li[@class="next"]/a/@href').extract()
 
-        for url in chain(url1s, url2s):
+        for url in urls:
             if "/2016/" in url:
                 self.finished = True
             absolute_url = response.urljoin(url)
@@ -57,18 +56,16 @@ class TechcrunchSpider(scrapy.Spider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@itemprop="headline"]//text()').extract()
+        article_title_parts = response.xpath('//h1[@class="alpha tweet-title"]//text()').extract()
         article_title = "".join(article_title_parts)
-        #all_paragraphs = response.xpath('//div[@itemprop="articleBody"]//p/text()|//div[@itemprop="articleBody"]//p/em//text()|//div[@itemprop="articleBody"]//p/a//text()|//div[@itemprop="articleBody"]//p/i//text()').extract()
+
         all_paragraphs = response.xpath(
-            '//div[@itemprop="articleBody"]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()').extract()
+            "//div[contains(@class, 'article-entry')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()").extract()
         article_authors = response.xpath('//a[@rel="author"]/@href').extract()
+        article_tags = response.xpath('//div[@class="article-entry"]/a/@href').extract()
 
-        article_datetime_tsstring = response.xpath('//time/@datetime').extract_first()
 
-
-        article_date_str = article_datetime_tsstring.split('T')[0]
-        article_date = date(*map(int,article_date_str.split('-')))
+        article_date = extract_date( url)
         all_paragraph_text = ""
         skip_next = False
         for paragraph in all_paragraphs:
@@ -83,5 +80,5 @@ class TechcrunchSpider(scrapy.Spider):
 
         sleep(1)
 
-        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}
+        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 

@@ -16,3 +16,10 @@ class ArstechnicaPipeline(object):
         if (found):
             spider.finished = True
         return item
+
+class TechcrunchPipeline(object):
+    def process_item(self, item, spider):
+        #exists = spider.article_repo.update_article(item["url"], item)
+        #if not exists:
+
+        return item

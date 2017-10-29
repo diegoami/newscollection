@@ -1,1 +1,1 @@
-from .pipelines import ArstechnicaPipeline
+from .pipelines import ArstechnicaPipeline, TechcrunchPipeline
