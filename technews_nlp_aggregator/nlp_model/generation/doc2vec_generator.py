@@ -35,8 +35,8 @@ class Doc2VecGenerator:
 
         self.it = LabeledLineSentence( range(len(texts)), texts)
 
-        self.model = Doc2Vec(size=300, window=10,  workers=11, alpha=0.1,
-                             iter=50, min_count=4, sample=0)  # use fixed learning rate
+        self.model = Doc2Vec(size=600, window=10,  workers=11, alpha=0.05,
+                             iter=25, min_count=4, sample=0)  # use fixed learning rate
         self.model.build_vocab(self.it)
 
     def train_model(self):

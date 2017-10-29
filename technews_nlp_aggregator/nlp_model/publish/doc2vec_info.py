@@ -1,8 +1,11 @@
-
+import operator
 class Doc2VecInfo():
     def __init__(self, model):
         self.model = model
 
 
     def get_vector_for_docid(self, docid):
-        return self.model.docvecs.doctag_syn0[docid]
+        doclist = self.model.docvecs.doctag_syn0[docid].tolist()
+        doczip = zip(range(len(doclist)), [round(x,3) for x in doclist])
+        docsorted = sorted(doczip,key=lambda x: abs(x[1]), reverse=True)
+        return docsorted

@@ -18,7 +18,7 @@ articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles(False)
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader)
 tfidfFacade.load_models()
-doc2VecFacade.load_models()
+
 
 
 url1 = "https://www.theverge.com/2017/10/22/16518298/google-investigating-pixel-2-xl-screen-burn-in"

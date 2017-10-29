@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=33"  >
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=2"></script>
+
+  <title>Find related news</title>
+ </head>
+<body onload="javascript:select_header('topnav_statistics')">
+{% include 'header.html' %}
+
+<FORM id="statistics_form" ACTION="/statistics_form" METHOD="POST">
+<P>
+<label for="article_id">Article_id</label><INPUT id="article_id" name="tdidf_input" maxlength="256" size="100" value="{{article_id}}">
+</INPUT>
+</P>
+<input type="checkbox" name="random_id" value="random_id"> Random Url<br>
+<input type="submit" value="Submit"  />
+</p>
+</FORM>
+{% if article_id: %}
+
+
+    <h2>Article</h2>
+     <div>
+        <h2>{{A.AIN_TITLE}}</h2>
+         <p><I>ID:</I> {{A.AIN_ID}}</p>
+        <p><I>URL:</I> <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
+        <P><I>Date:</I> {{A.AIN_DATE}}</P>
+        <P><I>Authors:</I>
+           {% for author in A.AUTHORS: %}
+                <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
+           {% endfor %}
+        </P>
+          <P><I>Tags:</I>
+           {% for tag in A.TAGS: %}
+                <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
+           {% endfor %}
+        </P>
+          <p class="article_text"><B>Text:</B>{{A.ATX_TEXT}}</p>
+     </div>
+    <h2>Tokenization</h2>
+    <P class="monospace">
+        {% for token in tokens: %}
+            {{token}} &nbsp; &nbsp;
+        {% endfor %}
+    </P>
+    <h2>Bag of Words</h2>
+    <TABLE>
+      <tr>
+        <th>Word</th>
+        <th>Frequency</th>
+
+      </tr>
+
+        {% for word, freq in bows: %}
+              <tr>
+                <td>{{word}}</td>
+                <td>{{freq}}</td>
+              </tr>
+        {% endfor %}
+    </TABLE>
+    <h2>Tfidf topics</h2>
+    <TABLE>
+      <tr>
+        <th>Topic</th>
+        <th>Relevancy</th>
+
+      </tr>
+
+        {% for topic, relevance in topics: %}
+              <tr>
+                <td>{{topic}}</td>
+                <td>{{relevance}}</td>
+              </tr>
+        {% endfor %}
+    </TABLE>
+
+    <h2>Document Vector</h2>
+    <TABLE>
+      <tr>
+        <th>Dimension</th>
+        <th>Weight</th>
+
+      </tr>
+
+        {% for dimension, weight in docvecs: %}
+              <tr>
+                <td>{{dimension}}</td>
+                <td>{{weight}}</td>
+              </tr>
+        {% endfor %}
+    </TABLE>
+{% endif %}
+</body>
+</html>

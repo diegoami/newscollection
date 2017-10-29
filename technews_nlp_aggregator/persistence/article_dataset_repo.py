@@ -230,10 +230,13 @@ class ArticleDatasetRepo(ArticleRepo):
     def load_article_with_text(self, id, con=None):
         article_info_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
         con = self.get_connection() if not con else con
-        article = con.query(article_info_sql, {"id": id}).next()
-        article["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article["ATX_TEXT"])
-        return article
-
+        article_query = con.query(article_info_sql, {"id": id})
+        article = next(article_query , None)
+        if article:
+            article["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article["ATX_TEXT"])
+            return article
+        else:
+            return None
     def load_tags_tables(self):
         econ = self.engine.connect()
 

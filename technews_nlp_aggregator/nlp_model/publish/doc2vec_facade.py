@@ -16,7 +16,7 @@ class Doc2VecFacade(ClfFacade):
     def __init__(self, model_filename, article_loader, tokenizer=None):
         self.model_filename = model_filename
         self.article_loader = article_loader
-        self.name="DOC2VEC-V1-500"
+        self.name="DOC2VEC-V3-600"
         self.tokenizer = DefaultTokenizer() if not tokenizer else tokenizer
 
 

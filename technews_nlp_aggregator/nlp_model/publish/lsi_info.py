@@ -27,5 +27,6 @@ class LsiInfo():
     def get_topics_docid(self, docid):
         vec_bow = self.corpus[docid]
         vec_lsi = self.model[vec_bow]
-        topic_freq = sorted(vec_lsi , key=operator.itemgetter(1), reverse=True)
+
+        topic_freq = sorted([round(x,3) for x in vec_lsi] , key=lambda x: abs(x[1]), reverse=True)
         return topic_freq

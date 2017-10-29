@@ -22,7 +22,7 @@ class TfidfFacade(ClfFacade):
     def __init__(self, model_dir, article_loader, tokenizer=None):
         self.model_dir = model_dir
         self.article_loader = article_loader
-        self.name = 'TFIDF-V1-500'
+        self.name = 'TFIDF-V3-500'
         self.tokenizer = DefaultTokenizer() if not tokenizer else tokenizer
 
     def load_models(self):

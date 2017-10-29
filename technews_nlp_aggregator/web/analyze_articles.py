@@ -1,11 +1,11 @@
 from random import randint
-from flask import render_template,  request
+from flask import  request, render_template
 
-from . import app, render_template, similarArticlesRepo, articleDatasetRepo
+from . import app
 
 @app.route('/duplicates/<int:page_id>')
 def duplicates(page_id=0):
-    all_articles = similarArticlesRepo.list_similar_articles()
+    all_articles = app.application.similarArticlesRepo.list_similar_articles()
     start, end = page_id*100, (page_id+1)*100
     if (len(all_articles) > start):
         has_next = len(all_articles) > end
@@ -17,15 +17,15 @@ def duplicates(page_id=0):
 
 @app.route('/compare/<int:id1>/<int:id2>')
 def compare(id1, id2):
-    article1, article2= articleDatasetRepo.load_articles_with_text(id1, id2)
-    article1["TAGS"], article1["AUTHORS"] = articleDatasetRepo.retrieve_tags_authors(id1)
-    article2["TAGS"], article2["AUTHORS"] = articleDatasetRepo.retrieve_tags_authors(id2)
+    article1, article2= app.application.articleDatasetRepo.load_articles_with_text(id1, id2)
+    article1["TAGS"], article1["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id1)
+    article2["TAGS"], article2["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id2)
 
     return render_template('to_compare.html', A1=article1, A2=article2)
 
 @app.route('/randomrelated')
 def randomrelated():
-    all_similar_articles = similarArticlesRepo.list_similar_articles()
+    all_similar_articles = app.application.similarArticlesRepo.list_similar_articles()
     len_similar_articles= len(all_similar_articles )
     rlena = randint(0,len_similar_articles)
     similar_article_pair = all_similar_articles[rlena]
@@ -34,7 +34,7 @@ def randomrelated():
     return compare(id1, id2)
 
 def save_user_association(id1,id2, similarity):
-    similarArticlesRepo.persist_user_association(id1, id2, similarity, request.environ['REMOTE_ADDR'])
+    app.application.similarArticlesRepo.persist_user_association(id1, id2, similarity, request.environ['REMOTE_ADDR'])
     return randomrelated()
 
 @app.route('/samestory/<int:id1>/<int:id2>')

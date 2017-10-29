@@ -10,6 +10,7 @@
  </head>
 <body onload="javascript:select_header('topnav_search_url')">
 {% include 'header.html' %}
+<div>
 <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
 <P>
 <label for="tdidf_input">Url in database: </label><INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url}}">
@@ -41,7 +42,7 @@
     <th>Tags</th>
     <th class="icon">Similar</th>
     <th class="icon">Compare</th>
-
+    <th class="icon">Statistics</th>
   </tr>
 
     {% for _ in tdf_articles: %}
@@ -68,9 +69,15 @@
             <td class="icon">
                 {% if article_id|string() != _.article_id|string() %}
                     <A HREF='/compare/{{article_id}}/{{_.article_id}}' target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.png') }}" ALT="Compare and Analyze">
+                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
                     </A>
                 {% endif %}
+            </td>
+            <td class="icon">
+                <A HREF="/statistics/{{article_id}}" target="_blank">
+                    <IMG SRC="{{ url_for('static', filename='images/statistics.png') }}" ALT="Statistics">
+                </A>
+
             </td>
         </tr>
 
@@ -94,6 +101,7 @@
     <th>Tags</th>
      <th class="icon">Similar</th>
     <th class="icon">Compare</th>
+      <th class="icon">Statistics</th>
 
   </tr>
 
@@ -120,9 +128,15 @@
             <td class="icon">
                 {% if article_id != _.article_id %}
                     <A HREF="/compare/{{article_id}}/{{_.article_id}}')" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.png') }}" ALT="Compare and Analyze">
+                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
                     </A>
                 {% endif %}
+            </td>
+            <td class="icon">
+                <A HREF="/statistics/{{article_id}}" target="_blank">
+                    <IMG SRC="{{ url_for('static', filename='images/statistics.png') }}" ALT="Statistics">
+                </A>
+
             </td>
         </tr>
     {% endfor %}

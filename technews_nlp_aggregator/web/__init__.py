@@ -3,15 +3,18 @@
 #################
 
 
-from random import randint
-from .services import articleDatasetRepo, ArticleLoader, similarArticlesRepo, tfidfFacade, doc2VecFacade, articleLoader, app
-
-from flask import Flask, render_template, request
-from .retrieve_similar import *
-from .analyze_articles import *
-
+from flask import Flask, render_template
+from .services import Application
+app = Flask(__name__)
 
 
 @app.route('/')
 def home():
     return render_template('home.html')
+
+
+
+import technews_nlp_aggregator.web.retrieve_similar
+import technews_nlp_aggregator.web.analyze_articles
+
+import technews_nlp_aggregator.web.statistics
