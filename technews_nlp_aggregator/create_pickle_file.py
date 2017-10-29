@@ -1,7 +1,8 @@
 import logging
 import pickle
 import os
-
+import sys
+sys.path.append('..')
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo

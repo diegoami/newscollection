@@ -1,3 +1,7 @@
+import sys
+sys.path.append('..')
+import yaml
+
 from technews_nlp_aggregator.jobs import ArticleComparatorJob
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -7,7 +11,7 @@ from technews_nlp_aggregator.nlp_model.common import ArticleLoader
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesTokenExcluder, SimpleTokenExcluder, NltkWordTokenizer
 from datetime import datetime, date
-import yaml
+
 
 config = yaml.safe_load(open('../config.yml'))
 db_config = yaml.safe_load(open(config["db_key_file"]))
