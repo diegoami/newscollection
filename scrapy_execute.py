@@ -1,7 +1,7 @@
 
 from technews_nlp_aggregator.scraping.google_search_wrapper import Command, create_google_service, Iterator
 from technews_nlp_aggregator.scraping.technews_retriever import Raw_Retriever
-from technews_nlp_aggregator.scraping.othersites.arstechnica.spiders import JobsSpider
+from technews_nlp_aggregator.scraping.othersites.arstechnica.spiders import ArstechnicaSpider
 from technews_nlp_aggregator.scraping.othersites.arstechnica import ArstechnicaPipeline
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 
@@ -22,7 +22,7 @@ crawler_settings = Settings()
 crawler_settings.setmodule(settings)
 process = CrawlerProcess(settings=crawler_settings)
 
-process.crawl(JobsSpider, articleDatasetRepo)
+process.crawl(ArstechnicaSpider, articleDatasetRepo)
 process.start()
 
 

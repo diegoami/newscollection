@@ -2,4 +2,4 @@
 #
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
-from .jobs import JobsSpider
+from .arstechnica import ArstechnicaSpider

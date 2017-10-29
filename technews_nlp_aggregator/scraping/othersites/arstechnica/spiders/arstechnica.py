@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy import Request
-import os
-from time import time
-from time import sleep
-import json
 
-from technews_nlp_aggregator.scraping.technews_retriever import url_to_filename
+from time import sleep
+
 from datetime import datetime,date
 from string import punctuation
 
@@ -14,7 +11,7 @@ from itertools import chain
 
 
 
-class JobsSpider(scrapy.Spider):
+class ArstechnicaSpider(scrapy.Spider):
     name = "jobs"
     pages_V = set()
     urls_V = set()
