@@ -30,7 +30,7 @@ class ArticleLoader:
 
     def load_all_articles(self, load_text=True, load_meta=True, limit=None):
         logging.info("Loading articles...")
-        self.articlesDF =  self.articlesRepo.load_articles(load_text=True, load_meta=load_meta, limit=limit)
+        self.articlesDF =  self.articlesRepo.load_articles(load_text=True, load_meta=load_meta)
 
         self.articlesDF =  exclude_articles(self.articlesDF )
         if (not load_text):

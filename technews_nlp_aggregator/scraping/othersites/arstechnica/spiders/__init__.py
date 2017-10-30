@@ -5,3 +5,6 @@
 from .util import extract_date
 from .arstechnica import ArstechnicaSpider
 from .techcrunch import TechcrunchSpider
+from .thenextweb import ThenextwebSpider
+from .theverge import ThevergeSpider
+

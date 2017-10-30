@@ -21,16 +21,10 @@ class ArticleDatasetRepo(ArticleRepo):
         })
         return con
 
-    def __init__(self, db_connection):
+    def __init__(self, db_connection, limit_article_id=None):
         self.db_connection = db_connection
+        self.limit_article_id = limit_article_id
 
-       # self.article_info_tbl = self.db['ARTICLE_INFO']
-        #self.article_text_tbl = self.db['ARTICLE_TEXT']
-       # self.tags_tbl = self.db['TAGS']
-       # self.authors_tbl = self.db['AUTHORS']
-
-       # self.article_tags_tbl = self.db['ARTICLE_TAGS']
-       # self.article_authors_tbl = self.db['ARTICLE_AUTHORS']
         self.engine = create_engine(self.db_connection,encoding='UTF-8')
         self.sentence_tokenizer = TechArticlesSentenceTokenizer()
 
@@ -178,15 +172,15 @@ class ArticleDatasetRepo(ArticleRepo):
 
         return found
 
-    def load_text(self, article_sub_DF, all=False,load_text=True):
+    def load_text(self, article_sub_DF, load_text=True):
         econ = self.engine.connect()
         if "text" not in article_sub_DF.columns:
             articleids = article_sub_DF.index
+            where_string = (" WHERE ATX_AIN_ID <= " + str(self.limit_article_id)) if self.limit_article_id else ""
             if (load_text):
-                article_text_sql = 'SELECT ATX_ID, ATX_TEXT, ATX_AIN_ID FROM ARTICLE_TEXT  '+ ( ('WHERE ATX_AIN_ID IN '+str(tuple(articleids))) if not all else '')
+                article_text_sql = 'SELECT ATX_ID, ATX_TEXT, ATX_AIN_ID FROM ARTICLE_TEXT  '+where_string
             else:
-                article_text_sql = 'SELECT ATX_ID, \'\', ATX_AIN_ID FROM ARTICLE_TEXT  ' + (
-                ('WHERE ATX_AIN_ID IN ' + str(tuple(articleids))) if not all else '')
+                article_text_sql = 'SELECT ATX_ID, \'\', ATX_AIN_ID FROM ARTICLE_TEXT  ' +where_string
             articleTextDF = pd.read_sql(article_text_sql , econ, index_col='ATX_ID')
             articleTextDF.columns = [ 'text', 'article_id' ]
 
@@ -196,28 +190,14 @@ class ArticleDatasetRepo(ArticleRepo):
         return article_sub_DF
 
 
-    def load_meta_record(self, article_record):
-        article_record["tags"], article_record["authors"] = self.retrieve_tags_authors(article_record["article_id"])
-
-    def retrieve_tags_authors(self, article_id):
-        tags, authors = [], []
-        con = self.get_connection()
-        for tag_row in con.query(self.tags_query, id=article_id):
-            tags.append({"url": tag_row["TAG_URL"], "name": tag_row["TAG_NAME"]})
-        for author_row in con.query(self.authors_query, id=article_id):
-            authors.append({"url": author_row["AUT_URL"], "name": author_row["AUT_NAME"]})
-
-        return tags, authors
-
-    def load_articles(self, load_text=False, load_meta=False, limit = None):
+    def load_articles(self, load_text=False, load_meta=False):
         econ=self.engine.connect()
+        where_string = (" WHERE AIN_ID <= "+str(self.limit_article_id)) if self.limit_article_id else ""
+        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO "+where_string+ "   ORDER BY AIN_ID"
 
-        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO ORDER BY AIN_ID"
-        if (limit):
-            article_info_sql += ' LIMIT '+str(limit)
         articleDF = pd.read_sql(article_info_sql,  econ)
         articleDF.columns = ['article_id' , 'url', 'title', 'date_p' ]
-        articleDF = self.load_text(articleDF, all=True,load_text=load_text)
+        articleDF = self.load_text(articleDF, load_text=load_text)
         econ.close()
         return articleDF
 
@@ -239,9 +219,9 @@ class ArticleDatasetRepo(ArticleRepo):
             return None
     def load_tags_tables(self):
         econ = self.engine.connect()
-
+        where_string = (" WHERE ATA_AIN_ID <= " + str(self.limit_article_id)) if self.limit_article_id else ""
         tags_sql = "SELECT TAG_ID, TAG_NAME, TAG_URL FROM TAGS"
-        tags_articles_sql = "SELECT ATA_ID, ATA_AIN_ID, ATA_TAG_ID FROM ARTICLE_TAGS"
+        tags_articles_sql = "SELECT ATA_ID, ATA_AIN_ID, ATA_TAG_ID FROM ARTICLE_TAGS" +  where_string
 
         tagsDF = pd.read_sql(tags_sql , econ)
         tagsDF.columns = ['tag_id', 'name', 'url']
@@ -254,7 +234,7 @@ class ArticleDatasetRepo(ArticleRepo):
 
     def load_authors_tables(self):
         econ = self.engine.connect()
-
+        where_string = (" WHERE AAU_AIN_ID <= " + str(self.limit_article_id)) if self.limit_article_id else ""
         authors_sql = "SELECT AUT_ID, AUT_NAME, AUT_URL FROM AUTHORS"
         authors_articles_sql = "SELECT AAU_ID, AAU_AIN_ID, AAU_AUT_ID FROM ARTICLE_AUTHORS"
 
@@ -265,4 +245,15 @@ class ArticleDatasetRepo(ArticleRepo):
 
         econ.close()
         return authorsDF, articleAuthorsDF
+
+
+    def retrieve_tags_authors(self, article_id):
+        tags, authors = [], []
+        con = self.get_connection()
+        for tag_row in con.query(self.tags_query, id=article_id):
+            tags.append({"url": tag_row["TAG_URL"], "name": tag_row["TAG_NAME"]})
+        for author_row in con.query(self.authors_query, id=article_id):
+            authors.append({"url": author_row["AUT_URL"], "name": author_row["AUT_NAME"]})
+
+        return tags, authors
 

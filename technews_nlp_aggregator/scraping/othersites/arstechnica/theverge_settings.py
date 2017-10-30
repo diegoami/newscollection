@@ -76,9 +76,8 @@ DOWNLOAD_DELAY = 3
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-BOT_NAME = 'techcrunch'
-
+BOT_NAME = 'theverge'
 ITEM_PIPELINES = {
-    'technews_nlp_aggregator.scraping.othersites.arstechnica.TechcrunchPipeline': 300,
+    'technews_nlp_aggregator.scraping.othersites.arstechnica.ThevergePipeline': 300,
 }
 

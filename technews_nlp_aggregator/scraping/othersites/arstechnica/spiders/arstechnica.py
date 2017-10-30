@@ -9,16 +9,22 @@ from string import punctuation
 
 from itertools import chain
 
+def end_condition(date):
+    if date.month < 10 or date.day < 15:
+        return True
+    else:
+        return False
 
 
 class ArstechnicaSpider(scrapy.Spider):
-    name = "jobs"
+    name = "arstechnica"
     pages_V = set()
     urls_V = set()
     allowed_domains = ["arstechnica.com"]
     start_urls = (
         'https://arstechnica.com/','http://arstechnica.com/'
     )
+
 
 
     def __init__(self, article_repo):
@@ -37,8 +43,7 @@ class ArstechnicaSpider(scrapy.Spider):
         pages = response.xpath('//div[@class="prev-next-links"]/a/@href').extract()
 
         for url in chain(url1s, url2s):
-            if "/2016/" in url:
-                self.finished = True
+
             absolute_url = response.urljoin(url)
             if (absolute_url not in self.urls_V):
                 self.urls_V.add(absolute_url)
@@ -50,6 +55,7 @@ class ArstechnicaSpider(scrapy.Spider):
 
         if not self.finished:
             for page in pages:
+
                 absolute_page = response.urljoin(page)
                 if (absolute_page not in self.pages_V):
                     self.pages_V.add(absolute_page)
@@ -82,6 +88,7 @@ class ArstechnicaSpider(scrapy.Spider):
             all_paragraph_text = all_paragraph_text+paragraph
 
         sleep(1)
-
+        if (end_condition(article_date)):
+            self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}
 

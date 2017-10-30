@@ -1,1 +1,1 @@
-from .pipelines import ArstechnicaPipeline, TechcrunchPipeline
+from .pipelines import ArstechnicaPipeline, TechcrunchPipeline, ThenextwebPipeline, ThevergePipeline

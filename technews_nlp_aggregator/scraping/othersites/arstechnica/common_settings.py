@@ -1,3 +1,14 @@
+# -*- coding: utf-8 -*-
+
+# Scrapy settings for arstechnica project
+#
+# For simplicity, this file contains only settings considered important or
+# commonly used. You can find more settings consulting the documentation:
+#
+#     http://doc.scrapy.org/en/latest/topics/settings.html
+#     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
+#     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+
 LOG_LEVEL = 'INFO'
 
 SPIDER_MODULES = ['technews_nlp_aggregator.scraping.othersites.arstechnica.spiders']
@@ -75,10 +86,3 @@ DOWNLOAD_DELAY = 3
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-BOT_NAME = 'techcrunch'
-
-ITEM_PIPELINES = {
-    'technews_nlp_aggregator.scraping.othersites.arstechnica.TechcrunchPipeline': 300,
-}
-

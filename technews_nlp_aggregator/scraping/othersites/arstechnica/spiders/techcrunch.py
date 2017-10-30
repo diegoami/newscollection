@@ -9,10 +9,14 @@ from string import punctuation
 from . import extract_date
 from itertools import chain
 
-
+def end_condition(date):
+    if date.year < 2017:
+        return True
+    else:
+        return False
 
 class TechcrunchSpider(scrapy.Spider):
-    name = "jobs"
+    name = "techcrunch"
     pages_V = set()
     urls_V = set()
     allowed_domains = ["techcrunch.com"]
@@ -36,8 +40,7 @@ class TechcrunchSpider(scrapy.Spider):
         pages = response.xpath('//li[@class="next"]/a/@href').extract()
 
         for url in urls:
-            if "/2016/" in url:
-                self.finished = True
+
             absolute_url = response.urljoin(url)
             if (absolute_url not in self.urls_V):
                 self.urls_V.add(absolute_url)
@@ -79,6 +82,7 @@ class TechcrunchSpider(scrapy.Spider):
             all_paragraph_text = all_paragraph_text+paragraph
 
         sleep(1)
-
+        if (end_condition(article_date)):
+            self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 

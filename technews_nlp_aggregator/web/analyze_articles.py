@@ -17,7 +17,7 @@ def duplicates(page_id=0):
 
 @app.route('/compare/<int:id1>/<int:id2>')
 def compare(id1, id2):
-    article1, article2= app.application.articleDatasetRepo.load_articles_with_text(id1, id2)
+    article1, article2 = app.application.articleDatasetRepo.load_articles_with_text(id1, id2)
     article1["TAGS"], article1["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id1)
     article2["TAGS"], article2["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id2)
 

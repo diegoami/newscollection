@@ -1,3 +1,10 @@
+
+
+BOT_NAME = 'thenextweb'
+ITEM_PIPELINES = {
+    'technews_nlp_aggregator.scraping.othersites.arstechnica.ThenextwebPipeline': 300,
+}
+
 LOG_LEVEL = 'INFO'
 
 SPIDER_MODULES = ['technews_nlp_aggregator.scraping.othersites.arstechnica.spiders']
@@ -75,10 +82,3 @@ DOWNLOAD_DELAY = 3
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-BOT_NAME = 'techcrunch'
-
-ITEM_PIPELINES = {
-    'technews_nlp_aggregator.scraping.othersites.arstechnica.TechcrunchPipeline': 300,
-}
-

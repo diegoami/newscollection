@@ -1,7 +1,8 @@
 
 from technews_nlp_aggregator.scraping.google_search_wrapper import Command, create_google_service, Iterator
 from technews_nlp_aggregator.scraping.technews_retriever import Raw_Retriever
-from technews_nlp_aggregator.scraping.othersites.arstechnica.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider
+from technews_nlp_aggregator.scraping.othersites.arstechnica.spiders import ArstechnicaSpider
+from technews_nlp_aggregator.scraping.othersites.arstechnica import ArstechnicaPipeline
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 
 import yaml

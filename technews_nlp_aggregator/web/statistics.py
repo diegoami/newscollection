@@ -24,12 +24,13 @@ def statistics_gen():
 
 @app.route('/statistics/<int:article_id>')
 def statistics(article_id):
-    if (article_id):
+    if (article_id and article_id.isdigit()):
         article = app.application.articleDatasetRepo.load_article_with_text(article_id)
         if article:
+
             article["TAGS"], article["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(article_id)
             tokens = app.application.tokenizeInfo.get_tokenized_article(article["AIN_TITLE"], article["ATX_TEXT"])
-            row = app.application.articleLoader.articlesDF[app.application.articleLoader.articlesDF['article_id'] == article_id]
+            row = app.application.articleLoader.articlesDF[app.application.articleLoader.articlesDF['article_id'] == int(article_id)]
             id = row.index[0]
             bows = app.application.lsiInfo.get_words_docid(id)
             topics = app.application.lsiInfo.get_topics_docid(id)
