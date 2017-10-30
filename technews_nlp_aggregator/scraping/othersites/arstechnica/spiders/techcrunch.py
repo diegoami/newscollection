@@ -6,14 +6,10 @@ from time import sleep
 
 from datetime import datetime,date
 from string import punctuation
-from . import extract_date
+from . import extract_date, end_condition
 from itertools import chain
 
-def end_condition(date):
-    if date.year < 2017:
-        return True
-    else:
-        return False
+
 
 class TechcrunchSpider(scrapy.Spider):
     name = "techcrunch"
@@ -61,9 +57,9 @@ class TechcrunchSpider(scrapy.Spider):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@class="alpha tweet-title"]//text()').extract()
         article_title = "".join(article_title_parts)
-
-        all_paragraphs = response.xpath(
-            "//div[contains(@class, 'article-entry')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()").extract()
+        all_paragraphs_r = response.xpath(
+            "//div[contains(@class, 'article-entry')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()")
+        all_paragraphs = all_paragraphs_r.extract()
         article_authors = response.xpath('//a[@rel="author"]/@href').extract()
         article_tags = response.xpath("//div[contains(@class, 'loaded') or @class='tag-item']/a/@href").extract()
 

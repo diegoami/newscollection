@@ -6,30 +6,15 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 
-
-class ArstechnicaPipeline(object):
+from nltk.tokenize import sent_tokenize
+class Pipeline(object):
     def process_item(self, item, spider):
-        #exists = spider.article_repo.update_article(item["url"], item)
-        #if not exists:
-
-        found = spider.article_repo.save_article( item["url"], item, item["text"])
-        return item
-
-class TechcrunchPipeline(object):
-    def process_item(self, item, spider):
-        exists = spider.article_repo.update_article(item["url"], item)
-        if not exists:
-            spider.article_repo.save_article(item["url"], item, item["text"])
-        return item
-
-
-
-class ThenextwebPipeline(object):
-    def process_item(self, item, spider):
-        return item
-
-
-
-class ThevergePipeline(object):
-    def process_item(self, item, spider):
+        #text = item['text']
+        #sentences = sent_tokenize(text)
+        #for sentence in sentences:
+        #    print(sentence)
+        if (len(item["title"]) >= 10) and (len(item["text"]) >= 600):
+            exists = spider.article_repo.update_article(item["url"], item)
+            if not exists:
+                found = spider.article_repo.save_article( item["url"], item, item["text"])
         return item

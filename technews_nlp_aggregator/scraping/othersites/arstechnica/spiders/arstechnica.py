@@ -8,13 +8,7 @@ from datetime import datetime,date
 from string import punctuation
 
 from itertools import chain
-
-def end_condition(date):
-    if date.month < 10 or date.day < 15:
-        return True
-    else:
-        return False
-
+from . import end_condition
 
 class ArstechnicaSpider(scrapy.Spider):
     name = "arstechnica"

@@ -5,17 +5,13 @@ from string import punctuation
 from time import sleep
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date
+from . import extract_date, end_condition
 
 
-def end_condition(date):
-    if date.year < 2017:
-        return True
-    else:
-        return False
 
-class ThevergeSpider(scrapy.Spider):
-    name = "thenextweb"
+
+class VenturebeatSpider(scrapy.Spider):
+    name = "venturebeat"
     pages_C =  0
     urls_V = set()
     pages_V = set()
@@ -35,7 +31,7 @@ class ThevergeSpider(scrapy.Spider):
 
 
 
-        urls = response.xpath('//h3/a/@href').extract()
+        urls = response.xpath('//h2[@class="article-title"]/a/@href').extract()
 
 
         for url in urls:
@@ -52,7 +48,7 @@ class ThevergeSpider(scrapy.Spider):
 
 
         if not self.finished:
-            absolute_page = 'https://www.theverge.com/archives/'+str(self.pages_C)
+            absolute_page = 'https://venturebeat.com/page/'+str(self.pages_C)
             self.pages_C += 1
 
 
@@ -64,16 +60,15 @@ class ThevergeSpider(scrapy.Spider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@class="c-page-title"]//text()').extract()
+        article_title_parts = response.xpath('//h1[@class="article-title"]//text()').extract()
         article_title = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'c-entry-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()").extract()
-        article_authors = response.xpath('//div[@class="c-byline"]/span[@class="c-byline__item"]/a/@href').extract()
-        article_tags = response.xpath("//li[contains(@class, 'c-entry-group-labels__item')]/a/@href").extract()
+            "//div[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)]//text()").extract()
+        article_authors = response.xpath('//div[@class="article-byline"]/a[@rel="author"]/@href').extract()
+        article_tags = response.xpath("//a[contains(@class, 'article-category')]/@href").extract()
 
         all_paragraph_text = ""
-        skip_next = False
         for paragraph in all_paragraphs:
             if len(paragraph) == 0 or paragraph[0] == '\n':
                 continue
@@ -87,7 +82,7 @@ class ThevergeSpider(scrapy.Spider):
 
         article_date = extract_date(url)
         if (end_condition(article_date)):
-            logging.info("Found condition " + article_date)
+
             self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 

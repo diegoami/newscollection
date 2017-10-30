@@ -5,14 +5,10 @@ from string import punctuation
 from time import sleep
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date
+from . import extract_date, end_condition
 
 
-def end_condition(date):
-    if date.year < 2017:
-        return True
-    else:
-        return False
+
 
 class ThenextwebSpider(scrapy.Spider):
     name = "thenextweb"
@@ -87,7 +83,7 @@ class ThenextwebSpider(scrapy.Spider):
 
         article_date = extract_date(url)
         if (end_condition(article_date)):
-            logging.info("Found condition " + article_date)
+
             self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 

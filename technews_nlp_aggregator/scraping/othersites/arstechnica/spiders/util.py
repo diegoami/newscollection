@@ -13,3 +13,14 @@ def extract_date(url):
         return date(year, month, day)
     else:
         return None
+
+
+
+def end_condition(date):
+    if not date:
+        return False
+    #if date.month < 10 or date.day < 28:
+    if date.year < 2017:
+        return True
+    else:
+        return False

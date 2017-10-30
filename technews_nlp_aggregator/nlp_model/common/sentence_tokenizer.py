@@ -9,14 +9,13 @@ sentence_excludes = [
     'Latest headlines delivered',
     'Copyright',
     'Intel’s rest sites and communications are subject to our Privacy Notice and Terms of Use.',
-    'The views expressed are the author\'s own',
+    'The views expressed are the author',
     'This story originally appeared on',
     'You can also listen on',
     'You may unsubscribe at any time.',
     'This post is part of our',
     'You can download a high-resolution version',
     'Read the original article',
-    'Country required',
     'It is written and published independently',
     'For more information',
     'This article was originally published',
@@ -64,7 +63,13 @@ sentence_excludes = [
     'Intel’s web sites and communications are subject to our Privacy',
     'This post originated on Ars Technica UK',
     'Advance Publications owns Condé Nast',
-    'We have Verge Extras, which experiments with audio and podcasting'
+    'We have Verge Extras, which experiments with audio and podcasting',
+    'Get this deal',
+    'Read next:',
+    'This post is part of our contributor series',
+    'Country required',
+    'By checking this box'
+
 
 ]
 
