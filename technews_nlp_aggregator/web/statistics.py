@@ -9,10 +9,13 @@ def statistics_form():
         if form:
 
             article_id = form.get("article_id")
-            if form.get('random_id'):
+            if (article_id and article_id.isdigit()):
+                article_id = int(article_id)
+            elif form.get('random_id'):
                 index, article = app.application.articleLoader.get_random_article()
                 article_id = article['article_id']
-
+            else:
+                return render_template('statistics.html', messages = ['Please enter an article id or check the random checkbox'])
 
             return statistics(article_id)
     else:
@@ -24,7 +27,7 @@ def statistics_gen():
 
 @app.route('/statistics/<int:article_id>')
 def statistics(article_id):
-    if (article_id and article_id.isdigit()):
+    if (article_id):
         article = app.application.articleDatasetRepo.load_article_with_text(article_id)
         if article:
 

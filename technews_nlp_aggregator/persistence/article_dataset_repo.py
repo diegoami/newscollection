@@ -257,3 +257,19 @@ class ArticleDatasetRepo(ArticleRepo):
 
         return tags, authors
 
+
+    def delete_short_texts(self):
+
+        con = self.get_connection()
+        try:
+            con.begin()
+            con.query('CALL detect_short_txts()')
+            con.commit()
+        except:
+            con.rollback()
+        try:
+            con.begin()
+            con.query('CALL delete_ids()')
+            con.commit()
+        except:
+            con.rollback()
