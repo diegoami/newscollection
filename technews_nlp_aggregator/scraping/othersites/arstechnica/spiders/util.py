@@ -25,6 +25,7 @@ month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 def get_date_from_string(date_str):
     result = None
     date_str_l = date_str.split(',')
+    month_and_day, year, month_index = None, None, 1
     if (len(date_str_l) == 3):
         month_and_day, year, time = date_str.split(',')
     if (len(date_str_l) == 2):
