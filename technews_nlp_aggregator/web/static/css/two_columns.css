@@ -8,7 +8,7 @@
     padding-right: 10px;
     margin: auto;
     text-align: center;
-
+    font-size: 1.3em;
 
 }
 
@@ -46,4 +46,36 @@
 
     background: #FFE4B5;
 
+}
+
+.btn-big {
+    cursor:pointer;
+    height: 50px;
+    width: 150px;
+    padding-left: 100px;
+    padding-right: 100px;
+
+}
+
+.red {
+  color: black;
+  background-color: red;
+}
+
+.green {
+  color: black;
+    background-color: green;
+}
+
+.yellow {
+    color: black;
+  background-color: yellow ;
+}
+
+span.organization {
+    font-weight: bold;
+}
+
+span.person {
+    font-weight: bold;
 }

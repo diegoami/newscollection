@@ -1,7 +1,9 @@
 from random import randint
 from flask import  request, render_template
+from technews_nlp_aggregator.nlp_model.spacy.entities import retrieve_entities
 
 from . import app
+import re
 
 @app.route('/duplicates/<int:page_id>')
 def duplicates(page_id=0):
@@ -20,6 +22,13 @@ def compare(id1, id2):
     article1, article2 = app.application.articleDatasetRepo.load_articles_with_text(id1, id2)
     article1["TAGS"], article1["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id1)
     article2["TAGS"], article2["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id2)
+    article1["ORGANIZATIONS"], article1["PERSONS"] = retrieve_entities(article1["ATX_TEXT"])
+    article2["ORGANIZATIONS"], article2["PERSONS"] = retrieve_entities(article2["ATX_TEXT"])
+
+    for organization in article1["ORGANIZATIONS"]:
+        article1["ATX_TEXT"] = re.sub(organization, '<SPAN class="organization">'+organization+'</SPAN>' , article1["ATX_TEXT"])
+    for organization in article2["ORGANIZATIONS"]:
+        article2["ATX_TEXT"] = re.sub(organization, '<SPAN class="organization">' + organization + '</SPAN>',article2["ATX_TEXT"])
 
     return render_template('to_compare.html', A1=article1, A2=article2)
 
@@ -39,15 +48,7 @@ def save_user_association(id1,id2, similarity):
 
 @app.route('/samestory/<int:id1>/<int:id2>')
 def samestory(id1, id2):
-    return save_user_association(id1,id2, 0.9)
-
-@app.route('/slantstory/<int:id1>/<int:id2>')
-def slantstory(id1, id2):
-    return save_user_association(id1,id2, 0.8)
-
-@app.route('/stronglyrelated/<int:id1>/<int:id2>')
-def stronglyrelated(id1, id2):
-    return save_user_association(id1, id2, 0.7)
+    return save_user_association(id1,id2, 1)
 
 @app.route('/related/<int:id1>/<int:id2>')
 def related(id1, id2):
@@ -55,7 +56,7 @@ def related(id1, id2):
 
 @app.route('/unrelated/<int:id1>/<int:id2>')
 def unrelated(id1, id2):
-    return save_user_association(id1, id2, 0.25)
+    return save_user_association(id1, id2, 0)
 
 
 

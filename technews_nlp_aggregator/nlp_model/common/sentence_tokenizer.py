@@ -1,5 +1,6 @@
 from nltk.tokenize import sent_tokenize
 import logging
+from string import punctuation
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 sentence_excludes = [
     'This post originally appeared',
@@ -69,7 +70,8 @@ sentence_excludes = [
     'This post is part of our contributor series',
     'Country required',
     'By checking this box',
-    'SEE:'
+    'SEE:',
+    '(Reporting by'
 
 
 ]
@@ -101,16 +103,19 @@ class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
 
     def process(self, title, document):
 
-        sentences = sent_tokenize(document)
-        real_sentences = self.remove_useless_sentences(sentences)
-        if (len(real_sentences) > 0):
-            if (real_sentences[0].startswith(title)):
-                return real_sentences
+        sentences = self.clean_sentences(document)
+        if (len(sentences ) > 0):
+            if (sentences[0].startswith(title)):
+                return sentences
             else:
-                return [title + "." ]+ real_sentences
+                return [title + "." ]+ sentences
         else:
             return None
+
     def clean_sentences(self, document):
         sentences = sent_tokenize(document)
-        real_sentences = self.remove_useless_sentences(sentences)
-        return " ".join(real_sentences)
+        sentences = self.remove_useless_sentences(sentences)
+        for index, sentence in enumerate(sentences):
+            if sentence[-1] not in punctuation:
+                sentences[index] = sentence + '.'
+        return sentences

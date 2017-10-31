@@ -40,7 +40,7 @@ def find_with_model(model, thresholds,begin, finish ):
 
 
 find_with_model(model = tfidfFacade, thresholds = (0.70, 0.995),
-                begin = datetime(year=2017, month=1, day=1), finish = datetime(year=2017, month=10, day=29))
+                begin = datetime(year=2017, month=1, day=1), finish = datetime(year=2017, month=10, day=31))
 
 find_with_model(model = doc2VecFacade, thresholds = (0.29, 0.99),
-                begin = datetime(year=2017, month=1, day=1), finish = datetime(year=2017, month=10, day=29))
+                begin = datetime(year=2017, month=1, day=1), finish = datetime(year=2017, month=10, day=31))

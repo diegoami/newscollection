@@ -128,7 +128,7 @@ class Converter:
                     article_full_text = f.read()
                     article = self.retrieve_title_and_text(article_full_text, braw_article)
                     if ("title" in article and "text" in article and article["title"] and article["text"] and len(
-                                article["text"]) > 400):
+                                article["text"]) >= 600):
 #                        if (not self.article_repo.file_name_exists(filename) ):
  #                           self.article_repo.save_text_to_file(filename, article["title"], article["text"])
   #                      if (not link_file_exists):

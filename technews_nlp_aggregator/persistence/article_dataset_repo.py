@@ -213,7 +213,7 @@ class ArticleDatasetRepo(ArticleRepo):
         article_query = con.query(article_info_sql, {"id": id})
         article = next(article_query , None)
         if article:
-            article["ATX_TEXT"] = self.sentence_tokenizer.clean_sentences(article["ATX_TEXT"])
+            article["ATX_TEXT"] = " ".join(self.sentence_tokenizer.clean_sentences(article["ATX_TEXT"]))
             return article
         else:
             return None

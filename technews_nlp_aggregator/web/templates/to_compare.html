@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=11"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=18"  >
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=22"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=41"  >
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
+    <meta charset="UTF-8">
 
-    <meta charset="UTF-8">
-    <meta charset="UTF-8">
     <title>Articles to compare</title>
 
 </head>
-<body onload="javascript:select_header('topnav_compare')">
+<body onload="select_header('topnav_compare'); ">
 
 {% include 'header.html' %}
-<H3>These two articles...</H3>
+<H3>Are these two articles about the same story ?????</H3>
 <div class="buttonrow">
-<form id="samestory" class="buttoncolumn" action="/samestory/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
-    <input type="submit" value="are almost duplicates">
-</form>
-<form id="slantstory" class="buttoncolumn" action="/slantstory/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
-    <input type="submit" value="are the same story but with a different slant">
-</form>
-<form id="stronglyrelated" class="buttoncolumn" action="/stronglyrelated/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
-    <input type="submit" value="are very strongly related, but are not about the same story">
-</form>
-<form id="related" class="buttoncolumn" action="/related/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
-    <input type="submit" value="are somewhat related">
-</form>
-<form id="unrelated" class="buttoncolumn" action="/related/{{A1.AIN_ID}}/{{A2.AIN_ID}}">
-    <input type="submit" value="are totally unrelated">
-</form>
-<form id="skip" class="buttoncolumn" action="/randomrelated">
-    <input type="submit" value="Skip">
+<form id="samestory" action="">
+    <input class="buttoncolumn btn-big green" type="submit" value="Yes" onclick="submit_story('samestory','{{A1.AIN_ID}}', '{{A2.AIN_ID}}' );">
+    <input class="buttoncolumn btn-big yellow" type="submit" value="Maybe" onclick="submit_story('related', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">
+    <input class="buttoncolumn btn-big red" type="submit" value="No" onclick="submit_story('unrelated', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">
 </form>
 </div>
 <div class="row">
@@ -51,7 +38,8 @@
             <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
        {% endfor %}
     </P>
-      <p class="article_text"><B>Text:</B>{{A1.ATX_TEXT}}</p>
+      <P></P>
+      <P id="a1_text" class="article_text">{{A1.ATX_TEXT | safe}}</P>
   </div>
     <div class="column middle"></div>
   <div class="column right">
@@ -70,8 +58,8 @@
             <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
        {% endfor %}
     </P>
-
-    <P class="article_text"><B>Text:</B> {{A2.ATX_TEXT}}</P>
+    <P></P>
+    <P id="a2_text" class="article_text"> {{A2.ATX_TEXT | safe}}</P>
 
  </div>
 </div>

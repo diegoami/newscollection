@@ -16,3 +16,9 @@ select_header = function(element) {
     var topNav_element = document.getElementById(element);
     topNav_element.setAttribute("class", "active");
 }
+
+submit_story = function(method, id1, id2) {
+    var mainForm = document.getElementById("samestory");
+    mainForm.action = '/'+method+'/'+id1+'/'+id2;
+    main.form.submit();
+}
