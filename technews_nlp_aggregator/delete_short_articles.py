@@ -14,3 +14,4 @@ config = yaml.safe_load(open('../config.yml'))
 db_config = yaml.safe_load(open(config["db_key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
+articleDatasetRepo.delete_short_texts()

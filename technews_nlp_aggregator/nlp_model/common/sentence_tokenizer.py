@@ -68,7 +68,8 @@ sentence_excludes = [
     'Read next:',
     'This post is part of our contributor series',
     'Country required',
-    'By checking this box'
+    'By checking this box',
+    'SEE:'
 
 
 ]

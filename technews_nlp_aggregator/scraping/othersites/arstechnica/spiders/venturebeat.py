@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy import Request
-from string import punctuation
-from time import sleep
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date, end_condition
+from . import extract_date, end_condition, build_text_from_paragraphs
 
 
 
@@ -68,16 +66,7 @@ class VenturebeatSpider(scrapy.Spider):
         article_authors = response.xpath('//div[@class="article-byline"]/a[@rel="author"]/@href').extract()
         article_tags = response.xpath("//a[contains(@class, 'article-category')]/@href").extract()
 
-        all_paragraph_text = ""
-        for paragraph in all_paragraphs:
-            if len(paragraph) == 0 or paragraph[0] == '\n':
-                continue
-            if (paragraph[-1] in ".!?"):
-                paragraph = paragraph + "\n"
-            elif (paragraph[-1] in punctuation):
-                paragraph = paragraph + " "
-
-            all_paragraph_text = all_paragraph_text+paragraph
+        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
 
         article_date = extract_date(url)
@@ -85,4 +74,5 @@ class VenturebeatSpider(scrapy.Spider):
 
             self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
+
 

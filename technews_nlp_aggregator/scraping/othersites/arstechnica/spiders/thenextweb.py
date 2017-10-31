@@ -5,7 +5,7 @@ from string import punctuation
 from time import sleep
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date, end_condition
+from . import extract_date, end_condition, build_text_from_paragraphs
 
 
 
@@ -68,17 +68,7 @@ class ThenextwebSpider(scrapy.Spider):
         article_authors = response.xpath('//a[@class="post-authorName"]/@href').extract()
         article_tags = response.xpath("//span[contains(@class, 'tag')]/a/@href").extract()
 
-        all_paragraph_text = ""
-        skip_next = False
-        for paragraph in all_paragraphs:
-            if len(paragraph) == 0 or paragraph[0] == '\n':
-                continue
-            if (paragraph[-1] in ".!?"):
-                paragraph = paragraph + "\n"
-            elif (paragraph[-1] in punctuation):
-                paragraph = paragraph + " "
-
-            all_paragraph_text = all_paragraph_text+paragraph
+        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
 
         article_date = extract_date(url)

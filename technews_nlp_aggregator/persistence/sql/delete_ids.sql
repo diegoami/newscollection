@@ -12,6 +12,7 @@ OPEN TOD_AIN_CURSOR;
            CLOSE TOD_AIN_CURSOR;
            LEAVE dup_aid_loop;
        END IF;
+  DELETE FROM TODELETE;
   END LOOP dup_aid_loop;
 END;
 

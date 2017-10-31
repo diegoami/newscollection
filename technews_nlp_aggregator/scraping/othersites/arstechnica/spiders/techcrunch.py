@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy import Request
-
-from time import sleep
-
-from datetime import datetime,date
-from string import punctuation
-from . import extract_date, end_condition
-from itertools import chain
-
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+from . import extract_date, end_condition, build_text_from_paragraphs
 
 
 class TechcrunchSpider(scrapy.Spider):
@@ -20,7 +15,6 @@ class TechcrunchSpider(scrapy.Spider):
         'https://techcrunch.com/','http://techcrunch.com/'
     )
 
-
     def __init__(self, article_repo):
         super().__init__()
         self.article_repo = article_repo
@@ -28,9 +22,6 @@ class TechcrunchSpider(scrapy.Spider):
 
 
     def parse(self, response):
-
-
-
         urls = response.xpath('//h2[@class="post-title"]/a/@href').extract()
 
         pages = response.xpath('//li[@class="next"]/a/@href').extract()
@@ -65,19 +56,8 @@ class TechcrunchSpider(scrapy.Spider):
 
 
         article_date = extract_date( url)
-        all_paragraph_text = ""
-        skip_next = False
-        for paragraph in all_paragraphs:
-            if len(paragraph) == 0 or paragraph[0] == '\n':
-                continue
-            if (paragraph[-1] in ".!?"):
-                paragraph = paragraph + "\n"
-            elif (paragraph[-1] in punctuation):
-                paragraph = paragraph + " "
+        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
-            all_paragraph_text = all_paragraph_text+paragraph
-
-        sleep(1)
         if (end_condition(article_date)):
             self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}

@@ -2,9 +2,10 @@
 #
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
-from .util import extract_date, end_condition
+from .util import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string
 from .arstechnica import ArstechnicaSpider
 from .techcrunch import TechcrunchSpider
 from .thenextweb import ThenextwebSpider
 from .theverge import ThevergeSpider
 from .venturebeat import VenturebeatSpider
+from .techrepublic import TechrepublicSpider

@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy import Request
-from string import punctuation
-from time import sleep
+
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date,  end_condition
+from . import extract_date,  end_condition, build_text_from_paragraphs
 
 
 
 class ThevergeSpider(scrapy.Spider):
-    name = "thenextweb"
+    name = "theverge"
     pages_C =  0
     urls_V = set()
     pages_V = set()
@@ -67,17 +66,7 @@ class ThevergeSpider(scrapy.Spider):
         article_authors = response.xpath('//div[@class="c-byline"]/span[@class="c-byline__item"]/a/@href').extract()
         article_tags = response.xpath("//li[contains(@class, 'c-entry-group-labels__item')]/a/@href").extract()
 
-        all_paragraph_text = ""
-        skip_next = False
-        for paragraph in all_paragraphs:
-            if len(paragraph) == 0 or paragraph[0] == '\n':
-                continue
-            if (paragraph[-1] in ".!?"):
-                paragraph = paragraph + "\n"
-            elif (paragraph[-1] in punctuation):
-                paragraph = paragraph + " "
-
-            all_paragraph_text = all_paragraph_text+paragraph
+        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
 
         article_date = extract_date(url)

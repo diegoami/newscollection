@@ -9,11 +9,13 @@ from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 from nltk.tokenize import sent_tokenize
 class Pipeline(object):
     def process_item(self, item, spider):
+        #print(item)
         #text = item['text']
         #sentences = sent_tokenize(text)
         #for sentence in sentences:
         #    print(sentence)
-        if (len(item["title"]) >= 10) and (len(item["text"]) >= 600):
+
+        if (len(item["title"]) >= 10) and (len(item["text"]) >= 600) and item["date"]:
             exists = spider.article_repo.update_article(item["url"], item)
             if not exists:
                 found = spider.article_repo.save_article( item["url"], item, item["text"])

@@ -4,11 +4,11 @@ from scrapy import Request
 
 from time import sleep
 
-from datetime import datetime,date
+from datetime import date
 from string import punctuation
 
 from itertools import chain
-from . import end_condition
+from . import end_condition, build_text_from_paragraphs
 
 class ArstechnicaSpider(scrapy.Spider):
     name = "arstechnica"
@@ -69,19 +69,8 @@ class ArstechnicaSpider(scrapy.Spider):
 
         article_date_str = article_datetime_tsstring.split('T')[0]
         article_date = date(*map(int,article_date_str.split('-')))
-        all_paragraph_text = ""
-        skip_next = False
-        for paragraph in all_paragraphs:
-            if len(paragraph) == 0 or paragraph[0] == '\n':
-                continue
-            if (paragraph[-1] in ".!?"):
-                paragraph = paragraph + "\n"
-            elif (paragraph[-1] in punctuation):
-                paragraph = paragraph + " "
+        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
-            all_paragraph_text = all_paragraph_text+paragraph
-
-        sleep(1)
         if (end_condition(article_date)):
             self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}

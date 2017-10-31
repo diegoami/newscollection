@@ -1,7 +1,7 @@
 
 from technews_nlp_aggregator.scraping.google_search_wrapper import Command, create_google_service, Iterator
 from technews_nlp_aggregator.scraping.technews_retriever import Raw_Retriever
-from technews_nlp_aggregator.scraping.othersites.arstechnica.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider
+from technews_nlp_aggregator.scraping.othersites.arstechnica.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider
 
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 
@@ -27,5 +27,6 @@ def do_crawl(settings, spiders):
     process.start()
 
 
-do_crawl(settings,  [ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider])
+#do_crawl(settings,  [ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider])
+do_crawl(settings,  [TechrepublicSpider])
 
