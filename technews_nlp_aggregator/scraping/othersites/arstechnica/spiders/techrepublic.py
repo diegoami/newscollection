@@ -12,7 +12,7 @@ from . import extract_date, end_condition, build_text_from_paragraphs, get_date_
 class TechrepublicSpider(scrapy.Spider):
     name = "techrepublic"
     pages_V = set()
-    pages_C = 5
+    pages_C = 0
     urls_V = set()
     allowed_domains = ["techrepublic.com" ]
     start_urls = (
