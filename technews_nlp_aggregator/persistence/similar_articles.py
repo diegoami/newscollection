@@ -161,4 +161,3 @@ class SimilarArticlesRepo:
 
         return similar_stories
 
-

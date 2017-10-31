@@ -17,6 +17,10 @@ class ArticleLoader:
         rand_index = randint(0,url_len)
         return rand_index, self.articlesDF.loc[rand_index]
 
+    def get_article(self, article_id):
+        article_row = self.articlesDF[(self.articlesDF['article_id'] == article_id)]
+        return article_row.iloc[0]
+
     def get_id_from_url(self, url):
         article_row = self.articlesDF[(self.articlesDF['url'] == url)]
         if (len(article_row) > 0):
