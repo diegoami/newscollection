@@ -71,7 +71,8 @@ sentence_excludes = [
     'Country required',
     'By checking this box',
     'SEE:',
-    '(Reporting by'
+    '(Reporting by',
+    'View source version on'
 
 
 ]

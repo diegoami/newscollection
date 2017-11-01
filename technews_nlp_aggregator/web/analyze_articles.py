@@ -1,6 +1,9 @@
 from random import randint
 from flask import  request, render_template
 from technews_nlp_aggregator.nlp_model.spacy.entities import retrieve_entities
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 from . import app
 import re
@@ -17,6 +20,13 @@ def duplicates(page_id=0):
     return render_template('duplicates.html', dup_articles=dup_articles, page_id=page_id, has_next=has_next)
 
 
+def enclose_with_span(article, str, class_id):
+    try:
+        article["ATX_TEXT"] = re.sub(str, '<SPAN class="'+class_id+'">' + str+ '</SPAN>', article["ATX_TEXT"])
+    except:
+        logging.warning("Could not replace "+str)
+
+
 @app.route('/compare/<int:id1>/<int:id2>')
 def compare(id1, id2):
     article1, article2 = app.application.articleDatasetRepo.load_articles_with_text(id1, id2)
@@ -26,11 +36,13 @@ def compare(id1, id2):
     article2["ORGANIZATIONS"], article2["PERSONS"] = retrieve_entities(article2["ATX_TEXT"])
 
     for organization in article1["ORGANIZATIONS"]:
-        article1["ATX_TEXT"] = re.sub(organization, '<SPAN class="organization">'+organization+'</SPAN>' , article1["ATX_TEXT"])
+        enclose_with_span(article1, organization, 'organization')
     for organization in article2["ORGANIZATIONS"]:
-        article2["ATX_TEXT"] = re.sub(organization, '<SPAN class="organization">' + organization + '</SPAN>',article2["ATX_TEXT"])
+        enclose_with_span(article2, organization, 'organization')
 
     return render_template('to_compare.html', A1=article1, A2=article2)
+
+
 
 @app.route('/randomrelated')
 def randomrelated():
