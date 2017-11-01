@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=33"  >
-    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=2"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=51"  >
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
 
   <title>Find related news</title>
  </head>
@@ -20,8 +20,8 @@
 <label for="n_articles">N articles in page: </label><input type="text" id="n_articles" name="n_articles" value="50"><br/></P>
 
 <p>
-    <input type="checkbox" name="random_url" value="random_url"> Random Url<br>
-<input type="submit" value="Submit"  />
+<input class="main" type="submit" value="Random" onclick="random_url();"  />
+<input class="main" type="submit" value="Submit"  />
 </p>
 </FORM>
 </div>

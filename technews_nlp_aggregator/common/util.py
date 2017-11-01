@@ -9,6 +9,8 @@ def extract_date_str(url):
     index = 0
     while not arrs[index].isdigit():
         index += 1
+        if index >= len(arrs):
+            return None
     year, month, day = arrs[index], arrs[index + 1], arrs[index + 2]
     date_str = day + '-' + month + '-' + year
 

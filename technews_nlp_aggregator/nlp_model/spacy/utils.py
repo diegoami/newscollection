@@ -12,8 +12,6 @@ def sanitize_ent(ents):
 
     return result
 
-
-
 def retrieve_entities(article_text):
     organizations, persons = set(), set()
     doc = nlp(article_text)
@@ -24,3 +22,8 @@ def retrieve_entities(article_text):
             persons.add(ent.text)
     organizations, persons = sanitize_ent(organizations), sanitize_ent(persons)
     return organizations, persons
+
+
+def retrieve_sp_words(article_text):
+    doc = nlp(article_text)
+    return doc

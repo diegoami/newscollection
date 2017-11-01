@@ -5,6 +5,8 @@
 
 from flask import Flask, render_template
 from .services import Application
+from .util import read_int_from_form
+
 app = Flask(__name__)
 
 

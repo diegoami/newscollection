@@ -1,6 +1,6 @@
 from random import randint
 from flask import  request, render_template
-from technews_nlp_aggregator.nlp_model.spacy.entities import retrieve_entities
+from technews_nlp_aggregator.nlp_model.spacy.utils import retrieve_entities
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 

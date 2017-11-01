@@ -20,13 +20,14 @@ def fill_article(link_obj, id, score, tags, authors):
     related_article["id"] = str(id)
     related_article["article_id"] = str(link_obj["article_id"])
     related_article["url"] = str(link_obj["url"])
-    related_article["date_p"] = str(link_obj["date_p"])
+    date_p = link_obj["date_p"]
+    related_article["date_p"] = str(date_p)
 
     related_article["title"] = str(link_obj["title"])
     related_article["source"] = extract_source(related_article["url"])
 
-    related_article["date"] = extract_date_str(related_article["url"])
-    related_article["similarity"] = round(score * 100,2)
+    related_article["date"] = str(date_p.year)+'-'+str(date_p.month)+'-'+str(date_p.day)
+    related_article["similarity"] = round(score * 100,3)
     related_article["tags"] = tags
     related_article["authors"] = authors
 
@@ -44,3 +45,7 @@ def filter_double(articleLoader, sims):
             found_articles.extend(connected_ids)
     return related_articles
 
+def read_int_from_form(form, id):
+    intv_str = form.get(id, '50')
+    intv = int(intv_str) if intv_str.isdigit() else 50
+    return intv

@@ -31,13 +31,15 @@ label {
 }
 input { display: table-cell; }
 
-input[type=submit] {
+
+input[type=submit].main {
     padding:5px 10px;
-
+    background-color: #555555;
     cursor:pointer;
-
+    color: white;
     height: 50px;
 }
+
 
 .errors {
   color: red;

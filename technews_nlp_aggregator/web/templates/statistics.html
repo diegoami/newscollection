@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=33"  >
-    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=2"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=50"  >
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
 
   <title>Find related news</title>
  </head>
@@ -16,8 +16,8 @@
 <label for="article_id">Article_id</label><INPUT id="article_id" name="article_id" maxlength="256" size="100" value="{{article_id}}">
 </INPUT>
 </P>
-<input type="checkbox" name="random_id" value="random_id"> Random Url<br>
-<input type="submit" value="Submit"  />
+<input class="main" type="submit" value="Random" onclick="random_article_id();"  />
+<input class="main" type="submit" value="Submit"  />
 </p>
 </FORM>
 {% if article_id: %}
@@ -41,6 +41,14 @@
         </P>
           <p class="article_text"><B>Text:</B>{{A.ATX_TEXT}}</p>
      </div>
+    <h2>Parts of speech</h2>
+    <P class="monospace">
+        {% for sp_word in sp_words: %}
+            ( {{sp_word.tag_}}, {{sp_word.pos_}}, {{sp_word.text}}&nbsp;)
+        {% endfor %}
+    </P>
+
+
     <h2>Tokenization</h2>
     <P class="monospace">
         {% for token in tokens: %}

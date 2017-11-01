@@ -29,13 +29,13 @@ So far it is about 45.000 articles.
 
 ### Prototype
 
-A prototype is currently accessible [on this site](http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080).
+A prototype is currently accessible [on this site](http://www.techcontroversy.com:8080).
 
 ### Similar articles and conteroversial topics
 
-You can find "controversial" topics in the datbase. [You can browse through the articles](http://18.194.147.93:8080/duplicates/0') that have been paired because the system considers it likely that they are talking about the same topic, possibly under a different slant.
+You can find "controversial" topics in the datbase. [You can browse through the articles](http://www.techcontroversy.com:8080/duplicates/0') that have been paired because the system considers it likely that they are talking about the same topic, possibly under a different slant.
 
-[You can help validate this pairings here](http://18.194.147.93:8080/randomrelated).
+[You can help validate this pairings here](http://www.techcontroversy.com:8080/randomrelated).
 
 
 ### Finding Related articles
@@ -44,9 +44,9 @@ The idea behind this is that after you find an article on the web, you would wan
 
 This works also as a recommandation system, because it should find articles talking about related topics.
 
-[You can copy the text of a technical article into this text page](http://18.194.147.93:8080/search)  and find similar articles in the dataset, possibly limiting the search in a date interval.
+[You can copy the text of a technical article into this text page](http://www.techcontroversy.com:8080/search)  and find similar articles in the dataset, possibly limiting the search in a date interval.
 
-Alternatively, you can see how articles in the database related to each other [entering the url of an article in this page](http://ec2-35-156-126-138.eu-central-1.compute.amazonaws.com:8080/search_url).
+Alternatively, you can see how articles in the database related to each other [entering the url of an article in this page](http://www.techcontroversy.com:8080/search_url).
 
 
 ## Technologys used

@@ -1,4 +1,4 @@
-from .util import extract_related_articles
+from .util import extract_related_articles, read_int_from_form
 from technews_nlp_aggregator.common.util import conv_to_date
 from flask import render_template,  request
 
@@ -25,8 +25,7 @@ def retrieve_similar():
             text = form["tdidf_input"]
             if not text or len(text.strip()) == 0:
                 return render_template('search.html', messages=['Please enter the text of a technical article'])
-            n_articles = int(form["n_articles"])
-
+            n_articles = read_int_from_form(form, 'n_articles')
             start_s = form["start"]
             end_s = form["end"]
 
@@ -36,42 +35,39 @@ def retrieve_similar():
             return render_template('search.html', tdf_articles=related_articles_tdf, doc2vec_articles=related_articles_doc2vec, search_text=text )
 
 
+
+
 @app.route('/random_url', methods=['POST'])
 def random_url():
     if request.method == 'POST':
         form = request.form
         if form:
+            n_articles = read_int_from_form(form, 'n_articles')
+
+
             index, article = app.application.articleLoader.get_random_article()
-            form["tdidf_input"] = article["url"]
-            return common_retrieve_url(form)
+            return common_retrieve_url(url=article["url"], article_id=article["article_id"],  n_articles=n_articles )
 
 @app.route('/retrieve_similar_url', methods=['POST'])
 def retrieve_similar_url():
     if request.method == 'POST':
         form = request.form
         if form:
-            if form.get('random_url'):
-                index, article = app.application.articleLoader.get_random_article()
 
-                return common_retrieve_url(form, article['url'], article['article_id'])
-            else:
-                url = form["tdidf_input"]
-                if url:
-                    article_id = app.application.articleLoader.get_id_from_url(url)
-                    if (not article_id):
-                        return render_template('search_url.html', messages=['Could not find the URL in the database'])
-                    else:
-                        return common_retrieve_url(form, url, article_id)
+            url = form["tdidf_input"]
+            n_articles = read_int_from_form(form, 'n_articles')
+            if url:
+                article_id = app.application.articleLoader.get_id_from_url(url)
+                if (not article_id):
+                    return render_template('search_url.html', messages=['Could not find the URL in the database'])
                 else:
-                    return render_template('search_url.html',
-                                           messages=['Please enter the URL of an article in the database'])
+                    return common_retrieve_url( url=url, article_id=article_id, n_articles=n_articles)
+            else:
+                return render_template('search_url.html',
+                                       messages=['Please enter the URL of an article in the database'])
 
 
-def common_retrieve_url(form, url=None, article_id=None):
-    if form.get("n_articles"):
-        n_articles = int(form["n_articles"])
-    else:
-        n_articles = 50
+def common_retrieve_url(url=None, article_id=None, n_articles=50):
     related_articles_tdf = retrieve_articles_url(app.application.tfidfFacade, url, n_articles)
     related_articles_doc2vec = retrieve_articles_url(app.application.doc2VecFacade, url, n_articles)
     if related_articles_tdf and related_articles_doc2vec:
@@ -94,9 +90,6 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
     articlesIndeces, scores = classifier.get_related_articles_and_score_doc(text, start, end)
     sims = zip(articlesIndeces[:n_articles], scores[:n_articles])
     related_articles = extract_related_articles(app.application.articleLoader, sims)
-
-
-
 
     return related_articles
 

@@ -1,1 +1,1 @@
-from .entities import retrieve_entities
+from .utils import retrieve_entities, retrieve_sp_words

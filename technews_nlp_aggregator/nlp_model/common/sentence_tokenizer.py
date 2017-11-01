@@ -73,11 +73,7 @@ sentence_excludes = [
     'SEE:',
     '(Reporting by',
     'View source version on'
-
-
 ]
-
-
 
 sentence_inside_excludes = [
     'By checking this box, you are confirming you are an adult',
@@ -85,9 +81,7 @@ sentence_inside_excludes = [
     'check out our interview with',
     'Latest headlines delivered to you daily',
     'Good Deals is a weekly roundup of the best deals on the internet'
-
 ]
-
 
 class SimpleSentenceTokenizer:
     def process(self, title, document):
