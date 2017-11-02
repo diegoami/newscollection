@@ -5,13 +5,12 @@ import dataset
 from sqlalchemy import create_engine
 
 from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis
-from todiscard.json.article_repo import ArticleRepo
-
+from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import pandas as pd
-from technews_nlp_aggregator.nlp_model.common import TechArticlesSentenceTokenizer
 
-class ArticleDatasetRepo(ArticleRepo):
+
+class ArticleDatasetRepo():
     tags_query = 'SELECT TAG_NAME, TAG_URL FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND AIN_ID = :id'
     authors_query = 'SELECT AUT_NAME, AUT_URL FROM ARTICLE_INFO, ARTICLE_AUTHORS, AUTHORS WHERE AAU_AIN_ID = AIN_ID AND AUT_ID = AAU_AUT_ID AND AIN_ID = :id'
 
@@ -26,7 +25,7 @@ class ArticleDatasetRepo(ArticleRepo):
         self.limit_article_id = limit_article_id
 
         self.engine = create_engine(self.db_connection,encoding='UTF-8')
-        self.sentence_tokenizer = TechArticlesSentenceTokenizer()
+
 
     def init_con_find(self):
         self.con_find = self.get_connection()
@@ -83,10 +82,10 @@ class ArticleDatasetRepo(ArticleRepo):
 
         return result
 
-    def update_article_text(self, article_id, new_text):
+    def update_article_text(self,  article_id, new_text, con = None, ):
         result = False
         try:
-            con = self.get_connection()
+            con = self.get_connection() if not con else con
             con.begin()
             row = con['ARTICLE_TEXT'].find_one(ATX_AIN_ID=article_id)
             if row:
@@ -96,7 +95,8 @@ class ArticleDatasetRepo(ArticleRepo):
                     dict({
                         "ATX_ID": pk,
                         "ATX_AIN_ID" : article_id,
-                        "ATX_TEXT" : new_text
+                        "ATX_TEXT": defaultTokenizer.clean_text(new_text),
+                        "ATX_TEXT_ORIG": new_text
                     }),['ATX_ID']
                 )
                 result = True
@@ -138,9 +138,8 @@ class ArticleDatasetRepo(ArticleRepo):
                     con['ARTICLE_TEXT'].insert(
                         dict({
                             "ATX_AIN_ID": pk,
-                            "ATX_TEXT": text,
-                            "ATX_TEXT_ORIG": text,
-
+                            "ATX_TEXT": defaultTokenizer.clean_text(text),
+                            "ATX_TEXT_ORIG": text
                         })
 
                     )
@@ -236,15 +235,15 @@ class ArticleDatasetRepo(ArticleRepo):
         return article1, article2
 
     def load_article_with_text(self, id, con=None):
-        article_info_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
+        article_info_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT, ATX_TEXT_ORIG FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
         con = self.get_connection() if not con else con
         article_query = con.query(article_info_sql, {"id": id})
         article = next(article_query , None)
         if article:
-            article["ATX_TEXT"] = " ".join(self.sentence_tokenizer.clean_sentences(article["ATX_TEXT"]))
             return article
         else:
             return None
+
     def load_tags_tables(self):
         econ = self.engine.connect()
         where_string = (" WHERE ATA_AIN_ID <= " + str(self.limit_article_id)) if self.limit_article_id else ""

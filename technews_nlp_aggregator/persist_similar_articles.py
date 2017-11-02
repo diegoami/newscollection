@@ -9,7 +9,7 @@ from technews_nlp_aggregator.common.util import daterange
 from technews_nlp_aggregator.nlp_model.publish import TfidfFacade, Doc2VecFacade
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesTokenExcluder, SimpleTokenExcluder, NltkWordTokenizer
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesTokenExcluder, SimpleTokenExcluder, TechArticlesWordTokenizer
 from datetime import datetime, date
 
 
@@ -21,8 +21,8 @@ articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles(True)
 
 tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
-                                 token_excluder=TechArticlesTokenExcluder(),
-                             word_tokenizer=NltkWordTokenizer())
+                             token_excluder=TechArticlesTokenExcluder(),
+                             word_tokenizer=TechArticlesWordTokenizer())
 
 tfidfFacade = TfidfFacade(config["lsi_models_dir_link"], article_loader=articleLoader, tokenizer=tokenizer)
 tfidfFacade.load_models()

@@ -27,7 +27,5 @@ def do_crawl(settings, spiders):
     process.start()
 
 
-#do_crawl(settings,  [ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider])
-#do_crawl(settings,  [TechrepublicSpider])
-do_crawl(settings,  [ThevergeSpider])
+do_crawl(settings,  [ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider])
 

@@ -1,6 +1,6 @@
 import spacy
 
-nlp = spacy.load('en')
+spacy_nlp = spacy.load('en')
 
 # print(random_article)
 
@@ -14,7 +14,7 @@ def sanitize_ent(ents):
 
 def retrieve_entities(article_text):
     organizations, persons = set(), set()
-    doc = nlp(article_text)
+    doc = spacy_nlp (article_text)
     for ent in doc.ents:
         if (ent.label_ == 'ORG'):
             organizations.add(ent.text)
@@ -25,5 +25,5 @@ def retrieve_entities(article_text):
 
 
 def retrieve_sp_words(article_text):
-    doc = nlp(article_text)
+    doc = spacy_nlp (article_text)
     return doc

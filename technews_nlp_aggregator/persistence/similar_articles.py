@@ -3,9 +3,9 @@ import traceback
 from datetime import datetime
 
 import dataset
+from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from nltk.tokenize import word_tokenize
 import re
 from technews_nlp_aggregator.common.util import extract_source
 
@@ -36,7 +36,7 @@ SELECT OTHER_ID AS O_ID, OTHER_DATE AS DATE, OTHER_TITLE AS TITLE, OTHER_URL AS 
 """
 
 
-
+FLOAT_REGEX = re.compile('\d+(\.\d+)?')
 class SimilarArticlesRepo:
 
     def get_connection(self):
@@ -146,13 +146,13 @@ class SimilarArticlesRepo:
 
     def verify_having_condition(self, filter_criteria=None):
         if filter_criteria:
-            float_regex = re.compile('\d+(\.\d+)?')
+
             allowed_tokens = ["T_SCORE", "D_SCORE", "U_SCORE", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
-            tokens = word_tokenize(filter_criteria)
+            tokens = defaultTokenizer.word_tokenizer.tokenize_sentence(filter_criteria)
             if (len(tokens) >= 3):
                 for token in tokens:
                     token = token.upper()
-                    if not ( token in allowed_tokens or float_regex.match(token)):
+                    if not ( token in allowed_tokens or FLOAT_REGEX.match(token)):
                         logging.warning("INVALID TOKEN "+token)
                         raise ValueError("Condition containing invalid token")
 

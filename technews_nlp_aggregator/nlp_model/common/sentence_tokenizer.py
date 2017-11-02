@@ -1,7 +1,7 @@
-from nltk.tokenize import sent_tokenize
 import logging
 from string import punctuation
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
 sentence_excludes = [
     'This post originally appeared',
     'Command Line delivers daily updates',
@@ -85,9 +85,11 @@ sentence_inside_excludes = [
 ]
 
 class SimpleSentenceTokenizer:
-    def process(self, title, document):
-        sentences = sent_tokenize(document)
-        return sentences
+    def sent_tokenize(self, document):
+        #sentences = sent_tokenize(document)
+        doc_sent = spacy_nlp(document)
+        sents = doc_sent.sents
+        return [sent.text for sent in sents]
 
 class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
     def remove_useless_sentences(self, sentences):
@@ -109,9 +111,6 @@ class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
             return None
 
     def clean_sentences(self, document):
-        sentences = sent_tokenize(document)
+        sentences = self.sent_tokenize(document)
         sentences = self.remove_useless_sentences(sentences)
-        for index, sentence in enumerate(sentences):
-            if sentence[-1] not in punctuation:
-                sentences[index] = sentence + '.'
         return sentences

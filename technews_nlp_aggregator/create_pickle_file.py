@@ -6,7 +6,7 @@ sys.path.append('..')
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesTokenExcluder, SimpleTokenExcluder, NltkWordTokenizer
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesTokenExcluder, SimpleTokenExcluder, TechArticlesWordTokenizer
 from datetime import datetime
 
 
@@ -32,6 +32,6 @@ def create_pickle(withTexts, tokenizer):
     os.symlink(pickle_file, config["text_pickle_file"])
 
 tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
-                                 token_excluder=TechArticlesTokenExcluder(),
-                             word_tokenizer=NltkWordTokenizer())
+                             token_excluder=TechArticlesTokenExcluder(),
+                             word_tokenizer=TechArticlesWordTokenizer())
 create_pickle(withTexts=True, tokenizer=tokenizer)

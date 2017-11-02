@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=50"  >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=50"  >
+
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
+
  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
 
   <title>Find related news</title>
@@ -42,6 +45,11 @@
         </P>
           <p class="article_text"><B>Text:</B>{{A.ATX_TEXT}}</p>
      </div>
+
+
+    <h2>Original text</h2>
+          <p class="article_text">{{A.ATX_TEXT_ORIG}}</p>
+
     <h2>Parts of speech</h2>
     <P class="monospace">
         {% for sp_word in sp_words: %}

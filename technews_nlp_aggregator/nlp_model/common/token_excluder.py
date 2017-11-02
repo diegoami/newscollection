@@ -6,16 +6,17 @@ excl_2 = ['about', 'if', 'what', 'up', 'so', 'there', 'all', 'he', 'said', 'othe
 
 excl_3 = [ 'do', 'these', 'says', 'were', 'had',  'see', 'after', 'us', 'no', 'where', 'may', 'through', 'those',  'my', 'don', 'two',  'because',  'll', 'same', 'take',  'around',  'made',  '–',  'then', 'both', 'any', ';',  'before', 'going', 'being',  'here', 'able',  'down', 'lot', 'right', 'she', 'her', 're', 'm', 've', 'd']
 
-excl_4 = ['-','@','\'s','``','\'\'' ,'&', '\'', '`', '!', '[', ']', '‘', '=', '…', '$' , '%', '<', '>']
+excl_4 = ['-','@','\'s','``','\'\'' ,'&', '\'', '`', '!', '[', ']', '‘', '=', '…', '$' , '%', '<', '>', '"', '/']
 
 not_excl_1 =['need', 'using', 'more', 'new', '$', 'company', 'out','people','google','time', 'data', 'app', 'game', 'service', 'video'
              'companies', 'apple', 'over', 'million', 'first', 'year', 'even', 'most', 'much', 'users', 'well', 'today', 'technology', 'last', 'want'
             ,'many','world', 'work','ai', 'still', 'own', 'help', 'team','years', 'back', 'games','market', 'uber',  'better', 'part', 'product', 'facebook', 'might',
             'very', 'good', 'think', 'vr', 've','next', '2017', 'something', 'including', 'amazon', 'tech',
              'business','startup', 'billion', 'since', 'watch', 'mobile']
+excl_5 = ['’s', '’ll', '’re', "'m", '#' , 'n’t']
 
 
-excl_all = excl_1 + excl_2 + excl_3 + excl_4
+excl_all = excl_1 + excl_2 + excl_3 + excl_4 + excl_5
 class SimpleTokenExcluder:
 
     def process(self,token_list):

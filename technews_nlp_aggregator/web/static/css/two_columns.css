@@ -1,16 +1,16 @@
 
 
 .left {
-  width: 47%;
+  width: 46%;
   float: left;
 }
 
 .middle {
-  width: 6%;
+  width: 8%;
 }
 
 .right {
-  width: 47%;
+  width: 46%;
   float: right;
 }
 
@@ -48,9 +48,14 @@
 .btn-big {
     cursor:pointer;
     height: 50px;
-    width: 200px;
+    width: 180px;
     padding-left: 100px;
     padding-right: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin-left: 25px;
     margin-right: 25px;
     font-size : 1.4em;

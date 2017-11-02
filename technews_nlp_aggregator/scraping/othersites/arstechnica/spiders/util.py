@@ -24,30 +24,31 @@ month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 
 def get_date_from_string(date_str):
     result = None
-    date_str_l = date_str.split(',')
-    month_and_day, year, month_index = None, None, 1
-    if (len(date_str_l) == 3):
-        month_and_day, year, time = date_str.split(',')
-    if (len(date_str_l) == 2):
-        month_and_day, year = date_str.split(',')
-    if (month_and_day and year):
-        month_and_day_l = month_and_day.split()
-        if (len(month_and_day_l ) == 2):
-            month, day = month_and_day.split()
-            if month in month_names:
-                month_index = month_names.index(month) + 1
-            if month in month_names_short:
-                month_index = month_names_short.index(month) + 1
-            if month_index:
-                article_date = date(int(year), month_index , int(day))
-                result = article_date
+    if (date_str):
+        date_str_l = date_str.split(',')
+        month_and_day, year, month_index = None, None, 1
+        if (len(date_str_l) == 3):
+            month_and_day, year, time = date_str.split(',')
+        if (len(date_str_l) == 2):
+            month_and_day, year = date_str.split(',')
+        if (month_and_day and year):
+            month_and_day_l = month_and_day.split()
+            if (len(month_and_day_l ) == 2):
+                month, day = month_and_day.split()
+                if month in month_names:
+                    month_index = month_names.index(month) + 1
+                if month in month_names_short:
+                    month_index = month_names_short.index(month) + 1
+                if month_index:
+                    article_date = date(int(year), month_index , int(day))
+                    result = article_date
     return result
 
 def end_condition(date):
     if not date:
         return False
-    #if date.month < 10 or date.day < 28:
-    if date.year < 2017:
+    if date.month < 10 or date.day < 28:
+    #if date.year < 2017:
         return True
     else:
         return False

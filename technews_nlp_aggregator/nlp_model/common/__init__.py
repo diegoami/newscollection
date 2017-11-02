@@ -4,6 +4,7 @@ from .article_loader import ArticleLoader
 from .sentence_tokenizer import SimpleSentenceTokenizer, TechArticlesSentenceTokenizer
 
 from .token_excluder import TechArticlesTokenExcluder, SimpleTokenExcluder
-from .word_tokenizer_nltk import NltkWordTokenizer
-from .tokenizer import DefaultTokenizer
+from .word_tokenizer import TechArticlesWordTokenizer
 from .article_cleaner import TechArticlesCleaner
+from .tokenizer import DefaultTokenizer, defaultTokenizer
+
