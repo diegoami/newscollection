@@ -44,7 +44,7 @@
     <th>Authors</th>
     <th>Tags</th>
     <th class="icon">Similar</th>
-    <th class="icon">Compare</th>
+
     <th class="icon">Statistics</th>
   </tr>
 
@@ -68,13 +68,6 @@
                 <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
                 </A>
-            </td>
-            <td class="icon">
-                {% if article_id|string() != _.article_id|string() %}
-                    <A HREF='/compare/{{article_id}}/{{_.article_id}}' target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
-                    </A>
-                {% endif %}
             </td>
             <td class="icon">
                 <A HREF="/statistics/{{article_id}}" target="_blank">
@@ -103,7 +96,6 @@
     <th>Authors</th>
     <th>Tags</th>
      <th class="icon">Similar</th>
-    <th class="icon">Compare</th>
       <th class="icon">Statistics</th>
 
   </tr>
@@ -127,13 +119,6 @@
                 <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
                 </A>
-            </td>
-            <td class="icon">
-                {% if article_id != _.article_id %}
-                    <A HREF="/compare/{{article_id}}/{{_.article_id}}')" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
-                    </A>
-                {% endif %}
             </td>
             <td class="icon">
                 <A HREF="/statistics/{{article_id}}" target="_blank">

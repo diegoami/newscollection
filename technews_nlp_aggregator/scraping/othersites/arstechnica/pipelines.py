@@ -16,7 +16,5 @@ class Pipeline(object):
         #    print(sentence)
 
         if (len(item["title"]) >= 10) and (len(item["text"]) >= 600) and item["date"]:
-            exists = spider.article_repo.update_article(item["url"], item)
-            if not exists:
-                found = spider.article_repo.save_article( item["url"], item, item["text"])
+            spider.article_repo.save_article( item["url"], item, item["text"])
         return item

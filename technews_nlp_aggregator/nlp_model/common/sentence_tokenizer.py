@@ -58,7 +58,7 @@ sentence_excludes = [
     'This post was originally published by',
     'This post is not sponsored, but',
     'This post was originally published by',
-    'Thanks!',
+
     'The article originally appeared at',
     'Listing image by',
     'Intel’s web sites and communications are subject to our Privacy',
@@ -72,7 +72,8 @@ sentence_excludes = [
     'By checking this box',
     'SEE:',
     '(Reporting by',
-    'View source version on'
+    'View source version on',
+    'Live tweeting: Follow @verge on Twitter'
 ]
 
 sentence_inside_excludes = [

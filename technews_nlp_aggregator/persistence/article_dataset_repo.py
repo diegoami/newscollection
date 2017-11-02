@@ -83,6 +83,32 @@ class ArticleDatasetRepo(ArticleRepo):
 
         return result
 
+    def update_article_text(self, article_id, new_text):
+        result = False
+        try:
+            con = self.get_connection()
+            con.begin()
+            row = con['ARTICLE_TEXT'].find_one(ATX_AIN_ID=article_id)
+            if row:
+                pk = row["ATX_ID"]
+
+                pk = con['ARTICLE_TEXT'].update(
+                    dict({
+                        "ATX_ID": pk,
+                        "ATX_AIN_ID" : article_id,
+                        "ATX_TEXT" : new_text
+                    }),['ATX_ID']
+                )
+                result = True
+            con.commit()
+
+        except:
+            traceback.print_exc()
+            con.rollback()
+
+        return result
+
+
     def save_article(self, url, to_add, text):
         if not "date" in to_add:
             to_add["date"] = extract_date(to_add["url"])
@@ -112,7 +138,9 @@ class ArticleDatasetRepo(ArticleRepo):
                     con['ARTICLE_TEXT'].insert(
                         dict({
                             "ATX_AIN_ID": pk,
-                            "ATX_TEXT": text
+                            "ATX_TEXT": text,
+                            "ATX_TEXT_ORIG": text,
+
                         })
 
                     )

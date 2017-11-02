@@ -6,3 +6,4 @@ from .sentence_tokenizer import SimpleSentenceTokenizer, TechArticlesSentenceTok
 from .token_excluder import TechArticlesTokenExcluder, SimpleTokenExcluder
 from .word_tokenizer_nltk import NltkWordTokenizer
 from .tokenizer import DefaultTokenizer
+from .article_cleaner import TechArticlesCleaner
