@@ -64,6 +64,8 @@ create table ARTICLE_TEXT
 		primary key,
 	ATX_AIN_ID int not null,
 	ATX_TEXT text null,
+	ATX_TEXT_ORIG text null,
+
 	constraint ARTICLE_TEXT_ATX_ID_uindex
 		unique (ATX_ID),
 	constraint ARTICLE_TEXT_ARTICLE_INFO_AIN_ID_fk
