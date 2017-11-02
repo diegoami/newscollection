@@ -32,6 +32,9 @@ def duplicates(page_id=0):
             dup_articles = all_articles[start:min(end,len(all_articles))]
         else:
             dup_articles = []
+            return render_template('duplicates.html', messages=['No articles found with this query'],
+                                   filter_criteria=filter_criteria)
+
         return render_template('duplicates.html', dup_articles=dup_articles, page_id=page_id, has_next=has_next, filter_criteria=filter_criteria)
     except:
         traceback.print_exc()
