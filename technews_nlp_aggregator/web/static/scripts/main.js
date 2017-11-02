@@ -33,3 +33,16 @@ skip = function() {
     window.location.href = '/random_related';
 
 }
+
+
+function send_same_story(method, id1, id2, element_id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/'+method+'/'+id1+'/'+id2, true);
+
+    xhr.onreadystatechange = function () {
+        var response_text = xhr.responseText ;
+        document.getElementById(element_id).innerHTML = response_text ;
+    }
+    xhr.send();
+}
+

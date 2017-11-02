@@ -15,7 +15,8 @@
 <body onload="select_header('topnav_compare'); ">
 
 {% include 'header.html' %}
-<H3>Are these two articles about the same story ????? </H3>
+<P><STRONG>Are these two articles about the same story ????? </STRONG> <A HREF="/examples" target="_blank">See examples</A></P>
+
 <div class="buttonrow">
 <form id="samestory" action="">
     <button class="buttoncolumn btn-big green tooltip"  onclick="submit_story('samestory','{{A1.AIN_ID}}', '{{A2.AIN_ID}}' );">YES <span class="tooltiptext">Could these two articles have the same title?<BR>Is the main story of each article covered also in the other article?</span>
@@ -27,9 +28,10 @@
      <button class="buttoncolumn btn-big grey tooltip"  onclick="skip();">SKIP<span class="tooltiptext">I wouldn't know.</span>
 
     </button>
+ </form>
 </div>
 </div>
-</form>
+
 </div>
 <div class="row">
   <div class="column left">

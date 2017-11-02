@@ -1,7 +1,3 @@
-.column {
-
-}
-
 
 
 .left {
@@ -58,6 +54,16 @@
     margin-left: 25px;
     margin-right: 25px;
     font-size : 1.4em;
+}
+
+.btn-small {
+    cursor:pointer;
+
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-size : 0.9em;
 }
 
 .red {

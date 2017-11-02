@@ -9,7 +9,7 @@ import traceback
 from . import app
 import re
 
-DEFAULT_FILTER_CRITERIA = 'T_SCORE > 0.7 AND D_SCORE > 0.4 AND ( U_SCORE > 0.5 OR U_SCORE IS NULL )'
+DEFAULT_FILTER_CRITERIA = 'T_SCORE > 0.8 AND D_SCORE > 0.4 OR ( U_SCORE > 0.5 )'
 
 @app.route('/filterduplicates', methods=['POST'])
 def filterduplicates():
@@ -37,6 +37,12 @@ def duplicates(page_id=0):
         traceback.print_exc()
         return render_template('duplicates.html',  filter_criteria=filter_criteria, messages=['Could not execute query - filter criteria are not valid'])
 
+
+@app.route('/examples')
+def examples(page_id=0):
+    yes_articles = app.application.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE = 1 ")
+    almost_articles = app.application.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE = 0.5 ")
+    return render_template('examples.html', yes_examples=yes_articles[:8], almost_examples=almost_articles[:8] )
 
 def enclose_with_span(article, str, class_id):
     try:
@@ -76,9 +82,15 @@ def save_user_association(id1,id2, similarity):
     app.application.similarArticlesRepo.persist_user_association(id1, id2, similarity, request.environ['REMOTE_ADDR'])
     return randomrelated()
 
+def save_user_association_xhr(id1,id2, similarity):
+    app.application.similarArticlesRepo.persist_user_association(id1, id2, similarity, request.environ['REMOTE_ADDR'])
+    return str(similarity), {'Content-Type': 'text/html'}
+
+
+
 @app.route('/samestory/<int:id1>/<int:id2>')
 def samestory(id1, id2):
-    return save_user_association(id1,id2, 1)
+    return save_user_association(id1,id2, 1.0)
 
 @app.route('/related/<int:id1>/<int:id2>')
 def related(id1, id2):
@@ -86,7 +98,19 @@ def related(id1, id2):
 
 @app.route('/unrelated/<int:id1>/<int:id2>')
 def unrelated(id1, id2):
-    return save_user_association(id1, id2, 0)
+    return save_user_association(id1, id2, 0.0)
 
+
+@app.route('/samestory_xhr/<int:id1>/<int:id2>')
+def samestory_xhr(id1, id2):
+    return save_user_association_xhr(id1, id2, 1.0)
+
+@app.route('/related_xhr/<int:id1>/<int:id2>')
+def related_xhr(id1, id2):
+    return save_user_association_xhr(id1, id2, 0.5)
+
+@app.route('/unrelated_xhr/<int:id1>/<int:id2>')
+def unrelated_xhr(id1, id2):
+    return save_user_association(id1, id2, 0.0)
 
 

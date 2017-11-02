@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=50"  >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=2"  >
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=2"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=2"  >
      <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
 
 
@@ -48,6 +50,7 @@
     <th>Authors</th>
     <th>Tags</th>
     <th class="icon">Similar</th>
+    <th class="icon">Statistics</th>
 
   </tr>
 
@@ -100,6 +103,7 @@
     <th>Authors</th>
     <th>Tags</th>
     <th class="icon">Similar</th>
+    <th class="icon">Statistics</th>
 
   </tr>
 
@@ -107,7 +111,7 @@
         <tr>
 
             <td>{{_.id}}</td>
-            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A> - <I><A HREF="javascript:find_similar('{{_.url}}')">Find similar</A></I></td>
+            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td class="date">{{_.date_p}}</td>
             <td>{{_.similarity}}</td>
             <td>{% for author in _.authors: %}

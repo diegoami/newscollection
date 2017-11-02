@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=50"  >
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=12"  >
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=2"  >
+     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
+
+    <meta charset="UTF-8">
+    <title>Duplicate Articles</title>
+
+</head>
+<body>
+{% include 'header.html' %}
+<H1>Guidelines on picking similar articles</H1>
+<H2> Same story (YES)</H2>
+<P>You should choose this when these articles <U>are obviously treating the same story</U>, possibly with a different slant.</P>
+<P>You should be able to answer yes to both of these questions:</P>
+<UL>
+    <LI>Could these two articles have <U>the same title</U>?</LI>
+    <LI>Is the main point of each article covered also in the other article?</LI>
+
+</UL>
+<P>Here are some examples of articles treating the same story.</P>
+<table>
+
+  <tr>
+    <th class="date">Date</th>
+    <th><span>Article1</span></th>
+    <th>Article2</th>
+    <th class="icon">Analyze</th>
+
+
+  </tr>
+
+    {% for _ in yes_examples: %}
+        {% if _.SOURCE_1 != _.SOURCE_2: %}
+        <tr>
+
+            <td class="date">{{_.DATE_1}}</td>
+            <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
+            <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
+
+            <td class="icon">
+                {% if _.ID_1 != _.ID_2 %}
+                    <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
+                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
+                    </A>
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endif %}
+
+    {% endfor %}
+</table>
+<H2> Strongly related stories (ALMOST)</H2>
+<P>You should choose this when the two articles are <U>strictly speaking not treating the same story, but are otherwise are strongly related</U>.</P>
+<P>You should be able to answer yes to both of these questions, while answering no to the previous questions:</P>
+<UL>
+    <LI><U>Could the content of one of two articles be added seamlessly to the other article</U>?</LI>
+    <LI>Can you think of at least two common tags for these two articles?</LI>
+
+</UL>
+<P>Here are some examples of articles treating strongly realted stories.</P>
+
+<table>
+
+  <tr>
+    <th class="date">Date</th>
+    <th><span>Article1</span></th>
+    <th>Article2</th>
+    <th class="icon">Analyze</th>
+
+
+  </tr>
+
+    {% for _ in almost_examples: %}
+        {% if _.SOURCE_1 != _.SOURCE_2: %}
+        <tr>
+
+            <td class="date">{{_.DATE_1}}</td>
+            <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
+            <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
+
+            <td class="icon">
+                {% if _.ID_1 != _.ID_2 %}
+                    <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
+                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
+                    </A>
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endif %}
+
+    {% endfor %}
+</table>
+<H2> Unrelated stories (NO)</H2>
+<P>In every other case you should choose NO. </P>
+</body>
+
+
+</html>
