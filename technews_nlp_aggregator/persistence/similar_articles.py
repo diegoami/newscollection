@@ -145,17 +145,18 @@ class SimilarArticlesRepo:
 
 
     def verify_having_condition(self, filter_criteria=None):
-        float_regex = re.compile('\d+(\.\d+)?')
-        allowed_tokens = ["T_SCORE", "D_SCORE", "U_SCORE", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
-        tokens = word_tokenize(filter_criteria)
-        if (len(tokens) >= 3):
-            for token in tokens:
-                token = token.upper()
-                if not ( token in allowed_tokens or float_regex.match(token)):
-                    logging.warning("INVALID TOKEN "+token)
-                    raise ValueError("Condition containing invalid token")
+        if filter_criteria:
+            float_regex = re.compile('\d+(\.\d+)?')
+            allowed_tokens = ["T_SCORE", "D_SCORE", "U_SCORE", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
+            tokens = word_tokenize(filter_criteria)
+            if (len(tokens) >= 3):
+                for token in tokens:
+                    token = token.upper()
+                    if not ( token in allowed_tokens or float_regex.match(token)):
+                        logging.warning("INVALID TOKEN "+token)
+                        raise ValueError("Condition containing invalid token")
 
-            return True
+                return True
         return False
 
     def similar_having_condition(self, filter_criteria=None):

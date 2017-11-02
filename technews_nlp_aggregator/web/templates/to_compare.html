@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=18"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=50"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=20"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=7"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=54"  >
  <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
 
@@ -15,12 +15,20 @@
 <body onload="select_header('topnav_compare'); ">
 
 {% include 'header.html' %}
-<H3>Are these two articles about the same story ?????</H3>
+<H3>Are these two articles about the same story ????? </H3>
 <div class="buttonrow">
 <form id="samestory" action="">
-    <input class="buttoncolumn btn-big green" type="submit" value="Yes" onclick="submit_story('samestory','{{A1.AIN_ID}}', '{{A2.AIN_ID}}' );">
-    <input class="buttoncolumn btn-big yellow" type="submit" value="Maybe" onclick="submit_story('related', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">
-    <input class="buttoncolumn btn-big red" type="submit" value="No" onclick="submit_story('unrelated', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">
+    <button class="buttoncolumn btn-big green tooltip"  onclick="submit_story('samestory','{{A1.AIN_ID}}', '{{A2.AIN_ID}}' );">YES <span class="tooltiptext">Could these two articles have the same title?<BR>Is the main story of each article covered also in the other article?</span>
+    </button>
+    <button class="buttoncolumn btn-big yellow tooltip" onclick="submit_story('related', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">ALMOST<span class="tooltiptext">Could the content of one of two articles be added seamlessly to the other article?<BR> Can you think of at least two common tags for these two articles?</span>
+    </button>
+
+    <button class="buttoncolumn btn-big red tooltip"  onclick="submit_story('unrelated', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">NO<span class="tooltiptext">Does not satisfy the previous conditions.</span>
+     <button class="buttoncolumn btn-big grey tooltip"  onclick="skip();">SKIP<span class="tooltiptext">I wouldn't know.</span>
+
+    </button>
+</div>
+</div>
 </form>
 </div>
 <div class="row">

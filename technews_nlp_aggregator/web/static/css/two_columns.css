@@ -29,7 +29,6 @@
     float: left;
     padding-left: 10px;
     padding-right: 10px;
-    margin: auto;
     text-align: center;
     font-size: 1.3em;
 
@@ -53,10 +52,12 @@
 .btn-big {
     cursor:pointer;
     height: 50px;
-    width: 150px;
+    width: 200px;
     padding-left: 100px;
     padding-right: 100px;
-
+    margin-left: 25px;
+    margin-right: 25px;
+    font-size : 1.4em;
 }
 
 .red {
@@ -66,11 +67,17 @@
 
 .green {
   color: black;
-    background-color: green;
+  background-color: green;
+}
+
+
+.gray {
+  color: black;
+  background-color: gray;
 }
 
 .yellow {
-    color: black;
+  color: black;
   background-color: yellow ;
 }
 
@@ -80,4 +87,30 @@ span.organization {
 
 span.person {
     font-weight: bold;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    font-size: 0.6em;
+    visibility: hidden;
+    width: 240px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    font-size: 0.5em;
+    visibility: visible;
 }

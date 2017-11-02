@@ -28,3 +28,8 @@ random_article_id = function() {
     statisticsForm.action = '/statistics_random';
     mainForm.submit();
 }
+
+skip = function() {
+    window.location.href = '/random_related';
+
+}
