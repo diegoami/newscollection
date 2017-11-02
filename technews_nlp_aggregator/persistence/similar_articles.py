@@ -5,17 +5,25 @@ from datetime import datetime
 import dataset
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
+from nltk.tokenize import word_tokenize
+import re
 from technews_nlp_aggregator.common.util import extract_source
-similarArticlesSQL = \
+
+similarArticlesSQL_select = \
 """
 SELECT T.ID_1, T.ID_2, T.DATE_1, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, ROUND(T.SIMILARITY,3) AS T_SCORE
   , ROUND(D.SIMILARITY,3) AS D_SCORE, ROUND(U.SSU_SIMILARITY_AVG,3) AS U_SCORE FROM TFIDF_SCORE T
 LEFT JOIN DOC2VEC_SCORE D ON D.ID_1=T.ID_1 AND D.ID_2=T.ID_2
 LEFT JOIN (SELECT AVG(SSU_SIMILARITY) SSU_SIMILARITY_AVG, SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2) U
 ON D.ID_1=U.SSU_AIN_ID_1 AND D.ID_2=U.SSU_AIN_ID_2
-ORDER BY T.DATE_1 DESC, T.ID_1 DESC, T.SIMILARITY DESC
 """
+
+similarArticlesSQL_orderby = \
+"""
+ ORDER BY T.DATE_1 DESC, T.ID_1 DESC, T.SIMILARITY DESC
+"""
+
+
 
 controversialArticlesSQL = \
 """
@@ -136,10 +144,52 @@ class SimilarArticlesRepo:
             )
 
 
+    def verify_having_condition(self, filter_criteria=None):
+        float_regex = re.compile('\d+(\.\d+)?')
+        allowed_tokens = ["T_SCORE", "D_SCORE", "U_SCORE", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
+        tokens = word_tokenize(filter_criteria)
+        if (len(tokens) >= 3):
+            for token in tokens:
+                token = token.upper()
+                if not ( token in allowed_tokens or float_regex.match(token)):
+                    logging.warning("INVALID TOKEN "+token)
+                    raise ValueError("Condition containing invalid token")
 
-    def list_similar_articles(self):
+            return True
+        return False
+
+    def similar_having_condition(self, filter_criteria=None):
+        columnMap = {"tfidf" : "T_SCORE", "doc2vec" : "D_SCORE", "uscore" : "U_SCORE"}
+        conditions = []
+        condition_string = ""
+        if filter_criteria:
+            filter_parts = filter_criteria.split(',')
+            for filter_part in filter_parts:
+                filter_part_l = filter_part.split()
+                if (len(filter_part_l) == 3):
+                    column, operator, value = filter_part_l
+                    column = column.lower()
+                    if column in columnMap:
+                        conditions.append(columnMap[column] + " "+operator+" "+ value)
+                    else:
+                        logging.info("Could not find column : {}".format(column))
+
+                else:
+                    logging.info("Not enough operators : {}".format(filter_part) )
+            if len(conditions) > 0:
+                condition_string = condition_string + " HAVING "
+            for index, condition in enumerate(conditions):
+                if index > 0:
+                    condition_string = condition_string + " AND "
+
+                condition_string = condition_string + condition
+        return condition_string
+
+    def list_similar_articles(self, filter_criteria= None):
         similar_stories = []
         con = self.get_connection()
+        similarArticlesSQL_having_cond =  "HAVING "+filter_criteria if self.verify_having_condition(filter_criteria) else ""
+        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby
         for row in con.query(similarArticlesSQL):
             similar_story = dict({
                 "ID_1": row["ID_1"],

@@ -2,15 +2,6 @@
 
 }
 
-.buttoncolumn {
-    float: left;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: auto;
-    text-align: center;
-    font-size: 1.3em;
-
-}
 
 
 .left {
@@ -33,6 +24,17 @@
     display: table;
     clear: both;
 }
+
+.buttoncolumn {
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: auto;
+    text-align: center;
+    font-size: 1.3em;
+
+}
+
 
 /* Clear floats after the columns */
 .buttonrow:after {

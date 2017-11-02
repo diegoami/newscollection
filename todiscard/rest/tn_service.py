@@ -12,7 +12,7 @@ from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleData
 from todiscard.rest import extract_related_articles, filter_double, extract_interesting_articles
 
 config = yaml.safe_load(open('config.yml'))
-db_config = yaml.safe_load(open(config["db_key_file"]))
+db_config = yaml.safe_load(open(config["key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)

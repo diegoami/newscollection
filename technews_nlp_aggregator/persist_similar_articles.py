@@ -14,7 +14,7 @@ from datetime import datetime, date
 
 
 config = yaml.safe_load(open('../config.yml'))
-db_config = yaml.safe_load(open(config["db_key_file"]))
+db_config = yaml.safe_load(open(config["key_file"]))
 db_url    = db_config["db_url"]
 articleDatasetRepo = ArticleDatasetRepo(db_url)
 articleLoader = ArticleLoader(articleDatasetRepo)

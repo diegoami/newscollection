@@ -4,12 +4,26 @@
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=50"  >
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=12"  >
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=1"  >
+     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+
     <meta charset="UTF-8">
     <title>Duplicate Articles</title>
 
 </head>
 <body onload="javascript:select_header('topnav_duplicated')">
 {% include 'header.html' %}
+<div class="buttonrow" >
+<form action="/filterduplicates" method="POST">
+   <input id="searchCriteria" name = "filterCriteria" type="text" class="buttoncolumn" placeholder="Filter criteria"
+          value="{{filter_criteria}}"
+          title="Type in a Filter criteria" size="80" maxWidth="160" >   <input class="buttoncolumn" type="submit" value="Filter" />
+
+</form>
+</div>
+
+<P><I>Example: T_SCORE > 0.7 AND D_SCORE > 0.4 AND ( U_SCORE > 0.5 OR U_SCORE IS NULL)</I>
+
 <table>
 
   <tr>
@@ -50,22 +64,24 @@
 </table>
     <BR>
 <div class="buttonrow">
-    {% if page_id > 0: %}
-        <form class="buttoncolumn" action="/duplicates/{{page_id-1}}">
-            <input class="main" type="submit" value="<<< Back" />
-        </form>
-    {% endif %}
-    {% if has_next : %}
-        <form class="buttoncolumn" action="/duplicates/{{page_id+1}}">
-            <input class="main" type="submit" value="Forward >>> " />
-        </form>
-    {% endif %}
+    {% if page_id %}
+        {% if page_id > 0: %}
+            <form class="buttoncolumn" action="/duplicates/{{page_id-1}}">
+                <input class="main" type="submit" value="<<< Back" />
+            </form>
+        {% endif %}
+        {% if has_next : %}
+            <form class="buttoncolumn" action="/duplicates/{{page_id+1}}">
+                <input class="main" type="submit" value="Forward >>> " />
+            </form>
+        {% endif %}
+
 
 </div>
  <div>
    Page : <B>{{page_id}}</B>
     </div>
-
+    {% endif %}
     <BR>
 
 

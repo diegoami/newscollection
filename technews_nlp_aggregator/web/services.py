@@ -11,7 +11,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 config = yaml.safe_load(open('config.yml'))
-db_config = yaml.safe_load(open(config["db_key_file"]))
+db_config = yaml.safe_load(open(config["key_file"]))
 db_url    = db_config["db_url"]
 
 

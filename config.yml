@@ -14,6 +14,6 @@ link_file           : /media/diego/QData/techarticles/lists/article_list_5_10_20
 commands_dir        : /media/diego/QData/techarticles/commands/
 commands_pattern    : /media/diego/QData/techarticles/commands/*.json
 google_key_file     : /media/diego/QData/techarticles/keys/google_search.yml
-db_key_file         : /media/diego/QData/techarticles/keys/db_coords.yml
+key_file           : /media/diego/QData/techarticles/keys/db_coords.yml
 pickle_dir          : /media/diego/QData/techarticles/pickle/
 text_pickle_file     : /media/diego/QData/techarticles/pickle/texts.p

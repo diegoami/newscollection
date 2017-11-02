@@ -13,7 +13,7 @@ from datetime import datetime
 import yaml
 
 config = yaml.safe_load(open('../config.yml'))
-db_config = yaml.safe_load(open(config["db_key_file"]))
+db_config = yaml.safe_load(open(config["key_file"]))
 pickle_dir = config["pickle_dir"]
 
 models_dir = config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'

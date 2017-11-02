@@ -11,7 +11,7 @@ from scrapy.crawler import CrawlerProcess
 
 config = yaml.safe_load(open('config.yml'))
 
-db_config = yaml.safe_load(open(config["db_key_file"]))
+db_config = yaml.safe_load(open(config["key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
 from scrapy.crawler import CrawlerProcess

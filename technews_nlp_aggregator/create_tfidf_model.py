@@ -14,7 +14,7 @@ from datetime import datetime
 import yaml
 
 config = yaml.safe_load(open('../config.yml'))
-db_config = yaml.safe_load(open(config["db_key_file"]))
+db_config = yaml.safe_load(open(config["key_file"]))
 models_dir = config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'
 
 
