@@ -24,6 +24,8 @@ class TechArticlesCleaner():
         return doc
 
     def do_clean(self, doc):
+        doc = self.remove_chars(doc)
+
         doc = self.replace_tweets(doc)
         return doc
 

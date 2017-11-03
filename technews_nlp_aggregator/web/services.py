@@ -21,7 +21,7 @@ class Application:
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
         self.articleLoader.load_all_articles(load_text=False)
         self.similarArticlesRepo = SimilarArticlesRepo(db_url)
-        self.tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(), token_excluder=TechArticlesTokenExcluder(), word_tokenizer=TechArticlesWordTokenizer())
+        self.tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(), word_tokenizer=TechArticlesWordTokenizer())
         self.doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], article_loader=self.articleLoader, tokenizer=self.tokenizer  )
         self.doc2VecFacade.load_models()
 

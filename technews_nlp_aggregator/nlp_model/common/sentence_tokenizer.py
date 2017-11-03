@@ -101,14 +101,8 @@ class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
 
     def process(self, title, document):
 
-        sentences = self.clean_sentences(document)
-        if (len(sentences ) > 0):
-            if (sentences[0].startswith(title)):
-                return sentences
-            else:
-                return [title + "." ]+ sentences
-        else:
-            return None
+        sentences = self.sent_tokenize(document)
+        return sentences
 
     def clean_sentences(self, document):
         sentences = self.sent_tokenize(document)

@@ -5,7 +5,7 @@ import yaml
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader, TechArticlesSentenceTokenizer, TechArticlesCleaner
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader, TechArticlesSentenceTokenizer, TechArticlesCleaner, defaultTokenizer
 from nltk.tokenize import sent_tokenize
 
 config = yaml.safe_load(open('../config.yml'))
@@ -26,14 +26,14 @@ def cleaned_text(title, text):
 
 articleFilteredDF = articleLoader.articlesDF
 con = articleDatasetRepo.get_connection()
-for index, row in articleFilteredDF.iterrows():
 
-    articleDatasetRepo.update_article_text(row["article_id"], cleaned_text(row["text"]), con)
-    if (index % 100 == 0):
-        print("Processed {} rows".format(index))
+def convert_file(id, con):
 
+    article_record = articleDatasetRepo.load_article_with_text(id)
+    transformed_txt = defaultTokenizer.clean_text(article_record["ATX_TEXT_ORIG"])
+    articleDatasetRepo.update_article_text(id, transformed_txt, con)
 
-
-
-
+con = articleDatasetRepo.get_connection()
+for file_id in range(37172, 37351):
+    convert_file(file_id, con )
 

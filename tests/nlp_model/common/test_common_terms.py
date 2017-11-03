@@ -12,7 +12,7 @@ db_config = yaml.safe_load(open(config["key_file"]))
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
 articlesDF = articleLoader.load_all_articles(load_text=True,limit=300)
-tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(), token_excluder=TechArticlesTokenExcluder())
+tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer())
 tokenized_docs = tokenizer.tokenize_ddf(articlesDF)
 from collections import defaultdict
 

@@ -148,10 +148,12 @@ class SimilarArticlesRepo:
         if filter_criteria:
 
             allowed_tokens = ["T_SCORE", "D_SCORE", "U_SCORE", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
-            tokens = defaultTokenizer.word_tokenizer.tokenize_sentence(filter_criteria)
-            if (len(tokens) >= 3):
-                for token in tokens:
-                    token = token.upper()
+            sp_tokens = defaultTokenizer.word_tokenizer.tokenize_doc(filter_criteria)
+            if (len(sp_tokens ) >= 3):
+                for sp_token in sp_tokens:
+                    if (len(sp_token.strip()) == 0):
+                        continue
+                    token = sp_token.upper()
                     if not ( token in allowed_tokens or FLOAT_REGEX.match(token)):
                         logging.warning("INVALID TOKEN "+token)
                         raise ValueError("Condition containing invalid token")

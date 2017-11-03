@@ -21,7 +21,7 @@ articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles(True)
 
 tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
-                             token_excluder=TechArticlesTokenExcluder(),
+
                              word_tokenizer=TechArticlesWordTokenizer())
 
 tfidfFacade = TfidfFacade(config["lsi_models_dir_link"], article_loader=articleLoader, tokenizer=tokenizer)
@@ -40,7 +40,7 @@ def find_with_model(model, thresholds,begin, finish ):
 
 
 find_with_model(model = tfidfFacade, thresholds = (0.70, 0.995),
-                begin = datetime(year=2017, month=1, day=1), finish = datetime(year=2017, month=10, day=31))
+                begin = datetime(year=2017, month=10, day=25), finish = datetime(year=2017, month=11, day=3))
 
 find_with_model(model = doc2VecFacade, thresholds = (0.29, 0.99),
-                begin = datetime(year=2017, month=1, day=1), finish = datetime(year=2017, month=10, day=31))
+                begin = datetime(year=2017, month=10, day=25), finish = datetime(year=2017, month=11, day=3))

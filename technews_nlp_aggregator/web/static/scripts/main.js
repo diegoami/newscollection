@@ -11,7 +11,14 @@ select_header = function(element) {
     topNav_element.setAttribute("class", "active");
 }
 
+
+
 submit_story = function(method, id1, id2) {
+    document.getElementById("yes_button").disabled = true;
+    document.getElementById("almost_button").disabled = true;
+    document.getElementById("no_button").disabled = true;
+
+
     var mainForm = document.getElementById("samestory");
     mainForm.action = '/'+method+'/'+id1+'/'+id2;
     mainForm.submit();
@@ -26,7 +33,7 @@ random_url = function() {
 random_article_id = function() {
     var statisticsForm = document.getElementById("statistics_form");
     statisticsForm.action = '/statistics_random';
-    mainForm.submit();
+    statisticsForm.submit();
 }
 
 skip = function() {

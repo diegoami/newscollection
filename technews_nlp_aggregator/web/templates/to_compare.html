@@ -19,12 +19,12 @@
 
 <div class="buttonrow">
 <form id="samestory" action="">
-    <button class="buttoncolumn btn-big green tooltip"  onclick="submit_story('samestory','{{A1.AIN_ID}}', '{{A2.AIN_ID}}' );">YES <span class="tooltiptext">Could these two articles have the same title?<BR>Is the main story of each article covered also in the other article?</span>
+    <button id="yes_button" class="buttoncolumn btn-big green tooltip"  onclick="submit_story('samestory','{{A1.AIN_ID}}', '{{A2.AIN_ID}}' );">YES <span class="tooltiptext">Could these two articles have the same title?<BR>Is the main story of each article covered also in the other article?</span>
     </button>
-    <button class="buttoncolumn btn-big yellow tooltip" onclick="submit_story('related', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">ALMOST<span class="tooltiptext">Could the content of one of two articles be added seamlessly to the other article?<BR> Can you think of at least two common tags for these two articles?</span>
+    <button id="almost_button" class="buttoncolumn btn-big yellow tooltip" onclick="submit_story('related', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">ALMOST<span class="tooltiptext">Could the content of one of two articles be added seamlessly to the other article?<BR> Can you think of at least two common tags for these two articles?</span>
     </button>
 
-    <button class="buttoncolumn btn-big red tooltip"  onclick="submit_story('unrelated', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">NO<span class="tooltiptext">Does not satisfy the previous conditions.</span>
+    <button id="no_button" class="buttoncolumn btn-big red tooltip"  onclick="submit_story('unrelated', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">NO<span class="tooltiptext">Does not satisfy the previous conditions.</span>
      <button class="buttoncolumn btn-big grey tooltip"  onclick="skip();">SKIP<span class="tooltiptext">I wouldn't know.</span>
 
     </button>
@@ -35,7 +35,7 @@
 </div>
 <div class="row">
   <div class="column left">
-    <h2>{{A1.AIN_TITLE}}</h2>
+    <h3>{{A1.AIN_TITLE}}</h3>
     <p><I>ID:</I> {{A1.AIN_ID}}</p>
 
     <p><I>URL:</I> <A HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A></p>
@@ -55,7 +55,7 @@
   </div>
     <div class="column middle"></div>
   <div class="column right">
-    <h2>{{A2.AIN_TITLE}}</h2>
+    <h3>{{A2.AIN_TITLE}}</h3>
       <p><I>ID:</I> {{A2.AIN_ID}}</p>
 
       <p><I>URL:</I> <A HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A></p>

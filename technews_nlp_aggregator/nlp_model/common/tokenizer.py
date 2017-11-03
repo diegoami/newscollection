@@ -2,9 +2,10 @@
 
 
 from . import SimpleSentenceTokenizer, TechArticlesSentenceTokenizer
-from . import TechArticlesTokenExcluder, SimpleTokenExcluder
+
 from . import TechArticlesWordTokenizer
 from . import TechArticlesCleaner
+
 import logging
 
 
@@ -13,47 +14,42 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 class DefaultTokenizer:
 
-    def __init__(self, sentence_tokenizer=None, token_excluder=None, word_tokenizer=None):
+    def __init__(self, sentence_tokenizer=None, word_tokenizer=None):
         self.sentence_tokenizer = TechArticlesSentenceTokenizer() if not sentence_tokenizer else sentence_tokenizer
-        self.token_excluder = TechArticlesTokenExcluder() if not token_excluder else token_excluder
+
         self.word_tokenizer = TechArticlesWordTokenizer() if not word_tokenizer else word_tokenizer
         self.articles_cleaner = TechArticlesCleaner()
 
     def tokenize_ddf(self, articleDF):
-        documents = articleDF['text'].tolist()
-        titles = articleDF['title'].tolist()
-        logging.info("Tokenizing documents... this might take a while")
+
         texts = []
 
-        for title, document in zip(titles, documents):
-            tokdoc = self.tokenize_doc(title, document)
-            if tokdoc:
-                texts.append(tokdoc)
-        logging.info("Done with tokenizing")
-        # remove words that appear only once
 
+        def tokenize (row):
+            texts.append(self.tokenize_doc(row['title'],row['text']))
+
+            if (len(texts) % 100 == 0):
+                print("Processed  {}".format(len(texts)))
+            return row
+
+
+        logging.info("Tokenizing documents... this might take a while")
+
+        articleDF.apply(tokenize , axis=1)
         return texts
 
     def tokenize_doc(self, title, document):
-        all_sentences = self.sentence_tokenizer.process(title, document)
-        if all_sentences:
+        return self.word_tokenizer.tokenize_fulldoc(title) + self.word_tokenizer.tokenize_fulldoc(document)
 
-            tokenized_sentences = self.word_tokenizer.tokenize_sentences(all_sentences)
-            words = []
-            for tokenized_sentence in tokenized_sentences:
-                for token in tokenized_sentence:
-                    if self.token_excluder.is_token_allowed(token):
-                        words.append(token)
-
-            return words
-        else:
-            return None
+    def tokenize_fulldoc(self, all_doc):
+        words = self.word_tokenizer.tokenize_fulldoc(all_doc)
+        return words
 
     def clean_text(self, text):
 
         text = self.articles_cleaner.do_clean(text)
         text = self.sentence_tokenizer.clean_sentences(text)
-        return "\n".join(text)
+        return "".join(text)
 
 
 defaultTokenizer = DefaultTokenizer()

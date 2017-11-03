@@ -13,7 +13,7 @@ import yaml
 config = yaml.safe_load(open('../../../config.yml'))
 db_config = yaml.safe_load(open(config["key_file"]))
 tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
-                             token_excluder=TechArticlesTokenExcluder(),
+
                              word_tokenizer=TechArticlesWordTokenizer())
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
