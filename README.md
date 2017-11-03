@@ -33,7 +33,7 @@ A prototype is currently accessible [on this site](http://www.techcontroversy.co
 
 ### Similar articles and conteroversial topics
 
-You can find "controversial" topics in the datbase. [You can browse through the articles](http://www.techcontroversy.com:8080/duplicates/0') that have been paired because the system considers it likely that they are talking about the same topic, possibly under a different slant.
+You can find "controversial" topics in the datbase. [You can browse through the articles](http://www.techcontroversy.com:8080/duplicates/0) that have been paired because the system considers it likely that they are talking about the same topic, possibly under a different slant.
 
 [You can help validate this pairings here](http://www.techcontroversy.com:8080/randomrelated).
 
@@ -55,7 +55,7 @@ I am still in the exploring phase as to what technology I should use. So far I b
 
 ## Validation
 
-I have included the possibility to let users [give feedback](), whether articles actually are about the same story, or at least related. If enough data is gathered, other approaches to train models will be used, such as neural networks.
+I have included the possibility to let users give feedback, whether articles actually are about the same story, or at least related. If enough data is gathered, other approaches to train models will be used, such as neural networks.
 
 ## Possible developments
 
