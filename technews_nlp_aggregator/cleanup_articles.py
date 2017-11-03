@@ -24,18 +24,31 @@ def cleaned_text(title, text):
     text = sentence_tokenizer.clean_sentences(text)
     return "\n".join(text)
 
-articleFilteredDF = articleLoader.articlesDF
+articleFilteredDF = articleLoader.articlesDF[articleLoader.articlesDF['article_id'] > 44000]
 con = articleDatasetRepo.get_connection()
 
 def convert_file(id, con):
 
     article_record = articleDatasetRepo.load_article_with_text(id)
-    articleDatasetRepo.update_article_text(id, article_record["ATX_TEXT_ORIG"], con)
+    articleDatasetRepo.update_article_text(id, article_record["ATX_TEXT_ORIG"], con, False)
 
 con = articleDatasetRepo.get_connection()
 count = 0
 for index, row in articleFilteredDF.iterrows():
-    convert_file(row['article_id'], con )
+    con.begin()
+    convert_file(row['article_id'], con)
     count += 1
     if (count % 100 == 0):
         print("Processed {} articles".format(count ) )
+        try:
+            con.commit()
+            con.begin()
+        except:
+            print("Could not commit")
+            con.rollback()
+
+try:
+    con.commit()
+except:
+    print("Could not commit")
+    con.rollback()

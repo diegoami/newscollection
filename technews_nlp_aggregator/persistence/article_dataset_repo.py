@@ -82,11 +82,12 @@ class ArticleDatasetRepo():
 
         return result
 
-    def update_article_text(self,  article_id, new_text, con = None, ):
+    def update_article_text(self,  article_id, new_text, con = None, commit=True ):
         result = False
         try:
             con = self.get_connection() if not con else con
-            con.begin()
+            if commit:
+                con.begin()
             row = con['ARTICLE_TEXT'].find_one(ATX_AIN_ID=article_id)
             if row:
                 pk = row["ATX_ID"]
@@ -100,7 +101,9 @@ class ArticleDatasetRepo():
                     }),['ATX_ID']
                 )
                 result = True
-            con.commit()
+            if commit:
+
+                con.commit()
 
         except:
             traceback.print_exc()
