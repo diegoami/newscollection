@@ -39,6 +39,7 @@ def statistics(article_id):
             article["TAGS"], article["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(article_id)
             sp_words = retrieve_sp_words(article["ATX_TEXT"])
             tokens = app.application.tokenizeInfo.get_tokenized_article(article["AIN_TITLE"], article["ATX_TEXT"])
+            trigrams = app.application.gramFacade.phrase(tokens )
             row = app.application.articleLoader.articlesDF[app.application.articleLoader.articlesDF['article_id'] == int(article_id)]
             id = row.index[0]
             bows = app.application.lsiInfo.get_words_docid(id)
@@ -47,7 +48,7 @@ def statistics(article_id):
             article["ORGANIZATIONS"], article["PERSONS"], article["NOUNS"]= retrieve_entities(article["ATX_TEXT"])
             highlight_entities(article, article["ORGANIZATIONS"], article["PERSONS"], article["NOUNS"])
 
-            return render_template('statistics.html', A=article, sp_words=sp_words, tokens=tokens, bows=bows, topics=topics, docvecs=docvecs, article_id=article_id)
+            return render_template('statistics.html', A=article, sp_words=sp_words, tokens=trigrams , bows=bows, topics=topics, docvecs=docvecs, article_id=article_id)
         else:
             return render_template('statistics.html')
     else:
