@@ -45,8 +45,8 @@ def duplicates(page_id=0):
 
 @app.route('/examples')
 def examples(page_id=0):
-    yes_articles = app.application.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE = 1 ")
-    almost_articles = app.application.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE = 0.5 ")
+    yes_articles = app.application.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE > 0.9 ")
+    almost_articles = app.application.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE > 0.3 AND U_SCORE < 0.7 ")
     return render_template('examples.html', yes_examples=yes_articles[:8], almost_examples=almost_articles[:8] )
 
 
