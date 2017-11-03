@@ -34,9 +34,9 @@ class Doc2VecGenerator:
     def create_model(self, texts):
 
         self.it = LabeledLineSentence( range(len(texts)), texts)
-
+        logging.info("Creating model with {} texts".format(len(texts)))
         self.model = Doc2Vec(size=600, window=10,  workers=11, alpha=0.05,
-                             iter=25, min_count=4, sample=0)  # use fixed learning rate
+                             iter=30, min_count=4, sample=0)  # use fixed learning rate
         self.model.build_vocab(self.it)
 
     def train_model(self):
@@ -44,7 +44,6 @@ class Doc2VecGenerator:
         logging.info("Starting to train......")
 
         self.model.train(self.it, total_examples=self.model.corpus_count, epochs=self.model.iter)
-        #   logging.info("Finished training epoch " + str(epoch))
 
         logging.info("Training completed, saving to  " + self.model_output_dir)
         self.model.save(self.model_output_dir+MODEL_FILENAME )

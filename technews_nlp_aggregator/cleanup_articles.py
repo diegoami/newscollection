@@ -30,10 +30,12 @@ con = articleDatasetRepo.get_connection()
 def convert_file(id, con):
 
     article_record = articleDatasetRepo.load_article_with_text(id)
-    transformed_txt = defaultTokenizer.clean_text(article_record["ATX_TEXT_ORIG"])
-    articleDatasetRepo.update_article_text(id, transformed_txt, con)
+    articleDatasetRepo.update_article_text(id, article_record["ATX_TEXT_ORIG"], con)
 
 con = articleDatasetRepo.get_connection()
-for file_id in range(37172, 37351):
-    convert_file(file_id, con )
-
+count = 0
+for index, row in articleFilteredDF.iterrows():
+    convert_file(row['article_id'], con )
+    count += 1
+    if (count % 100 == 0):
+        print("Processed {} articles".format(count ) )

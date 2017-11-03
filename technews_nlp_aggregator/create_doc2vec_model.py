@@ -19,12 +19,12 @@ pickle_dir = config["pickle_dir"]
 models_dir = config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'
 os.mkdir(models_dir)
 
-pickle_file = config["text_pickle_file"]
+pickle_file = config["trigrams_pickle_file"]
 with open(pickle_file, 'rb') as f:
-    texts = pickle.load(f)
+    trigrams = pickle.load(f)
     doc2VecGenerator = Doc2VecGenerator( models_dir)
 
-    doc2VecGenerator.create_model(texts)
+    doc2VecGenerator.create_model(trigrams)
     doc2VecGenerator.train_model()
 
 if os.path.islink(config["doc2vec_models_dir_link"]):

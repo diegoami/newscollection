@@ -148,7 +148,7 @@ class SimilarArticlesRepo:
         if filter_criteria:
 
             allowed_tokens = ["T_SCORE", "D_SCORE", "U_SCORE", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
-            sp_tokens = defaultTokenizer.word_tokenizer.tokenize_doc(filter_criteria)
+            sp_tokens = defaultTokenizer.word_tokenizer.tokenize_fulldoc(filter_criteria)
             if (len(sp_tokens ) >= 3):
                 for sp_token in sp_tokens:
                     if (len(sp_token.strip()) == 0):

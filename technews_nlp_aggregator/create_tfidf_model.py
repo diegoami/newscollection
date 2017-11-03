@@ -6,7 +6,7 @@ sys.path.append('..')
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from technews_nlp_aggregator.nlp_model.generation import TfidfGenerator
-
+from technews_nlp_aggregator.nlp_model.publish import  GramFacade
 
 
 
@@ -20,11 +20,12 @@ models_dir = config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'
 
 os.mkdir(models_dir)
 
-pickle_file = config["text_pickle_file"]
-with open(pickle_file, 'rb') as f:
-    texts = pickle.load(f)
+trigrams_file = config["trigrams_pickle_file"]
+with open(trigrams_file , 'rb') as f:
+    trigrams = pickle.load(f)
+    logging.info("Loaded {} trigrams".format(len(trigrams)))
     tfidfGenerator = TfidfGenerator( models_dir)
-    tfidfGenerator.create_model(texts)
+    tfidfGenerator.create_model(trigrams)
 
 
 if os.path.islink(config["lsi_models_dir_link"]):

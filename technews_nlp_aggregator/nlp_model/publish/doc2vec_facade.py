@@ -1,23 +1,21 @@
 from gensim.models import Doc2Vec
-from nltk.tokenize import word_tokenize
-import datetime
+
 from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
-import pandas as pd
-from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
+
+from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 import numpy as np
 MIN_FREQUENCY = 3
-
-from gensim import utils, matutils  # utility fnc for pickling, common scipy operations etc
 
 
 from numpy import *
 class Doc2VecFacade(ClfFacade):
 
-    def __init__(self, model_filename, article_loader, tokenizer=None):
+    def __init__(self, model_filename, article_loader, gramFacade, tokenizer=None):
         self.model_filename = model_filename
         self.article_loader = article_loader
-        self.name="DOC2VEC-V3-600"
-        self.tokenizer = DefaultTokenizer() if not tokenizer else tokenizer
+        self.name="DOC2VEC-V4-600"
+        self.gramFacade = gramFacade
+        self.tokenizer = defaultTokenizer if not tokenizer else tokenizer
 
 
     def load_models(self):
@@ -26,7 +24,8 @@ class Doc2VecFacade(ClfFacade):
 
     def get_related_articles_and_sims(self, doc, n):
         wtok = self.tokenizer.tokenize_doc('', doc)
-        infer_vector = self.model.infer_vector(wtok)
+        p_wtok = self.gramFacade.phrase(wtok)
+        infer_vector = self.model.infer_vector(p_wtok )
 
         similar_documents = self.model.docvecs.most_similar([infer_vector], topn=n)
 
@@ -44,7 +43,8 @@ class Doc2VecFacade(ClfFacade):
 
     def get_related_articles_and_score_doc(self, doc, start=None, end=None):
         wtok = self.tokenizer.tokenize_doc('', doc)
-        infer_vector = self.model.infer_vector(wtok)
+        p_wtok = self.gramFacade.phrase(wtok)
+        infer_vector = self.model.infer_vector(p_wtok)
 
         if (start and end):
             interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
@@ -75,7 +75,7 @@ class Doc2VecFacade(ClfFacade):
             scores = self.model.docvecs.most_similar([docid], topn=None)
 
             args_scores = np.argsort(-scores)
-            return self.article_loader.articlesDF.iloc[args_scores].index, scores[args_scores]
+            return self.article_loader.articlesDF.loc[args_scores].index, scores[args_scores]
         else:
             return None, None
 

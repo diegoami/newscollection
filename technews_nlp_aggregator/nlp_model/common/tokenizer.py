@@ -29,20 +29,26 @@ class DefaultTokenizer:
             texts.append(self.tokenize_doc(row['title'],row['text']))
 
             if (len(texts) % 100 == 0):
-                print("Processed  {}".format(len(texts)))
+                logging.info("Processed  {} texts".format(len(texts)))
             return row
 
 
         logging.info("Tokenizing documents... this might take a while")
-
-        articleDF.apply(tokenize , axis=1)
+        logging.info("ArticleDF has {} rows ".format(len(articleDF)))
+        #articleDF.apply(tokenize , axis=1)
+        for index, row in articleDF.iterrows():
+            texts.append(self.tokenize_doc(row['title'], row['text']))
+            if (len(texts) % 100 == 0):
+                logging.info("Processed  {} texts".format(len(texts)))
+            #print(len(texts), len(articleDF['text']), len(articleDF['text'].tolist()))
         return texts
 
     def tokenize_doc(self, title, document):
-        return self.word_tokenizer.tokenize_fulldoc(title) + self.word_tokenizer.tokenize_fulldoc(document)
+        return self.tokenize_fulldoc(title) + self.tokenize_fulldoc(document)
 
     def tokenize_fulldoc(self, all_doc):
         words = self.word_tokenizer.tokenize_fulldoc(all_doc)
+
         return words
 
     def clean_text(self, text):

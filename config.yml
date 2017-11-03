@@ -17,3 +17,9 @@ google_key_file     : /media/diego/QData/techarticles/keys/google_search.yml
 key_file           : /media/diego/QData/techarticles/keys/db_coords.yml
 pickle_dir          : /media/diego/QData/techarticles/pickle/
 text_pickle_file     : /media/diego/QData/techarticles/pickle/texts.p
+bigrams_pickle_file     : /media/diego/QData/techarticles/pickle/bigrams.p
+trigrams_pickle_file     : /media/diego/QData/techarticles/pickle/trigrams.p
+
+phrases_model_dir_base    : /media/diego/QData/techarticles/models/phrases/phrases__
+phrases_model_dir_link     : /media/diego/QData/techarticles/models/phrases/phrases_model
+

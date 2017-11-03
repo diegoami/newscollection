@@ -6,10 +6,10 @@ from technews_nlp_aggregator.jobs import ArticleComparatorJob
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.common.util import daterange
-from technews_nlp_aggregator.nlp_model.publish import TfidfFacade, Doc2VecFacade
+from technews_nlp_aggregator.nlp_model.publish import TfidfFacade, Doc2VecFacade, GramFacade
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesTokenExcluder, SimpleTokenExcluder, TechArticlesWordTokenizer
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesWordTokenizer, defaultTokenizer
 from datetime import datetime, date
 
 
@@ -19,15 +19,12 @@ db_url    = db_config["db_url"]
 articleDatasetRepo = ArticleDatasetRepo(db_url)
 articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles(True)
+gramFacade = GramFacade(config["phrases_model_dir_link"])
 
-tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
-
-                             word_tokenizer=TechArticlesWordTokenizer())
-
-tfidfFacade = TfidfFacade(config["lsi_models_dir_link"], article_loader=articleLoader, tokenizer=tokenizer)
+tfidfFacade = TfidfFacade(config["lsi_models_dir_link"], article_loader=articleLoader, gramFacade=gramFacade, tokenizer=defaultTokenizer)
 tfidfFacade.load_models()
 
-doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], article_loader=articleLoader, tokenizer=tokenizer)
+doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], article_loader=articleLoader, gramFacade=gramFacade, tokenizer=defaultTokenizer)
 doc2VecFacade.load_models()
 
 def find_with_model(model, thresholds,begin, finish ):

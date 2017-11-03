@@ -8,7 +8,7 @@ import logging
 
 from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
-from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
+from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
 from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 import numpy as np
@@ -19,11 +19,14 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 class TfidfFacade(ClfFacade):
 
-    def __init__(self, model_dir, article_loader, tokenizer=None):
+    def __init__(self, model_dir, article_loader, gramFacade, tokenizer=None):
         self.model_dir = model_dir
         self.article_loader = article_loader
-        self.name = 'TFIDF-V3-500'
-        self.tokenizer = DefaultTokenizer() if not tokenizer else tokenizer
+        self.name = 'TFIDF-V4-500'
+        self.gramFacade = gramFacade
+        self.tokenizer = defaultTokenizer if not tokenizer else tokenizer
+
+
 
     def load_models(self):
         self.dictionary = corpora.Dictionary.load(self.model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference
@@ -34,7 +37,8 @@ class TfidfFacade(ClfFacade):
 
     def get_vec(self,doc):
         words = self.tokenizer.tokenize_doc('', doc)
-        vec_bow = self.dictionary.doc2bow(words)
+        p_words = self.gramFacade.phrase(words)
+        vec_bow = self.dictionary.doc2bow(p_words)
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
 

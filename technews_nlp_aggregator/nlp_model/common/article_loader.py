@@ -32,11 +32,11 @@ class ArticleLoader:
     def articles_in_interval(self,start, end):
         return self.articlesDF[(self.articlesDF['date_p'] >= start) & (self.articlesDF['date_p'] <= end) ]
 
-    def load_all_articles(self, load_text=True, load_meta=True, limit=None):
+    def load_all_articles(self, load_text=True, limit=None):
         logging.info("Loading articles...")
-        self.articlesDF =  self.articlesRepo.load_articles(load_text=True, load_meta=load_meta)
+        self.articlesDF =  self.articlesRepo.load_articles()
 
-        self.articlesDF =  exclude_articles(self.articlesDF )
+
         if (not load_text):
             self.articlesDF.drop('text', inplace=True, axis=1)
 

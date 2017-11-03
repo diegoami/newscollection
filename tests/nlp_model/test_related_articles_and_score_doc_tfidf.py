@@ -2,25 +2,24 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesTokenExcluder, SimpleTokenExcluder, TechArticlesWordTokenizer
 
-from technews_nlp_aggregator.nlp_model.publish import TfidfFacade, Doc2VecFacade
+from technews_nlp_aggregator.nlp_model.publish import TfidfFacade, Doc2VecFacade, GramFacade
 import yaml
 
 
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 import yaml
 
 config = yaml.safe_load(open('../../config.yml'))
 db_config = yaml.safe_load(open(config["key_file"]))
-tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
 
-                             word_tokenizer=TechArticlesWordTokenizer())
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
 articleLoader.load_all_articles(False)
-tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader, tokenizer)
+gramFacade = GramFacade(config["phrases_model_dir_link"])
+tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader, gramFacade, defaultTokenizer)
 tfidfFacade.load_models()
-doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader, tokenizer)
+doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader, gramFacade, defaultTokenizer)
 doc2VecFacade.load_models()
 
 article1 = """

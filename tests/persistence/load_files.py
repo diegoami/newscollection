@@ -5,7 +5,7 @@ config = yaml.safe_load(open('../../config.yml'))
 db_config = yaml.safe_load(open(config["key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
-articles = articleDatasetRepo.load_articles(load_meta=False, load_text=False)
+articles = articleDatasetRepo.load_articles()
 
 #for article in articles[:10]:
 #    print(article)
@@ -24,6 +24,6 @@ print(articles10.iloc[2,:]['text'])
 
 
 
-articles2 = articleDatasetRepo.load_articles(load_meta=False, load_text=True)
+articles2 = articleDatasetRepo.load_articles()
 print(articles2.head())
 print(articles2.info())
