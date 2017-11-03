@@ -21,7 +21,7 @@ articleLoader.load_all_articles(False)
 gramFacade = GramFacade(config["phrases_model_dir_link"])
 tfidfFacade   = TfidfFacade(config["lsi_models_dir_link"], articleLoader, gramFacade=gramFacade)
 tfidfFacade.load_models()
-tfidfFacade.lsi.show_topics(num_topics=200, num_words=100, log=True)
+tfidfFacade.lsi.show_topics(num_topics=400, num_words=100, log=True)
 
 
 

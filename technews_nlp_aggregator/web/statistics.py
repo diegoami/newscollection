@@ -1,7 +1,8 @@
 
 from flask import render_template,  request
-from technews_nlp_aggregator.nlp_model.spacy import retrieve_sp_words
+from technews_nlp_aggregator.nlp_model.spacy import retrieve_sp_words, retrieve_entities
 from . import app
+from .util import highlight_entities
 
 @app.route('/statistics_random', methods=['POST'])
 def statistics_random():
@@ -43,6 +44,8 @@ def statistics(article_id):
             bows = app.application.lsiInfo.get_words_docid(id)
             topics = app.application.lsiInfo.get_topics_docid(id)
             docvecs=app.application.doc2VecInfo.get_vector_for_docid(id)
+            article["ORGANIZATIONS"], article["PERSONS"], article["NOUNS"]= retrieve_entities(article["ATX_TEXT"])
+            highlight_entities(article, article["ORGANIZATIONS"], article["PERSONS"], article["NOUNS"])
 
             return render_template('statistics.html', A=article, sp_words=sp_words, tokens=tokens, bows=bows, topics=topics, docvecs=docvecs, article_id=article_id)
         else:

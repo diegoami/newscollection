@@ -78,7 +78,7 @@
 
 .green {
   color: black;
-  background-color: green;
+  background-color: lightgreen;
 }
 
 
@@ -96,8 +96,12 @@ span.organization {
     font-weight: bold;
 }
 
+span.noun {
+    font-style: italic;
+}
+
 span.person {
-    font-weight: bold;
+    text-decoration: underline;
 }
 
 .tooltip {

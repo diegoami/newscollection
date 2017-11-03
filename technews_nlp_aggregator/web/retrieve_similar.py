@@ -68,8 +68,8 @@ def retrieve_similar_url():
 
 
 def common_retrieve_url(url=None, article_id=None, n_articles=50):
-    related_articles_tdf = retrieve_articles_url(app.application.tfidfFacade, url, n_articles)
-    related_articles_doc2vec = retrieve_articles_url(app.application.doc2VecFacade, url, n_articles)
+    related_articles_tdf = retrieve_articles_url(app.application.tfidfFacade, url)
+    related_articles_doc2vec = retrieve_articles_url(app.application.doc2VecFacade, url)
     if related_articles_tdf and related_articles_doc2vec:
         return render_template('search_url.html', tdf_articles=related_articles_tdf,
                                doc2vec_articles=related_articles_doc2vec, search_url=url, article_id=article_id)

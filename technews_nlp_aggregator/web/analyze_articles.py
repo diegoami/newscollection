@@ -8,8 +8,9 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 import traceback
 
 from . import app
-import re
+from .util import highlight_entities
 
+#
 DEFAULT_FILTER_CRITERIA = 'T_SCORE > 0.8 AND D_SCORE > 0.4 OR ( U_SCORE > 0.5 )'
 
 @app.route('/filterduplicates', methods=['POST'])
@@ -48,11 +49,6 @@ def examples(page_id=0):
     almost_articles = app.application.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE = 0.5 ")
     return render_template('examples.html', yes_examples=yes_articles[:8], almost_examples=almost_articles[:8] )
 
-def enclose_with_span(article, str, class_id):
-    try:
-        article["ATX_TEXT"] = re.sub(str, '<SPAN class="'+class_id+'">' + str+ '</SPAN>', article["ATX_TEXT"])
-    except:
-        logging.warning("Could not replace "+str)
 
 
 @app.route('/compare/<int:id1>/<int:id2>')
@@ -61,17 +57,11 @@ def compare(id1, id2):
     article1["ATX_TEXT"], article2["ATX_TEXT"] = app.application.tokenizer.clean_text(article1["ATX_TEXT"]), app.application.tokenizer.clean_text(article2["ATX_TEXT"])
     article1["TAGS"], article1["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id1)
     article2["TAGS"], article2["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id2)
-    article1["ORGANIZATIONS"], article1["PERSONS"] = retrieve_entities(article1["ATX_TEXT"])
-    article2["ORGANIZATIONS"], article2["PERSONS"] = retrieve_entities(article2["ATX_TEXT"])
+    article1["ORGANIZATIONS"], article1["PERSONS"], article1["NOUNS"] = retrieve_entities(article1["ATX_TEXT"])
+    article2["ORGANIZATIONS"], article2["PERSONS"], article2["NOUNS"] = retrieve_entities(article2["ATX_TEXT"])
+    highlight_entities(article1, article1["ORGANIZATIONS"], article1["PERSONS"], article1["NOUNS"])
+    highlight_entities(article2, article2["ORGANIZATIONS"], article2["PERSONS"], article2["NOUNS"])
 
-    for organization in article1["ORGANIZATIONS"]:
-        enclose_with_span(article1, organization, 'organization')
-    for organization in article2["ORGANIZATIONS"]:
-        enclose_with_span(article2, organization, 'organization')
-    for person in article1["PERSONS"]:
-        enclose_with_span(article1, person, 'person')
-    for person in article2["PERSONS"]:
-        enclose_with_span(article2, person, 'person')
     return render_template('to_compare.html', A1=article1, A2=article2)
 
 

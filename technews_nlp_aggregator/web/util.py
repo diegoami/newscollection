@@ -1,5 +1,7 @@
 from technews_nlp_aggregator.common import extract_source, extract_date_str, extract_tags
-
+import logging
+import re, html
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
 def extract_related_articles(articleLoader, sims):
@@ -49,3 +51,20 @@ def read_int_from_form(form, id):
     intv_str = form.get(id, '50')
     intv = int(intv_str) if intv_str.isdigit() else 50
     return intv
+
+def enclose_with_span(article, str, class_id):
+    try:
+
+        article["ATX_TEXT"] = re.sub(r'\b(%s)\b'%str, '<SPAN class="'+class_id+'">' + str+ '</SPAN>', article["ATX_TEXT"], flags=re.IGNORECASE)
+    except:
+        logging.warning("Could not replace "+str)
+
+
+def highlight_entities(article, organizations, persons, nouns):
+    #article["ATX_TEXT"] = html.escape(article["ATX_TEXT"], True)
+    for organization in organizations:
+        enclose_with_span(article, organization, 'organization')
+    for person in persons:
+        enclose_with_span(article, person, 'person')
+    for noun in nouns:
+        enclose_with_span(article, noun, 'noun')

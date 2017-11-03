@@ -20,3 +20,4 @@ import technews_nlp_aggregator.web.retrieve_similar
 import technews_nlp_aggregator.web.analyze_articles
 
 import technews_nlp_aggregator.web.statistics
+from .util import enclose_with_span, highlight_entities
