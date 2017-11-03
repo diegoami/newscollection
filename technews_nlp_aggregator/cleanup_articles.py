@@ -24,7 +24,7 @@ def cleaned_text(title, text):
     text = sentence_tokenizer.clean_sentences(text)
     return "\n".join(text)
 
-articleFilteredDF = articleLoader.articlesDF[articleLoader.articlesDF['article_id'] > 44000]
+articleFilteredDF = articleLoader.articlesDF
 con = articleDatasetRepo.get_connection()
 
 def convert_file(id, con):

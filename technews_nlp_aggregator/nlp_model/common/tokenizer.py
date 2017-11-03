@@ -55,7 +55,7 @@ class DefaultTokenizer:
 
         text = self.articles_cleaner.do_clean(text)
         text = self.sentence_tokenizer.clean_sentences(text)
-        return "".join(text)
+        return " ".join(text)
 
 
 defaultTokenizer = DefaultTokenizer()

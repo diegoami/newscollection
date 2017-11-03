@@ -21,8 +21,8 @@ tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
 
 tokenizeInfo = TokenizeInfo(tokenizer)
 from random import randint
-for i in range(100):
-    index, article = articleLoader.get_random_article()
-    article_with_text = articleDatasetRepo.load_article_with_text(article['article_id'] )
-    print(article_with_text)
-    print(tokenizeInfo.get_tokenized_article(article_with_text['AIN_TITLE'], article_with_text['ATX_TEXT']))
+#for i in range(100):
+article = articleLoader.get_article(45105)
+article_with_text = articleDatasetRepo.load_article_with_text(article['article_id'] )
+print(article_with_text)
+print(tokenizeInfo.get_tokenized_article(article_with_text['AIN_TITLE'], article_with_text['ATX_TEXT']))
