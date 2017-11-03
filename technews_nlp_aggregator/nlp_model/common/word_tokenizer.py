@@ -35,6 +35,10 @@ class TechArticlesWordTokenizer:
             tokenized_sentences.append(self.tokenize_fulldoc(sentence))
         return tokenized_sentences
 
+    def simple_tokenize(self, doc):
+        tok_doc = spacy_nlp(doc.lower())
+        return [token.text for token in tok_doc]
+
     def tokenize_fulldoc(self, doc):
         tok_doc = spacy_nlp(doc.lower())
         #return [word.text.strip() for word in tok_doc if not word.is_stop and len(word.text.strip()) > 0]
