@@ -1,6 +1,7 @@
 from random import randint
 from flask import  request, render_template, session
 from technews_nlp_aggregator.nlp_model.spacy.utils import retrieve_entities
+
 import logging
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -57,6 +58,7 @@ def enclose_with_span(article, str, class_id):
 @app.route('/compare/<int:id1>/<int:id2>')
 def compare(id1, id2):
     article1, article2 = app.application.articleDatasetRepo.load_articles_with_text(id1, id2)
+    article1["ATX_TEXT"], article2["ATX_TEXT"] = app.application.tokenizer.clean_text(article1["ATX_TEXT"]), app.application.tokenizer.clean_text(article2["ATX_TEXT"])
     article1["TAGS"], article1["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id1)
     article2["TAGS"], article2["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id2)
     article1["ORGANIZATIONS"], article1["PERSONS"] = retrieve_entities(article1["ATX_TEXT"])
@@ -66,7 +68,10 @@ def compare(id1, id2):
         enclose_with_span(article1, organization, 'organization')
     for organization in article2["ORGANIZATIONS"]:
         enclose_with_span(article2, organization, 'organization')
-
+    for person in article1["PERSONS"]:
+        enclose_with_span(article1, person, 'person')
+    for person in article2["PERSONS"]:
+        enclose_with_span(article2, person, 'person')
     return render_template('to_compare.html', A1=article1, A2=article2)
 
 

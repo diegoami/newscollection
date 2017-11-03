@@ -33,10 +33,7 @@ def create_pickle(tokenizer):
         os.unlink(config["text_pickle_file"])
     os.symlink(pickle_file, config["text_pickle_file"])
 
-tokenizer = DefaultTokenizer(sentence_tokenizer=TechArticlesSentenceTokenizer(),
-                             word_tokenizer=TechArticlesWordTokenizer())
-create_pickle( tokenizer=tokenizer)
-#create_phrases( tokenizer=tokenizer)
+create_pickle(defaultTokenizer)
 
 
 

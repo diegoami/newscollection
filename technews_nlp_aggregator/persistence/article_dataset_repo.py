@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 
 from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 import pandas as pd
 
 
@@ -82,28 +82,27 @@ class ArticleDatasetRepo():
 
         return result
 
-    def update_article_text(self,  article_id, new_text, con = None, commit=True ):
+    def update_article_text(self,  article_id, new_text, con = None ):
         result = False
         try:
             con = self.get_connection() if not con else con
-            if commit:
-                con.begin()
+
+            con.begin()
             row = con['ARTICLE_TEXT'].find_one(ATX_AIN_ID=article_id)
             if row:
                 pk = row["ATX_ID"]
-
+                cleaned_text = defaultTokenizer.clean_text(new_text)
+                logging.debug(cleaned_text)
                 pk = con['ARTICLE_TEXT'].update(
                     dict({
                         "ATX_ID": pk,
                         "ATX_AIN_ID" : article_id,
-                        "ATX_TEXT": defaultTokenizer.clean_text(new_text),
+                        "ATX_TEXT": cleaned_text,
                         "ATX_TEXT_ORIG": new_text
                     }),['ATX_ID']
                 )
                 result = True
-            if commit:
-
-                con.commit()
+            con.commit()
 
         except:
             traceback.print_exc()
@@ -221,6 +220,8 @@ class ArticleDatasetRepo():
         article1 = self.load_article_with_text(id1, con)
         article2 = self.load_article_with_text(id2, con)
         return article1, article2
+
+
 
     def load_article_with_text(self, id, con=None):
         article_info_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT, ATX_TEXT_ORIG FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"

@@ -37,6 +37,7 @@ class DefaultTokenizer:
         logging.info("ArticleDF has {} rows ".format(len(articleDF)))
         #articleDF.apply(tokenize , axis=1)
         for index, row in articleDF.iterrows():
+
             texts.append(self.tokenize_doc(row['title'], row['text']))
             if (len(texts) % 100 == 0):
                 logging.info("Processed  {} texts".format(len(texts)))
@@ -55,7 +56,8 @@ class DefaultTokenizer:
 
         text = self.articles_cleaner.do_clean(text)
         text = self.sentence_tokenizer.clean_sentences(text)
-        return " ".join(text)
+        result = " ".join(text)
+        return result
 
 
 defaultTokenizer = DefaultTokenizer()
