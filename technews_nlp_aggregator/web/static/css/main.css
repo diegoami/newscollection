@@ -62,10 +62,18 @@ img {
     font-family: monospace;
 }
 
-.footer {
 
+footer {
+    position: fixed;
+    left: 0;
     bottom: 0;
-    clear:both;
-    position: absolute;
+    width: 100%;
+    background-color: rgba(75, 157, 211, 0.69);
+    color: black;
+    text-align: center;
+    font-size: 0.5em;
+}
 
+.textarea_label {
+ vertical-align: middle;
 }

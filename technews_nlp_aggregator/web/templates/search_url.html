@@ -2,12 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=60"  >
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=2"  >
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
-
-    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=25"></script>
+{% include 'header_files.html' %}
 
   <title>Find related news</title>
  </head>
@@ -16,15 +11,20 @@
 <div>
 <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
 <P>
-<label for="tdidf_input">Url in database: </label><INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url}}">
+<label for="tdidf_input">Url in database: </label><INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url | default('')}}">
 </INPUT>
 </P>
 <P>
-<label for="n_articles">N articles in page: </label><input type="text" id="n_articles" name="n_articles" value="50"><br/></P>
+<label for="n_articles">N articles: </label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"><br/></P>
 
 <p>
-<input class="main" type="submit" value="Random" onclick="random_url();"  />
+<P>
+<label for="d_days">Date range in days</label><input type="text" id="d_days" name="d_days" value="{{d_days | default(30) }}"><br/></P>
+
+<p>
 <input class="main" type="submit" value="Submit"  />
+
+<input class="main" type="submit" value="Random" onclick="random_url();"  />
 </p>
 </FORM>
 </div>

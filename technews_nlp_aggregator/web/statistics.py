@@ -48,7 +48,7 @@ def statistics(article_id):
             article["ORGANIZATIONS"], article["PERSONS"], article["NOUNS"]= retrieve_entities(article["ATX_TEXT"])
             highlight_entities(article, article["ORGANIZATIONS"], article["PERSONS"], article["NOUNS"])
 
-            return render_template('statistics.html', A=article, sp_words=sp_words, tokens=trigrams , bows=bows, topics=topics, docvecs=docvecs, article_id=article_id)
+            return render_template('statistics.html', A=article,  tokens=trigrams , bows=bows, topics=topics, docvecs=docvecs, article_id=article_id)
         else:
             return render_template('statistics.html')
     else:

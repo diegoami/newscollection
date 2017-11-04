@@ -2,13 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=60"  >
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=50"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=23"  >
-    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
-
- <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+{% include 'header_files.html' %}
 
   <title>Find related news</title>
  </head>

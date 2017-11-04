@@ -66,17 +66,20 @@ class TfidfFacade(ClfFacade):
 
 
 
-    def get_related_articles_and_score_url(self,  url):
+    def get_related_articles_and_score_url(self,  url, d_days   ):
         url_condition = self.article_loader.articlesDF['url'] == url
         docrow = self.article_loader.articlesDF[url_condition]
         if (len(docrow) > 0):
             docid = docrow.index[0]
             url_date = docrow.iloc[0]['date_p']
+            interval_condition = abs((self.article_loader.articlesDF['date_p'] - url_date).dt.days) <= d_days
+
+            articlesFilteredDF = self.article_loader.articlesDF[interval_condition]
 
             vec_lsi = self.get_vec_docid(docid)
-            scores = self.matrix_wrapper[(vec_lsi,None)]
+            scores = self.matrix_wrapper[(vec_lsi,interval_condition)]
             args_scores = np.argsort(-scores)
-            return self.article_loader.articlesDF.iloc[args_scores].index, scores[args_scores], abs(pd.to_numeric(self.article_loader.articlesDF['date_p'] - url_date))
+            return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
         else:
             return None, None
 

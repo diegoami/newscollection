@@ -33,8 +33,12 @@ def show_topics():
 from random import randint
 for i in range(100):
     icorp = randint(0,len(lsi_info.corpus))
-#    print(lsi_info.get_words_docid(icorp))
-    print(lsi_info.get_topics_docid(icorp))
+    i_words_docid, i_topics_docid = lsi_info.get_words_docid(icorp), lsi_info.get_topics_docid(icorp)
+    print(i_words_docid, i_topics_docid )
+
+    jcorp = randint(0,len(lsi_info.corpus))
+    j_words_docid, j_topics_docid = lsi_info.get_words_docid(jcorp), lsi_info.get_topics_docid(jcorp)
+
 
 
 

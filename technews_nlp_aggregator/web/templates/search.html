@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% include 'header_files.html' %}
   <meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=6"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=60"  >
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=2"  >
-    <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=2"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tables.css') }}?v=2"  >
-     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
-
-
-
   <title>Find related news</title>
 
 </head>
 <body onload="javascript:select_header('topnav_search')">
 {% include 'header.html' %}
 <H3> Enter text from a tech article here</H3>
+<I>Can be used also to search in the article database, but results quality may vary</I>
 <div>
 <FORM id="mainForm"  ACTION="/retrieve_similar" METHOD="POST">
 <p>
-<label for="tdidf_input">Enter text here</label>
+<label class="textarea_label" for="tdidf_input" >Enter text here</label>
 
 <textarea id="tdidf_input" name="tdidf_input" rows="30" cols="90">{% if search_text: %}
 {{search_text}}
 {% endif %}
 </textarea>
 </p>
-    <p><label for="n_articles">N Articles per page:</label><input type="text" id="n_articles" name="n_articles" value="50"></p>
+    <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="25"></p>
 
 <p><label for="start">From:</label><input type="text" id="start" name="start" value="2017-01-01"><I>Starts from 2017-01-01</I></p>
 <p><label for="end">To:</label><input type="text" id="end" name="end" value="2017-11-03"><I>Until 2017-11-03</I><br/><br/></p>

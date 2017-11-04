@@ -66,5 +66,5 @@ def highlight_entities(article, organizations, persons, nouns):
         enclose_with_span(article, organization, 'organization')
     for person in persons:
         enclose_with_span(article, person, 'person')
-    for noun in nouns:
-        enclose_with_span(article, noun, 'noun')
+    #for noun in nouns:
+    #   enclose_with_span(article, noun, 'noun')
