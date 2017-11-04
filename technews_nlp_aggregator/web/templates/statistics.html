@@ -51,11 +51,6 @@
           <p class="article_text">{{A.ATX_TEXT_ORIG}}</p>
 
     <h2>Parts of speech</h2>
-    <P class="monospace">
-        {% for sp_word in sp_words: %}
-            ( {{sp_word.tag_}}, {{sp_word.pos_}}, {{sp_word.text}}&nbsp;)
-        {% endfor %}
-    </P>
 
 
     <h2>Tokenization</h2>
@@ -111,5 +106,6 @@
         {% endfor %}
     </TABLE>
 {% endif %}
+{% include 'footer.html' %}
 </body>
 </html>

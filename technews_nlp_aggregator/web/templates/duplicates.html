@@ -84,7 +84,7 @@
 </table>
     <BR>
 <div class="buttonrow">
-        {% if page and page_id > 0: %}
+        {% if page_id and page_id > 0: %}
             <form class="buttoncolumn" action="/duplicates/{{page_id-1}}">
                 <input class="main" type="submit" value="<<< Back" />
             </form>
@@ -102,7 +102,7 @@
     </div>
     <BR>
 
-
+{% include 'footer.html' %}
 </body>
 
 

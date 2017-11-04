@@ -8,6 +8,7 @@ MIN_FREQUENCY = 3
 
 
 from numpy import *
+import pandas as pd
 class Doc2VecFacade(ClfFacade):
 
     def __init__(self, model_filename, article_loader, gramFacade, tokenizer=None):
@@ -72,10 +73,11 @@ class Doc2VecFacade(ClfFacade):
         docrow = self.article_loader.articlesDF[url_condition]
         if (len(docrow) > 0):
             docid = docrow.index[0]
+            url_date = docrow.iloc[0]['date_p']
             scores = self.model.docvecs.most_similar([docid], topn=None)
 
             args_scores = np.argsort(-scores)
-            return self.article_loader.articlesDF.loc[args_scores].index, scores[args_scores]
+            return self.article_loader.articlesDF.loc[args_scores].index, scores[args_scores], abs(pd.to_numeric(self.article_loader.articlesDF['date_p'] - url_date))
         else:
             return None, None
 

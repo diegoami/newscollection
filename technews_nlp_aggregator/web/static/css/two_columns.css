@@ -53,12 +53,14 @@
     padding-right: 100px;
     padding-top: 10px;
     padding-bottom: 10px;
-
+    font-weight: bolder;
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 25px;
     margin-right: 25px;
     font-size : 1.4em;
+     color: rebeccapurple;
+
 }
 
 .btn-small {
@@ -72,23 +74,24 @@
 }
 
 .red {
-  color: black;
-  background-color: red;
+
+  background-color: #ff733f;
 }
 
 .green {
-  color: black;
-  background-color: green;
+
+  background-color: rgba(55, 196, 92, 0.69);
 }
 
 
 .gray {
-  color: black;
+
   background-color: gray;
+    width: 90px;
 }
 
 .yellow {
-  color: black;
+
   background-color: yellow ;
 }
 
@@ -102,6 +105,10 @@ span.noun {
 
 span.person {
     text-decoration: underline;
+}
+
+.shorturl {
+    font-size: 0.7em;
 }
 
 .tooltip {

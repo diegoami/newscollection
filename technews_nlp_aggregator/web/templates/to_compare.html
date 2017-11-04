@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=25"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/two_columns.css') }}?v=27"  >
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/topnav.css') }}?v=7"  >
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=60"  >
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}?v=62"  >
  <script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}?v=3"></script>
  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
 
@@ -38,7 +38,7 @@
     <h3>{{A1.AIN_TITLE}}</h3>
     <p><I>ID:</I> {{A1.AIN_ID}}</p>
 
-    <p><I>URL:</I> <A HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A></p>
+    <p>Original url : <A class="shorturl" HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A> </p>
     <P><I>Date:</I> {{A1.AIN_DATE}}</P>
     <P><I>Authors:</I>
        {% for author in A1.AUTHORS: %}
@@ -58,7 +58,7 @@
     <h3>{{A2.AIN_TITLE}}</h3>
       <p><I>ID:</I> {{A2.AIN_ID}}</p>
 
-      <p><I>URL:</I> <A HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A></p>
+      <p>Original url :  <A class="shorturl" HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A>  </p>
       <P><I>Date:</I> {{A2.AIN_DATE}}</P>
       <P><I>Authors: </I>
        {% for author in A2.AUTHORS: %}
@@ -78,6 +78,6 @@
 <BR>
 <BR>
 
-
+{% include 'footer.html' %}
 </body>
 </html>

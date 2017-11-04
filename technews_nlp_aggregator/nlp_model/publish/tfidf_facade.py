@@ -5,6 +5,7 @@ LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
 import logging
+import pandas as pd
 
 from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
@@ -70,10 +71,12 @@ class TfidfFacade(ClfFacade):
         docrow = self.article_loader.articlesDF[url_condition]
         if (len(docrow) > 0):
             docid = docrow.index[0]
+            url_date = docrow.iloc[0]['date_p']
+
             vec_lsi = self.get_vec_docid(docid)
             scores = self.matrix_wrapper[(vec_lsi,None)]
             args_scores = np.argsort(-scores)
-            return self.article_loader.articlesDF.iloc[args_scores].index, scores[args_scores]
+            return self.article_loader.articlesDF.iloc[args_scores].index, scores[args_scores], abs(pd.to_numeric(self.article_loader.articlesDF['date_p'] - url_date))
         else:
             return None, None
 

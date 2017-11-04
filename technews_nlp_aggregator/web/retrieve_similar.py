@@ -29,10 +29,10 @@ def retrieve_similar():
             start_s = form["start"]
             end_s = form["end"]
 
-            related_articles_tdf = retrieve_articles(app.application.tfidfFacade, text, n_articles, start_s, end_s)
-            related_articles_doc2vec = retrieve_articles(app.application.doc2VecFacade, text, n_articles, start_s, end_s)
-
-            return render_template('search.html', tdf_articles=related_articles_tdf, doc2vec_articles=related_articles_doc2vec, search_text=text )
+            tdf_sims_map = retrieve_sims_map(app.application.tfidfFacade, text, start_s, end_s, n_articles)
+            doc2vec_sims_map = retrieve_sims_map(app.application.doc2VecFacade, text, start_s, end_s,  n_articles)
+            related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map)
+            return render_template('search.html', articles=related_articles[:n_articles],  search_text=text )
 
 
 
@@ -68,16 +68,27 @@ def retrieve_similar_url():
 
 
 def common_retrieve_url(url=None, article_id=None, n_articles=50):
-    related_articles_tdf = retrieve_articles_url(app.application.tfidfFacade, url, n_articles)
-    related_articles_doc2vec = retrieve_articles_url(app.application.doc2VecFacade, url, n_articles)
-    if related_articles_tdf and related_articles_doc2vec:
-        return render_template('search_url.html', tdf_articles=related_articles_tdf,
-                               doc2vec_articles=related_articles_doc2vec, search_url=url, article_id=article_id)
+    tdf_sims_map = retrieve_articles_url_sims(app.application.tfidfFacade, url, n_articles)
+    doc2vec_sims_map = retrieve_articles_url_sims(app.application.doc2VecFacade, url, n_articles)
+    related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map)
+    if related_articles:
+        return render_template('search_url.html', articles=related_articles[:n_articles], search_url=url, article_id=article_id)
     else:
         return render_template('search_url.html', messages=['Could not find related URLs in the database'])
 
 
-def retrieve_articles(classifier, text, n_articles, start_s, end_s):
+def merge_sims_maps(tdf_sims_map, doc2vec_sims_map):
+    both_sims_map = {}
+    for tdf_key in tdf_sims_map:
+        both_sims_map[tdf_key] = tdf_sims_map.get(tdf_key, 0) + doc2vec_sims_map.get(tdf_key, 0)
+    for doc2vec_key in doc2vec_sims_map:
+        both_sims_map[doc2vec_key] = tdf_sims_map.get(doc2vec_key, 0) + doc2vec_sims_map.get(doc2vec_key, 0)
+    sims = sorted(both_sims_map.items(), key=lambda x: x[1], reverse=True)
+    related_articles = extract_related_articles(app.application.articleLoader, sims)
+    return related_articles
+
+
+def retrieve_sims_map(classifier, text, start_s, end_s, n_articles):
     if start_s:
         start = conv_to_date(start_s)
     if end_s:
@@ -88,20 +99,22 @@ def retrieve_articles(classifier, text, n_articles, start_s, end_s):
         end = date.max
 
     articlesIndeces, scores = classifier.get_related_articles_and_score_doc(text, start, end)
-    sims = zip(articlesIndeces[:n_articles], scores[:n_articles])
-    related_articles = extract_related_articles(app.application.articleLoader, sims)
-
-    return related_articles
-
+    max_n_articles = min(len(articlesIndeces), n_articles*10)
+    sims = zip(articlesIndeces[:max_n_articles], scores[:max_n_articles])
+    articleMap = {articleIndex: score for articleIndex, score in sims }
 
 
-def retrieve_articles_url(classifier, url, n_articles):
-    articlesIndeces, scores = classifier.get_related_articles_and_score_url(url)
+    return articleMap
+
+
+
+def retrieve_articles_url_sims(classifier, url, n_articles):
+    articlesIndeces, scores, date_differences = classifier.get_related_articles_and_score_url(url)
     if (articlesIndeces is not None):
-        sims = zip(articlesIndeces[:n_articles], scores[:n_articles])
-        related_articles = extract_related_articles(app.application.articleLoader, sims)
+        max_n_articles = min(len(articlesIndeces), n_articles * 20)
+        sims = zip(articlesIndeces[:max_n_articles], scores[:max_n_articles], date_differences[:max_n_articles])
+        articleMap = {articleIndex: score  for articleIndex, score, date_dif in sims}
 
-
-        return related_articles
+        return articleMap
     else:
         return None

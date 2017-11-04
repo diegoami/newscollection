@@ -29,8 +29,8 @@
 </FORM>
 </div>
 
-{% if tdf_articles: %}
-<h2>Advice from TFIDF & BOW</h2>
+{% if articles: %}
+<h2>TFIDF+Doc2Vec </h2>
 
 <table border="1">
 
@@ -40,7 +40,7 @@
 
 
     <th class="date"><span>Date</span></th>
-    <th>TFIDF Score</th>
+    <th>Score</th>
     <th>Authors</th>
     <th>Tags</th>
     <th class="icon">Similar</th>
@@ -48,10 +48,9 @@
     <th class="icon">Statistics</th>
   </tr>
 
-    {% for _ in tdf_articles: %}
+    {% for _ in articles: %}
 
         <tr>
-
             <td>{{_.id}}</td>
             <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td class="date">{{_.date_p}}</td>
@@ -81,56 +80,8 @@
     {% endfor %}
 </table>
 {% endif %}
-{% if doc2vec_articles: %}
-<h2>Advice from DOC2VEC</h2>
 
-<I>This will perform poorly for short texts</I>
-
-
-<table border="1">
-  <tr>
-    <th>Article Id</th>
-    <th><span>Title</span></th>
-    <th class="date"><span>Date</span></th>
-    <th>Doc2Vec Score</th>
-    <th>Authors</th>
-    <th>Tags</th>
-     <th class="icon">Similar</th>
-      <th class="icon">Statistics</th>
-
-  </tr>
-
-    {% for _ in doc2vec_articles: %}
-        <tr>
-
-            <td>{{_.id}}</td>
-            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
-            <td class="date">{{_.date_p}}</td>
-            <td>{{_.similarity}}</td>
-            <td>{% for author in _.authors: %}
-                    <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
-                {% endfor %}
-            </td>
-            <td>{% for tag in _.tags: %}
-                    <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
-                {% endfor %}
-            </td>
-            <td class="icon">
-                <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
-                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
-                </A>
-            </td>
-            <td class="icon">
-                <A HREF="/statistics/{{article_id}}" target="_blank">
-                    <IMG SRC="{{ url_for('static', filename='images/statistics.png') }}" ALT="Statistics">
-                </A>
-
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-{% endif %}
-
+{% include 'footer.html' %}
 
 </body>
 </html>
