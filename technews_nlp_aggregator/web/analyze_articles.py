@@ -109,6 +109,6 @@ def related_xhr(id1, id2):
 
 @app.route('/unrelated_xhr/<int:id1>/<int:id2>')
 def unrelated_xhr(id1, id2):
-    return save_user_association(id1, id2, 0.0)
+    return save_user_association_xhr(id1, id2, 0.0)
 
 
