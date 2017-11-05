@@ -210,7 +210,8 @@ class SimilarArticlesRepo:
                 "U_SCORE": row["U_SCORE"]
 
             })
-
+            if (similar_story["U_SCORE"] is not None):
+                similar_story["U_SCORE_DEF"] = True
             similar_stories.append(similar_story)
 
         return similar_stories

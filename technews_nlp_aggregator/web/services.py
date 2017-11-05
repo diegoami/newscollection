@@ -19,7 +19,7 @@ class Application:
         db_url = db_config["db_url"]
         self.articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
-        self.articleLoader.load_all_articles(load_text=True)
+        self.articleLoader.load_all_articles(load_text=False)
         self.similarArticlesRepo = SimilarArticlesRepo(db_url)
         self.gramFacade = GramFacade(config["phrases_model_dir_link"])
         self.tokenizer = defaultTokenizer
