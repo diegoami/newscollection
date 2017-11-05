@@ -1,0 +1,25 @@
+root_dir  : /media/diego/QData/techarticles/
+list_name : /media/diego/QData/techarticles/lists/article_list.json
+parsed_articles_dir : /media/diego/QData/techarticles/parsed_articles/
+lsi_models_dir_base : /media/diego/QData/techarticles/models/lsi/lsi_
+lsi_models_dir_link : /media/diego/QData/techarticles/models/lsi/lsi_model
+doc2vec_models_dir_base : /media/diego/QData/techarticles/models/doc2vec/doc2vec__
+doc2vec_models_dir_link : /media/diego/QData/techarticles/models/doc2vec/doc2vec_model
+doc2vec_models_file_link : /media/diego/QData/techarticles/models/doc2vec/doc2vec_model/doc2vec
+raw_base_dir        : /media/diego/QData/techarticles/raw_articles/
+parsed_base_dir     : /media/diego/QData/techarticles/parsed_articles/
+search_results_dir  : /media/diego/QData/techarticles/search_results/
+search_pattern      : /media/diego/QData/techarticles/search_results/*.json
+link_file           : /media/diego/QData/techarticles/lists/article_list_5_10_2017.json
+commands_dir        : /media/diego/QData/techarticles/commands/
+commands_pattern    : /media/diego/QData/techarticles/commands/*.json
+google_key_file     : /media/diego/QData/techarticles/keys/google_search.yml
+key_file           : /media/diego/QData/techarticles/keys/db_coords_staging.yml
+pickle_dir          : /media/diego/QData/techarticles/pickle/
+text_pickle_file     : /media/diego/QData/techarticles/pickle/texts.p
+bigrams_pickle_file     : /media/diego/QData/techarticles/pickle/bigrams.p
+trigrams_pickle_file     : /media/diego/QData/techarticles/pickle/trigrams.p
+
+phrases_model_dir_base    : /media/diego/QData/techarticles/models/phrases/phrases__
+phrases_model_dir_link     : /media/diego/QData/techarticles/models/phrases/phrases_model
+

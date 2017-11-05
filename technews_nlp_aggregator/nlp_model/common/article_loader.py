@@ -34,11 +34,9 @@ class ArticleLoader:
 
     def load_all_articles(self, load_text=True, limit=None):
         logging.info("Loading articles...")
-        self.articlesDF =  self.articlesRepo.load_articles()
+        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text)
 
 
-        if (not load_text):
-            self.articlesDF.drop('text', inplace=True, axis=1)
 
         self.articlesDF.reset_index(inplace=True)
         self.tagsDF, self.articleTagsDF = self.articlesRepo.load_tags_tables()

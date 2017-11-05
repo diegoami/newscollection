@@ -41,13 +41,7 @@ class ArticleDatasetRepo():
     def close_con_find(self):
         self.con_find = None
 
-    def file_name_exists(self, filename):
-        row = self.get_connection()['ARTICLE_INFO'].find_one(AIN_FILENAME=filename)
-        if row:
-            pk = row["AIN_ID"]
-            return self.get_connection()['ARTICLE_TEXT'].find_one(ATX_AIN_ID=pk)
-        else:
-            return False
+
 
 
     def update_article(self, url, to_add):
@@ -114,6 +108,10 @@ class ArticleDatasetRepo():
     def save_article(self, url, to_add, text):
         if not "date" in to_add:
             to_add["date"] = extract_date(to_add["url"])
+        text = remove_emojis(text)
+        cleaned_text = defaultTokenizer.clean_text(text)
+        if (cleaned_text < 600):
+            return True
         source = extract_host(url)
         found = False
         try:
@@ -135,12 +133,11 @@ class ArticleDatasetRepo():
                 found = True
             if (pk):
                 if not con['ARTICLE_TEXT'].find_one(ATX_AIN_ID=str(pk)):
-                    text = remove_emojis(text)
                     print("Trying to write article at "+str(pk))
                     con['ARTICLE_TEXT'].insert(
                         dict({
                             "ATX_AIN_ID": pk,
-                            "ATX_TEXT": defaultTokenizer.clean_text(text),
+                            "ATX_TEXT": cleaned_text,
                             "ATX_TEXT_ORIG": text
                         })
 
@@ -204,14 +201,18 @@ class ArticleDatasetRepo():
 
 
 
-    def load_articles(self):
+    def load_articles(self, load_text=True):
         econ=self.engine.connect()
         where_string = (" AND AIN_ID <= "+str(self.limit_article_id)) if self.limit_article_id else ""
-        article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID "+where_string+ " ORDER BY AIN_ID"
-
+        if (load_text):
+            article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID "+where_string+ " ORDER BY AIN_ID"
+        else:
+            article_info_sql = "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO WHERE 1 = 1 " + where_string + " ORDER BY AIN_ID"
         articleDF = pd.read_sql(article_info_sql,  econ)
-        articleDF.columns = ['article_id' , 'url', 'title', 'date_p', 'text' ]
-
+        if (load_text):
+            articleDF.columns = ['article_id' , 'url', 'title', 'date_p', 'text' ]
+        else:
+            articleDF.columns = ['article_id', 'url', 'title', 'date_p']
         econ.close()
         return articleDF
 

@@ -41,6 +41,7 @@
     <th>Authors</th>
     <th>Tags</th>
     <th class="icon">Similar</th>
+
     <th class="icon">Statistics</th>
 
   </tr>
@@ -66,6 +67,8 @@
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
                 </A>
             </td>
+
+
             <td class="icon">
                 <A HREF="/statistics/{{article_id}}" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/statistics.png') }}" ALT="Statistics">

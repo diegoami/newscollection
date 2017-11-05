@@ -5,21 +5,21 @@ from technews_nlp_aggregator.persistence.similar_articles import  SimilarArticle
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade, LsiInfo, TokenizeInfo, Doc2VecInfo, GramFacade
 
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesWordTokenizer, defaultTokenizer
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader,  defaultTokenizer
 
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-config = yaml.safe_load(open('config.yml'))
-db_config = yaml.safe_load(open(config["key_file"]))
-db_url    = db_config["db_url"]
+
 
 
 class Application:
-    def __init__(self):
+    def __init__(self, config):
+        db_config = yaml.safe_load(open(config["key_file"]))
+        db_url = db_config["db_url"]
         self.articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
-        self.articleLoader.load_all_articles(load_text=False)
+        self.articleLoader.load_all_articles(load_text=True)
         self.similarArticlesRepo = SimilarArticlesRepo(db_url)
         self.gramFacade = GramFacade(config["phrases_model_dir_link"])
         self.tokenizer = defaultTokenizer

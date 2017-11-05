@@ -11,7 +11,7 @@ from technews_nlp_aggregator.common.util import extract_source
 
 similarArticlesSQL_select = \
 """
-SELECT T.ID_1, T.ID_2, T.DATE_1, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, ROUND(T.SIMILARITY,3) AS T_SCORE
+SELECT T.ID_1, T.ID_2, T.DATE_1, T.DATE_2, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, ROUND(T.SIMILARITY,3) AS T_SCORE
   , ROUND(D.SIMILARITY,3) AS D_SCORE, ROUND(U.SSU_SIMILARITY_AVG,3) AS U_SCORE FROM TFIDF_SCORE T
 LEFT JOIN DOC2VEC_SCORE D ON D.ID_1=T.ID_1 AND D.ID_2=T.ID_2
 LEFT JOIN (SELECT AVG(SSU_SIMILARITY) SSU_SIMILARITY_AVG, SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2) U
@@ -198,6 +198,7 @@ class SimilarArticlesRepo:
                 "ID_1": row["ID_1"],
                 "ID_2": row["ID_2"],
                 "DATE_1"  : row["DATE_1"],
+                "DATE_2": row["DATE_2"],
                 "TITLE_1" : row["TITLE_1"],
                 "TITLE_2" : row["TITLE_2"],
                 "URL_1"   : row["URL_1"],
@@ -209,10 +210,8 @@ class SimilarArticlesRepo:
                 "U_SCORE": row["U_SCORE"]
 
             })
-            if (similar_story["U_SCORE"] is not None):
-                similar_story["U_SCORE_DEF"] = True
-            if (similar_story["SOURCE_1"] != similar_story["SOURCE_2"]):
-                similar_stories.append(similar_story)
+
+            similar_stories.append(similar_story)
 
         return similar_stories
 
