@@ -27,16 +27,6 @@
          <p><I>ID:</I> {{A.AIN_ID}}</p>
         <p><I>URL:</I> <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
         <P><I>Date:</I> {{A.AIN_DATE}}</P>
-        <P><I>Authors:</I>
-           {% for author in A.AUTHORS: %}
-                <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
-           {% endfor %}
-        </P>
-          <P><I>Tags:</I>
-           {% for tag in A.TAGS: %}
-                <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
-           {% endfor %}
-        </P>
           <p class="article_text"><B>Text:</B>{{A.ATX_TEXT | safe}}</p>
      </div>
 

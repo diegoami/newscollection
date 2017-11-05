@@ -38,8 +38,7 @@
     <th><span>Title</span></th>
     <th class="date"><span>Date</span></th>
     <th>Score</th>
-    <th>Authors</th>
-    <th>Tags</th>
+
     <th class="icon">Similar</th>
 
     <th class="icon">Statistics</th>
@@ -54,14 +53,7 @@
             <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td class="date">{{_.date_p}}</td>
             <td>{{_.similarity}}</td>
-            <td>{% for author in _.authors: %}
-                    <A HREF="{{author.url}}">{{author.name}}</A>&nbsp;
-                {% endfor %}
-            </td>
-            <td>{% for tag in _.tags: %}
-                    <A HREF="{{tag.url}}">{{tag.name}}</A>&nbsp;
-                {% endfor %}
-            </td>
+
              <td class="icon">
                 <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">

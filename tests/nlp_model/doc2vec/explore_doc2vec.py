@@ -1,8 +1,8 @@
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader
-from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer
+from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade,  GramFacade
 import yaml
 
 
@@ -18,17 +18,22 @@ db_config = yaml.safe_load(open(config["key_file"]))
 
 articleDatasetRepo = ArticleDatasetRepo(db_config["db_url"])
 articleLoader = ArticleLoader(articleDatasetRepo)
-articleLoader.load_all_articles(False)
-doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader)
+articleLoader.load_all_articles(True)
+gramFacade = GramFacade(config["phrases_model_dir_link"])
+doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], articleLoader, gramFacade)
 doc2VecFacade.load_models()
-model = doc2VecFacade.model
-start = date(2017, 10, 10)
+print(articleLoader.articlesDF.head())
+for i in range(20):
+    random_article_id, random_article=  articleLoader.get_random_article()
 
-end = date(2017, 10, 11)
 
 
-articles_Found = doc2VecFacade.compare_articles_from_dates(start, end,(.55,.98))
-for art_cp, score in articles_Found.items():
-    id, other_id = art_cp
-    article, otherarticle = articleLoader.articlesDF.loc[id], articleLoader.articlesDF.loc[other_id]
-    print(article['date_p'], otherarticle['date_p'], article['title'], otherarticle['title'], score, sep=',')
+    print(" ============= ARTICLE ==================")
+    print(random_article['text'])
+    print(" ============= DOC2VEC ==================")
+    sentences_tokenizer = defaultTokenizer.sentence_tokenizer
+    for sentence in sentences_tokenizer.process( random_article['text']):
+        scores = doc2VecFacade.compare_docs_to_id(random_article['title'], sentence, random_article_id)
+        print(sentence)
+        print(scores)
+

@@ -12,7 +12,6 @@ from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleData
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, DefaultTokenizer, TechArticlesSentenceTokenizer, TechArticlesWordTokenizer, defaultTokenizer
 from datetime import datetime, date
 
-
 config = yaml.safe_load(open('../config.yml'))
 db_config = yaml.safe_load(open(config["key_file"]))
 db_url    = db_config["db_url"]

@@ -10,14 +10,13 @@ def extract_related_articles(articleLoader, sims):
 
     for id, score in sims:
         link_obj = articleLoader.articlesDF.loc[id]
-        tags, authors  = articleLoader.retrieve_meta(id)
-        related_article = fill_article(link_obj , id, score, tags, authors  )
+        related_article = fill_article(link_obj , id, score)
         related_articles.append(related_article)
 
     return related_articles
 
 
-def fill_article(link_obj, id, score, tags, authors):
+def fill_article(link_obj, id, score):
     related_article = {}
     related_article["id"] = str(id)
     related_article["article_id"] = str(link_obj["article_id"])
@@ -30,8 +29,7 @@ def fill_article(link_obj, id, score, tags, authors):
 
     related_article["date"] = str(date_p.year)+'-'+str(date_p.month)+'-'+str(date_p.day)
     related_article["similarity"] = round(score * 100,3)
-    related_article["tags"] = tags
-    related_article["authors"] = authors
+
 
     return related_article
 

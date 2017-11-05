@@ -80,7 +80,7 @@ def remove_emojis(text):
 
 def daterange(start_date, end_date, days_diff=1):
     if start_date <= end_date:
-        for n1, n2 in zip(range((end_date - start_date).days + 1),range(1,(end_date - start_date).days + 1 + days_diff)):
+        for n1, n2 in zip(range((end_date - start_date).days + 1),range(1+days_diff, (end_date - start_date).days + 1+days_diff)):
             yield start_date + timedelta(n1), start_date + timedelta(n2)
     else:
         raise(ValueError)

@@ -35,9 +35,28 @@ class TfidfFacade(ClfFacade):
         self.lsi = models.LsiModel.load(self.model_dir + '/'+ LSI_FILENAME)
         self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and index it
 
+    def compare_docs_to_id(self,title, doc, id):
+        vec_lsi = self.get_vec(title, doc)
+        condition = self.article_loader.articlesDF.index == id
+        scores = self.matrix_wrapper[(vec_lsi, condition )]
+        return scores
 
-    def get_vec(self,doc):
-        words = self.tokenizer.tokenize_doc('', doc)
+    def compare_sentences_to_id(self, sentences, id):
+        condition = self.article_loader.articlesDF.index == id
+        vec_lsis = []
+        for sentence in sentences:
+            words = self.tokenizer.tokenize_doc('', sentence)
+            p_words = self.gramFacade.phrase(words)
+            vec_bow = self.dictionary.doc2bow(p_words)
+            vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
+            vec_lsis.append(vec_lsi)
+        scores = self.matrix_wrapper.get_for_corpus(vec_lsis, id)
+        return scores
+
+
+
+    def get_vec(self,title, doc):
+        words = self.tokenizer.tokenize_doc(title, doc)
         p_words = self.gramFacade.phrase(words)
         vec_bow = self.dictionary.doc2bow(p_words)
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
@@ -52,7 +71,7 @@ class TfidfFacade(ClfFacade):
 
 
     def get_related_articles_and_score_doc(self, doc, start=None, end=None):
-        vec_lsi = self.get_vec(doc)
+        vec_lsi = self.get_vec('', doc)
         if (start and end):
             interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
             scores = self.matrix_wrapper[(vec_lsi, interval_condition) ]

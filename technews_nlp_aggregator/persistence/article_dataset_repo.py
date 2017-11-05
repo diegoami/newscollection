@@ -11,8 +11,6 @@ import pandas as pd
 
 
 class ArticleDatasetRepo():
-    tags_query = 'SELECT TAG_NAME, TAG_URL FROM ARTICLE_INFO, ARTICLE_TAGS, TAGS WHERE TAG_ID = ATA_TAG_ID AND ATA_AIN_ID = AIN_ID AND AIN_ID = :id'
-    authors_query = 'SELECT AUT_NAME, AUT_URL FROM ARTICLE_INFO, ARTICLE_AUTHORS, AUTHORS WHERE AAU_AIN_ID = AIN_ID AND AUT_ID = AAU_AUT_ID AND AIN_ID = :id'
 
     def get_connection(self):
         con = dataset.connect(self.db_connection, engine_kwargs={
@@ -247,32 +245,6 @@ class ArticleDatasetRepo():
 
         econ.close()
         return tagsDF, articleTagsDF
-
-
-    def load_authors_tables(self):
-        econ = self.engine.connect()
-        where_string = (" WHERE AAU_AIN_ID <= " + str(self.limit_article_id)) if self.limit_article_id else ""
-        authors_sql = "SELECT AUT_ID, AUT_NAME, AUT_URL FROM AUTHORS"
-        authors_articles_sql = "SELECT AAU_ID, AAU_AIN_ID, AAU_AUT_ID FROM ARTICLE_AUTHORS"
-
-        authorsDF = pd.read_sql(authors_sql, econ)
-        authorsDF.columns = ['author_id', 'name', 'url']
-        articleAuthorsDF = pd.read_sql(authors_articles_sql, econ)
-        articleAuthorsDF.columns = ['author_article_id', 'article_id', 'author_id']
-
-        econ.close()
-        return authorsDF, articleAuthorsDF
-
-
-    def retrieve_tags_authors(self, article_id):
-        tags, authors = [], []
-        con = self.get_connection()
-        for tag_row in con.query(self.tags_query, id=article_id):
-            tags.append({"url": tag_row["TAG_URL"], "name": tag_row["TAG_NAME"]})
-        for author_row in con.query(self.authors_query, id=article_id):
-            authors.append({"url": author_row["AUT_URL"], "name": author_row["AUT_NAME"]})
-
-        return tags, authors
 
 
     def delete_short_texts(self):

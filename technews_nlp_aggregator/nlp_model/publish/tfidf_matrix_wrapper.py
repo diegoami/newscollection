@@ -14,4 +14,13 @@ class TfidfMatrixWrapper():
         if npdate is None:
             return simil_returned
         else:
+
             return simil_returned[npdate]
+
+    def get_for_corpus(self, query, column):
+
+
+        simil_returned = self.similarityMatrix[query]
+
+
+        return simil_returned[:,column]

@@ -55,8 +55,6 @@ def examples(page_id=0):
 def compare(id1, id2):
     article1, article2 = app.application.articleDatasetRepo.load_articles_with_text(id1, id2)
     article1["ATX_TEXT"], article2["ATX_TEXT"] = app.application.tokenizer.clean_text(article1["ATX_TEXT"]), app.application.tokenizer.clean_text(article2["ATX_TEXT"])
-    article1["TAGS"], article1["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id1)
-    article2["TAGS"], article2["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(id2)
     article1["ORGANIZATIONS"], article1["PERSONS"], article1["NOUNS"] = retrieve_entities(article1["ATX_TEXT"])
     article2["ORGANIZATIONS"], article2["PERSONS"], article2["NOUNS"] = retrieve_entities(article2["ATX_TEXT"])
     highlight_entities(article1, article1["ORGANIZATIONS"], article1["PERSONS"], article1["NOUNS"])
@@ -64,15 +62,23 @@ def compare(id1, id2):
 
     return render_template('to_compare.html', A1=article1, A2=article2)
 
+@app.route('/summary/<int:article_id>')
+def summary(article_id):
 
+    id =  app.application.articleLoader.articlesDF[app.application.articleLoader.articlesDF['article_id'] == article_id].index[0]
+    article = app.application.articleDatasetRepo.load_article_with_text( article_id )
+    summary_sentences = app.application.summaryFacade.summarize(article["AIN_TITLE"], article["ATX_TEXT"], id, 75)
+    result = ""
+    for highlighted, sentence in summary_sentences:
+        if highlighted:
+            result = result + " <B> " +sentence+"</B>"
+        else:
+            result =  result + " " + sentence
+    return result, {'Content-Type': 'text/html'}
 
 @app.route('/randomrelated')
 def randomrelated():
-    all_similar_articles = app.application.similarArticlesRepo.list_similar_articles()
-    len_similar_articles= len(all_similar_articles )
-    rlena = randint(0,len_similar_articles)
-    similar_article_pair = all_similar_articles[rlena]
-    id1, id2 = similar_article_pair["ID_1"], similar_article_pair["ID_2"]
+    id1, id2 = app.application.similarArticlesRepo.retrieve_random_related()
 
     return compare(id1, id2)
 

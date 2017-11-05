@@ -5,6 +5,8 @@ from technews_nlp_aggregator.persistence.similar_articles import  SimilarArticle
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade, LsiInfo, TokenizeInfo, Doc2VecInfo, GramFacade
 
+from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
+
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader,  defaultTokenizer
 
 import logging
@@ -32,5 +34,5 @@ class Application:
         self.lsiInfo = LsiInfo(self.tfidfFacade.lsi, self.tfidfFacade.corpus)
         self.tokenizeInfo = TokenizeInfo(self.tokenizer)
         self.doc2VecInfo = Doc2VecInfo(self.doc2VecFacade.model)
-
+        self.summaryFacade = SummaryFacade(self.tfidfFacade, self.doc2VecFacade)
 

@@ -15,7 +15,7 @@ class ArticleLoader:
     def get_random_article(self):
         url_len = len(self.articlesDF)
         rand_index = randint(0,url_len)
-        return rand_index, self.articlesDF.loc[rand_index]
+        return rand_index, self.articlesDF.iloc[rand_index]
 
     def get_article(self, article_id):
         article_row = self.articlesDF[(self.articlesDF['article_id'] == article_id)]
@@ -39,15 +39,6 @@ class ArticleLoader:
 
 
         self.articlesDF.reset_index(inplace=True)
-        self.tagsDF, self.articleTagsDF = self.articlesRepo.load_tags_tables()
-        self.authorsDF, self.articleAuthorsDF = self.articlesRepo.load_authors_tables()
 
         return self.articlesDF
 
-    def retrieve_meta(self, id):
-        article_id = self.articlesDF.loc[id]['article_id']
-        tags_of_article = self.articleTagsDF[self.articleTagsDF['article_id'] ==  article_id].merge(self.tagsDF,on='tag_id')
-        tags_to_export = tags_of_article [['url','name']]
-        authors_of_article =  self.articleAuthorsDF[self.articleAuthorsDF['article_id'] ==  id].merge(self.authorsDF, on='author_id')
-        authors_to_export  = authors_of_article[['url','name']]
-        return tags_to_export.to_dict(orient='records'), authors_of_article.to_dict(orient='records')

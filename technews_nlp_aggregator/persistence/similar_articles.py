@@ -188,11 +188,20 @@ class SimilarArticlesRepo:
                 condition_string = condition_string + condition
         return condition_string
 
+    def retrieve_random_related(self):
+
+        retrieveSQL = "select SST_AIN_ID_1 AS ID_1, SST_AIN_ID_2 AS ID_2 from SAME_STORY order by rand() limit 1"
+        con = self.get_connection()
+        row =  con.query(retrieveSQL).next()
+        id1, id2   =  row["ID_1"], row["ID_2"]
+        return id1, id2
+
+
     def list_similar_articles(self, filter_criteria= None):
         similar_stories = []
         con = self.get_connection()
         similarArticlesSQL_having_cond =  "HAVING "+filter_criteria if self.verify_having_condition(filter_criteria) else ""
-        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby
+        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 500"
         for row in con.query(similarArticlesSQL):
             similar_story = dict({
                 "ID_1": row["ID_1"],

@@ -35,7 +35,7 @@ class ArticleComparatorJob:
                 con.begin()
 
                 for other_id, score in sims:
-                    article, otherarticle = articlesDF.loc[id], articlesDF.loc[other_id]
+                    article, otherarticle = articlesDF.iloc[id], articlesDF.iloc[other_id]
                     article_id, article_other_id = article['article_id'] , otherarticle ['article_id']
                     self.similarArticlesRepo.persist_association(con, article_id, article_other_id, self.facade.name, score )
                 con.commit()

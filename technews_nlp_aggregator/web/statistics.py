@@ -36,7 +36,7 @@ def statistics(article_id):
         article = app.application.articleDatasetRepo.load_article_with_text(article_id)
         if article:
 
-            article["TAGS"], article["AUTHORS"] = app.application.articleDatasetRepo.retrieve_tags_authors(article_id)
+
            # sp_words = retrieve_sp_words(article["ATX_TEXT"])
             tokens = app.application.tokenizeInfo.get_tokenized_article(article["AIN_TITLE"], article["ATX_TEXT"])
             trigrams = app.application.gramFacade.phrase(tokens )

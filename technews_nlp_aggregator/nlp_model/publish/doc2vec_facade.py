@@ -41,6 +41,15 @@ class Doc2VecFacade(ClfFacade):
         return similar_documents
 
 
+    def compare_docs_to_id(self,title, doc, id):
+        wtok = self.tokenizer.tokenize_doc(title, doc)
+        p_wtok = self.gramFacade.phrase(wtok)
+        condition = self.article_loader.articlesDF.index == id
+        articlesFilteredDF = self.article_loader.articlesDF[condition]
+        dindex = articlesFilteredDF.index
+        infer_vector = self.model.infer_vector(p_wtok)
+        scores = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
+        return scores
 
     def get_related_articles_and_score_doc(self, doc, start=None, end=None):
         wtok = self.tokenizer.tokenize_doc('', doc)
