@@ -15,15 +15,13 @@
 <p>
 <label class="textarea_label" for="tdidf_input" >Enter text here</label>
 
-<textarea id="tdidf_input" name="tdidf_input" rows="30" cols="90">{% if search_text: %}
-{{search_text}}
-{% endif %}
+<textarea id="tdidf_input" name="tdidf_input" rows="30" cols="90">{{search_text | default('') }}
 </textarea>
 </p>
-    <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="25"></p>
+    <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"></p>
 
-<p><label for="start">From:</label><input type="text" id="start" name="start" value="2017-01-01"><I>Starts from 2017-01-01</I></p>
-<p><label for="end">To:</label><input type="text" id="end" name="end" value="2017-11-03"><I>Until 2017-11-03</I><br/><br/></p>
+<p><label for="start">From:</label><input type="text" id="start" name="start" value="{{start_s | default('2017-01-01') }}"><I>Starts from 2017-01-01</I></p>
+<p><label for="end">To:</label><input type="text" id="end" name="end" value="{{end_s | default('2017-11-03') }}"><I>Until 2017-11-03</I><br/><br/></p>
 
 <p>
 <input class="main"  type="submit" value="submit"  />

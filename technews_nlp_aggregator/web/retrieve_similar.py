@@ -32,7 +32,7 @@ def retrieve_similar():
             tdf_sims_map = retrieve_sims_map(app.application.tfidfFacade, text, start_s, end_s, n_articles)
             doc2vec_sims_map = retrieve_sims_map(app.application.doc2VecFacade, text, start_s, end_s,  n_articles)
             related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map)
-            return render_template('search.html', articles=related_articles[:n_articles],  search_text=text )
+            return render_template('search.html', articles=related_articles[:n_articles],  search_text=text, n_articles=n_articles, start_s=start_s, end_s=end_s )
 
 
 
@@ -43,10 +43,10 @@ def random_url():
         form = request.form
         if form:
             n_articles = read_int_from_form(form, 'n_articles')
-
+            d_days = read_int_from_form(form, 'd_days')
 
             index, article = app.application.articleLoader.get_random_article()
-            return common_retrieve_url(url=article["url"], article_id=article["article_id"],  n_articles=n_articles )
+            return common_retrieve_url(url=article["url"], article_id=article["article_id"],  n_articles=n_articles,  d_days=d_days )
 
 @app.route('/retrieve_similar_url', methods=['POST'])
 def retrieve_similar_url():
@@ -73,7 +73,7 @@ def common_retrieve_url(url=None, article_id=None, n_articles=25, d_days=30):
     doc2vec_sims_map = retrieve_articles_url_sims(app.application.doc2VecFacade, url, n_articles, d_days)
     related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map)
     if related_articles:
-        return render_template('search_url.html', articles=related_articles[:n_articles], search_url=url, article_id=article_id, d_days=d_days)
+        return render_template('search_url.html', articles=related_articles[:n_articles], search_url=url, article_id=article_id, n_articles=n_articles,  d_days=d_days)
     else:
         return render_template('search_url.html', messages=['Could not find related URLs in the database'])
 
