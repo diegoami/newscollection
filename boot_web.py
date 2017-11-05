@@ -1,7 +1,7 @@
 
 import yaml
 from technews_nlp_aggregator.web import *
-app.application = Application()
+
 from werkzeug.contrib.fixers import ProxyFix
 
 
@@ -16,4 +16,5 @@ key_config.get("secret_key")
 app.config['SECRET_KEY'] = key_config.get("secret_key")
 #app.run(debug=True,  use_reloader=False, host='0.0.0.0',port=8080)
 if __name__ == '__main__':
-    app.run()
+    app.application = Application()
+    app.run(debug=True,  use_reloader=False)
