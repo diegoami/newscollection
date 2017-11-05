@@ -6,7 +6,6 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, TechArticlesSentenceTokenizer, TechArticlesCleaner, defaultTokenizer
-from nltk.tokenize import sent_tokenize
 
 config = yaml.safe_load(open('../config.yml'))
 db_config = yaml.safe_load(open(config["key_file"]))

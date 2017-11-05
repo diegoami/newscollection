@@ -6,7 +6,6 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 
-from nltk.tokenize import sent_tokenize
 class Pipeline(object):
     def process_item(self, item, spider):
         #print(item)

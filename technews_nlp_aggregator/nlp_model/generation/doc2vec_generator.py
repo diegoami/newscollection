@@ -1,8 +1,5 @@
-from nltk.tokenize import sent_tokenize, word_tokenize
 from gensim.models.doc2vec import TaggedDocument
 from gensim.models import Doc2Vec
-import pickle
-from technews_nlp_aggregator.nlp_model.common import DefaultTokenizer
 
 MODEL_FILENAME   = 'doc2vec'
 

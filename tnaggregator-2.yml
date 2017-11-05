@@ -46,7 +46,6 @@ dependencies:
 - markupsafe=1.0=py36_0
 - matplotlib=2.1.0=py36_0
 - ncurses=5.9=10
-- nltk=3.2.5=py_0
 - numpy=1.13.3=py36_blas_openblas_200
 - oauthlib=2.0.6=py_0
 - openblas=0.2.19=2
