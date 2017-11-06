@@ -35,7 +35,7 @@ for _ in range(20):
     print(text)
 
     print(" ============= SUMMARY ==================")
-    summary_sentences = summaryFacade.summarize(title, text, random_article_id, 90)
+    summary_sentences = summaryFacade.summarize(title, text, random_article_id)
     print(title)
-    for summary_sentence in summary_sentences:
-        print(summary_sentence)
+    for entry in summary_sentences:
+        print(entry["sentence"])

@@ -41,6 +41,23 @@ class Doc2VecFacade(ClfFacade):
         return similar_documents
 
 
+    def compare_sentences_to_id(self, sentences, id):
+        condition = self.article_loader.articlesDF.index == id
+        articlesFilteredDF = self.article_loader.articlesDF[condition]
+        dindex = articlesFilteredDF.index
+        indexer = DocVec2Indexer(self.model.docvecs, dindex)
+        scores = []
+        for sentence in sentences:
+            wtok = self.tokenizer.tokenize_doc('', sentence)
+            p_wtok = self.gramFacade.phrase(wtok)
+
+            infer_vector = self.model.infer_vector(p_wtok)
+
+            score = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
+            scores.append(score[0])
+        return np.array(scores)
+
+
     def compare_docs_to_id(self,title, doc, id):
         wtok = self.tokenizer.tokenize_doc(title, doc)
         p_wtok = self.gramFacade.phrase(wtok)

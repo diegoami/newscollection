@@ -73,7 +73,10 @@ sentence_excludes = [
     'SEE:',
     '(Reporting by',
     'View source version on',
-    'Live tweeting: Follow @verge on Twitter'
+    'Live tweeting: Follow @verge on Twitter',
+    'Here’s where to watch:',
+    'HOW TO WATCH:',
+    'Starting time: '
 ]
 
 sentence_inside_excludes = [

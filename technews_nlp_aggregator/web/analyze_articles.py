@@ -67,13 +67,13 @@ def summary(article_id):
 
     id =  app.application.articleLoader.articlesDF[app.application.articleLoader.articlesDF['article_id'] == article_id].index[0]
     article = app.application.articleDatasetRepo.load_article_with_text( article_id )
-    summary_sentences = app.application.summaryFacade.summarize(article["AIN_TITLE"], article["ATX_TEXT"], id, 75)
+    summary_sentences = app.application.summaryFacade.summarize(article["AIN_TITLE"], article["ATX_TEXT"], id)
     result = ""
-    for highlighted, sentence in summary_sentences:
-        if highlighted:
-            result = result + " <B> " +sentence+"</B>"
+    for entry in summary_sentences:
+        if entry["highlighted"]:
+            result = result + " <B> " + entry["sentence"] +"</B>"
         else:
-            result =  result + " " + sentence
+            result =  result + " " + entry["sentence"]
     return result, {'Content-Type': 'text/html'}
 
 @app.route('/randomrelated')
