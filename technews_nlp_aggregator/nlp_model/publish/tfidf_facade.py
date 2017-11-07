@@ -4,8 +4,6 @@ CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
-import logging
-import pandas as pd
 
 from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
@@ -14,20 +12,18 @@ from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 import numpy as np
 from . import ClfFacade
-
+import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
 class TfidfFacade(ClfFacade):
 
-    def __init__(self, model_dir, article_loader, gramFacade, tokenizer=None):
+    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None):
         self.model_dir = model_dir
         self.article_loader = article_loader
         self.name = 'TFIDF-V4-500'
         self.gramFacade = gramFacade
         self.tokenizer = defaultTokenizer if not tokenizer else tokenizer
-
-
 
     def load_models(self):
         self.dictionary = corpora.Dictionary.load(self.model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference
@@ -52,7 +48,6 @@ class TfidfFacade(ClfFacade):
             vec_lsis.append(vec_lsi)
         scores = self.matrix_wrapper.get_for_corpus(vec_lsis, id)
         return scores
-
 
 
     def get_vec(self,title, doc):
@@ -102,9 +97,6 @@ class TfidfFacade(ClfFacade):
         else:
             return None, None
 
-
-
-
     def compare_articles_from_dates(self,  start, end, thresholds):
         articles_and_sim = {}
         interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
@@ -120,5 +112,31 @@ class TfidfFacade(ClfFacade):
             articles_and_sim[id] = zip(id_in_threshold, scores_in_threshold)
         return articles_and_sim
 
+
+
+
+    def create_model(self, texts):
+        dictionary = corpora.Dictionary(texts)
+        logging.info("Initializing dictionary with {} texts".format(len(texts)))
+
+        dictionary.filter_extremes(no_below=5, no_above=0.78, keep_n=150000)
+        dictionary.save(self.model_dir+DICTIONARY_FILENAME)  # store the dictionary, for future reference
+        corpus = [dictionary.doc2bow(text) for text in texts]
+        logging.info("Created {} bags of words".format(len(corpus)))
+
+        corpora.MmCorpus.serialize(self.model_dir+CORPUS_FILENAME, corpus)
+        tfidf = models.TfidfModel(corpus)  # step 1 -- initialize a model
+        logging.info("Tfidf initialized with {} docs ".format(tfidf.num_docs))
+
+        corpus_tfidf = tfidf[corpus]
+        lsi = models.LsiModel(corpus_tfidf, num_topics=500, id2word=dictionary, chunksize=50000)  # initialize an LSI transformation
+        corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
+
+        lsi.save(self.model_dir+LSI_FILENAME)  # same for tfidf, lda, ...
+
+        index = similarities.MatrixSimilarity(lsi[corpus])  # transform corpus to LSI space and index it
+        logging.info("Similarity Matrix Length : {} ".format(len(index)))
+
+        index.save(self.model_dir+INDEX_FILENAME)
 
 

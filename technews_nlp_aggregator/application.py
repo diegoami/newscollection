@@ -24,9 +24,11 @@ class Application:
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
         self.articleLoader.load_all_articles(load_text=load_text)
         self.similarArticlesRepo = SimilarArticlesRepo(db_url)
-        self.gramFacade = GramFacade(config["phrases_model_dir_link"])
         self.tokenizer = defaultTokenizer
-        self.doc2VecFacade = Doc2VecFacade(config["doc2vec_models_file_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer  )
+        self.gramFacade = GramFacade(config["phrases_model_dir_link"])
+        self.gramFacade.load_models()
+
+        self.doc2VecFacade = Doc2VecFacade(config["doc2vec_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer  )
         self.doc2VecFacade.load_models()
 
         self.tfidfFacade = TfidfFacade(config["lsi_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer  )

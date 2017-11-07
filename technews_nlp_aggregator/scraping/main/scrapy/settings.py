@@ -1,7 +1,7 @@
 LOG_LEVEL = 'INFO'
 
-SPIDER_MODULES = ['technews_nlp_aggregator.scraping.othersites.arstechnica.spiders']
-NEWSPIDER_MODULE = 'technews_nlp_aggregator.scraping.othersites.arstechnica.spiders'
+SPIDER_MODULES = ['technews_nlp_aggregator.scraping.main.scrapy.spiders']
+NEWSPIDER_MODULE = 'technews_nlp_aggregator.scraping.main.scrapy.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -36,13 +36,13 @@ DOWNLOAD_DELAY = 1
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'arstechnica.middlewares.MyCustomSpiderMiddleware': 543,
+#    'scrapy.middlewares.MyCustomSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'arstechnica.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'scrapy.middlewares.MyCustomDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -79,6 +79,6 @@ DOWNLOAD_DELAY = 1
 BOT_NAME = 'tnaggregator'
 
 ITEM_PIPELINES = {
-    'technews_nlp_aggregator.scraping.othersites.arstechnica.Pipeline': 300,
+    'technews_nlp_aggregator.scraping.main.scrapy.Pipeline': 300,
 }
 

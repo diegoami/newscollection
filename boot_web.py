@@ -1,6 +1,7 @@
 
 import yaml
 from technews_nlp_aggregator.web import *
+from technews_nlp_aggregator import Application
 
 from werkzeug.contrib.fixers import ProxyFix
 

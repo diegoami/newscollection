@@ -39,7 +39,12 @@ class ArticleDatasetRepo():
     def close_con_find(self):
         self.con_find = None
 
-
+    def get_latest_article_date(self):
+        max_date_sql = "SELECT MAX(AIN_DATE) AS MAX_AIN_DATE FROM ARTICLE_INFO"
+        con = self.get_connection()
+        max_date_query = con.query(max_date_sql)
+        max_date = next(max_date_query, None)
+        return max_date["MAX_AIN_DATE"]
 
 
     def update_article(self, url, to_add):
@@ -108,7 +113,7 @@ class ArticleDatasetRepo():
             to_add["date"] = extract_date(to_add["url"])
         text = remove_emojis(text)
         cleaned_text = defaultTokenizer.clean_text(text)
-        if (cleaned_text < 600):
+        if (len(cleaned_text) < 600):
             return True
         source = extract_host(url)
         found = False

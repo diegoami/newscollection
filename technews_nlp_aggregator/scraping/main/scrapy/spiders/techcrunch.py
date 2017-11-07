@@ -15,9 +15,11 @@ class TechcrunchSpider(scrapy.Spider):
         'https://techcrunch.com/','http://techcrunch.com/'
     )
 
-    def __init__(self, article_repo):
+    def __init__(self, article_repo, go_back_date):
         super().__init__()
         self.article_repo = article_repo
+        self.go_back_date = go_back_date
+
         self.finished = False
 
 
@@ -58,7 +60,7 @@ class TechcrunchSpider(scrapy.Spider):
         article_date = extract_date( url)
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
-        if (end_condition(article_date)):
+        if (end_condition(article_date, self.go_back_date)):
             self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 

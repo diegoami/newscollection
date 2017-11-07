@@ -3,24 +3,42 @@ from gensim.models import Doc2Vec
 from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
+
+MODEL_FILENAME = 'doc2vec'
+
+
 import numpy as np
-MIN_FREQUENCY = 3
+from gensim.models.doc2vec import TaggedDocument
+
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+class LabeledLineSentence(object):
+    def __init__(self, idxlist, texts):
+        self.doc_list = idxlist
+        self.texts = texts
+
+    def __iter__(self):
+        for idx, text in zip(self.doc_list, self.texts):
+            wtok = text
+            tags = [idx]
+
+            yield TaggedDocument(words=wtok, tags=tags)
 
 
-from numpy import *
-import pandas as pd
 class Doc2VecFacade(ClfFacade):
 
-    def __init__(self, model_filename, article_loader, gramFacade, tokenizer=None):
-        self.model_filename = model_filename
+    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None):
+
+        self.model_dir = model_dir
         self.article_loader = article_loader
         self.name="DOC2VEC-V4-600"
         self.gramFacade = gramFacade
         self.tokenizer = defaultTokenizer if not tokenizer else tokenizer
 
-
     def load_models(self):
-        self.model = Doc2Vec.load(self.model_filename)
+        model_filename = self.model_dir+'/'+MODEL_FILENAME
+        self.model = Doc2Vec.load(model_filename)
 
 
     def get_related_articles_and_sims(self, doc, n):
@@ -129,6 +147,22 @@ class Doc2VecFacade(ClfFacade):
             articles_and_sim[id] = zip(id_in_threshold, scores_in_threshold)
         return articles_and_sim
 
+    def create_model(self, texts):
+
+        it = LabeledLineSentence(range(len(texts)), texts)
+        logging.info("Creating model with {} texts".format(len(texts)))
+        self.model = Doc2Vec(size=600, window=10, workers=11, alpha=0.05,
+                             iter=30, min_count=4, sample=0)  # use fixed learning rate
+        self.model.build_vocab(it)
+
+        logging.info("Starting to train......")
+
+        self.model.train(it, total_examples=self.model.corpus_count, epochs=self.model.iter)
+
+        logging.info("Training completed, saving to  " + self.model_dir)
+        self.model.save(self.model_dir + MODEL_FILENAME)
+
+
 class DocVec2Indexer():
     def __init__(self, doc2vec, dindex):
         self.doc2vec = doc2vec
@@ -138,5 +172,5 @@ class DocVec2Indexer():
 
 
     def most_similar(self, mean, topn):
-        dists = dot(self.doc2vec.doctag_syn0norm[self.dindex], mean)
+        dists = np.dot(self.doc2vec.doctag_syn0norm[self.dindex], mean)
         return dists

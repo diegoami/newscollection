@@ -14,8 +14,6 @@ class GramsGenerator:
         bigrams_phraser = Phraser(bigrams_phrases)
         trigrams_phrases = Phrases(bigrams_phraser[doc_list], min_count=4)
         trigrams_phraser = Phraser(trigrams_phrases)
-        #bigrams_phrases.save(self.model_dir+ '/'+ BIGRAMS_PHRASES_FILENAME )
         bigrams_phraser.save(self.model_dir + '/' + BIGRAMS_PHRASER_FILENAME)
-        #trigrams_phrases.save(self.model_dir + '/' + TRIGRAMS_PHRASES_FILENAME)
         trigrams_phraser.save(self.model_dir + '/' + TRIGRAMS_PHRASER_FILENAME)
 

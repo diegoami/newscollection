@@ -10,7 +10,7 @@ import yaml
 
 
 
-def process_phrases(config):
+def create_gram_model(config):
 
     def generate_model(models_dir):
 
@@ -19,8 +19,8 @@ def process_phrases(config):
         with open(pickle_file, 'rb') as f:
             texts = pickle.load(f)
             logging.info("Loaded {} texts".format(len(texts)))
-            gramsGenerator = GramsGenerator( models_dir)
-            gramsGenerator.create_model(texts)
+            gramFacade = GramFacade(models_dir)
+            gramFacade.create_model(texts)
         if os.path.islink(config["phrases_model_dir_link"]):
             os.unlink(config["phrases_model_dir_link"])
 
@@ -37,6 +37,7 @@ def process_phrases(config):
             texts = pickle.load(f)
             logging.info("Loaded {} texts".format(len(texts)))
             gramFacade = GramFacade(phrase_model_dir)
+            gramFacade.load_models()
             bigrams = gramFacade.export_bigrams(texts)
             trigrams = gramFacade.export_trigrams(bigrams)
             logging.info("Saving {} texts as trigrams".format(len(trigrams)))
@@ -81,5 +82,5 @@ if __name__ == '__main__':
     import sys
     sys.path.append('..')
     config = yaml.safe_load(open('../config.yml'))
-    process_phrases(config)
+    create_gram_model(config)
 

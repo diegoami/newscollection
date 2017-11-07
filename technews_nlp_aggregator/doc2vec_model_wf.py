@@ -3,7 +3,7 @@ import pickle
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-from technews_nlp_aggregator.nlp_model.generation import Doc2VecGenerator
+from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade
 
 from datetime import datetime
 import yaml
@@ -18,10 +18,9 @@ def create_doc2vec_model(config):
     pickle_file = config["trigrams_pickle_file"]
     with open(pickle_file, 'rb') as f:
         trigrams = pickle.load(f)
-        doc2VecGenerator = Doc2VecGenerator( models_dir)
+        doc2VecFacade = Doc2VecFacade( models_dir)
 
-        doc2VecGenerator.create_model(trigrams)
-        doc2VecGenerator.train_model()
+        doc2VecFacade.create_model(trigrams)
 
     if os.path.islink(config["doc2vec_models_dir_link"]):
         os.unlink(config["doc2vec_models_dir_link"])

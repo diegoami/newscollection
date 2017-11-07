@@ -44,10 +44,10 @@ def get_date_from_string(date_str):
                     result = article_date
     return result
 
-def end_condition(date):
+def end_condition(date, go_back_date):
     if not date:
         return False
-    if date.month < 10 or date.day < 28:
+    if date < go_back_date:
     #if date.year < 2017:
         return True
     else:

@@ -1,29 +1,29 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy import Request
-from string import punctuation
-from time import sleep
+
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date, end_condition, build_text_from_paragraphs
+from . import extract_date,  end_condition, build_text_from_paragraphs
 
 
 
-
-class ThenextwebSpider(scrapy.Spider):
-    name = "thenextweb"
+class ThevergeSpider(scrapy.Spider):
+    name = "theverge"
     pages_C =  0
     urls_V = set()
     pages_V = set()
-    allowed_domains = ["thenextweb.com"]
+    allowed_domains = ["theverge.com"]
     start_urls = (
-        'https://thenextweb.com/','http://thenextweb.com/'
+        'https://www.theverge.com/', 'http://www.theverge.com/'
     )
 
 
-    def __init__(self, article_repo):
+    def __init__(self, article_repo, go_back_date):
         super().__init__()
         self.article_repo = article_repo
+        self.go_back_date = go_back_date
+
         self.finished = False
 
 
@@ -31,7 +31,7 @@ class ThenextwebSpider(scrapy.Spider):
 
 
 
-        urls = response.xpath('//h4[@class="story-title"]/a/@href').extract()
+        urls = response.xpath('//h3/a/@href').extract()
 
 
         for url in urls:
@@ -48,7 +48,7 @@ class ThenextwebSpider(scrapy.Spider):
 
 
         if not self.finished:
-            absolute_page = 'https://thenextweb.com/latest/page/'+str(self.pages_C)
+            absolute_page = 'https://www.theverge.com/archives/'+str(self.pages_C)
             self.pages_C += 1
 
 
@@ -60,19 +60,19 @@ class ThenextwebSpider(scrapy.Spider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@class="u-m-0_25"]//text()').extract()
+        article_title_parts = response.xpath('//h1[@class="c-page-title"]//text()').extract()
         article_title = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'post-body')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()").extract()
-        article_authors = response.xpath('//a[@class="post-authorName"]/@href').extract()
-        article_tags = response.xpath("//span[contains(@class, 'tag')]/a/@href").extract()
+            "//div[contains(@class, 'c-entry-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(./div/twitterwidget)]//text()").extract()
+        article_authors = response.xpath('//div[@class="c-byline"]/span[@class="c-byline__item"]/a/@href').extract()
+        article_tags = response.xpath("//li[contains(@class, 'c-entry-group-labels__item')]/a/@href").extract()
 
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
 
         article_date = extract_date(url)
-        if (end_condition(article_date)):
+        if (end_condition(article_date, self.go_back_date)):
 
             self.finished = True
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}

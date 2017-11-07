@@ -21,7 +21,6 @@ class TfidfGenerator:
 
     def create_model(self, texts):
 
-
         dictionary = corpora.Dictionary(texts)
         logging.info("Initializing dictionary with {} texts".format(len(texts)))
 
