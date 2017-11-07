@@ -17,7 +17,11 @@ def create_tfidf_model(config):
         trigrams = pickle.load(f)
         logging.info("Loaded {} trigrams".format(len(trigrams)))
         tfidfFacade = TfidfFacade( models_dir)
-        tfidfFacade.create_model(trigrams)
+        corpus, dictionary = tfidfFacade.create_dictionary(trigrams)
+        del trigrams
+        lsi = tfidfFacade.create_model(corpus, dictionary)
+        del dictionary
+        tfidfFacade.create_matrix(lsi, corpus)
 
 
     if os.path.islink(config["lsi_models_dir_link"]):

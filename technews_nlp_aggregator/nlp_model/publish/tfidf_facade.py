@@ -7,7 +7,6 @@ INDEX_FILENAME        = 'index'
 
 from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
-from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
 from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 import numpy as np
@@ -23,7 +22,7 @@ class TfidfFacade(ClfFacade):
         self.article_loader = article_loader
         self.name = 'TFIDF-V4-500'
         self.gramFacade = gramFacade
-        self.tokenizer = defaultTokenizer if not tokenizer else tokenizer
+        self.tokenizer = tokenizer
 
     def load_models(self):
         self.dictionary = corpora.Dictionary.load(self.model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference
@@ -115,7 +114,7 @@ class TfidfFacade(ClfFacade):
 
 
 
-    def create_model(self, texts):
+    def create_dictionary(self, texts):
         dictionary = corpora.Dictionary(texts)
         logging.info("Initializing dictionary with {} texts".format(len(texts)))
 
@@ -125,6 +124,10 @@ class TfidfFacade(ClfFacade):
         logging.info("Created {} bags of words".format(len(corpus)))
 
         corpora.MmCorpus.serialize(self.model_dir+CORPUS_FILENAME, corpus)
+        return corpus
+
+    def create_model(self, corpus, dictionary):
+
         tfidf = models.TfidfModel(corpus)  # step 1 -- initialize a model
         logging.info("Tfidf initialized with {} docs ".format(tfidf.num_docs))
 
@@ -133,7 +136,9 @@ class TfidfFacade(ClfFacade):
         corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
 
         lsi.save(self.model_dir+LSI_FILENAME)  # same for tfidf, lda, ...
+        return lsi
 
+    def create_matrix(self, lsi, corpus):
         index = similarities.MatrixSimilarity(lsi[corpus])  # transform corpus to LSI space and index it
         logging.info("Similarity Matrix Length : {} ".format(len(index)))
 
