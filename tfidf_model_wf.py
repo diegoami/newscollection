@@ -15,6 +15,7 @@ def create_tfidf_model(config):
     trigrams_file = trigrams_dir +'/' + 'trigrams_phraser'
     with open(trigrams_file , 'rb') as f:
         trigrams = pickle.load(f)
+
         logging.info("Loaded {} trigrams".format(len(trigrams)))
         tfidfFacade = TfidfFacade( models_dir)
         tfidfFacade.create_model(trigrams)

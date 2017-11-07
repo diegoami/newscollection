@@ -16,28 +16,16 @@ def create_gram_model(config):
 
 
         pickle_file = config["text_pickle_file"]
+        pickle_dir = config["pickle_dir"]
         with open(pickle_file, 'rb') as f:
             texts = pickle.load(f)
             logging.info("Loaded {} texts".format(len(texts)))
             gramFacade = GramFacade(models_dir)
             gramFacade.create_model(texts)
-        if os.path.islink(config["phrases_model_dir_link"]):
-            os.unlink(config["phrases_model_dir_link"])
+            if os.path.islink(config["phrases_model_dir_link"]):
+                os.unlink(config["phrases_model_dir_link"])
 
-        os.symlink(models_dir, config["phrases_model_dir_link"])
-
-    def export_to_phrases(models_dir ):
-        pickle_dir = config["pickle_dir"]
-        pickle_file = config["text_pickle_file"]
-        bigrams_pickle_file = config["bigrams_pickle_file"]
-        trigrams_pickle_file = config["trigrams_pickle_file"]
-
-        phrase_model_dir = config["phrases_model_dir_link"]
-        with open(pickle_file, 'rb') as f:
-            texts = pickle.load(f)
-            logging.info("Loaded {} texts".format(len(texts)))
-            gramFacade = GramFacade(phrase_model_dir)
-            gramFacade.load_models()
+            os.symlink(models_dir, config["phrases_model_dir_link"])
             bigrams = gramFacade.export_bigrams(texts)
             trigrams = gramFacade.export_trigrams(bigrams)
             logging.info("Saving {} texts as trigrams".format(len(trigrams)))
