@@ -11,8 +11,8 @@ def create_tfidf_model(config):
     db_config = yaml.safe_load(open(config["key_file"]))
     models_dir = config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'
     os.mkdir(models_dir)
-
-    trigrams_file = config["trigrams_pickle_file"]
+    trigrams_dir = config["phrases_model_dir_link"]
+    trigrams_file = trigrams_dir +'/' + 'trigrams_phraser'
     with open(trigrams_file , 'rb') as f:
         trigrams = pickle.load(f)
         logging.info("Loaded {} trigrams".format(len(trigrams)))

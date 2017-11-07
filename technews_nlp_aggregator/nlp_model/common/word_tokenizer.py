@@ -40,9 +40,9 @@ class TechArticlesWordTokenizer:
         return [token.text for token in tok_doc]
 
     def tokenize_fulldoc(self, doc):
-        tok_doc = spacy_nlp(doc.lower())
+        tok_doc = spacy_nlp(doc)
         #return [word.text.strip() for word in tok_doc if not word.is_stop and len(word.text.strip()) > 0]
-        return [word.lemma_ for word in tok_doc if not word.is_stop and len(word.text.strip()) > 0]
+        return [word.lemma_ for word in tok_doc if not word.is_stop ]
 
     def tokenize_doc(self, title, document):
         return self.tokenize_fulldoc(title+".\n"+document)

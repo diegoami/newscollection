@@ -36,3 +36,4 @@ if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
     application = Application(config, True)
+    persist_similar_articles(application)

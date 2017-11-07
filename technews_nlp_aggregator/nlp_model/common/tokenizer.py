@@ -36,6 +36,7 @@ class DefaultTokenizer:
         logging.info("Tokenizing documents... this might take a while")
         logging.info("ArticleDF has {} rows ".format(len(articleDF)))
         #articleDF.apply(tokenize , axis=1)
+        articleDF['article_txt'] = row['title'], row['text']
         for index, row in articleDF.iterrows():
 
             texts.append(self.tokenize_doc(row['title'], row['text']))

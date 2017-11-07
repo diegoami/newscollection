@@ -62,7 +62,7 @@ def create_gram_model(config):
     models_dir = config["phrases_model_dir_base"] + datetime.now().isoformat() + '/'
     os.mkdir(models_dir)
     generate_model(models_dir )
-    export_to_phrases(models_dir )
+
 
 
 def check_bigrams_trigrams():
