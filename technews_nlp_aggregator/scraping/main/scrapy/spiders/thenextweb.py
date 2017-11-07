@@ -21,10 +21,10 @@ class ThenextwebSpider(scrapy.Spider):
     )
 
 
-    def __init__(self, article_repo):
+    def __init__(self, article_repo, go_back_date):
         super().__init__()
         self.article_repo = article_repo
-
+        self.go_back_date = go_back_date
 
         self.finished = False
 
