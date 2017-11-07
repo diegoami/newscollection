@@ -1,15 +1,15 @@
 import logging
 import pickle
 import os
-import sys
+
 from datetime import datetime
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import yaml
-from technews_nlp_aggregator.application import Application
+from technews_nlp_aggregator.persistence import ArticleDatasetRepo
+from technews_nlp_aggregator.nlp_model.common import ArticleLoader
 
-def create_pickle(application, config ):
-    _ = application
 
+def create_pickle( config ):
 
     logging.info("Articles loaded : {} ".format(len(_.articleLoader.articlesDF)))
 
@@ -29,8 +29,8 @@ def save_picke_file(config, texts):
     os.symlink(pickle_file, config["text_pickle_file"])
 
 
-def update_pickle(application, config):
-    _ = application
+def update_pickle(config):
+
     pickle_file = config["text_pickle_file"]
     with open(pickle_file, 'rb') as f:
         texts = pickle.load(f)
@@ -47,10 +47,13 @@ def update_pickle(application, config):
 if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
-    application = Application(config, True)
-
-    #create_pickle(application, config )
-    update_pickle(application, config)
+    db_config = yaml.safe_load(open(config["key_file"]))
+    db_url = db_config["db_url"]
+    articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
+    articleLoader = ArticleLoader(articleDatasetRepo)
+    articleLoader.load_all_articles(True)
+    create_pickle(config )
+    #update_pickle( config)
 
 
 
