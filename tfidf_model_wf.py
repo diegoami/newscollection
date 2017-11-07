@@ -2,7 +2,7 @@ import logging
 import os
 import pickle
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from technews_nlp_aggregator.nlp_model.publish import TfidfFacade
+from technews_nlp_aggregator.nlp_model.publish import TfidfGenerator
 from datetime import datetime
 import yaml
 
@@ -16,12 +16,12 @@ def create_tfidf_model(config):
     with open(trigrams_file , 'rb') as f:
         trigrams = pickle.load(f)
         logging.info("Loaded {} trigrams".format(len(trigrams)))
-        tfidfFacade = TfidfFacade( models_dir)
-        corpus, dictionary = tfidfFacade.create_dictionary(trigrams)
+        tfidfGenerator = TfidfGenerator( models_dir)
+        corpus, dictionary = tfidfGenerator.create_dictionary(trigrams)
         del trigrams
-        lsi = tfidfFacade.create_model(corpus, dictionary)
+        lsi = tfidfGenerator.create_model(corpus, dictionary)
         del dictionary
-        tfidfFacade.create_matrix(lsi, corpus)
+        tfidfGenerator.create_matrix(lsi, corpus)
 
 
     if os.path.islink(config["lsi_models_dir_link"]):
