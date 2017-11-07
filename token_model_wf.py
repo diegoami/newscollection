@@ -45,9 +45,8 @@ def update_pickle(application, config):
 
 
 if __name__ == '__main__':
-    import sys
-    sys.path.append('..')
-    config = yaml.safe_load(open('../config.yml'))
+
+    config = yaml.safe_load(open('config.yml'))
     application = Application(config, True)
 
     #create_pickle(application, config )

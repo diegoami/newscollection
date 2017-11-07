@@ -2,7 +2,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider
-from datetime import date, timedelta
+from datetime import  timedelta
 from technews_nlp_aggregator import Application
 import yaml
 

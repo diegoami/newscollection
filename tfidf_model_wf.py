@@ -27,7 +27,5 @@ def create_tfidf_model(config):
 
 
 if __name__ == '__main__':
-    import sys
-    sys.path.append('..')
-    config = yaml.safe_load(open('../config.yml'))
+    config = yaml.safe_load(open('config.yml'))
     create_tfidf_model(config)

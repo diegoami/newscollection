@@ -33,7 +33,6 @@ def persist_similar_articles(application):
                     begin = start,  finish = end, days_diff=2)
 
 if __name__ == '__main__':
-    import sys
-    sys.path.append('..')
-    config = yaml.safe_load(open('../config.yml'))
+
+    config = yaml.safe_load(open('config.yml'))
     application = Application(config, True)

@@ -79,8 +79,7 @@ def check_bigrams_trigrams():
     print(trigrams[:50])
 
 if __name__ == '__main__':
-    import sys
-    sys.path.append('..')
-    config = yaml.safe_load(open('../config.yml'))
+
+    config = yaml.safe_load(open('config.yml'))
     create_gram_model(config)
 

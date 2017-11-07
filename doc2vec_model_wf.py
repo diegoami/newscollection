@@ -27,8 +27,6 @@ def create_doc2vec_model(config):
     os.symlink(models_dir,config["doc2vec_models_dir_link"])
 
 if __name__ == '__main__':
-    import sys
-    sys.path.append('..')
 
-    config = yaml.safe_load(open('../config.yml'))
+    config = yaml.safe_load(open('config.yml'))
     create_doc2vec_model(config)
