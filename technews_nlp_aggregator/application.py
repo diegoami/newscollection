@@ -17,13 +17,13 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 class Application:
     def __init__(self, config, load_text=False):
-        db_config = yaml.safe_load(open(config["key_file"]))
-        db_url = db_config["db_url"]
+        self.db_config = yaml.safe_load(open(config["key_file"]))
+        self.db_url = self.db_config["db_url"]
         self.load_text = load_text
-        self.articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
+        self.articleDatasetRepo = ArticleDatasetRepo(self.db_config.get("db_url"), self.db_config.get("limit"))
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
         self.articleLoader.load_all_articles(load_text=load_text)
-        self.similarArticlesRepo = SimilarArticlesRepo(db_url)
+        self.similarArticlesRepo = SimilarArticlesRepo(self.db_url)
         self.tokenizer = defaultTokenizer
         self.gramFacade = GramFacade(config["phrases_model_dir_link"])
         self.gramFacade.load_models()

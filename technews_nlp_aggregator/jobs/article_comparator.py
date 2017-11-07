@@ -21,6 +21,7 @@ class ArticleComparatorJob:
         self.article_loader = self.facade.article_loader
 
         self.thresholds = thresholds
+        self.inserted_in_session = set()
 
     def save_job_execution(self, start, end):
         self.similarArticlesRepo.persist_job(start, end, self.facade.name, self.thresholds  )
@@ -37,7 +38,9 @@ class ArticleComparatorJob:
                 for other_id, score in sims:
                     article, otherarticle = articlesDF.iloc[id], articlesDF.iloc[other_id]
                     article_id, article_other_id = article['article_id'] , otherarticle ['article_id']
-                    self.similarArticlesRepo.persist_association(con, article_id, article_other_id, self.facade.name, score )
+                    if ((article_id, article_other_id ) not in self.inserted_in_session):
+                        self.similarArticlesRepo.persist_association(con, article_id, article_other_id, self.facade.name, score )
+                        self.inserted_in_session.add((article_id, article_other_id))
                 con.commit()
             except:
                 traceback.print_exc()

@@ -45,16 +45,8 @@ class SimilarArticlesRepo:
         })
         return con
 
-
-
     def __init__(self, db_connection):
         self.db_connection = db_connection
-
-       # self.same_story_tbl = self.db['SAME_STORY']
-      #  self.same_story_jobs_tbl = self.db['SAME_STORY_JOBS']
-      #  self.same_story_user_tbl = self.db['SAME_STORY_USER']
-
-
 
     def association_exists(self, con, first_id, second_id, agent):
 
@@ -111,13 +103,9 @@ class SimilarArticlesRepo:
         if (first_id > second_id):
             first_id, second_id = second_id, first_id
 
-
         rowFound = self.association_exists(con, first_id, second_id, agent)
 
         if (not rowFound ):
-
-
-
 
             row = con['SAME_STORY'].insert(
                         dict({
@@ -128,7 +116,6 @@ class SimilarArticlesRepo:
                             "SST_UPDATED"   : datetime.now()
                         })
             )
-
 
         else:
             pk = rowFound['SST_ID']
@@ -196,7 +183,6 @@ class SimilarArticlesRepo:
         id1, id2   =  row["ID_1"], row["ID_2"]
         return id1, id2
 
-
     def list_similar_articles(self, filter_criteria= None):
         similar_stories = []
         con = self.get_connection()
@@ -225,3 +211,9 @@ class SimilarArticlesRepo:
 
         return similar_stories
 
+    def get_last_similar_story(self):
+        sql_last_similar = "SELECT AIN_DATE FROM ARTICLE_INFO WHERE AIN_ID = (SELECT MAX(SST_AIN_ID_2) FROM SAME_STORY )"
+        con = self.get_connection()
+        max_date_query = con.query(sql_last_similar)
+        max_date = next(max_date_query, None)
+        return max_date["AIN_DATE"]
