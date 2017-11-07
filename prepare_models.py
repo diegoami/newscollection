@@ -8,7 +8,6 @@ if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
 
-
-    create_gram_model(config)
-    create_tfidf_model(config)
-    create_doc2vec_model(config)
+    application = Application(config, True)
+    do_crawl(application)
+    create_pickle(application, config)
