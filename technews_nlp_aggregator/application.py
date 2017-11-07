@@ -16,12 +16,13 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 
 class Application:
-    def __init__(self, config):
+    def __init__(self, config, load_text=False):
         db_config = yaml.safe_load(open(config["key_file"]))
         db_url = db_config["db_url"]
+        self.load_text = load_text
         self.articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
-        self.articleLoader.load_all_articles(load_text=False)
+        self.articleLoader.load_all_articles(load_text=load_text)
         self.similarArticlesRepo = SimilarArticlesRepo(db_url)
         self.gramFacade = GramFacade(config["phrases_model_dir_link"])
         self.tokenizer = defaultTokenizer
@@ -35,4 +36,9 @@ class Application:
         self.tokenizeInfo = TokenizeInfo(self.tokenizer)
         self.doc2VecInfo = Doc2VecInfo(self.doc2VecFacade.model)
         self.summaryFacade = SummaryFacade(self.tfidfFacade, self.doc2VecFacade)
+
+    def ensure_text_loaded(self):
+        if (not self.load_text):
+            self.articleLoader.load_all_articles(load_text=True)
+            self.load_text = True
 

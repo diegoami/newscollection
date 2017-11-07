@@ -1,24 +1,22 @@
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
-from technews_nlp_aggregator.application import Application
-
 import yaml
 
+from technews_nlp_aggregator.application import Application
 
-def explore_lemmas(application, n_articles):
+
+def show_tokens(application, n_articles=100):
     _ = application
-
     for i in range(n_articles):
         index, article = _.articleLoader.get_random_article()
         article_id = article['article_id']
         article_with_text = _.articleDatasetRepo.load_article_with_text(article_id  )
-        doc = spacy_nlp(article_with_text['ATX_TEXT'])
-        lemmas = [(word.text, word.lemma_) for word in doc]
-        print(lemmas)
+
+        print(str(article_id )+' : ' +str(_.tokenizeInfo.get_tokenized_article(article_with_text['AIN_TITLE'], article_with_text['ATX_TEXT'])))
+
 
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('../../../config.yml'))
     application = Application(config, True)
-    explore_lemmas(application)
+    show_tokens(application )

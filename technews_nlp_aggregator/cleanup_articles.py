@@ -1,42 +1,40 @@
-import sys
-sys.path.append('..')
 import yaml
+from .application import Application
+from technews_nlp_aggregator.nlp_model.common import TechArticlesCleaner
 
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
-from technews_nlp_aggregator.nlp_model.common import ArticleLoader, TechArticlesSentenceTokenizer, TechArticlesCleaner, defaultTokenizer
 
-config = yaml.safe_load(open('../config.yml'))
-db_config = yaml.safe_load(open(config["key_file"]))
-db_url    = db_config["db_url"]
-articleDatasetRepo = ArticleDatasetRepo(db_url)
-articleLoader = ArticleLoader(articleDatasetRepo)
-articleLoader.load_all_articles(True)
+def cleanup(application):
+    def convert_file(id, con):
 
-sentence_tokenizer = TechArticlesSentenceTokenizer()
-article_cleaner    = TechArticlesCleaner()
+        article_record = _.articleDatasetRepo.load_article_with_text(id)
+        _.articleDatasetRepo.update_article_text(id, article_record["ATX_TEXT_ORIG"], con)
 
-def cleaned_text(title, text):
+    def cleaned_text(title, text):
 
-    text = article_cleaner.do_clean(text)
-    text = sentence_tokenizer.clean_sentences(text)
-    return "\n".join(text)
+        text = article_cleaner.do_clean(text)
+        text = _.tokenizer.sentence_tokenizer.clean_sentences(text)
+        return "\n".join(text)
 
-articleFilteredDF = articleLoader.articlesDF
-con = articleDatasetRepo.get_connection()
+    _ =  application
 
-def convert_file(id, con):
+    article_cleaner = TechArticlesCleaner()
+    articleFilteredDF = _.articleLoader.articlesDF
+    con = _.articleDatasetRepo.get_connection()
+    count = 0
+    for index, row in articleFilteredDF.iterrows():
 
-    article_record = articleDatasetRepo.load_article_with_text(id)
-    articleDatasetRepo.update_article_text(id, article_record["ATX_TEXT_ORIG"], con)
+        convert_file(row['article_id'], con)
+        count += 1
+        if (count % 100 == 0):
+            print("Processed {} articles".format(count ) )
 
-con = articleDatasetRepo.get_connection()
-count = 0
-for index, row in articleFilteredDF.iterrows():
+if __name__ == '__main__':
+    import sys
+    sys.path.append('..')
 
-    convert_file(row['article_id'], con)
-    count += 1
-    if (count % 100 == 0):
-        print("Processed {} articles".format(count ) )
+    config = yaml.safe_load(open('../config.yml'))
+    application = Application(config, True)
 
+    cleanup(application)

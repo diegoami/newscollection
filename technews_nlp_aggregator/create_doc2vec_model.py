@@ -1,32 +1,35 @@
-import logging
 import os
 import pickle
-import sys
-sys.path.append('..')
+import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from technews_nlp_aggregator.nlp_model.generation import Doc2VecGenerator
 
 from datetime import datetime
-
-
 import yaml
 
-config = yaml.safe_load(open('../config.yml'))
-db_config = yaml.safe_load(open(config["key_file"]))
-pickle_dir = config["pickle_dir"]
+def create_doc2vec_model(config):
+    db_config = yaml.safe_load(open(config["key_file"]))
+    pickle_dir = config["pickle_dir"]
 
-models_dir = config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'
-os.mkdir(models_dir)
+    models_dir = config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'
+    os.mkdir(models_dir)
 
-pickle_file = config["trigrams_pickle_file"]
-with open(pickle_file, 'rb') as f:
-    trigrams = pickle.load(f)
-    doc2VecGenerator = Doc2VecGenerator( models_dir)
+    pickle_file = config["trigrams_pickle_file"]
+    with open(pickle_file, 'rb') as f:
+        trigrams = pickle.load(f)
+        doc2VecGenerator = Doc2VecGenerator( models_dir)
 
-    doc2VecGenerator.create_model(trigrams)
-    doc2VecGenerator.train_model()
+        doc2VecGenerator.create_model(trigrams)
+        doc2VecGenerator.train_model()
 
-if os.path.islink(config["doc2vec_models_dir_link"]):
-    os.unlink(config["doc2vec_models_dir_link"])
-os.symlink(models_dir,config["doc2vec_models_dir_link"])
+    if os.path.islink(config["doc2vec_models_dir_link"]):
+        os.unlink(config["doc2vec_models_dir_link"])
+    os.symlink(models_dir,config["doc2vec_models_dir_link"])
+
+if __name__ == '__main__':
+    import sys
+    sys.path.append('..')
+
+    config = yaml.safe_load(open('../config.yml'))
+    create_doc2vec_model(config)

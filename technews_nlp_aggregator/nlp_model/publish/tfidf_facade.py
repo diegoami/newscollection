@@ -85,7 +85,7 @@ class TfidfFacade(ClfFacade):
 
 
 
-    def get_related_articles_and_score_url(self,  url, d_days   ):
+    def get_related_articles_and_score_url(self,  url, d_days = 30   ):
         url_condition = self.article_loader.articlesDF['url'] == url
         docrow = self.article_loader.articlesDF[url_condition]
         if (len(docrow) > 0):
