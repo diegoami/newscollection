@@ -55,7 +55,7 @@ if __name__ == '__main__':
     articleLoader = ArticleLoader(articleDatasetRepo)
     articleLoader.load_all_articles(True)
 
-    create_pickle(config , articleLoader, defaultTokenizer, 500)
+    create_pickle(config , articleLoader, defaultTokenizer)
     #update_pickle( config)
 
 
