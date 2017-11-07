@@ -3,7 +3,7 @@ import os
 import pickle
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-from technews_nlp_aggregator.nlp_model.generation import GramsGenerator
+
 from technews_nlp_aggregator.nlp_model.publish import GramFacade
 from datetime import datetime
 import yaml

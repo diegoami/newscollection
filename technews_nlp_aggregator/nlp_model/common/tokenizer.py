@@ -1,7 +1,7 @@
 
 
 
-from . import SimpleSentenceTokenizer, TechArticlesSentenceTokenizer
+from . import  TechArticlesSentenceTokenizer
 
 from . import TechArticlesWordTokenizer
 from . import TechArticlesCleaner

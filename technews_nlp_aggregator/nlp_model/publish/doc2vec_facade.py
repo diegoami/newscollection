@@ -152,7 +152,7 @@ class Doc2VecFacade(ClfFacade):
         it = LabeledLineSentence(range(len(texts)), texts)
         logging.info("Creating model with {} texts".format(len(texts)))
         self.model = Doc2Vec(size=600, window=10, workers=11, alpha=0.05,
-                             iter=30, min_count=4, sample=0)  # use fixed learning rate
+                             iter=30, min_count=5)  # use fixed learning rate
         self.model.build_vocab(it)
 
         logging.info("Starting to train......")
