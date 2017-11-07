@@ -1,0 +1,32 @@
+server {
+    listen 80;
+    server_name localhost
+ 
+    location / {
+        include proxy_params;
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+	root /home/diego/PycharmProjects/Newscollection/
+
+    }
+     
+
+    location ^~ /static/  {
+
+            # Example:
+            # root /full/path/to/application/static/file/dir;
+            root  /home/diego/PycharmProjects/Newscollection/static/ ;
+
+        }
+
+        # Serve a static file (ex. favico)
+        # outside /static directory
+        location = /favico.ico  {
+
+            root //home/diego/PycharmProjects/Newscollection/static/images/favico.ico;
+
+        }
+
+
+}
