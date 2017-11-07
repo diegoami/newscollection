@@ -15,7 +15,7 @@ def generate_model(config):
 
     models_dir = config["phrases_model_dir_base"] + datetime.now().isoformat() + '/'
     os.mkdir(models_dir)
-    generate_model(models_dir )
+
 
     pickle_file = config["text_pickle_file"]
     with open(pickle_file, 'rb') as f:
@@ -30,7 +30,6 @@ def generate_model(config):
 
 
 
-s
 if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
