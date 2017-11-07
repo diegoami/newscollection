@@ -124,7 +124,7 @@ class TfidfFacade(ClfFacade):
         logging.info("Created {} bags of words".format(len(corpus)))
 
         corpora.MmCorpus.serialize(self.model_dir+CORPUS_FILENAME, corpus)
-        return corpus
+        return corpus, dictionary
 
     def create_model(self, corpus, dictionary):
 
