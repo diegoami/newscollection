@@ -8,8 +8,8 @@ import yaml
 CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 from gensim import corpora, models, similarities
+from gensim import corpora, models, similarities
 from gensim.corpora import MmCorpus
-
 
 def create_tfidfmatrix(config):
     db_config = yaml.safe_load(open(config["key_file"]))
