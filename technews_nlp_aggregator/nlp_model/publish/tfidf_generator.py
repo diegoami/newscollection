@@ -38,13 +38,13 @@ class TfidfGenerator(ClfFacade):
         lsi = models.LsiModel(corpus_tfidf, num_topics=500, id2word=dictionary, chunksize=50000)  # initialize an LSI transformation
         corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
 
-        lsi.save(self.model_dir+LSI_FILENAME)  # same for tfidf, lda, ...
+        lsi.save(self.model_dir+'/'+LSI_FILENAME)  # same for tfidf, lda, ...
         return lsi
 
     def create_matrix(self, lsi, corpus):
         index = similarities.MatrixSimilarity(lsi[corpus])  # transform corpus to LSI space and index it
         logging.info("Similarity Matrix Length : {} ".format(len(index)))
 
-        index.save(self.model_dir+INDEX_FILENAME)
+        index.save(self.model_dir+'/'+INDEX_FILENAME)
 
 
