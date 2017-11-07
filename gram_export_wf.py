@@ -52,5 +52,5 @@ def export_to_phrases(config):
 if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
-    create_gram_model(config)
+    export_to_phrases(config)
 
