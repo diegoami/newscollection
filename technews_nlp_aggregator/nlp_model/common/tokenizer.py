@@ -36,14 +36,17 @@ class DefaultTokenizer:
         logging.info("Tokenizing documents... this might take a while")
         logging.info("ArticleDF has {} rows ".format(len(articleDF)))
         #articleDF.apply(tokenize , axis=1)
-        articleDF['article_txt'] = row['title'], row['text']
-        for index, row in articleDF.iterrows():
+        articleDF['article_txt'] = articleDF['title'].map(str)+".\n"+ articleDF['text']
+        articleDF['article_tokens'] = articleDF['article_txt'].map(self.tokenize_fulldoc)
 
-            texts.append(self.tokenize_doc(row['title'], row['text']))
-            if (len(texts) % 100 == 0):
-                logging.info("Processed  {} texts".format(len(texts)))
+      #  for index, row in articleDF.iterrows():
+
+      #      texts.append(self.tokenize_fulldoc(row['article_txt']))
+     #       if (len(texts) % 100 == 0):
+      #          logging.info("Processed  {} texts".format(len(texts)))
             #print(len(texts), len(articleDF['text']), len(articleDF['text'].tolist()))
-        return texts
+        #return texts
+        return articleDF['article_tokens']
 
     def tokenize_doc(self, title, document):
         return self.tokenize_fulldoc(title) + self.tokenize_fulldoc(document)

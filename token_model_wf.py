@@ -13,7 +13,8 @@ def create_pickle( config , articleLoader, tokenizer, limit=None):
 
     logging.info("Articles loaded : {} ".format(len(articleLoader.articlesDF)))
     articleFilterDF = articleLoader.articlesDF[:limit] if limit else articleLoader.articlesDF
-    texts = tokenizer.tokenize_ddf(articleFilterDF )
+    texts_df = tokenizer.tokenize_ddf(articleFilterDF )
+    texts = texts_df.tolist()
     if (not limit):
         save_picke_file(config, texts)
 

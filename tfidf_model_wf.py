@@ -20,8 +20,7 @@ def create_tfidf_model(config):
         corpus, dictionary = tfidfGenerator.create_dictionary(trigrams)
         del trigrams
         lsi = tfidfGenerator.create_model(corpus, dictionary)
-        del dictionary
-        tfidfGenerator.create_matrix(lsi, corpus)
+
 
 
     if os.path.islink(config["lsi_models_dir_link"]):
