@@ -1,14 +1,14 @@
 import logging
 import pickle
 import os
-import cProfile
+
 from datetime import datetime
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import yaml
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer
 import argparse
-
+import sys
 
 def create_pickle( config , articleLoader, tokenizer, limit=None):
 
@@ -65,6 +65,7 @@ if __name__ == '__main__':
         create_pickle(config , articleLoader, defaultTokenizer)
     else:
         print("Please choose create or append")
+        sys.exit(1)
 
 
 

@@ -3,7 +3,7 @@ import scrapy
 from scrapy import Request
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date, end_condition, build_text_from_paragraphs
+from . import extract_date, end_condition, build_text_from_paragraphs, TechnewsSpiderHelper
 
 
 
@@ -11,63 +11,37 @@ from . import extract_date, end_condition, build_text_from_paragraphs
 class VenturebeatSpider(scrapy.Spider):
     name = "venturebeat"
     pages_C =  0
-    urls_V = set()
-    pages_V = set()
     allowed_domains = ["venturebeat.com"]
     start_urls = (
         'https://venturebeat.com/', 'http://venturebeat.com/'
     )
 
-
     def __init__(self, article_repo, go_back_date):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
+        super().__init__(article_repo, go_back_date)
 
-        self.finished = False
+    def retrieve_urls_and_pages(self, response):
 
-
-    def parse(self, response):
         urls = response.xpath('//h2[@class="article-title"]/a/@href').extract()
-        for url in urls:
-            absolute_url = response.urljoin(url)
-            article_date = extract_date(url)
-            if (article_date):
-                if (absolute_url not in self.urls_V):
-                    self.urls_V.add(absolute_url)
-                    yield Request(absolute_url, callback=self.parse_page,
-                                  meta={'URL': absolute_url})
+        pages = ['https://venturebeat.com/page/' + str(self.pages_C)]
+        self.pages_C += 1
+        return urls, pages
 
+    def condition_on_url(self, url):
+        return extract_date(url)
 
-
-        if not self.finished:
-            absolute_page = 'https://venturebeat.com/page/'+str(self.pages_C)
-            self.pages_C += 1
-
-
-            logging.info("Adding absolute page "+absolute_page )
-            if (absolute_page not in self.pages_V):
-                self.pages_V.add(absolute_page)
-
-                yield Request(absolute_page , callback=self.parse)
-
-    def parse_page(self, response):
+    def create_item(self, response, url):
         url = response.meta.get('URL')
+        item = {"url" : url}
         article_title_parts = response.xpath('//h1[@class="article-title"]//text()').extract()
-        article_title = "".join(article_title_parts)
+        item["title"] = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)]//text()").extract()
-        article_authors = response.xpath('//div[@class="article-byline"]/a[@rel="author"]/@href').extract()
-        article_tags = response.xpath("//a[contains(@class, 'article-category')]/@href").extract()
+        item["authors"] = response.xpath('//div[@class="article-byline"]/a[@rel="author"]/@href').extract()
+        item["tags"] = response.xpath("//a[contains(@class, 'article-category')]/@href").extract()
 
-        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
+        item["text"] = build_text_from_paragraphs(all_paragraphs)
 
-
-        article_date = extract_date(url)
-        if (end_condition(article_date, self.go_back_date)):
-
-            self.finished = True
-        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
-
+        item["date"] = extract_date(url)
+        return item
 

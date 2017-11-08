@@ -2,80 +2,68 @@
 import scrapy
 from scrapy import Request
 
-from time import sleep
+
 
 from datetime import date
-from string import punctuation
+
 
 from itertools import chain
-from . import end_condition, build_text_from_paragraphs
+from . import  build_text_from_paragraphs, TechnewsSpiderHelper
 
 class ArstechnicaSpider(scrapy.Spider):
     name = "arstechnica"
-    pages_V = set()
-    urls_V = set()
+
     allowed_domains = ["arstechnica.com"]
     start_urls = (
         'https://arstechnica.com/','http://arstechnica.com/'
     )
 
-
-
-    def __init__(self, article_repo, go_back_date):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = False
-
-
-    def parse(self, response):
-
-
-
+    def retrieve_urls_and_pages(self, response):
         url1s = response.xpath('//a[@class="overlay"]/@href').extract()
         url2s = response.xpath('//h2/a/@href').extract()
 
         pages = response.xpath('//div[@class="prev-next-links"]/a/@href').extract()
 
-        for url in chain(url1s, url2s):
-
-            absolute_url = response.urljoin(url)
-            if (absolute_url not in self.urls_V):
-                self.urls_V.add(absolute_url)
-
-                yield Request(absolute_url, callback=self.parse_page,
-                              meta={'URL': absolute_url})
+        return chain(url1s, url2s), pages
 
 
 
-        if not self.finished:
-            for page in pages:
+    def create_item(self, response, url):
+        item = {}
+        item["url"] = url
+        article_title_parts = response.xpath('//h1[@class="alpha tweet-title"]//text()').extract()
+        item["title"] = "".join(article_title_parts)
+        all_paragraphs_r = response.xpath(
+            "//div[contains(@class, 'article-entry')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()")
+        all_paragraphs = all_paragraphs_r.extract()
+        item["authors"] = response.xpath('//a[@rel="author"]/@href').extract()
+        item["tags"] = response.xpath("//div[contains(@class, 'loaded') or @class='tag-item']/a/@href").extract()
 
-                absolute_page = response.urljoin(page)
-                if (absolute_page not in self.pages_V):
-                    self.pages_V.add(absolute_page)
-                    yield Request(absolute_page , callback=self.parse)
+        item["date"] = extract_date(url)
+        item["text"] = build_text_from_paragraphs(all_paragraphs)
+        return item
+
+    def __init__(self, article_repo, go_back_date):
+        super().__init__(article_repo, go_back_date)
+
+
+
 
     def parse_page(self, response):
         url = response.meta.get('URL')
+        item = {}
+        item["url"] = url
         article_title_parts = response.xpath('//h1[@itemprop="headline"]//text()').extract()
-        article_title = "".join(article_title_parts)
-        #all_paragraphs = response.xpath('//div[@itemprop="articleBody"]//p/text()|//div[@itemprop="articleBody"]//p/em//text()|//div[@itemprop="articleBody"]//p/a//text()|//div[@itemprop="articleBody"]//p/i//text()').extract()
-        first_paragraph = response.xpath(
-            '//div[@itemprop="articleBody"]/text()').extract()
+        item["title"] = "".join(article_title_parts)
+
         all_paragraphs = response.xpath(
             '//div[@itemprop="articleBody"]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()').extract()
-        article_authors = response.xpath('//a[@rel="author"]/@href').extract()
+        item["authors"]= response.xpath('//a[@rel="author"]/@href').extract()
 
         article_datetime_tsstring = response.xpath('//time/@datetime').extract_first()
 
 
         article_date_str = article_datetime_tsstring.split('T')[0]
-        article_date = date(*map(int,article_date_str.split('-')))
-        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
-
-        if (end_condition(article_date, self.go_back_date )):
-            self.finished = True
-        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}
-
+        item["date"] = date(*map(int,article_date_str.split('-')))
+        item["text"] = build_text_from_paragraphs(all_paragraphs)
+        return item

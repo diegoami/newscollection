@@ -68,3 +68,12 @@ def build_text_from_paragraphs(all_paragraphs, punct_end = ".!?", punct_add_poin
 
         all_paragraph_text = all_paragraph_text + paragraph
     return all_paragraph_text
+
+def already_retrieved(articleLoader, url):
+    retrieved = articleLoader.articlesDF.any(articleLoader.articlesDF['url'] == url)
+    if (retrieved):
+        logging.info("{} already retrieved, skipping".format(url))
+        return True
+    else:
+        return False
+
