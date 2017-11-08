@@ -2,6 +2,7 @@ import logging
 import pickle
 import os
 import cProfile
+import sys
 from datetime import datetime
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import yaml
@@ -65,6 +66,7 @@ if __name__ == '__main__':
         create_pickle(config , articleLoader, defaultTokenizer)
     else:
         print("Please choose create or append")
+        sys.exit(1)
 
 
 

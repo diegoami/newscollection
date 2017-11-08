@@ -21,7 +21,7 @@ class ArticleDatasetRepo():
     def __init__(self, db_connection, limit_article_id=None):
         self.db_connection = db_connection
         self.limit_article_id = limit_article_id
-
+        self.con_find = None
         self.engine = create_engine(self.db_connection,encoding='UTF-8')
 
 
@@ -29,7 +29,7 @@ class ArticleDatasetRepo():
         self.con_find = self.get_connection()
 
     def url_exists(self, url):
-        if self.con_find == None:
+        if not self.con_find:
             self.init_con_find()
         found_one =  self.con_find['ARTICLE_INFO'].find_one(AIN_URL=url)
 

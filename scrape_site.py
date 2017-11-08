@@ -3,24 +3,25 @@ from scrapy.settings import Settings
 from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider
 from datetime import  timedelta
-from technews_nlp_aggregator import Application
+from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 import yaml
 
-def do_crawl(application):
-    _ = application
+def do_crawl(articleDatasetRepo):
+
     spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider])
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
     process = CrawlerProcess(settings=crawler_settings)
-    max_date = _.articleDatasetRepo.get_latest_article_date()
+    max_date = articleDatasetRepo.get_latest_article_date()
     go_back_date = max_date-timedelta(days=3)
     for spider in spiders:
-        process.crawl(spider, _.articleDatasetRepo, max_date)
+        process.crawl(spider, articleDatasetRepo, max_date)
     process.start()
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
-    application = Application(config, True)
-    do_crawl(application)
-
+    db_config = yaml.safe_load(open(config["key_file"]))
+    db_url = db_config["db_url"]
+    articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
+    do_crawl(articleDatasetRepo)
 

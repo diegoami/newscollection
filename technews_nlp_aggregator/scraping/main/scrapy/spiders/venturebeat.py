@@ -3,7 +3,8 @@ import scrapy
 from scrapy import Request
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-from . import extract_date, end_condition, build_text_from_paragraphs
+from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
+
 
 
 
@@ -33,7 +34,7 @@ class VenturebeatSpider(scrapy.Spider):
             absolute_url = response.urljoin(url)
             article_date = extract_date(url)
             if (article_date):
-                if (absolute_url not in self.urls_V):
+                if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url)):
                     self.urls_V.add(absolute_url)
                     yield Request(absolute_url, callback=self.parse_page,
                                   meta={'URL': absolute_url})

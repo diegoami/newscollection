@@ -2,13 +2,14 @@
 import scrapy
 from scrapy import Request
 
-from time import sleep
+
 
 from datetime import date
-from string import punctuation
+
 
 from itertools import chain
-from . import end_condition, build_text_from_paragraphs
+from . import end_condition, build_text_from_paragraphs, already_crawled
+
 
 class ArstechnicaSpider(scrapy.Spider):
     name = "arstechnica"
@@ -41,7 +42,7 @@ class ArstechnicaSpider(scrapy.Spider):
         for url in chain(url1s, url2s):
 
             absolute_url = response.urljoin(url)
-            if (absolute_url not in self.urls_V):
+            if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url)):
                 self.urls_V.add(absolute_url)
 
                 yield Request(absolute_url, callback=self.parse_page,

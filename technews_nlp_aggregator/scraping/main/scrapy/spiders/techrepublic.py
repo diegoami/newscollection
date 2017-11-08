@@ -5,7 +5,8 @@ from scrapy import Request
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from datetime import date
-from . import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string
+from . import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled
+
 
 
 
@@ -33,7 +34,7 @@ class TechrepublicSpider(scrapy.Spider):
         for url in urls:
 
             absolute_url = response.urljoin(url)
-            if (absolute_url not in self.urls_V):
+            if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url)):
                 self.urls_V.add(absolute_url)
 
                 yield Request(absolute_url, callback=self.parse_page,

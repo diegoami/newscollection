@@ -53,6 +53,11 @@ def end_condition(date, go_back_date):
     else:
         return False
 
+def already_crawled(repo, url):
+    url_exists = repo.url_exists(url)
+    if (url_exists):
+        logging.info("{} already crawled, skipping...".format(url))
+    return url_exists
 
 def build_text_from_paragraphs(all_paragraphs, punct_end = ".!?", punct_add_point= ""):
     all_paragraph_text = ""
