@@ -3,4 +3,4 @@ ssh ubuntu@18.194.147.93 'find /media/diego/QData/techarticles/models/lsi -mtime
 ssh ubuntu@18.194.147.93 'find /media/diego/QData/techarticles/models/phrases -mtime +1 -type d | xargs rm -f -r'
 ssh ubuntu@18.194.147.93 'find /media/diego/QData/techarticles/pickle -mtime +7 -type d | xargs rm -f -r'
 ssh ubuntu@18.194.147.93 'rm /media/diego/QData/techarticles/models.tgz'
-ssh ubuntu@18.194.147.93 'pushd /media/diego/QData/techarticles; tar xvf models.tgz; popd'
+
