@@ -107,8 +107,6 @@ def retrieve_sims_map(classifier, text, start_s, end_s, n_articles):
 
     return articleMap
 
-
-
 def retrieve_articles_url_sims(classifier, url, n_articles, d_days):
     articlesIndeces, scores = classifier.get_related_articles_and_score_url(url, d_days)
     if (articlesIndeces is not None):

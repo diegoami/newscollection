@@ -44,3 +44,9 @@ class Application:
             self.articleLoader.load_all_articles(load_text=True)
             self.load_text = True
 
+    def reload(self):
+        self.articleLoader.load_all_articles(load_text=True)
+        self.gramFacade.load_models()
+        self.doc2VecFacade.load_models()
+        self.tfidfFacade.load_models()
+
