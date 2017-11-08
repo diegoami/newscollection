@@ -43,7 +43,9 @@ def update_pickle(config, articleLoader, tokenizer):
         logging.info("Articles loaded : {} ".format(len(articleLoader.articlesDF)))
 
         articlesNewDF = articleLoader.articlesDF.iloc[len(texts):]
-        new_texts =  tokenizer.tokenize_ddf(articlesNewDF )
+        new_textsDF =  tokenizer.tokenize_ddf(articlesNewDF )
+        new_texts = new_textsDF.tolist()
+
         texts = texts + new_texts
         save_picke_file(config, texts)
 
@@ -59,10 +61,16 @@ if __name__ == '__main__':
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
     articleLoader = ArticleLoader(articleDatasetRepo)
+    logging.info("Loading articles....")
+
     articleLoader.load_all_articles(True)
+    logging.info("Finished loading articles....")
+
     if (args.action == 'append'):
+        logging.info("Appending....")
         update_pickle(config, articleLoader, defaultTokenizer)
     elif (args.action == 'create'):
+        logging.info("Creating new pickle file....")
         create_pickle(config , articleLoader, defaultTokenizer)
     else:
         print("Please choose create or append")
