@@ -7,6 +7,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 import yaml
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer
+import argparse
 
 
 def create_pickle( config , articleLoader, tokenizer, limit=None):
@@ -31,7 +32,7 @@ def save_picke_file(config, texts):
     os.symlink(pickle_file, config["text_pickle_file"])
 
 
-def update_pickle(config,articleLoader, tokenizer):
+def update_pickle(config, articleLoader, tokenizer):
 
     pickle_file = config["text_pickle_file"]
     with open(pickle_file, 'rb') as f:
@@ -47,6 +48,10 @@ def update_pickle(config,articleLoader, tokenizer):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--action', help='action can be create or append')
+    args = parser.parse_args()
+
 
     config = yaml.safe_load(open('config.yml'))
     db_config = yaml.safe_load(open(config["key_file"]))
@@ -54,9 +59,12 @@ if __name__ == '__main__':
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
     articleLoader = ArticleLoader(articleDatasetRepo)
     articleLoader.load_all_articles(True)
-
-    create_pickle(config , articleLoader, defaultTokenizer)
-    #update_pickle( config)
+    if (args.action == 'append'):
+        update_pickle(config, articleLoader, defaultTokenizer)
+    elif (args.action == 'create'):
+        create_pickle(config , articleLoader, defaultTokenizer)
+    else:
+        print("Please choose create or append")
 
 
 
