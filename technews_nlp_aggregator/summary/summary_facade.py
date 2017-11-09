@@ -26,7 +26,7 @@ class SummaryFacade():
         return sentences_zipped
 
     def summarize(self, title, doc, article_id):
-        sentences = defaultTokenizer.sentence_tokenizer.process('', doc)
+        sentences = defaultTokenizer.sentence_tokenizer.process( doc)
 
         summaryQuickTask = SummaryQuickTask(doc, sentences, article_id, self.tfidfFacade, self.doc2vecFacade)
         scores = summaryQuickTask.get_scores()

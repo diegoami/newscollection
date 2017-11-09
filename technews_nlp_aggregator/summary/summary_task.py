@@ -7,7 +7,7 @@ class SummaryTask():
         self.article_id = article_id
         self.percentage = percentage
 
-        self.sentences = defaultTokenizer.sentence_tokenizer.process(self.title, self.doc)
+        self.sentences = defaultTokenizer.sentence_tokenizer.sent_tokenize(self.doc)
         self.result = None
 
 

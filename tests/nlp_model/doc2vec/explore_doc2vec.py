@@ -11,7 +11,7 @@ def test_compare_docs_to_id(application, n_articles=20):
         print(random_article['text'])
         print(" ============= DOC2VEC ==================")
         sentences_tokenizer = _.tokenizer.sentence_tokenizer
-        for sentence in sentences_tokenizer.process( random_article['title'], random_article['text']):
+        for sentence in sentences_tokenizer.sent_tokenize(  random_article['text']):
             scores = _.doc2VecFacade.compare_docs_to_id(random_article['title'], sentence, random_article_id)
             print(sentence)
             print(scores)

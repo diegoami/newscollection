@@ -37,7 +37,7 @@ def analize_article(application):
         analize_bows(icorp, _ )
         doc = _.articleLoader.articlesDF.iloc[icorp]["text"]
         sentences_tokenizer = _.tokenizer.sentence_tokenizer
-        for sentence in sentences_tokenizer.process('', doc):
+        for sentence in sentences_tokenizer.sent_tokenize(doc):
             scores = _.tfidfFacade.compare_docs_to_id(sentence, icorp)
             print(sentence)
             print(scores)

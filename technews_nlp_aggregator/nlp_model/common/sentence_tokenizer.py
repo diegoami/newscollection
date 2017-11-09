@@ -88,14 +88,9 @@ sentence_inside_excludes = [
     'Good Deals is a weekly roundup of the best deals on the internet'
 ]
 
-class SimpleSentenceTokenizer:
-    def sent_tokenize(self, document):
-        #sentences = sent_tokenize(document)
-        doc_sent = spacy_nlp(document)
-        sents = doc_sent.sents
-        return [sent.text for sent in sents]
 
-class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
+
+class TechArticlesSentenceTokenizer():
     def remove_useless_sentences(self, sentences):
 
         sentences =  [ s for s in sentences if not any([x for x in sentence_excludes if s.startswith(x)])]
@@ -103,9 +98,11 @@ class TechArticlesSentenceTokenizer(SimpleSentenceTokenizer):
 
         return sentences
 
-    def process(self, title, document):
+    def sent_tokenize(self, document):
+        doc_sent = spacy_nlp(document)
+        sents = doc_sent.sents
+        return [sent.text for sent in sents]
 
-        sentences = self.sent_tokenize(document)
         return sentences
 
     def clean_sentences(self, document):
