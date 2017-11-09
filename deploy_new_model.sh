@@ -5,3 +5,4 @@ ssh ubuntu@18.194.147.93 'find /media/diego/QData/techarticles/pickle -mtime +7 
 ssh ubuntu@18.194.147.93 'rm /media/diego/QData/techarticles/models.tgz'
 scp /media/diego/QData/techarticles/models.tgz ubuntu@18.194.147.93:/media/diego/QData/techarticles
 ssh ubuntu@18.194.147.93 'pushd /media/diego/QData/techarticles; tar xvf models.tgz; popd'
+curl 18.194.147.93:8080/reload

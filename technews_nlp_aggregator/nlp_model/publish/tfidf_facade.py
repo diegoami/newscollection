@@ -40,8 +40,7 @@ class TfidfFacade(ClfFacade):
         condition = self.article_loader.articlesDF.index == id
         vec_lsis = []
         for sentence in sentences:
-            words = self.tokenizer.tokenize_doc('', sentence)
-            p_words = self.gramFacade.phrase(words)
+            p_words = self.get_tokenized(sentence)
             vec_bow = self.dictionary.doc2bow(p_words)
             vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
             vec_lsis.append(vec_lsi)
@@ -49,12 +48,16 @@ class TfidfFacade(ClfFacade):
         return scores
 
 
-    def get_vec(self,title, doc):
-        words = self.tokenizer.tokenize_doc(title, doc)
-        p_words = self.gramFacade.phrase(words)
+    def get_vec(self, title, doc):
+        p_words = self.get_tokenized(doc, title)
         vec_bow = self.dictionary.doc2bow(p_words)
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
+
+    def get_tokenized(self, doc, title=''):
+        words = self.tokenizer.tokenize_doc(title, doc)
+        p_words = self.gramFacade.phrase(words)
+        return p_words
 
     def get_vec_docid(self, id):
 

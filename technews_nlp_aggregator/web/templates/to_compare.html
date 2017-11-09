@@ -31,26 +31,30 @@
 </div>
 <div class="row">
   <div class="column left">
-    <h3 id="title1_id">{{A1.AIN_TITLE}}</h3>
     <p><I>ID:</I> {{A1.AIN_ID}}</p>
 
     <p>Original url : <A class="shorturl" HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A> </p>
     <P><I>Date:</I> {{A1.AIN_DATE}}</P>
 
       <P></P>
-      <P class="article_text"><B id="summary1_id"><A HREF="#" onclick="request_summary('{{A1.AIN_ID}}', 'summary1_id', 'a1_text','title1_id'); return false;">Request summary</A></B></P>
+
+    <h3 id="title1_id">{{A1.AIN_TITLE}}</h3>
       <P></P>
+
+
       <P id="a1_text" class="article_text">{{A1.ATX_TEXT | safe}}</P>
   </div>
     <div class="column middle"></div>
   <div class="column right">
-    <h3 id="title2_id">{{A2.AIN_TITLE}}</h3>
       <p><I>ID:</I> {{A2.AIN_ID}}</p>
 
       <p>Original url :  <A class="shorturl" HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A>  </p>
       <P><I>Date:</I> {{A2.AIN_DATE}}</P>
       <P></P>
-       <P class="article_text"><B id="summary2_id"><A HREF="#" onclick="request_summary('{{A2.AIN_ID}}', 'summary2_id', 'a2_text','title2_id'); return false;">Request summary</A></B></P>
+
+    <h3 id="title2_id">{{A2.AIN_TITLE}}</h3>
+
+
       <P></P>
     <P id="a2_text" class="article_text"> {{A2.ATX_TEXT | safe}}</P>
 

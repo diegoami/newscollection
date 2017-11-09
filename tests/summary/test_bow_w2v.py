@@ -123,7 +123,7 @@ def select_sentences(_, tok_to_keep, sents_t, tfidf1_m):
 
 
             if token in tok_to_keep and token not in seen_in_doc:
-                print("Triggering token : {}".format(token)  )
+
                 mustAdd = True
                 seen_in_doc.append(token)
         if mustAdd:

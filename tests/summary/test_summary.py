@@ -19,10 +19,10 @@ def try_summarize(application, n_articles=20):
         print(text)
 
         print(" ============= SUMMARY ==================")
-        summary_sentences = _.summaryFacade.summarize(title, text, random_article_id)
+        summary_sentences = _.summaryFacade.summarize(random_article_id, title, text)
         print(title)
-        for entry in summary_sentences:
-            print(entry["sentence"])
+        for id, sent in summary_sentences:
+            print("{} {}".format(id,sent))
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('../../config.yml'))

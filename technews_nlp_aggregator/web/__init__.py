@@ -4,7 +4,6 @@
 
 
 from flask import Flask, render_template
-
 from .util import read_int_from_form
 
 app = Flask(__name__)
@@ -14,11 +13,11 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-
-
+import technews_nlp_aggregator.web.duplicate_articles
+import technews_nlp_aggregator.web.compare_articles
 import technews_nlp_aggregator.web.retrieve_similar
-import technews_nlp_aggregator.web.analyze_articles
+import technews_nlp_aggregator.web.retrieve_similar_url
+
 
 import technews_nlp_aggregator.web.statistics
 import technews_nlp_aggregator.web.admin
-from .util import enclose_with_span, highlight_entities

@@ -38,6 +38,10 @@ class Application:
         self.tokenizeInfo = TokenizeInfo(self.tokenizer)
         self.doc2VecInfo = Doc2VecInfo(self.doc2VecFacade.model)
         self.summaryFacade = SummaryFacade(self.tfidfFacade, self.doc2VecFacade)
+        last_article_date = self.articleDatasetRepo.get_latest_article_date()
+
+        self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)
+
 
     def ensure_text_loaded(self):
         if (not self.load_text):

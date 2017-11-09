@@ -1,6 +1,6 @@
 import time
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
-class SummaryTask():
+class SummaryHeavyStrategy():
     def __init__(self, title, doc, article_id, percentage):
         self.title = title
         self.doc = doc
