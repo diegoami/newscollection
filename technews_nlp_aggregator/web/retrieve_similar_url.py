@@ -21,22 +21,26 @@ def random_url():
 
 @app.route('/retrieve_similar_url', methods=['POST'])
 def retrieve_similar_url():
+    _ = app.application
     if request.method == 'POST':
         form = request.form
         if form:
 
             url = form["tdidf_input"]
+            article_id = read_int_from_form(form, 'article_id', 0)
             n_articles = read_int_from_form(form, 'n_articles')
             d_days = read_int_from_form(form, 'd_days')
-            if url:
-                article_id = app.application.articleLoader.get_id_from_url(url)
-                if (not article_id):
-                    return render_template('search_url.html', messages=['Could not find the URL in the database'])
-                else:
-                    return common_retrieve_url( url=url, article_id=article_id, n_articles=n_articles, d_days=d_days)
+            if article_id :
+                url = _.articleLoader.get_article(article_id).iloc[0]['url']
+            elif url:
+                article_id = _.articleLoader.get_id_from_url(url)
+            if (not article_id):
+                return render_template('search_url.html', messages=['Could not find the URL in the database'])
             else:
-                return render_template('search_url.html',
-                                       messages=['Please enter the URL of an article in the database'])
+                return common_retrieve_url( url=url, article_id=article_id, n_articles=n_articles, d_days=d_days)
+        else:
+            return render_template('search_url.html',
+                                       messages=['Please enter the URL of an article or an article id in the databasse'])
 
 
 def common_retrieve_url(url=None, article_id=None, n_articles=25, d_days=30):

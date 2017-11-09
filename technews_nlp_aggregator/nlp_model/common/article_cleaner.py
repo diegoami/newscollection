@@ -15,7 +15,7 @@ class TechArticlesCleaner():
     ]
 
     def remove_chars(self, doc):
-        doc = doc.replace('“', '').replace('”', '')
+        doc = doc.replace('“', '').replace('”', '').replace('‘', '').replace('’', '')
         return doc
 
     def replace_tweets(self, doc):

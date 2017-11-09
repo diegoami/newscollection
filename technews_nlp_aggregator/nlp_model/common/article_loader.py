@@ -19,7 +19,7 @@ class ArticleLoader:
 
     def get_article(self, article_id):
         article_row = self.articlesDF[(self.articlesDF['article_id'] == article_id)]
-        return article_row.iloc[0]
+        return article_row
 
     def get_id_from_url(self, url):
         article_row = self.articlesDF[(self.articlesDF['url'] == url)]

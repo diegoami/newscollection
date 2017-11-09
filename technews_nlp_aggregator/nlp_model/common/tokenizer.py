@@ -5,6 +5,7 @@ from . import  TechArticlesSentenceTokenizer
 
 from . import TechArticlesWordTokenizer
 from . import TechArticlesCleaner
+from . import TechArticlesPreprocessor
 
 import logging
 
@@ -14,11 +15,13 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 class DefaultTokenizer:
 
-    def __init__(self, sentence_tokenizer=None, word_tokenizer=None):
+    def __init__(self, sentence_tokenizer=None, word_tokenizer=None, preprocessor=None):
         self.sentence_tokenizer = TechArticlesSentenceTokenizer() if not sentence_tokenizer else sentence_tokenizer
-
-        self.word_tokenizer = TechArticlesWordTokenizer() if not word_tokenizer else word_tokenizer
+        self.preprocessor = TechArticlesPreprocessor() if not preprocessor else preprocessor
+        self.word_tokenizer = TechArticlesWordTokenizer(self.preprocessor) if not word_tokenizer else word_tokenizer
         self.articles_cleaner = TechArticlesCleaner()
+
+
 
     def tokenize_ddf(self, articleDF):
 
@@ -35,17 +38,11 @@ class DefaultTokenizer:
 
         logging.info("Tokenizing documents... this might take a while")
         logging.info("ArticleDF has {} rows ".format(len(articleDF)))
-        #articleDF.apply(tokenize , axis=1)
+
         articleDF['article_txt'] = articleDF['title'].map(str)+".\n"+ articleDF['text']
         articleDF['article_tokens'] = articleDF['article_txt'].map(self.tokenize_fulldoc)
 
-      #  for index, row in articleDF.iterrows():
 
-      #      texts.append(self.tokenize_fulldoc(row['article_txt']))
-     #       if (len(texts) % 100 == 0):
-      #          logging.info("Processed  {} texts".format(len(texts)))
-            #print(len(texts), len(articleDF['text']), len(articleDF['text'].tolist()))
-        #return texts
         return articleDF['article_tokens']
 
     def tokenize_doc(self, title, document):

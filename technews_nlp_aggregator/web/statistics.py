@@ -38,7 +38,7 @@ def statistics(article_id):
 
         if article:
            # sp_words = retrieve_sp_words(article["ATX_TEXT"])
-            row = _.articleLoader.articlesDF[app.application.articleLoader.articlesDF['article_id'] == int(article_id)]
+            row = _.articleLoader.get_article(article_id)
             tokens = _.tokenizeInfo.get_tokenized_article(article["AIN_TITLE"], article["ATX_TEXT"])
             trigrams = _.gramFacade.phrase(tokens)
             id = row.index[0]

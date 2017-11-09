@@ -65,6 +65,7 @@ create table ARTICLE_TEXT
 	ATX_AIN_ID int not null,
 	ATX_TEXT text null,
 	ATX_TEXT_ORIG text null,
+	ATX_MODIFIED tinyint(1) null,
 
 	constraint ARTICLE_TEXT_ATX_ID_uindex
 		unique (ATX_ID),

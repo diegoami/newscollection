@@ -78,6 +78,7 @@ sentence_excludes = [
     'HOW TO WATCH:',
     'Starting time: ',
     'Tech Republic may get a share of revenue from the sale'
+    '(via'
 ]
 
 sentence_inside_excludes = [
@@ -85,7 +86,8 @@ sentence_inside_excludes = [
     'Stay tuned with our weekly recap',
     'check out our interview with',
     'Latest headlines delivered to you daily',
-    'Good Deals is a weekly roundup of the best deals on the internet'
+    'Good Deals is a weekly roundup of the best deals on the internet',
+    'Read the full story'
 ]
 
 

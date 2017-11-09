@@ -10,6 +10,10 @@
 {% include 'header.html' %}
 <div>
 <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
+    <P>
+<label for="article_id">Article Id: </label><INPUT id="article_id" name="article_id" maxlength="64" size="10" value="{{article_id | default('')}}">
+</INPUT>
+</P>
 <P>
 <label for="tdidf_input">Url in database: </label><INPUT id="tdidf_input" name="tdidf_input" maxlength="256" size="100" value="{{search_url | default('')}}">
 </INPUT>
