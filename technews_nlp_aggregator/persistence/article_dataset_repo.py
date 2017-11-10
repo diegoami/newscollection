@@ -226,6 +226,12 @@ class ArticleDatasetRepo():
         return article1, article2
 
 
+    def load_articles_for_process(self):
+        econ=self.engine.connect()
+        article_process_sql = "SELECT @curRow := @curRow + 1 AS AIN_ROW, AIN_ID FROM ARTICLE_INFO IL JOIN (SELECT @curRow := 0) R WHERE AIN_PROCESSED IS NULL"
+
+        articlesProcessDF = pd.read_sql(article_process_sql ,  econ, index_col="AIN_ROW")
+        return articlesProcessDF
 
     def load_article_with_text(self, id, con=None):
         article_info_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND AIN_ID = :id"
@@ -269,8 +275,8 @@ class ArticleDatasetRepo():
             con.rollback()
 
 
-"""
- def load_text(self, article_sub_DF, load_text=True):
+
+def load_text(self, article_sub_DF, load_text=True):
         econ = self.engine.connect()
         if "text" not in article_sub_DF.columns:
             articleids = article_sub_DF.index
@@ -286,4 +292,3 @@ class ArticleDatasetRepo():
 
         econ.close()
         return article_sub_DF
-"""

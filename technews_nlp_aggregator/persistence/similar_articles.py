@@ -1,7 +1,7 @@
 import logging
 import traceback
 from datetime import datetime
-
+import pandas as pd
 import dataset
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
@@ -217,3 +217,14 @@ class SimilarArticlesRepo:
         max_date_query = con.query(sql_last_similar)
         max_date = next(max_date_query, None)
         return max_date["AIN_DATE"]
+
+    def retrieve_user_paired(self):
+        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, SSU_SIMILARITY FROM SAME_STORY_USER ";
+        similar_stories = []
+        con = self.get_connection()
+        query_result= con.query(sql_user_similar)
+        result = [row for row in query_result]
+        return result
+
+
+

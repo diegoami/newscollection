@@ -1,7 +1,7 @@
 
 import logging
 from random import randint
-from . import exclude_articles
+
 
 
 

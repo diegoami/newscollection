@@ -25,6 +25,8 @@ create table ARTICLE_INFO
 	AIN_DATE date null,
 	AIN_TITLE varchar(256) not null,
 	AIN_FILENAME varchar(256) null,
+	AIN_CREATED date null,
+
 	constraint ARTICLE_INFO_AIN_ID_uindex
 		unique (AIN_ID),
 	constraint ARTICLE_INFO_AIN_URL_uindex

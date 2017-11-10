@@ -45,5 +45,25 @@ class ArticleComparatorJob:
             except:
                 traceback.print_exc()
                 con.rollback()
+"""
+    def process_articles(self, articlesSimilarDF):
+        for index, row in articlesSimilarDF.iterrows():
+        articlesDF = self.article_loader.articlesDF
+        con = self.similarArticlesRepo.get_connection()
 
+        for id, sims in articles_and_sims.items():
+            try:
+                con.begin()
 
+                for other_id, score in sims:
+                    article, otherarticle = articlesDF.iloc[id], articlesDF.iloc[other_id]
+                    article_id, article_other_id = article['article_id'], otherarticle['article_id']
+                    if ((article_id, article_other_id) not in self.inserted_in_session):
+                        self.similarArticlesRepo.persist_association(con, article_id, article_other_id,
+                                                                     self.facade.name, score)
+                        self.inserted_in_session.add((article_id, article_other_id))
+                con.commit()
+            except:
+                traceback.print_exc()
+                con.rollback()
+"""

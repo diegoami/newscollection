@@ -124,18 +124,18 @@ class Doc2VecFacade(ClfFacade):
         if (len(docrow) > 0):
             docid = docrow.index[0]
             url_date = docrow.iloc[0]['date_p']
-            interval_condition = abs((articleModelDF['date_p'] - url_date).dt.days) <= d_days
-            articlesFilteredDF = articleModelDF[interval_condition]
-            dindex = articlesFilteredDF.index
-            indexer = DocVec2Indexer(self.model.docvecs, dindex)
-
-            scores = self.model.docvecs.most_similar([docid], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
-
-            args_scores = np.argsort(-scores)
-            return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
+            return self.get_related_articles_for_id(articleModelDF, d_days, docid, url_date)
         else:
             return None, None
 
+    def get_related_articles_for_id(self, articleDF, d_days, docid, url_date):
+        interval_condition = abs((articleDF['date_p'] - url_date).dt.days) <= d_days
+        articlesFilteredDF = articleDF[interval_condition]
+        dindex = articlesFilteredDF.index
+        indexer = DocVec2Indexer(self.model.docvecs, dindex)
+        scores = self.model.docvecs.most_similar([docid], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
+        args_scores = np.argsort(-scores)
+        return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
     def compare_articles_from_dates(self,  start, end, thresholds):
         articles_and_sim = {}

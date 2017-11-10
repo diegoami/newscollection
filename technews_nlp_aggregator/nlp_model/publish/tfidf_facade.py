@@ -86,16 +86,17 @@ class TfidfFacade(ClfFacade):
         if (len(docrow) > 0):
             docid = docrow.index[0]
             url_date = docrow.iloc[0]['date_p']
-            interval_condition = abs((articlesModelDF['date_p'] - url_date).dt.days) <= d_days
-
-            articlesFilteredDF = articlesModelDF[interval_condition]
-
-            vec_lsi = self.get_vec_docid(docid)
-            scores = self.matrix_wrapper[(vec_lsi,interval_condition)]
-            args_scores = np.argsort(-scores)
-            return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
+            return self.get_related_articles_for_id(articlesModelDF, d_days, docid, url_date)
         else:
             return None, None
+
+    def get_related_articles_for_id(self, articlesDF, d_days, docid, url_date):
+        interval_condition = abs((articlesDF['date_p'] - url_date).dt.days) <= d_days
+        articlesFilteredDF = articlesDF[interval_condition]
+        vec_lsi = self.get_vec_docid(docid)
+        scores = self.matrix_wrapper[(vec_lsi, interval_condition)]
+        args_scores = np.argsort(-scores)
+        return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
     def compare_articles_from_dates(self,  start, end, thresholds):
         articles_and_sim = {}
@@ -111,7 +112,24 @@ class TfidfFacade(ClfFacade):
 
             articles_and_sim[id] = zip(id_in_threshold, scores_in_threshold)
         return articles_and_sim
-
-
-
-
+"""
+    def process_article(self,articlesSimilarDF, thresholds):
+        for id, row in articlesSimilarDF.iterrows():
+            date = row['date']
+            article_id = row['article_id']
+            vec_lsi = self.get_vec_docid(id)
+            scores = self.matrix_wrapper[(vec_lsi)]
+            scores_in_threshold_condition = (scores >= thresholds[0]) & (scores <= thresholds[1])
+            sims = scores[scores_in_threshold_condition]
+            for other_id, score in scores:
+                        article, otherarticle = articlesDF.iloc[id], articlesDF.iloc[other_id]
+                        article_id, article_other_id = article['article_id'], otherarticle['article_id']
+                        if ((article_id, article_other_id) not in self.inserted_in_session):
+                            self.similarArticlesRepo.persist_association(con, article_id, article_other_id,
+                                                                         self.facade.name, score)
+                            self.inserted_in_session.add((article_id, article_other_id))
+                    con.commit()
+                except:
+                    traceback.print_exc()
+                    con.rollback()
+"""
