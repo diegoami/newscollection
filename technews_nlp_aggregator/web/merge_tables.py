@@ -27,7 +27,7 @@ def extract_start_end(start_s, end_s):
     return end, start
 
 
-def retrieve_sims_map_with_dates(classifier, text, start, end, n_articles, title):
+def retrieve_sims_map_with_dates(classifier, text, start=date.min, end=date.max, n_articles=25, title=''):
     articlesIndeces, scores = classifier.get_related_articles_and_score_doc(doc=text, start=start, end=end, title=title)
     max_n_articles = min(len(articlesIndeces), n_articles * 10)
     sims = zip(articlesIndeces[:max_n_articles], scores[:max_n_articles])

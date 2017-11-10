@@ -45,7 +45,7 @@ def filter_double(articleLoader, sims):
             found_articles.extend(connected_ids)
     return related_articles
 
-def read_int_from_form(form, id, default_value=50):
+def read_int_from_form(form, id, default_value="50"):
     intv_str = form.get(id, default_value)
     intv_str = intv_str.strip()
     intv = int(intv_str) if intv_str.isdigit() else default_value

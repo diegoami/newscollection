@@ -24,6 +24,7 @@
 <p><label for="end">To:</label><input type="text" id="end" name="end" value="{{end_s | default('2017-12-31')}}"><br/><br/></p>
 
 <p>
+<input name="search_url" id="search_url" type="hidden" value="submit"  />
 <input class="main"  type="submit" value="submit"  />
 </p>
 </FORM>
@@ -62,7 +63,7 @@
 
 
             <td class="icon">
-                <A HREF="/statistics/{{article_id}}" target="_blank">
+                <A HREF="/statistics/{{_.article_id}}" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/statistics.png') }}" ALT="Statistics">
                 </A>
 

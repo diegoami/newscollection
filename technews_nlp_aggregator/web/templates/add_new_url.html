@@ -62,9 +62,6 @@
         <th class="date"><span>Date</span></th>
         <th>Score</th>
 
-        <th class="icon">Similar</th>
-
-        <th class="icon">Statistics</th>
 
       </tr>
 
@@ -77,19 +74,7 @@
                 <td class="date">{{_.date_p}}</td>
                 <td>{{_.similarity}}</td>
 
-                 <td class="icon">
-                    <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
-                    </A>
-                </td>
 
-
-                <td class="icon">
-                    <A HREF="/statistics/{{article_id}}" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/statistics.png') }}" ALT="Statistics">
-                    </A>
-
-                </td>
 
             </tr>
 
