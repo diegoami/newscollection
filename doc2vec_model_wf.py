@@ -1,7 +1,7 @@
 import os
 import pickle
 import logging
-
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade
 
