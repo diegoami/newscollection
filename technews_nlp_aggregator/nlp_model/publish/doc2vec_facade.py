@@ -71,15 +71,19 @@ class Doc2VecFacade(ClfFacade):
         return np.array(scores)
 
 
-    def compare_docs_to_id(self,title, doc, id):
-        wtok = self.tokenizer.tokenize_doc(title, doc)
-        p_wtok = self.gramFacade.phrase(wtok)
+    def compare_docs_to_id(self, title, doc, id):
+        p_wtok = self.get_tokenized(doc=doc, title=title)
         condition = self.article_loader.articlesDF.index == id
         articlesFilteredDF = self.article_loader.articlesDF[condition]
         dindex = articlesFilteredDF.index
         infer_vector = self.model.infer_vector(p_wtok)
         scores = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
         return scores
+
+    def get_tokenized(self, doc, title):
+        wtok = self.tokenizer.tokenize_doc(title=title, doc=doc)
+        p_wtok = self.gramFacade.phrase(wtok)
+        return p_wtok
 
     def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None):
         infer_vector = self.get_vector(doc, title)
@@ -100,8 +104,7 @@ class Doc2VecFacade(ClfFacade):
         return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
     def get_vector(self, doc, title=''):
-        wtok = self.tokenizer.tokenize_doc(title, doc)
-        p_wtok = self.gramFacade.phrase(wtok)
+        p_wtok = self.get_tokenized(doc=doc, title=title)
         infer_vector = self.model.infer_vector(p_wtok)
         return infer_vector
 

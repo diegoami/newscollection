@@ -1,9 +1,8 @@
 from .util import read_int_from_form
-from .merge_tables import retrieve_sims_map, merge_sims_maps,retrieve_sims_map_with_dates
+from .merge_tables import merge_sims_maps,retrieve_sims_map_with_dates
 from flask import render_template,  request
 from . import app
 from datetime import timedelta, date
-from technews_nlp_aggregator.common.util import extract_date
 
 
 @app.route('/search_url')
@@ -28,8 +27,8 @@ def retrieve_similar_url():
         form = request.form
         if form:
 
-            url = form["tdidf_input"]
-            article_id = read_int_from_form(form, 'article_id', 0)
+            url = form.get("search_url",None)
+            article_id = read_int_from_form(form, 'article_id', None)
             n_articles = read_int_from_form(form, 'n_articles')
             d_days = read_int_from_form(form, 'd_days')
 

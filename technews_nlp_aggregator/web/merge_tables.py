@@ -13,7 +13,8 @@ def merge_sims_maps(tdf_sims_map, doc2vec_sims_map, articleLoader):
     return related_articles
 
 
-def retrieve_sims_map(classifier, text, start_s=None, end_s=None, n_articles=25, title=''):
+
+def extract_start_end(start_s, end_s):
     start, end = None, None
     if start_s:
         start = conv_to_date(start_s)
@@ -23,15 +24,11 @@ def retrieve_sims_map(classifier, text, start_s=None, end_s=None, n_articles=25,
         start = date.min
     if not end:
         end = date.max
-
-    articleMap = retrieve_sims_map_with_dates(classifier, text=text, start=start, end=end, n_articles=n_articles, title=title)
-
-
-    return articleMap
+    return end, start
 
 
 def retrieve_sims_map_with_dates(classifier, text, start, end, n_articles, title):
-    articlesIndeces, scores = classifier.get_related_articles_and_score_doc(text, start=start, end=end, title=title)
+    articlesIndeces, scores = classifier.get_related_articles_and_score_doc(doc=text, start=start, end=end, title=title)
     max_n_articles = min(len(articlesIndeces), n_articles * 10)
     sims = zip(articlesIndeces[:max_n_articles], scores[:max_n_articles])
     articleMap = {articleIndex: score for articleIndex, score in sims}

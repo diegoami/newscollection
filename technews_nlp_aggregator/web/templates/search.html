@@ -13,9 +13,9 @@
 <div>
 <FORM id="mainForm"  ACTION="/retrieve_similar" METHOD="POST">
 <p>
-<label class="textarea_label" for="tdidf_input" >Enter text here</label>
+<label class="textarea_label" for="search_text" >Enter text here</label>
 
-<textarea id="tdidf_input" name="tdidf_input" rows="30" cols="90">{{search_text | default('') }}
+<textarea id="search_text" name="search_text" rows="30" cols="90">{{search_text | default('') }}
 </textarea>
 </p>
     <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"></p>

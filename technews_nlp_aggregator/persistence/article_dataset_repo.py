@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
 
 from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 import pandas as pd
 
 

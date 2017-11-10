@@ -1,6 +1,5 @@
 from math import log
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 
 class SummaryTfidfStrategy():
     def __init__(self,  tfidfFacade, threshold_mult=0.8):
@@ -40,7 +39,7 @@ class SummaryTfidfStrategy():
         for idx, sent in enumerate(sents_t):
             mustAdd = False
             seen_in_sent = []
-            for token in self.tfidfFacade.get_tokenized(sent):
+            for token in self.tfidfFacade.get_tokenized(doc=sent):
 
                 if token in tok_to_keep:
                     seen_in_sent.append(token)

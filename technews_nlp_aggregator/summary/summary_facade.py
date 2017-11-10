@@ -1,11 +1,6 @@
-from .summary_heavy_strategy import SummaryHeavyStrategy
-from .summary_quick_strategy import SummaryQuickStrategy
 from .summary_tfidf_strategy import SummaryTfidfStrategy
 
-from .summary_evaluator import SummaryEvaluator
-from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 import logging
-import numpy as np
 
 class SummaryFacade():
 

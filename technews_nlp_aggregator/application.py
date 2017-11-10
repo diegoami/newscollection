@@ -10,7 +10,6 @@ from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader,  defaultTokenizer
 
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 
 
 

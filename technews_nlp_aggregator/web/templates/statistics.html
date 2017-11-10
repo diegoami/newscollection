@@ -11,9 +11,15 @@
 
 <FORM id="statistics_form" ACTION="/statistics_form" METHOD="POST">
 <P>
-<label for="article_id">Article_id</label><INPUT id="article_id" name="article_id" maxlength="256" size="80" value="{{article_id}}">
+<label for="article_id">Article_id</label><INPUT id="article_id" name="article_id"  maxlength="64" size="10" value="{{article_id}}">
 </INPUT>
 </P>
+<P>
+<label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="70" value="{{search_url | default('')}}">
+</INPUT>
+</P>
+<P>
+
 <input class="main" type="submit" value="Random" onclick="random_article_id();"  />
 <input class="main" type="submit" value="Submit"  />
 </p>
