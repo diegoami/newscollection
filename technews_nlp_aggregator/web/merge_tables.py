@@ -5,7 +5,7 @@ from .util import extract_related_articles
 def merge_sims_maps(tdf_sims_map, doc2vec_sims_map, articleLoader):
     both_sims_map = {}
     for tdf_key in tdf_sims_map:
-        both_sims_map[tdf_key] = tdf_sims_map.get(tdf_key, 0) + doc2vec_sims_map.get(tdf_key, 0)
+        both_sims_map[tdf_key] = (tdf_sims_map.get(tdf_key, 0) + doc2vec_sims_map.get(tdf_key, 0)) / 2
     for doc2vec_key in doc2vec_sims_map:
         both_sims_map[doc2vec_key] = tdf_sims_map.get(doc2vec_key, 0) + doc2vec_sims_map.get(doc2vec_key, 0)
     sims = sorted(both_sims_map.items(), key=lambda x: x[1], reverse=True)
