@@ -38,8 +38,11 @@ def retrieve_similar_url():
                 url = article.iloc[0]['url']
                 id = article.index[0]
             elif url:
-                id = _.articleLoader.get_id_from_url(url)
+                article_id = _.articleLoader.get_id_from_url(url)
+                article = _.articleLoader.get_article(article_id)
+                id = article.index[0]
 
+                # to FIX
             if (id > _.tfidfFacade.docs_in_model() or id > _.doc2VecFacade.docs_in_model()):
                 return retrieve_from_article_id( article_id=article_id, n_articles=n_articles,   url=url, d_days=d_days)
             else:
