@@ -34,14 +34,19 @@ def retrieve_similar_url():
 
             if article_id:
                 article = _.articleLoader.get_article(article_id)
-                url = article.iloc[0]['url']
-                id = article.index[0]
+
+
             elif url:
                 article_id = _.articleLoader.get_id_from_url(url)
                 article = _.articleLoader.get_article(article_id)
-                id = article.index[0]
 
-                # to FIX
+            if (len(article) > 0):
+                id = article.index[0]
+                url = article.iloc[0]['url']
+            else:
+                return render_template('search_url.html',
+                                       messages=[
+                                           'Could not find neither url nor id'])
             if (id > _.tfidfFacade.docs_in_model() or id > _.doc2VecFacade.docs_in_model()):
                 return retrieve_from_article_id( article_id=article_id, n_articles=n_articles,   url=url, d_days=d_days)
             else:
