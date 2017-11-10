@@ -3,7 +3,7 @@ import scrapy
 from scrapy import Request
 
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 from datetime import date
 from . import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled
 

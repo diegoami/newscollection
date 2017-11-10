@@ -1,5 +1,5 @@
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 import yaml
 
 from technews_nlp_aggregator.application import Application

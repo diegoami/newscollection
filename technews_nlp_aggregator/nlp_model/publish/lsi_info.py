@@ -17,6 +17,9 @@ class LsiInfo():
 
     def get_words_docid(self, docid):
         vec = self.corpus[docid]
+        return self.get_bows_with_id(vec)
+
+    def get_bows_with_id(self, vec):
         wfreq = []
         for id, count in vec:
             word = self.id2word[id]

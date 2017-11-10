@@ -39,15 +39,3 @@ def retrieve_similar():
                 doc2vec_sims_map = retrieve_sims_map(_.doc2VecFacade, text, start_s, end_s,  n_articles)
                 related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map,_.articleLoader)
                 return render_template('search.html', articles=related_articles[:n_articles],  search_text=text, n_articles=n_articles, start_s=start_s, end_s=end_s )
-
-
-def retrieve_articles_url_sims(classifier, url, n_articles, d_days):
-    articlesIndeces, scores = classifier.get_related_articles_and_score_url(url, d_days)
-    if (articlesIndeces is not None):
-        max_n_articles = min(len(articlesIndeces), n_articles * 10)
-        sims = zip(articlesIndeces[:max_n_articles], scores[:max_n_articles])
-        articleMap = {articleIndex: score  for articleIndex, score in sims}
-
-        return articleMap
-    else:
-        return None

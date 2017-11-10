@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'header_files.html' %}
+  <meta charset="UTF-8">
+  <title>Add new article</title>
+
+</head>
+<body onload="javascript:select_header('topnav_add_new_url')">
+{% include 'header.html' %}
+<H3> Add a new article</H3>
+
+<div>
+<FORM id="mainForm"  ACTION="/add_new_url" METHOD="POST">
+<p>
+    <p><label for="article_date_s">Date:</label><input type="text" id="article_date_s" name="article_date_s" value=""></p>
+<P>
+<label for="article_url">Url of article: </label><INPUT id="article_url" name="article_url" maxlength="256" size="80" value="">
+</INPUT>
+</P>
+    <P>
+<label for="article_title">Title: </label><INPUT id="article_title" name="article_title" maxlength="256" size="80" value="">
+</INPUT>
+</P>
+<label class="textarea_label" for="article_text" >Enter text here</label>
+
+<textarea id="article_text" name="article_text" rows="30" cols="90">
+</textarea>
+</p>
+   <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"></p>
+<input class="main"  type="submit" value="submit"  />
+</p>
+</FORM>
+{% if A %}
+    </div>
+         <div>
+
+             <h2>{{A.AIN_TITLE}}</h2>
+             <p><I>ID:</I> {{A.AIN_ID}}</p>
+            <p><I>URL:</I> <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
+            <P><I>Date:</I> {{A.AIN_DATE}}</P>
+
+             <p class="article_text">{{summary_text | safe}}</p>
+         </div>
+
+
+        <h2>Tokenization</h2>
+        <P class="monospace">
+            {% for token in tokens: %}
+                {{token}} &nbsp; &nbsp;
+            {% endfor %}
+        </P>
+
+    {% if articles: %}
+    <h2>RESULTS (Tfidf+Doc2vec)</h2>
+
+    <table border="1">
+
+    <tr>
+        <th>Article Id</th>
+        <th><span>Title</span></th>
+        <th class="date"><span>Date</span></th>
+        <th>Score</th>
+
+        <th class="icon">Similar</th>
+
+        <th class="icon">Statistics</th>
+
+      </tr>
+
+        {% for _ in articles: %}
+
+            <tr>
+
+                <td>{{_.id}}</td>
+                <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+                <td class="date">{{_.date_p}}</td>
+                <td>{{_.similarity}}</td>
+
+                 <td class="icon">
+                    <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
+                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                    </A>
+                </td>
+
+
+                <td class="icon">
+                    <A HREF="/statistics/{{article_id}}" target="_blank">
+                        <IMG SRC="{{ url_for('static', filename='images/statistics.png') }}" ALT="Statistics">
+                    </A>
+
+                </td>
+
+            </tr>
+
+
+        {% endfor %}
+    </table>
+    {% endif %}
+
+{% endif %}
+{% include 'footer.html' %}
+</body>
+</html>

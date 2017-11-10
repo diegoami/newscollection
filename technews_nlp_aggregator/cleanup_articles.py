@@ -3,7 +3,7 @@ from .application import Application
 from technews_nlp_aggregator.nlp_model.common import TechArticlesCleaner
 
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 def cleanup(application):
     def convert_file(id, con):

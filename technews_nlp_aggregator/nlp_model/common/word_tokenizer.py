@@ -1,10 +1,10 @@
 import logging
 from string import punctuation
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
 from spacy.en.word_sets import STOP_WORDS
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 
 

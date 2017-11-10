@@ -5,7 +5,7 @@ from datetime import datetime
 import dataset
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 import re
 from technews_nlp_aggregator.common.util import extract_source
 

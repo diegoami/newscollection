@@ -8,7 +8,7 @@ INDEX_FILENAME        = 'index'
 from gensim import corpora, models, similarities
 from . import ClfFacade
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 
 class TfidfGenerator(ClfFacade):

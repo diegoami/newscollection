@@ -5,7 +5,7 @@ TRIGRAMS_PHRASER_FILENAME   = 'trigrams_phraser'
 TRIGRAMS_PHRASES_FILENAME   = 'trigrams_phrases'
 
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 from gensim.models.phrases import Phraser, Phrases
 class GramFacade():

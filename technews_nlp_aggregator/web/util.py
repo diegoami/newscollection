@@ -1,7 +1,7 @@
 from technews_nlp_aggregator.common import extract_source, extract_date_str, extract_tags
 import logging
 import re, html
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 
 def extract_related_articles(articleLoader, sims):

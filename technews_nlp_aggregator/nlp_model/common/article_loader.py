@@ -2,7 +2,7 @@
 import logging
 from random import randint
 from . import exclude_articles
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 
 

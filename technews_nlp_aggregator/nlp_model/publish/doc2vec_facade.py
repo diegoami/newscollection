@@ -11,7 +11,7 @@ import numpy as np
 from gensim.models.doc2vec import TaggedDocument
 
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 class LabeledLineSentence(object):
     def __init__(self, idxlist, texts):
@@ -42,9 +42,7 @@ class Doc2VecFacade(ClfFacade):
 
 
     def get_related_articles_and_sims(self, doc, n):
-        wtok = self.tokenizer.tokenize_doc('', doc)
-        p_wtok = self.gramFacade.phrase(wtok)
-        infer_vector = self.model.infer_vector(p_wtok )
+        infer_vector = self.get_vector(doc, '')
 
         similar_documents = self.model.docvecs.most_similar([infer_vector], topn=n)
 
@@ -66,10 +64,7 @@ class Doc2VecFacade(ClfFacade):
         indexer = DocVec2Indexer(self.model.docvecs, dindex)
         scores = []
         for sentence in sentences:
-            wtok = self.tokenizer.tokenize_doc('', sentence)
-            p_wtok = self.gramFacade.phrase(wtok)
-
-            infer_vector = self.model.infer_vector(p_wtok)
+            infer_vector = self.get_vector(sentence, '')
 
             score = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
             scores.append(score[0])
@@ -86,41 +81,48 @@ class Doc2VecFacade(ClfFacade):
         scores = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
         return scores
 
-    def get_related_articles_and_score_doc(self, doc, start=None, end=None):
-        wtok = self.tokenizer.tokenize_doc('', doc)
-        p_wtok = self.gramFacade.phrase(wtok)
-        infer_vector = self.model.infer_vector(p_wtok)
-
+    def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None):
+        infer_vector = self.get_vector(doc, title)
+        articleModelDF = self.article_loader.articlesDF.iloc[:self.model.docvecs.doctag_syn0.shape[0]]
         if (start and end):
-            interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
-            articlesFilteredDF = self.article_loader.articlesDF[interval_condition]
+            interval_condition = (articleModelDF ['date_p'] >= start) & (articleModelDF ['date_p'] <= end)
+            articlesFilteredDF = articleModelDF [interval_condition]
             dindex = articlesFilteredDF.index
             indexer = DocVec2Indexer(self.model.docvecs,dindex )
             scores = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
 
         else:
             scores = self.model.docvecs.most_similar([infer_vector], topn=None)
-            articlesFilteredDF = self.article_loader.articlesDF
+            articlesFilteredDF = articleModelDF
             dindex = articlesFilteredDF.index
 
         args_scores = np.argsort(-scores)
         return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
+    def get_vector(self, doc, title=''):
+        wtok = self.tokenizer.tokenize_doc(title, doc)
+        p_wtok = self.gramFacade.phrase(wtok)
+        infer_vector = self.model.infer_vector(p_wtok)
+        return infer_vector
 
+    def get_vector_for_doc(self, title, doc):
 
-
+        doclist =  self.get_vector(title=title, doc=doc)
+        doczip = zip(range(len(doclist)), doclist)
+        docsorted = sorted(doczip, key=lambda x: abs(x[1]), reverse=True)
+        return docsorted
 
     def get_related_articles_and_score_url(self, url, d_days):
         #docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
+        articleModelDF = self.article_loader.articlesDF.iloc[:self.model.docvecs.doctag_syn0.shape[0]]
+        url_condition = articleModelDF['url'] == url
 
-        url_condition = self.article_loader.articlesDF['url'] == url
-
-        docrow = self.article_loader.articlesDF[url_condition]
+        docrow = articleModelDF[url_condition]
         if (len(docrow) > 0):
             docid = docrow.index[0]
             url_date = docrow.iloc[0]['date_p']
-            interval_condition = abs((self.article_loader.articlesDF['date_p'] - url_date).dt.days) <= d_days
-            articlesFilteredDF = self.article_loader.articlesDF[interval_condition]
+            interval_condition = abs((articleModelDF['date_p'] - url_date).dt.days) <= d_days
+            articlesFilteredDF = articleModelDF[interval_condition]
             dindex = articlesFilteredDF.index
             indexer = DocVec2Indexer(self.model.docvecs, dindex)
 
@@ -161,6 +163,9 @@ class Doc2VecFacade(ClfFacade):
 
         logging.info("Training completed, saving to  " + self.model_dir)
         self.model.save(self.model_dir + MODEL_FILENAME)
+
+    def docs_in_model(self):
+        return self.model.docvecs.doctag_syn0.shape[0]
 
 
 class DocVec2Indexer():

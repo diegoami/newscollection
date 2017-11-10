@@ -4,7 +4,7 @@ from flask import request, render_template
 
 from technews_nlp_aggregator.web.summary import convert_summary
 
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 
 from . import app

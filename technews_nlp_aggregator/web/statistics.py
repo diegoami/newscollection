@@ -1,6 +1,6 @@
 
 from flask import render_template,  request
-
+from .summary import get_highlighted_text
 from technews_nlp_aggregator.web.summary import convert_summary
 from . import app
 
@@ -39,14 +39,31 @@ def statistics(article_id):
         if article:
            # sp_words = retrieve_sp_words(article["ATX_TEXT"])
             row = _.articleLoader.get_article(article_id)
-            tokens = _.tokenizeInfo.get_tokenized_article(article["AIN_TITLE"], article["ATX_TEXT"])
-            trigrams = _.gramFacade.phrase(tokens)
             id = row.index[0]
-            bows = _.lsiInfo.get_words_docid(id)
-            topics = _.lsiInfo.get_topics_docid(id)
-            docvecs= _.doc2VecInfo.get_vector_for_docid(id)
-            article = convert_summary(article_id)
-            return render_template('statistics.html', A=article,  tokens=trigrams , bows=bows, topics=topics, docvecs=docvecs, article_id=article_id)
+            if id <= _.tfidfFacade.docs_in_model() or id <= _.doc2VecFacade.docs_in_model():
+                tokens = _.tokenizeInfo.get_tokenized_article(article["AIN_TITLE"], article["ATX_TEXT"])
+                trigrams = _.gramFacade.phrase(tokens)
+                bows = _.lsiInfo.get_words_docid(id)
+                topics = _.lsiInfo.get_topics_docid(id)
+                docvecs= _.doc2VecInfo.get_vector_for_docid(id)
+                article = convert_summary(article_id)
+                return render_template('statistics.html', A=article, tokens=trigrams, bows=bows, topics=topics,
+                                       docvecs=docvecs, article_id=article_id)
+            else:
+
+                saved_text = article['ATX_TEXT']
+                bows_vec = _.tfidfFacade.get_doc_bow(article['AIN_TITLE'], saved_text)
+                bows = _.lsiInfo.get_bows_with_id(bows_vec)
+                topics = _.tfidfFacade.get_vec(article['AIN_TITLE'], saved_text)
+                tokens = _.tfidfFacade.get_tokenized(article['AIN_TITLE'], saved_text)
+                docvecs = _.doc2VecFacade.get_vector_for_doc(title=article['AIN_TITLE'], doc=saved_text)
+                summaries = _.summaryFacade.summarize_text(article['AIN_TITLE'], saved_text)
+                summary_text = get_highlighted_text(summaries)
+                article['ATX_TEXT'] = summary_text
+                return render_template('statistics.html', A=article, tokens=tokens, bows=bows, topics=topics,
+                                       docvecs=docvecs, article_id=article_id)
+
+
         else:
             return render_template('statistics.html')
     else:

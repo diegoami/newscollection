@@ -12,7 +12,7 @@ from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 import numpy as np
 from . import ClfFacade
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 
 class TfidfFacade(ClfFacade):
@@ -49,10 +49,14 @@ class TfidfFacade(ClfFacade):
 
 
     def get_vec(self, title, doc):
-        p_words = self.get_tokenized(doc, title)
-        vec_bow = self.dictionary.doc2bow(p_words)
+        vec_bow = self.get_doc_bow(doc, title)
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
+
+    def get_doc_bow(self, title, doc):
+        p_words = self.get_tokenized(doc, title)
+        vec_bow = self.dictionary.doc2bow(p_words)
+        return vec_bow
 
     def get_tokenized(self, doc, title=''):
         words = self.tokenizer.tokenize_doc(title, doc)
@@ -65,17 +69,19 @@ class TfidfFacade(ClfFacade):
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
 
+    def docs_in_model(self):
+        return self.corpus.num_docs
 
-
-    def get_related_articles_and_score_doc(self, doc, start=None, end=None):
-        vec_lsi = self.get_vec('', doc)
+    def get_related_articles_and_score_doc(self, doc, start=None, end=None, title=''):
+        articlesModelDF = self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
+        vec_lsi = self.get_vec(title, doc)
         if (start and end):
-            interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
+            interval_condition = (articlesModelDF ['date_p'] >= start) & (articlesModelDF ['date_p'] <= end)
             scores = self.matrix_wrapper[(vec_lsi, interval_condition) ]
-            articlesFilteredDF = self.article_loader.articlesDF[interval_condition ]
+            articlesFilteredDF = articlesModelDF [interval_condition ]
         else:
             scores = self.matrix_wrapper[(vec_lsi,None)]
-            articlesFilteredDF = self.article_loader.articlesDF
+            articlesFilteredDF = articlesModelDF
         args_scores = np.argsort(-scores)
         return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
@@ -83,14 +89,15 @@ class TfidfFacade(ClfFacade):
 
 
     def get_related_articles_and_score_url(self,  url, d_days = 30   ):
-        url_condition = self.article_loader.articlesDF['url'] == url
-        docrow = self.article_loader.articlesDF[url_condition]
+        articlesModelDF= self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
+        url_condition = articlesModelDF['url'] == url
+        docrow = articlesModelDF[url_condition]
         if (len(docrow) > 0):
             docid = docrow.index[0]
             url_date = docrow.iloc[0]['date_p']
-            interval_condition = abs((self.article_loader.articlesDF['date_p'] - url_date).dt.days) <= d_days
+            interval_condition = abs((articlesModelDF['date_p'] - url_date).dt.days) <= d_days
 
-            articlesFilteredDF = self.article_loader.articlesDF[interval_condition]
+            articlesFilteredDF = articlesModelDF[interval_condition]
 
             vec_lsi = self.get_vec_docid(docid)
             scores = self.matrix_wrapper[(vec_lsi,interval_condition)]

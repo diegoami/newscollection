@@ -2,7 +2,7 @@ from urllib.parse import urlparse, unquote
 from datetime import date, datetime, timedelta
 from string import punctuation
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 def extract_date(url):
     arrs = str(urlparse(url)[2]).split('/')

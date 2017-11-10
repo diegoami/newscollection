@@ -1,5 +1,5 @@
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 from technews_nlp_aggregator.nlp_model.publish.tdidf import FilterMatrixSimilarity
 from datetime import date
 import yaml

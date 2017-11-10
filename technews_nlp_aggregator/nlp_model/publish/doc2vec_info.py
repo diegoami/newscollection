@@ -9,3 +9,4 @@ class Doc2VecInfo():
         doczip = zip(range(len(doclist)),  doclist)
         docsorted = sorted(doczip,key=lambda x: abs(x[1]), reverse=True)
         return docsorted
+

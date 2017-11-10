@@ -25,7 +25,7 @@ tfidfFacade.load_models()
 app = Flask(__name__)
 api = Api(app)
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 from datetime import timedelta
 
 class ClassifierService(Resource):

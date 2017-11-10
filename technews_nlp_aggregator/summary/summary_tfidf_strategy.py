@@ -1,6 +1,6 @@
 from math import log
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 
 class SummaryTfidfStrategy():
     def __init__(self,  tfidfFacade, threshold_mult=0.8):

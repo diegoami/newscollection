@@ -10,7 +10,7 @@ from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader,  defaultTokenizer
 
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 
 
 
@@ -41,6 +41,7 @@ class Application:
         last_article_date = self.articleDatasetRepo.get_latest_article_date()
 
         self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)
+        logging.debug("Log in debug mode")
 
 
     def ensure_text_loaded(self):

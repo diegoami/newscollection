@@ -1,6 +1,6 @@
 import logging
 from string import punctuation
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
 sentence_excludes = [
     'This post originally appeared',

@@ -3,7 +3,7 @@ sys.path.append('..')
 import yaml
 from technews_nlp_aggregator.jobs import ArticleComparatorJob
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 from technews_nlp_aggregator.common.util import daterange
 from datetime import datetime, timedelta
 

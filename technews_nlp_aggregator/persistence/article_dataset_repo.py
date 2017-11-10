@@ -113,8 +113,9 @@ class ArticleDatasetRepo():
             to_add["date"] = extract_date(to_add["url"])
         text = remove_emojis(text)
         cleaned_text = defaultTokenizer.clean_text(text)
+        pk = None
         if (len(cleaned_text) < 600):
-            return True
+            return None
         source = extract_host(url)
         found = False
         try:
@@ -128,7 +129,7 @@ class ArticleDatasetRepo():
                         "AIN_URL" : to_add["url"],
                         "AIN_DATE" : to_add["date"],
                         "AIN_TITLE" : remove_emojis(to_add["title"]),
-                        "AIN_FILENAME": to_add["filename"]
+                        "AIN_FILENAME": to_add.get("filename","")
                     })
                 )
             else:
@@ -145,7 +146,7 @@ class ArticleDatasetRepo():
                         })
 
                     )
-            authors = to_add["authors"]
+            authors = to_add.get("authors",[])
             for author in authors:
                 if ("http" not in author):
                     author = source+author
@@ -171,7 +172,7 @@ class ArticleDatasetRepo():
                             })
 
                         )
-            tags = to_add["tags"]
+            tags = to_add.get("tags",[])
             for tag in tags:
                 tag_row = con['TAGS'].find_one(TAG_URL=tag)
                 if not tag_row:
@@ -199,7 +200,7 @@ class ArticleDatasetRepo():
             traceback.print_exc()
             con.rollback()
 
-        return found
+        return pk
 
 
 

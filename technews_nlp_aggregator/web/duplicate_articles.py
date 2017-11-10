@@ -4,7 +4,7 @@ from technews_nlp_aggregator.nlp_model.spacy.utils import retrieve_entities
 
 import logging
 import traceback
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
 
 
 from . import app
