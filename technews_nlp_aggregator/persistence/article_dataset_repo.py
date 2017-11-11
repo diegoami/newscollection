@@ -208,12 +208,14 @@ class ArticleDatasetRepo():
         econ=self.engine.connect()
         where_string = (" AND AIN_ID <= "+str(self.limit_article_id)) if self.limit_article_id else ""
         if (load_text):
-            article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID "+where_string+ " ORDER BY AIN_ID"
+            article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT, AIN_PROCESSED FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID "+where_string+ " ORDER BY AIN_ID"
+
         else:
             article_info_sql = "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE FROM ARTICLE_INFO WHERE 1 = 1 " + where_string + " ORDER BY AIN_ID"
         articleDF = pd.read_sql(article_info_sql,  econ)
         if (load_text):
-            articleDF.columns = ['article_id' , 'url', 'title', 'date_p', 'text' ]
+            articleDF.columns = ['article_id' , 'url', 'title', 'date_p', 'text' , 'processed']
+
         else:
             articleDF.columns = ['article_id', 'url', 'title', 'date_p']
         econ.close()
@@ -228,7 +230,7 @@ class ArticleDatasetRepo():
 
     def load_articles_for_process(self):
         econ=self.engine.connect()
-        article_process_sql = "SELECT @curRow := @curRow + 1 AS AIN_ROW, AIN_ID FROM ARTICLE_INFO IL JOIN (SELECT @curRow := 0) R WHERE AIN_PROCESSED IS NULL"
+        article_process_sql = "SELECT @curRow := @curRow + 1 AS AIN_ROW, AIN_ID, AIN_DATE FROM ARTICLE_INFO IL JOIN (SELECT @curRow := 0) R WHERE AIN_PROCESSED IS NULL"
 
         articlesProcessDF = pd.read_sql(article_process_sql ,  econ, index_col="AIN_ROW")
         return articlesProcessDF

@@ -86,11 +86,12 @@ class TfidfFacade(ClfFacade):
         if (len(docrow) > 0):
             docid = docrow.index[0]
             url_date = docrow.iloc[0]['date_p']
-            return self.get_related_articles_for_id(articlesModelDF, d_days, docid, url_date)
+            return self.get_related_articles_for_id(d_days, docid, url_date)
         else:
             return None, None
 
-    def get_related_articles_for_id(self, articlesDF, d_days, docid, url_date):
+    def get_related_articles_for_id(self, d_days, docid, url_date):
+        articlesDF = self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
         interval_condition = abs((articlesDF['date_p'] - url_date).dt.days) <= d_days
         articlesFilteredDF = articlesDF[interval_condition]
         vec_lsi = self.get_vec_docid(docid)

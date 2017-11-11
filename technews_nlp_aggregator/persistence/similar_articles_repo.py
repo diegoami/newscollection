@@ -219,7 +219,7 @@ class SimilarArticlesRepo:
         return max_date["AIN_DATE"]
 
     def retrieve_user_paired(self):
-        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, SSU_SIMILARITY FROM SAME_STORY_USER ";
+        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, SSU_SIMILARITY FROM SAME_STORY_USER  WHERE SSU_SIMILARITY = 1 ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2";
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar)
@@ -227,4 +227,8 @@ class SimilarArticlesRepo:
         return result
 
 
-
+    def update_to_processed(self, article_id, con=None):
+        sql_update = "UPDATE ARTICLE_INFO SET AIN_PROCESSED = SYSDATE() WHERE AIN_ID = :article_id"
+        con = self.get_connection() if not con else con
+        article_query = con.query(sql_update, {"article_id": article_id})
+        return

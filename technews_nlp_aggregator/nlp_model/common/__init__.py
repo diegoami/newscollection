@@ -1,6 +1,6 @@
 from .article_exclusions import exclude_articles
 from .article_loader import ArticleLoader
-
+from .article_similar_loader import ArticleSimilarLoader
 from .sentence_tokenizer import TechArticlesSentenceTokenizer
 
 from .word_tokenizer import TechArticlesWordTokenizer

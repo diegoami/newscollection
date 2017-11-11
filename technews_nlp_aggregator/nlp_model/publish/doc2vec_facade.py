@@ -124,11 +124,12 @@ class Doc2VecFacade(ClfFacade):
         if (len(docrow) > 0):
             docid = docrow.index[0]
             url_date = docrow.iloc[0]['date_p']
-            return self.get_related_articles_for_id(articleModelDF, d_days, docid, url_date)
+            return self.get_related_articles_for_id( d_days, docid, url_date)
         else:
             return None, None
 
-    def get_related_articles_for_id(self, articleDF, d_days, docid, url_date):
+    def get_related_articles_for_id(self,  d_days, docid, url_date):
+        articleDF = self.article_loader.articlesDF.iloc[:self.model.docvecs.doctag_syn0.shape[0]]
         interval_condition = abs((articleDF['date_p'] - url_date).dt.days) <= d_days
         articlesFilteredDF = articleDF[interval_condition]
         dindex = articlesFilteredDF.index

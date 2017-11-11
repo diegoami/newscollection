@@ -6,10 +6,11 @@ from technews_nlp_aggregator.application import Application
 import yaml
 
 def explore_user_paired(_):
-    rows = _.similarArticlesRepo.retrieve_user_paired()
-    print(rows)
+    user_paired = _.articleSimilarLoader.retrieve_groups()
+    return user_paired
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('../../../config.yml'))
     application = Application(config, True)
-    explore_user_paired(application)
+    drows = explore_user_paired(application)
+    print(drows)
