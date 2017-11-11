@@ -6,9 +6,9 @@ def convert_summary(article_id):
     id =  _.articleLoader.get_article(article_id).index[0]
     article = _.articleDatasetRepo.load_article_with_text( article_id )
     if id <= _.tfidfFacade.docs_in_model():
-        summary_sentences = _.summaryFacade.summarize( id, article["AIN_TITLE"], article["ATX_TEXT"])
+        summary_sentences = _.summaryFacade.summarize( id, doc=article["ATX_TEXT"], title=article["AIN_TITLE"], )
     else:
-        summary_sentences = _.summaryFacade.summarize_text(article["AIN_TITLE"], article["ATX_TEXT"])
+        summary_sentences = _.summaryFacade.summarize_text(doc=article["ATX_TEXT"], title=article["AIN_TITLE"] )
     result = get_highlighted_text(summary_sentences)
 
     article["ATX_TEXT"] = result

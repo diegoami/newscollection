@@ -19,7 +19,7 @@ def try_summarize(application, n_articles=20):
         print(text)
 
         print(" ============= SUMMARY ==================")
-        summary_sentences = _.summaryFacade.summarize(random_article_id, title, text)
+        summary_sentences = _.summaryFacade.summarize(random_article_id,doc=text, title=title)
         print(title)
         for id, sent in summary_sentences:
             print("{} {}".format(id,sent))

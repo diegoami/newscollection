@@ -219,7 +219,7 @@ class ArticlesSimilarRepo:
         return max_date["AIN_DATE"]
 
     def retrieve_user_paired(self):
-        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, SSU_SIMILARITY FROM SAME_STORY_USER  WHERE SSU_SIMILARITY = 1 ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2";
+        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2";
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar)

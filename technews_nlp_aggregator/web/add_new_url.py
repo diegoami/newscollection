@@ -48,7 +48,7 @@ def add_new_url():
                 tdf_sims_map = retrieve_sims_map_with_dates(_.tfidfFacade, text=text, n_articles=n_articles)
                 doc2vec_sims_map = retrieve_sims_map_with_dates(_.doc2VecFacade, text=text, n_articles=n_articles)
                 tokens = _.tfidfFacade.get_tokenized(doc=text, title=title)
-                summaries = _.summaryFacade.summarize_text(title, text)
+                summaries = _.summaryFacade.summarize_text(doc=text, title=title)
                 summary_text = get_highlighted_text(summaries)
                 related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map, _.articleLoader)
                 return render_template('add_new_url.html', articles=related_articles[:n_articles], tokens=tokens,

@@ -31,27 +31,21 @@ class TfidfFacade(ClfFacade):
         self.lsi = models.LsiModel.load(self.model_dir + '/'+ LSI_FILENAME)
         self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and index it
 
-    def compare_docs_to_id(self,title, doc, id):
-        vec_lsi = self.get_vec(title, doc)
-        condition = self.article_loader.articlesDF.index == id
-        scores = self.matrix_wrapper[(vec_lsi, condition )]
-        return scores
 
 
 
-
-    def get_vec(self, title, doc):
+    def get_vec(self, doc, title=''):
         vec_bow = self.get_doc_bow(doc=doc, title=title)
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
 
-    def get_doc_bow(self, title, doc):
+    def get_doc_bow(self, doc, title=''):
         p_words = self.get_tokenized(doc=doc, title=title)
         vec_bow = self.dictionary.doc2bow(p_words)
         return vec_bow
 
     def get_tokenized(self, doc, title=''):
-        words = self.tokenizer.tokenize_doc(title=title, doc=doc)
+        words = self.tokenizer.tokenize_doc( doc=doc, title=title)
         p_words = self.gramFacade.phrase(words)
         return p_words
 
@@ -66,7 +60,7 @@ class TfidfFacade(ClfFacade):
 
     def get_related_articles_and_score_doc(self, doc, start=None, end=None, title=''):
         articlesModelDF = self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
-        vec_lsi = self.get_vec(title, doc)
+        vec_lsi = self.get_vec(doc=doc, title=title)
         if (start and end):
             interval_condition = (articlesModelDF ['date_p'] >= start) & (articlesModelDF ['date_p'] <= end)
             scores = self.matrix_wrapper[(vec_lsi, interval_condition) ]
@@ -89,6 +83,18 @@ class TfidfFacade(ClfFacade):
         vec_bow2 = self.corpus[id2]
         vec_lsi2 = self.lsi[vec_bow2]
         query2 = matutils.unitvec(vec_lsi2)
+        query2 = np.array([x[1] for x in query2])
+
+        return np.dot(query1, query2.T)
+
+    def get_score_doc_doc(self, doc1, doc2):
+
+        vec_doc1 = self.get_vec(doc1)
+        query1 = matutils.unitvec(vec_doc1 )
+        query1 = np.array([x[1] for x in query1])
+
+        vec_doc2 = self.get_vec(doc2)
+        query2 = matutils.unitvec(vec_doc2 )
         query2 = np.array([x[1] for x in query2])
 
         return np.dot(query1, query2.T)

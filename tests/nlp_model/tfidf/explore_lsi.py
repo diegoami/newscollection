@@ -29,18 +29,6 @@ def analize_bows(icorp, _ ):
     slist_words = sorted(list_words, key=lambda x: x[1], reverse=True)
     print(slist_words)
 
-def analize_article(application):
-    _ = application
-    for i in range(10):
-        print("ARTICLE {} ".format(i))
-        icorp = randint(0,len(_.lsi_info.corpus))
-        analize_bows(icorp, _ )
-        doc = _.articleLoader.articlesDF.iloc[icorp]["text"]
-        sentences_tokenizer = _.tokenizer.sentence_tokenizer
-        for sentence in sentences_tokenizer.sent_tokenize(doc):
-            scores = _.tfidfFacade.compare_docs_to_id(sentence, icorp)
-            print(sentence)
-            print(scores)
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('../../../config.yml'))

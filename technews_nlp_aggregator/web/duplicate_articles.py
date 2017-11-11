@@ -23,6 +23,7 @@ def filterduplicates():
             session['filterCriteria'] = request.form['filterCriteria']
     return duplicates(0)
 
+@app.route('/duplicates', defaults={'page_id': 0})
 @app.route('/duplicates/<int:page_id>')
 def duplicates(page_id=0):
     _ = app.application

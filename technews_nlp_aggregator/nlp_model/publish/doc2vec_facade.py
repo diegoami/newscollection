@@ -57,6 +57,14 @@ class Doc2VecFacade(ClfFacade):
 
         return np.dot(docvec1, docvec2.T)
 
+    def get_score_doc_doc(self, doc1, doc2):
+        docvec1 = self.get_vector(doc1)
+        docvec1 = matutils.unitvec(docvec1)
+        docvec2 = self.get_vector(doc2)
+
+        docvec2 = matutils.unitvec(docvec2)
+
+        return np.dot(docvec1, docvec2.T)
 
     def get_related_articles_and_sims_id(self, id, n):
         similar_documents = self.model.docvecs.most_similar([id], topn=n)
@@ -115,7 +123,7 @@ class Doc2VecFacade(ClfFacade):
         infer_vector = self.model.infer_vector(p_wtok)
         return infer_vector
 
-    def get_vector_for_doc(self, title, doc):
+    def get_vector_for_doc(self,  doc, title):
 
         doclist =  self.get_vector(title=title, doc=doc)
         doczip = zip(range(len(doclist)), doclist)
