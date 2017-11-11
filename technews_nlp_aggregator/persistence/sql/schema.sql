@@ -25,14 +25,15 @@ create table ARTICLE_INFO
 	AIN_DATE date null,
 	AIN_TITLE varchar(256) not null,
 	AIN_FILENAME varchar(256) null,
-	AIN_CREATED date null,
-
+	AIN_PROCESSED datetime null,
+	AIN_SAVED datetime null,
 	constraint ARTICLE_INFO_AIN_ID_uindex
 		unique (AIN_ID),
 	constraint ARTICLE_INFO_AIN_URL_uindex
 		unique (AIN_URL)
 )
 ;
+
 
 alter table ARTICLE_AUTHORS
 	add constraint ARTICLE_AUTHORS_ARTICLE_INFO_AIN_ID_fk

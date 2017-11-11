@@ -19,7 +19,7 @@ class ArticleDatasetRepo():
 
     def __init__(self, db_connection, limit_article_id=None):
         self.db_connection = db_connection
-        self.limit_article_id = limit_article_id
+
         self.con_find = None
         self.engine = create_engine(self.db_connection,encoding='UTF-8')
 
@@ -204,9 +204,9 @@ class ArticleDatasetRepo():
 
 
 
-    def load_articles(self, load_text=True):
+    def load_articles(self, load_text=True, load_only_unsaved=True):
         econ=self.engine.connect()
-        where_string = (" AND AIN_ID <= "+str(self.limit_article_id)) if self.limit_article_id else ""
+        where_string = (" AND AIN_SAVED IS NULL ") if load_only_unsaved else ""
         if (load_text):
             article_info_sql= "SELECT AIN_ID, AIN_URL , AIN_TITLE, AIN_DATE, ATX_TEXT, AIN_PROCESSED FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID "+where_string+ " ORDER BY AIN_ID"
 
@@ -220,6 +220,8 @@ class ArticleDatasetRepo():
             articleDF.columns = ['article_id', 'url', 'title', 'date_p']
         econ.close()
         return articleDF
+
+
 
     def load_articles_with_text(self, id1, id2):
         con = self.get_connection()
@@ -278,19 +280,13 @@ class ArticleDatasetRepo():
 
 
 
-def load_text(self, article_sub_DF, load_text=True):
-        econ = self.engine.connect()
-        if "text" not in article_sub_DF.columns:
-            articleids = article_sub_DF.index
-            where_string = (" WHERE ATX_AIN_ID <= " + str(self.limit_article_id)) if self.limit_article_id else ""
-            if (load_text):
-                article_text_sql = 'SELECT ATX_ID, ATX_TEXT, ATX_AIN_ID FROM ARTICLE_TEXT  '+where_string
-            else:
-                article_text_sql = 'SELECT ATX_ID, \'\', ATX_AIN_ID FROM ARTICLE_TEXT  ' +where_string
-            articleTextDF = pd.read_sql(article_text_sql , econ, index_col='ATX_ID')
-            articleTextDF.columns = [ 'text', 'article_id' ]
-
-            article_sub_DF = article_sub_DF.merge(articleTextDF, on='article_id')
-
-        econ.close()
-        return article_sub_DF
+    def update_to_saved(self,  con=None):
+        sql_update = "UPDATE ARTICLE_INFO SET AIN_SAVED = SYSDATE()"
+        con = self.get_connection() if not con else con
+        try:
+            con.begin()
+            article_query = con.query(sql_update)
+            con.commit()
+        except:
+            con.rollback()
+            traceback.print_stack()

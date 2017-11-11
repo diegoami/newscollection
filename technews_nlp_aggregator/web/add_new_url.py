@@ -47,7 +47,7 @@ def add_new_url():
                 saved_text = saved_article['ATX_TEXT']
                 tdf_sims_map = retrieve_sims_map_with_dates(_.tfidfFacade, text=text, n_articles=n_articles)
                 doc2vec_sims_map = retrieve_sims_map_with_dates(_.doc2VecFacade, text=text, n_articles=n_articles)
-                tokens = _.tfidfFacade.tokenizer.tokenize_doc(title, text)
+                tokens = _.tfidfFacade.get_tokenized(doc=text, title=title)
                 summaries = _.summaryFacade.summarize_text(title, text)
                 summary_text = get_highlighted_text(summaries)
                 related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map, _.articleLoader)

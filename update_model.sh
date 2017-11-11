@@ -9,5 +9,5 @@ source activate tnaggregator-2
 [ $? -eq 0 ] &&  python tfidf_model_wf.py
 [ $? -eq 0 ] &&  python tfidf_matrix_wf.py
 [ $? -eq 0 ] &&  python doc2vec_model_wf.py
-#:[ $? -eq 0 ] &&  python similar_articles_wf.py
+
 

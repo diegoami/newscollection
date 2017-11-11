@@ -1,6 +1,6 @@
 import yaml
 
-from technews_nlp_aggregator.persistence.similar_articles_repo import  SimilarArticlesRepo
+from technews_nlp_aggregator.persistence.articles_similar_repo import  ArticlesSimilarRepo
 
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade, LsiInfo, TokenizeInfo, Doc2VecInfo, GramFacade
@@ -19,10 +19,10 @@ class Application:
         self.db_config = yaml.safe_load(open(config["key_file"]))
         self.db_url = self.db_config["db_url"]
         self.load_text = load_text
-        self.articleDatasetRepo = ArticleDatasetRepo(self.db_config.get("db_url"), self.db_config.get("limit"))
+        self.articleDatasetRepo = ArticleDatasetRepo(self.db_config.get("db_url"))
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
         self.articleLoader.load_all_articles(load_text=load_text)
-        self.similarArticlesRepo = SimilarArticlesRepo(self.db_url)
+        self.similarArticlesRepo = ArticlesSimilarRepo(self.db_url)
 
         self.articleSimilarLoader = ArticleSimilarLoader(self.similarArticlesRepo )
         self.tokenizer = defaultTokenizer

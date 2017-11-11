@@ -32,13 +32,9 @@ class ArticleLoader:
     def articles_in_interval(self,start, end):
         return self.articlesDF[(self.articlesDF['date_p'] >= start) & (self.articlesDF['date_p'] <= end) ]
 
-    def load_all_articles(self, load_text=True, limit=None):
+    def load_all_articles(self, load_text=True, load_only_unsaved=False):
         logging.info("Loading articles...")
-        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text)
-
-
-
+        self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text, load_only_unsaved=load_only_unsaved)
         self.articlesDF.reset_index(inplace=True)
-
         return self.articlesDF
 

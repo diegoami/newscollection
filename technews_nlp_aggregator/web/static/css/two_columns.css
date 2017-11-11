@@ -84,11 +84,10 @@
 .btn-small {
     cursor:pointer;
 
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     margin-left: 2px;
     margin-right: 2px;
-    font-size : 0.9em;
 }
 
 .red {

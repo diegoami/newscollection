@@ -22,6 +22,6 @@ if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
-    articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"), db_config.get("limit"))
+    articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     do_crawl(articleDatasetRepo)
 

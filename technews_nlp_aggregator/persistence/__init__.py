@@ -1,3 +1,3 @@
 from .article_dataset_repo import ArticleDatasetRepo
-from .similar_articles_repo import SimilarArticlesRepo
+from .articles_similar_repo import ArticlesSimilarRepo
 

@@ -37,7 +37,7 @@ SELECT OTHER_ID AS O_ID, OTHER_DATE AS DATE, OTHER_TITLE AS TITLE, OTHER_URL AS 
 
 
 FLOAT_REGEX = re.compile('\d+(\.\d+)?')
-class SimilarArticlesRepo:
+class ArticlesSimilarRepo:
 
     def get_connection(self):
         con = dataset.connect(self.db_connection, engine_kwargs={
