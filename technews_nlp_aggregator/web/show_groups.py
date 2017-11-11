@@ -38,6 +38,7 @@ def show_groups(page_id=0):
                 "source" : extract_source(row['url'])
             }
             article_group.append(article)
+        
         article_groups.append(article_group)
     return render_template('groups.html', article_groups=article_groups, page_id=page_id, has_next=has_next)
 

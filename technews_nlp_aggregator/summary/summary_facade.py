@@ -21,4 +21,4 @@ class SummaryFacade():
 
         doc_bow = self.tfidfFacade.get_doc_bow(doc=doc, title=title)
         logging.debug("docbow : {}".format(str(doc_bow)))
-        return self.summaryStrategy.get_sentences_from_bow(doc_bow , text)
+        return self.summaryStrategy.get_sentences_from_bow(doc_bow , doc)

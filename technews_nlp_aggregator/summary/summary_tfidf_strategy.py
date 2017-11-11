@@ -6,12 +6,12 @@ class SummaryTfidfStrategy():
         self.tfidfFacade = tfidfFacade
         self.threshold_mult = threshold_mult
 
-    def get_summary_sentences(self, id, text):
+    def get_summary_sentences(self, id, doc):
 
         bow = self.tfidfFacade.corpus[id]
-        return self.get_sentences_from_bow(bow, text)
+        return self.get_sentences_from_bow(bow, doc)
 
-    def get_sentences_from_bow(self, bow, text):
+    def get_sentences_from_bow(self, bow, doc):
         id2word = self.tfidfFacade.lsi.id2word
         tot_docs = len(self.tfidfFacade.corpus)
         tfidf = sorted([(id2word[w], w, c * log(tot_docs / self.tfidfFacade.dictionary.dfs[w])) for w, c in bow],
@@ -28,7 +28,7 @@ class SummaryTfidfStrategy():
             tfidf_indx += 1
             tfidf_left -= tfidf[tfidf_indx][2]
             logging.debug(" Adding {} for {} : left {}".format(tfidf[tfidf_indx][0], tfidf[tfidf_indx][2], tfidf_left))
-        sents_t = self.tfidfFacade.tokenizer.sentence_tokenizer.sent_tokenize(text)
+        sents_t = self.tfidfFacade.tokenizer.sentence_tokenizer.sent_tokenize(doc)
         sents = self.select_sentences(tokens_to_keep, sents_t, tfidf_m)
         return sents
 
