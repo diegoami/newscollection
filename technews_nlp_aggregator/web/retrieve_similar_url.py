@@ -37,7 +37,7 @@ def retrieve_similar_url():
 
 
             elif url:
-                article_id = _.articleLoader.get_id_from_url(url)
+                article_id = _.articleLoader.get_article_id_from_url(url)
                 article = _.articleLoader.get_article(article_id)
 
             if (len(article) > 0):

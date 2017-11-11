@@ -8,20 +8,21 @@ import logging
 
 
 
-excl_1 = [',', 'the', '.', 'to', 'and', 'a', 'of', '’', 'in', 'that', 's', 'it', 'is', 'for', 'with', 'on', 'you', 'as', '“', '”', 'be', 'this', 'but', 'are', 'from',  'its', 'at', 'can', 'an', 'have', 'we', 'has', 'i', 'by', 't',  'your', 'or', 'was', 'they', '—', ':', '(', ')', 'their', 'like', 'which', 'not', 'one', 'also','will']
-excl_2 = ['about', 'if', 'what', 'up', 'so', 'there', 'all', 'he', 'said', 'other', 'some', 'just', 'when', 'into',  'been', 'how', 'now', 'than', 'them',  'said',  'while', 'who', 'our',   'get', 're', 'could',  'use', 'would', 'way', 'only', 'make', '?', 'his']
+excl_1 = [',', 'the', '.', 'to', 'and', 'a', 'of', '’', 'in', 'that', 'it', 'is', 'for', 'with', 'on', 'you', 'as', '“', '”',  'this', 'but', 'from',  'its', 'at', 'can', 'an',  'we',   'by',   'your', 'or',  'they', '—', ':', '(', ')', 'their', 'like', 'which', 'not', 'one', 'also',]
+excl_2 = ['about', 'if', 'what', 'up', 'so', 'there', 'all', 'he', 'other', 'some', 'just', 'when', 'into',  'how', 'now', 'than', 'them',  'while', 'who', 'our',   'get', 're', 'could',  'use', 'would', 'way', 'only', 'make', '?', 'his']
 
-excl_3 = [ 'do', 'these', 'says', 'were', 'had',  'see', 'after', 'us', 'no', 'where', 'may', 'through', 'those',  'my', 'don', 'two',  'because',  'll', 'same', 'take',  'around',  'made',  '–',  'then', 'both', 'any', ';',  'before', 'going', 'being',  'here', 'able',  'down', 'lot', 'right', 'she', 'her', 're', 'm', 've', 'd']
+excl_3 = [  'these',  'after', 'us', 'no', 'where', 'through', 'those',  'my', 'don', 'two',  'because',  'll', 'same', 'around',  '–',  'then', 'both', 'any', ';',  'before',   'here', 'able',  'down', 'she', 'her', 're', ]
 
 excl_4 = ['-','@','\'s','``','\'\'' ,'&', '\'', '`', '!', '[', ']', '‘', '=', '…',
           #'$' , '£', '€',
           '%', '<', '>', '"', '/', '\n', '\s', '\t', ' ', '\r' , '\xa0', '...']
 
 excl_5 = ['’s', '’ll', '’re', "'m", '#' , 'n’t', "'s", '--', "'"]
-excl_6 = [" "*x for x in range(1,12)]
 
 
-excl_all = set(excl_1 + excl_2 + excl_3 + excl_4 + excl_5 + excl_6 )
+
+excl_all = set(excl_1 + excl_2 + excl_3 + excl_4 + excl_5  )
+exc_all = set()
 
 class TechArticlesWordTokenizer:
     def __init__(self, preprocessor):

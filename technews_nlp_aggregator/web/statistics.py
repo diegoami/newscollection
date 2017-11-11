@@ -23,7 +23,7 @@ def statistics_form():
                 article_id = int(article_id)
                 return statistics(article_id)
             elif (search_url and len(search_url.strip()) > 0):
-                article_id = _.articleLoader.get_id_from_url(url=search_url)
+                article_id = _.articleLoader.get_article_id_from_url(url=search_url)
                 return statistics(article_id)
             else:
                 return render_template('statistics.html', messages = ['Please enter a valid article id or an url'])

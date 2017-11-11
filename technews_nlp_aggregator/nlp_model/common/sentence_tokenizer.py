@@ -67,6 +67,7 @@ sentence_excludes = [
     'We have Verge Extras, which experiments with audio and podcasting',
     'Get this deal',
     'Read next:',
+    'Read:',
     'This post is part of our contributor series',
     'Country required',
     'By checking this box',

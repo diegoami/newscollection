@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'header_files.html' %}
+<head>
+
+    <meta charset="UTF-8">
+    <title>Controversial news</title>
+
+</head>
+<body onload="select_header('topnav_groups')">
+{% include 'header.html' %}
+
+{% include 'footer.html' %}
+</body>
+
+{% for article_group in article_groups %}
+
+<HR>
+<UL>
+    {% for article in article_group %}
+        <LI>
+          <A HREF="{{article.url}}">{{article.title}}</A>
+        </LI>
+    {% endfor %}
+</UL>
+{% endfor %}
+<HR>
+</html>

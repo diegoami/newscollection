@@ -1,4 +1,5 @@
 from gensim.models import Doc2Vec
+from gensim import matutils
 
 from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 
@@ -48,7 +49,13 @@ class Doc2VecFacade(ClfFacade):
 
         return similar_documents
 
+    def get_score_id_id(self, id1, id2):
+        docvec1 = self.model.docvecs.doctag_syn0[id1]
+        docvec1 = matutils.unitvec(docvec1)
+        docvec2 = self.model.docvecs.doctag_syn0[id2]
+        docvec2 = matutils.unitvec(docvec2)
 
+        return np.dot(docvec1, docvec2.T)
 
 
     def get_related_articles_and_sims_id(self, id, n):

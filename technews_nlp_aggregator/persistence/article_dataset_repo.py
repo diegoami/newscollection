@@ -136,7 +136,7 @@ class ArticleDatasetRepo():
                 found = True
             if (pk):
                 if not con['ARTICLE_TEXT'].find_one(ATX_AIN_ID=str(pk)):
-                    print("Trying to write article at "+str(pk))
+                    logging.info("Trying to write article at "+str(pk))
                     con['ARTICLE_TEXT'].insert(
                         dict({
                             "ATX_AIN_ID": pk,

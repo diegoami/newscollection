@@ -1,12 +1,12 @@
 import re
 
+from functools import reduce
 
 
 
 class TechArticlesPreprocessor():
     regexprs_year = [
         re.compile(r'\b(20|19)(\d+)\b')
-
     ]
 
     regexprs_hour = [
@@ -14,8 +14,6 @@ class TechArticlesPreprocessor():
         re.compile(r'\b((1[0-2]|0?[1-9]):([0-5][0-9])([AaPp][Mm]))\b'),
         re.compile(r'\b(1[0-2]|0?[1-9]):([0-5][0-9])\b'),
         re.compile(r'\b((1[0-2]|0?[1-9])-(1[0-2]|0?[1-9])([AaPp][Mm]))\b')
-
-
     ]
 
     regexprs_percentage = [
@@ -27,7 +25,7 @@ class TechArticlesPreprocessor():
     ]
 
     regexprs_money = [
-       # re.compile(r'\b[\$\£\€]{1}(\d+)(\,\d+)?(\,\d+)?(\.\d+)?\b')
+        # re.compile(r'\b[\$\£\€]{1}(\d+)(\,\d+)?(\,\d+)?(\.\d+)?\b')
         re.compile(r'[\$\£\€]{1}(\d+)([\,\.]\d+)\b'),
         re.compile(r'[\$\£\€]{1}(\d+)\b')
     ]
@@ -36,8 +34,6 @@ class TechArticlesPreprocessor():
     regexprs_dates = [
         re.compile(r'\b(%s)(\s[0-9]{1,2},\s20[0-9]{1,2}(th)?)\b' % monthExpr,re.VERBOSE),
         re.compile(r'\b(%s)(\s[0-9]{1,2})(th)?\b' % monthExpr,re.VERBOSE),
-
-
     ]
 
     regexprs_month = [
@@ -54,57 +50,31 @@ class TechArticlesPreprocessor():
         re.compile(r'\B(s’)(?=\W)')
     ]
 
-    def replace_hours(self, doc):
-        for regexp in self.regexprs_hour:
-            doc = regexp.sub('#TIMEOFDAY', doc)
+    regexprs_ubers = [
+        re.compile(r'\bubers\b')
+    ]
 
-        return doc
-
-    def replace_percentage(self, doc):
-        for regexp in self.regexprs_percentage:
-            doc = regexp.sub('#PERCENTAGE', doc)
-
-        for regexp in self.regexprs_percentage2:
-            doc = regexp.sub('#PERCENTAGE%', doc)
+    def regexpr_func(self, str, regexprs):
+        def replace_func(doc):
+            for regexp in regexprs:
+                doc = regexp.sub(str, doc)
+            return doc
+        return replace_func
 
 
-        return doc
-
-
-    def replace_money(self, doc):
-        for regexp in self.regexprs_money:
-            doc = regexp.sub('#MONEY', doc)
-        return doc
-
-    def replace_dates(self, doc):
-        for regexp in self.regexprs_dates:
-            doc = regexp.sub('#DATE', doc)
-        return doc
-
-    def replace_months(self, doc):
-        for regexp in self.regexprs_month:
-            doc = regexp.sub('#MONTH', doc)
-        return doc
-
-    def replace_years(self, doc):
-        for regexp in self.regexprs_year:
-            doc = regexp.sub('#YEAR', doc)
-        return doc
-
-    def replace_asaxon(self, doc):
-        for regexp in self.regexprs_saxon:
-            doc = regexp.sub('s', doc)
-        return doc
 
     def process(self, doc):
         doc = doc.replace("‘", '').replace("’", '')
-        doc = self.replace_hours(doc)
-        doc = self.replace_percentage(doc)
-        doc = self.replace_money(doc)
-        doc = self.replace_dates(doc)
-        doc = self.replace_months(doc)
-        doc = self.replace_years(doc)
-        doc = self.replace_asaxon(doc)
+        doc = self.regexpr_func('uber', self.regexprs_ubers)(doc)
+        doc = self.regexpr_func('#TIMEOFDAY',self.regexprs_hour)(doc)
+        doc = self.regexpr_func('#PERCENTAGE', self.regexprs_percentage)(doc)
+        doc = self.regexpr_func('#PERCENTAGE%', self.regexprs_percentage2)(doc)
+        doc = self.regexpr_func('#MONEY', self.regexprs_money)(doc)
+        doc = self.regexpr_func('#DATE', self.regexprs_dates)(doc)
+        doc = self.regexpr_func('#MONTH', self.regexprs_month)(doc)
+        doc = self.regexpr_func('#YEAR', self.regexprs_year)(doc)
+        doc = self.regexpr_func('s', self.regexprs_saxon)(doc)
+
 
         return doc
 

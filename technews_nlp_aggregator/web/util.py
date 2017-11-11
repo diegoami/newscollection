@@ -28,7 +28,7 @@ def fill_article(link_obj, id, score):
     related_article["source"] = extract_source(related_article["url"])
 
     related_article["date"] = str(date_p.year)+'-'+str(date_p.month)+'-'+str(date_p.day)
-    related_article["similarity"] = round(score * 100,3)
+    related_article["similarity"] = score
 
 
     return related_article

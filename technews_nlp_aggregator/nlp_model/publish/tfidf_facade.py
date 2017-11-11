@@ -12,6 +12,7 @@ from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 import numpy as np
 from . import ClfFacade
 import logging
+from gensim import matutils
 
 
 
@@ -78,6 +79,19 @@ class TfidfFacade(ClfFacade):
 
 
 
+    def get_score_id_id(self, id1, id2):
+
+        vec_bow1 = self.corpus[id1]
+        vec_lsi1 = self.lsi[vec_bow1]
+        query1= matutils.unitvec(vec_lsi1 )
+        query1 = np.array([x[1] for x in query1])
+
+        vec_bow2 = self.corpus[id2]
+        vec_lsi2 = self.lsi[vec_bow2]
+        query2 = matutils.unitvec(vec_lsi2)
+        query2 = np.array([x[1] for x in query2])
+
+        return np.dot(query1, query2.T)
 
     def get_related_articles_and_score_url(self,  url, d_days = 30   ):
         articlesModelDF= self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
