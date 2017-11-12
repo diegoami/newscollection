@@ -1,9 +1,7 @@
 
 from flask import  request, render_template, session
-from technews_nlp_aggregator.nlp_model.spacy.utils import retrieve_entities
 from technews_nlp_aggregator.common.util import extract_source
-import logging
-import traceback
+from itertools import product
 
 from . import app
 
@@ -28,17 +26,19 @@ def show_groups(page_id=0):
         articlesDF = _.articleLoader.articlesDF
         lgroup = list(group)
         articles_in_groupDF = articlesDF[articlesDF['article_id'].isin(group)]
-        article_group = []
+        articles = []
+        article_ids = articles_in_groupDF['article_id'].tolist()
+
         for id, row in articles_in_groupDF.iterrows():
             article = {
                 "article_id" : row['article_id'],
                 "title" : row['title'],
                 "date" : row['date_p'],
                 "url" : row['url'],
-                "source" : extract_source(row['url'])
+                "source" : extract_source(row['url']),
+                "other_ids" : [article_id for article_id in article_ids if article_id != row['article_id'] ]
             }
-            article_group.append(article)
-        
-        article_groups.append(article_group)
-    return render_template('groups.html', article_groups=article_groups, page_id=page_id, has_next=has_next)
+            articles.append(article)
+        article_groups.append(articles)
+    return render_template('show_groups.html', article_groups=article_groups, page_id=page_id, has_next=has_next)
 

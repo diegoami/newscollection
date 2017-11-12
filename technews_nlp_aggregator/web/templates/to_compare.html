@@ -11,6 +11,8 @@
 <body onload="select_header('topnav_compare'); ">
 
 {% include 'header.html' %}
+{% if session['signed_in']: %}
+
 <P><STRONG>Are these two articles about the same story ????? </STRONG> <A HREF="/examples" target="_blank">See examples</A></P>
 
 <div class="buttonrow">
@@ -26,12 +28,15 @@
     </button>
  </form>
 </div>
+{% endif %}
+
 </div>
 
 </div>
 <div class="row">
   <div class="column left">
-    <p><I>ID:</I> {{A1.AIN_ID}}</p>
+
+      <p><I>ID:</I> <A HREF="/statistics/{{A1.AIN_ID}}" target="_blank">{{A1.AIN_ID}}</A></p>
 
     <p>Original url : <A class="shorturl" HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A> </p>
     <P><I>Date:</I> {{A1.AIN_DATE}}</P>
@@ -46,7 +51,7 @@
   </div>
     <div class="column middle"></div>
   <div class="column right">
-      <p><I>ID:</I> {{A2.AIN_ID}}</p>
+      <p><I>ID:</I> <A HREF="/statistics/{{A2.AIN_ID}}" target="_blank">{{A2.AIN_ID}}</A></p>
 
       <p>Original url :  <A class="shorturl" HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A>  </p>
       <P><I>Date:</I> {{A2.AIN_DATE}}</P>

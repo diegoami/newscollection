@@ -1,6 +1,6 @@
 from .util import read_int_from_form
 from technews_nlp_aggregator.common.util import conv_to_date
-from flask import render_template,  request
+from flask import render_template,  request, session
 from .merge_tables import merge_sims_maps, retrieve_sims_map_with_dates
 from .summary import get_highlighted_text
 
@@ -9,8 +9,10 @@ from . import app
 
 @app.route('/add_new_url_start')
 def add_new_url_start():
-
-    return render_template('add_new_url.html', )
+    if (session["signed_in"]):
+        return render_template('add_new_url.html')
+    else:
+        return render_template('home.html')
 
 @app.route('/add_new_url', methods=['POST'])
 def add_new_url():

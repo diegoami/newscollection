@@ -1,3 +1,4 @@
+
 find_similar = function(url) {
     var mainForm = document.getElementById("mainForm");
     mainForm.action = '/retrieve_similar_url';
@@ -64,3 +65,6 @@ function request_summary(id, element_id, text_id, title_element_id) {
     }
     xhr.send();
 }
+
+
+

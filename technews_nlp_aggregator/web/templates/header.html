@@ -7,7 +7,10 @@
   <a id="topnav_search_url" href="/search_url">Search by URL</a>
   <a id="topnav_search" href="/search">Search by text</a>
   <a id="topnav_statistics" href="/statistics_gen">Analyze</a>
-      <a id="topnav_add_new_url" href="/add_new_url_start">Add url</a>
+{% if session['signed_in']: %}
+  <a id="topnav_add_new_url" href="/add_new_url_start">Add url</a>
+{% endif %}
+
  </div>
 
 <BR>

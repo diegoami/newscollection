@@ -47,7 +47,11 @@ class TechArticlesPreprocessor():
     ]
 
     regexprs_saxon = [
-        re.compile(r'\B(s’)(?=\W)')
+        re.compile(r'\B(s’)(?=\W)'),
+    ]
+
+    regexprs_saxon2 = [
+        re.compile(r'\B(’s)(?=\W)'),
     ]
 
     regexprs_ubers = [
@@ -74,6 +78,7 @@ class TechArticlesPreprocessor():
         doc = self.regexpr_func('#MONTH', self.regexprs_month)(doc)
         doc = self.regexpr_func('#YEAR', self.regexprs_year)(doc)
         doc = self.regexpr_func('s', self.regexprs_saxon)(doc)
+        #doc = self.regexpr_func('', self.regexprs_saxon)(doc)
 
 
         return doc

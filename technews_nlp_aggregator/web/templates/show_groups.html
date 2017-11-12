@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'header_files.html' %}
+<head>
+
+    <meta charset="UTF-8">
+    <title>Controversial news</title>
+
+</head>
+<body onload="select_header('topnav_groups')">
+{% include 'header.html' %}
+
+{% include 'footer.html' %}
+</body>
+
+{% for article_group in article_groups %}
+
+<HR>
+<TABLE>
+    <col width="17%">
+    <col width="8%">
+    <col width="8%">
+    <col width="55%">
+    <col width="3%">
+    <col width="3%">
+    <col width="3%">
+    <col width="3%">
+
+
+    <TR>
+       <th>SOURCE</th>
+       <th>Id</th>
+
+       <th>Date</th>
+       <th><span>Article</span></th>
+       <th><span>Id2</span></th>
+    {% if article.other_ids|length > 1 %}   <th><span>Id3</span></th> {% endif %}
+    {% if article.other_ids|length > 2 %}   <th><span>Id4</span></th> {% endif %}
+    {% if article.other_ids|length > 3 %}   <th><span>Id5</span></th> {% endif %}
+
+    </tr>
+    {% for article in article_group %}
+    <TR>
+        <TD>{{article.source}}</TD>
+        <TD><A HREF="/statistics/{{article.article_id}}" target="_blank">{{article.article_id}}</A></TD>
+        <TD>{{article.date}}</TD>
+        <TD><A HREF="{{article.url}}">{{article.title}}</A></TD>
+        <TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[0]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A></TD>
+       {% if article.other_ids|length > 1 %} <TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[1]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A> </TD> {% endif %}
+        {% if article.other_ids|length > 2 %}<TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[2]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A></TD>
+ {% endif %}
+        {% if article.other_ids|length > 3 %}<TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[3]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A> </TD> {% endif %}
+
+
+    </TR>
+    {% endfor %}
+</TABLE>
+{% endfor %}
+<HR>
+    <BR>
+<div class="buttonrow">
+        {% if page_id and page_id > 0: %}
+            <form class="buttoncolumn" action="/show_groups/{{page_id-1}}">
+                <input class="main" type="submit" value="<<< Back" />
+            </form>
+        {% endif %}
+        {% if has_next : %}
+            <form class="buttoncolumn" action="/show_groups/{{page_id+1}}">
+                <input class="main" type="submit" value="Forward >>> " />
+            </form>
+        {% endif %}
+
+
+</div>
+ <div>
+   Page : <B>{{page_id | default(0) }}</B>
+    </div>
+    <BR>
+
+
+</html>
