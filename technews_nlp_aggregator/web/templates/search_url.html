@@ -47,7 +47,7 @@
 
     <th class="date"><span>Date</span></th>
     <th>Score</th>
-
+    <th class="columnscore">User Score</th>
     <th class="icon">Similar</th>
     <th class="icon">Compare</th>
   </tr>
@@ -59,7 +59,26 @@
             <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td class="date">{{_.date_p}}</td>
             <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
+             <td class="columnscore">
+              <span id="samestory_{{article_id}}_{{_.article_id}}" >
+                {% if _.U_SCORE_DEF: %}
+                    {{_.U_SCORE}}
+                {% else %}
+                  {% if session['signed_in'] %}
+                     <div class="buttonrow">
+                        <button class="buttoncolumn btn-small green"  onclick="send_same_story('samestory_xhr','{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}' );">Y
+                        </button>
+                        <button class="buttoncolumn btn-small yellow" onclick="send_same_story('related_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">A
+                        </button>
 
+                        <button class="buttoncolumn btn-small red"  onclick="send_same_story('unrelated_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">N
+
+                        </button>
+                     </div>
+                  {% endif %}
+                {% endif %}
+              </span>
+            </td>
             <td class="icon">
                 <A HREF="javascript:find_similar('{{_.url}}', '{{_.article_id}}')" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">

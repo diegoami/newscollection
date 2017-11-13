@@ -34,7 +34,6 @@ DECLARE UNINTERESTING_ATX_TXT_ID_CURSOR CURSOR FOR
                                                           OR
                                                         (AIN_URL LIKE 'https://www.theverge.com/circuitbreaker/%')
 
-                                                      )
                                                       ;
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET exit_loop = TRUE;
 OPEN UNINTERESTING_ATX_TXT_ID_CURSOR ;
