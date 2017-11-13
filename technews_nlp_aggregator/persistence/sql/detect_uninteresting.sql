@@ -23,7 +23,10 @@ DECLARE UNINTERESTING_ATX_TXT_ID_CURSOR CURSOR FOR
                                                         AIN_TITLE LIKE '%Show Notes: %'
                                                            OR
                                                         AIN_TITLE LIKE 'Video:%'
-
+                                                                        OR
+                                                          AIN_URL LIKE 'http://www.techrepublic.com/blog/microsoft-office/%'
+                                                        OR
+                                                        (AIN_TITLE LIKE '%Best Buy%' AND AIN_URL LIKE 'https://www.theverge.com/%')
 
                                                       )
                                                     AND LENGTH(ATX_TEXT) < 2000

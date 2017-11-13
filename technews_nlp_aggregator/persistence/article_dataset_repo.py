@@ -8,6 +8,8 @@ from technews_nlp_aggregator.common.util import extract_date, extract_last_part,
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 import pandas as pd
 
+from sqlalchemy.orm import create_session
+from sqlalchemy import create_engine
 
 class ArticleDatasetRepo():
 
@@ -267,20 +269,19 @@ class ArticleDatasetRepo():
 
     def delete_unrelevant_texts(self):
 
-        try:
-            econ = self.engine.connect()
-            econ.execute('call detect_uninteresting()')
-        finally:
-            econ.close()
+        session = create_session()
+
+        connection = self.engine.raw_connection()
+        cursor = connection.cursor()
+        cursor.callproc("detect_uninteresting")
+        cursor.close()
+        connection.commit()
+        cursor = connection.cursor()
+        cursor.callproc("delete_ids")
+        cursor.close()
 
 
-        try:
-            econ = self.engine.connect()
-            econ.execute('call delete_ids()')
-
-        finally:
-            econ.close()
-
+        connection.commit()
 
     def update_to_saved(self,  con=None):
         sql_update = "UPDATE ARTICLE_INFO SET AIN_SAVED = SYSDATE()"
