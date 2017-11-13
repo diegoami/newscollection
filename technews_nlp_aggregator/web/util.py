@@ -4,12 +4,13 @@ import re, html
 
 
 
-def extract_related_articles(articleLoader, sims):
+def extract_related_articles(articleLoader, scoresDF):
     related_articles = []
 
 
-    for id, score in sims:
-        link_obj = articleLoader.articlesDF.loc[id]
+    for id, row in scoresDF.iterrows():
+        score = (row['score_t'], row['score_d'])
+        link_obj = articleLoader.articlesDF.iloc[id]
         related_article = fill_article(link_obj , id, score)
         related_articles.append(related_article)
 

@@ -67,5 +67,10 @@ function request_summary(id, element_id, text_id, title_element_id) {
     xhr.send();
 }
 
-
+function move_to_page(page_id) {
+    var mainForm = document.getElementById("mainForm");
+    document.getElementById("page_id").value = page_id
+    mainForm.target= "";
+    mainForm.submit();
+}
 

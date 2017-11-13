@@ -6,7 +6,7 @@ from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
 MODEL_FILENAME = 'doc2vec'
-
+import pandas as pd
 
 import numpy as np
 from gensim.models.doc2vec import TaggedDocument
@@ -116,7 +116,13 @@ class Doc2VecFacade(ClfFacade):
             dindex = articlesFilteredDF.index
 
         args_scores = np.argsort(-scores)
-        return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
+        new_index = articlesFilteredDF.iloc[args_scores].index
+        df = pd.DataFrame(scores[args_scores], index=new_index, columns=['score'])
+        return df
+
+
+
+        #return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
     def get_vector(self, doc, title=''):
         p_wtok = self.get_tokenized(doc=doc, title=title)
@@ -151,7 +157,14 @@ class Doc2VecFacade(ClfFacade):
         indexer = DocVec2Indexer(self.model.docvecs, dindex)
         scores = self.model.docvecs.most_similar([docid], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
         args_scores = np.argsort(-scores)
-        return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
+
+
+        new_index = articlesFilteredDF.iloc[args_scores].index
+
+
+        df = pd.DataFrame(scores[args_scores], index=new_index , columns=['score'])
+        return df
+
 
     def compare_articles_from_dates(self,  start, end, thresholds):
         articles_and_sim = {}

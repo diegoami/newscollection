@@ -23,6 +23,9 @@ def retrieve_similar():
             if not text or len(text.strip()) < 15:
                 messages.append('Please enter the text of a technical article')
             n_articles = read_int_from_form(form, 'n_articles')
+            page_id = read_int_from_form(form, 'page_id', "0")
+
+
             start_s = form["start"]
             end_s = form["end"]
 
@@ -39,5 +42,5 @@ def retrieve_similar():
 
                 tdf_sims_map = retrieve_sims_map_with_dates(classifier=_.tfidfFacade, text=text, start=start, end=end, n_articles=n_articles)
                 doc2vec_sims_map = retrieve_sims_map_with_dates(classifier=_.doc2VecFacade, text=text, start=start, end=end,  n_articles=n_articles)
-                related_articles = merge_sims_maps(tdf_sims_map=tdf_sims_map, doc2vec_sims_map=doc2vec_sims_map, articleLoader=_.articleLoader)
-                return render_template('search.html', articles=related_articles[:n_articles],  search_text=text, n_articles=n_articles, start_s=start_s, end_s=end_s )
+                related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map, _.articleLoader, n_articles=n_articles, page_id=page_id)
+                return render_template('search.html', articles=related_articles[:n_articles],  search_text=text, n_articles=n_articles, start_s=start_s, end_s=end_s, page_id=page_id )

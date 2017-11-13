@@ -11,7 +11,7 @@ def show_related_articles_random_urls(application, n_articles=20):
 
     def show_related_articles(_, facade, url, d_days = 90):
 
-        articles_indices, scores = facade.get_related_articles_and_score_url(url, d_days )
+        scoresDF = facade.get_related_articles_and_score_url(url, d_days )
 
 
         print(" ==== related_articles  ==== ")

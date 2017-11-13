@@ -52,6 +52,6 @@ def add_new_url():
                 tokens = _.tfidfFacade.get_tokenized(doc=text, title=title)
                 summaries = _.summaryFacade.summarize_text(doc=text, title=title)
                 summary_text = get_highlighted_text(summaries)
-                related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map, _.articleLoader)
+                related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map, _.articleLoader, n_articles=n_articles)
                 return render_template('add_new_url.html', articles=related_articles[:n_articles], tokens=tokens,
                                        A=saved_article, summary_text=summary_text, n_articles=n_articles )

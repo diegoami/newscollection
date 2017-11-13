@@ -13,6 +13,8 @@ import numpy as np
 from . import ClfFacade
 import logging
 from gensim import matutils
+import pandas as pd
+from pandas import DataFrame
 
 
 
@@ -69,7 +71,12 @@ class TfidfFacade(ClfFacade):
             scores = self.matrix_wrapper[(vec_lsi,None)]
             articlesFilteredDF = articlesModelDF
         args_scores = np.argsort(-scores)
-        return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
+        new_index = articlesFilteredDF.iloc[args_scores].index
+        df = pd.DataFrame(scores[args_scores], index=new_index, columns=['score'])
+        return df
+
+
+        #return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
 
 
 
@@ -117,7 +124,10 @@ class TfidfFacade(ClfFacade):
         vec_lsi = self.get_vec_docid(docid)
         scores = self.matrix_wrapper[(vec_lsi, interval_condition)]
         args_scores = np.argsort(-scores)
-        return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
+        new_index = articlesFilteredDF.iloc[args_scores].index
+        df = pd.DataFrame(scores[args_scores], index=new_index , columns=['score'])
+        return df
+
 
     def compare_articles_from_dates(self,  start, end, thresholds):
         articles_and_sim = {}
