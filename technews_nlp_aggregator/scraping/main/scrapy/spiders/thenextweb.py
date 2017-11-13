@@ -65,7 +65,7 @@ class ThenextwebSpider(scrapy.Spider):
         article_title = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'post-body')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()").extract()
+            "//div[contains(@class, 'post-body')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)  and not(.//script) ]//text()").extract()
         article_authors = response.xpath('//a[@class="post-authorName"]/@href').extract()
         article_tags = response.xpath("//span[contains(@class, 'tag')]/a/@href").extract()
 

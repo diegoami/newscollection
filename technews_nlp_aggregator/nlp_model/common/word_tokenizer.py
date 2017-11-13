@@ -14,7 +14,7 @@ excl_2 = ['about', 'if', 'what', 'up', 'so', 'there', 'all', 'he', 'said', 'othe
 excl_3 = [ 'do', 'these', 'says', 'were', 'had',  'see', 'after', 'us', 'no', 'where', 'may', 'through', 'those',  'my', 'don', 'two',  'because',  'll', 'same', 'take',  'around',  'made',  '–',  'then', 'both', 'any', ';',  'before', 'going', 'being',  'here', 'able',  'down', 'lot', 'right', 'she', 'her', 're', 'm', 've', 'd']
 
 excl_4 = ['-','@','\'s','``','\'\'' ,'&', '\'', '`', '!', '[', ']', '‘', '=', '…',
-          #'$' , '£', '€',
+      #    '$' , '£', '€',
           '%', '<', '>', '"', '/', '\n', '\s', '\t', ' ', '\r' , '\xa0', '...']
 
 excl_5 = ['’s', '’ll', '’re', "'m", '#' , 'n’t', "'s", '--', "'"]

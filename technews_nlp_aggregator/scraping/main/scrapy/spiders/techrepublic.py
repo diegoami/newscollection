@@ -60,7 +60,7 @@ class TechrepublicSpider(scrapy.Spider):
         article_title_parts = response.xpath('//h1[@class="title"]//text()').extract()
         article_title = "".join(article_title_parts)
         all_paragraphs_r = response.xpath(
-            "//div[contains(@class, 'content') and contains(@data-component, 'lazyloadImages')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()")
+            "//div[contains(@class, 'content') and contains(@data-component, 'lazyloadImages')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)  and not(.//script)]//text()")
         all_paragraphs = all_paragraphs_r.extract()
         article_authors = response.xpath('//a[@rel="author"]/@href').extract()
         article_tags = response.xpath("//p[contains(@class, 'categories')]/a/@href").extract()

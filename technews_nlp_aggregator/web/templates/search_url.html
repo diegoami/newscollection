@@ -59,7 +59,7 @@
             <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
 
             <td class="icon">
-                <A HREF="javascript:find_similar('{{_.url}}')" target="_blank">
+                <A HREF="javascript:find_similar('{{_.url}}', '{{_.article_id}}')" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
                 </A>
             </td>

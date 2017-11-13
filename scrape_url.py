@@ -5,26 +5,24 @@ from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpid
 from datetime import  timedelta
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 import yaml
+import logging
+from datetime import date
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+def do_crawl(articleDatasetRepo, spiders, urls):
 
-def do_crawl(articleDatasetRepo):
 
-    spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider])
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
     process = CrawlerProcess(settings=crawler_settings)
-    max_date = articleDatasetRepo.get_latest_article_date()
-    go_back_date = max_date-timedelta(days=3)
-    for spider in spiders:
-        process.crawl(spider, articleDatasetRepo, max_date)
-    process.start()
 
-def do_remove_uninteresting(articleDatasetRepo):
-    articleDatasetRepo.delete_unrelevant_texts()
+    for spider in spiders:
+        process.crawl(spider, articleDatasetRepo, date.min, urls)
+    process.start()
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
-    do_crawl(articleDatasetRepo)
-    do_remove_uninteresting(articleDatasetRepo)
+    do_crawl(articleDatasetRepo, [TechcrunchSpider], ["https://techcrunch.com/2017/11/11/uber-takes-a-different-approach-to-asia/"])
+

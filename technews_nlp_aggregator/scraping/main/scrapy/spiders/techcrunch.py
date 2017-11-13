@@ -15,43 +15,50 @@ class TechcrunchSpider(scrapy.Spider):
         'https://techcrunch.com/','http://techcrunch.com/'
     )
 
-    def __init__(self, article_repo, go_back_date):
+    def __init__(self, article_repo, go_back_date, url_list=None):
         super().__init__()
         self.article_repo = article_repo
         self.go_back_date = go_back_date
 
         self.finished = False
+        self.url_list = url_list
 
 
     def parse(self, response):
-        urls = response.xpath('//h2[@class="post-title"]/a/@href').extract()
+        if self.url_list:
+            for url in self.url_list:
+                yield Request(url , callback=self.parse_page,
+                          meta={'URL': url})
+        else:
+            urls = response.xpath('//h2[@class="post-title"]/a/@href').extract()
 
-        pages = response.xpath('//li[@class="next"]/a/@href').extract()
+            pages = response.xpath('//li[@class="next"]/a/@href').extract()
 
-        for url in urls:
+            for url in urls:
 
-            absolute_url = response.urljoin(url)
-            if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url) ):
-                self.urls_V.add(absolute_url)
+                absolute_url = response.urljoin(url)
+                if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url) ):
+                    self.urls_V.add(absolute_url)
 
-                yield Request(absolute_url, callback=self.parse_page,
-                              meta={'URL': absolute_url})
+                    yield Request(absolute_url, callback=self.parse_page,
+                                  meta={'URL': absolute_url})
 
 
 
-        if not self.finished:
-            for page in pages:
-                absolute_page = response.urljoin(page)
-                if (absolute_page not in self.pages_V):
-                    self.pages_V.add(absolute_page)
-                    yield Request(absolute_page , callback=self.parse)
+            if not self.finished:
+                for page in pages:
+                    absolute_page = response.urljoin(page)
+                    if (absolute_page not in self.pages_V):
+                        self.pages_V.add(absolute_page)
+                        yield Request(absolute_page , callback=self.parse)
 
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@class="alpha tweet-title"]//text()').extract()
         article_title = "".join(article_title_parts)
+
         all_paragraphs_r = response.xpath(
-            "//div[contains(@class, 'article-entry')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)]//text()")
+            "//div[contains(@class, 'article-entry')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//script) and not(.//div[contains(@class, 'fb_post')])]//text()")
         all_paragraphs = all_paragraphs_r.extract()
         article_authors = response.xpath('//a[@rel="author"]/@href').extract()
         article_tags = response.xpath("//div[contains(@class, 'loaded') or @class='tag-item']/a/@href").extract()

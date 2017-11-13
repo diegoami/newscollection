@@ -136,7 +136,7 @@ class Converter:
                         article["date"] = extract_date( url) if not article.get("date") else article.get("date")
                         article["url"] = url
                         to_add = {k: v for k, v in article.items() if k != "text"}
-                        self.article_repo.save_article(url, to_add, article["text"])
+                        self.article_repo.save_article(to_add, article["text"])
                         if (showEntry):
                             print(to_add)
                         if (count % 50) == 0:

@@ -44,7 +44,7 @@ def add_new_url():
             if (len(messages) > 0):
                 return render_template('add_new_url.html', messages=messages)
             else:
-                article_id = _.articleDatasetRepo.save_article(url, article, text)
+                article_id = _.articleDatasetRepo.save_article( article, text)
                 saved_article = _.articleDatasetRepo.load_article_with_text(article_id)
                 saved_text = saved_article['ATX_TEXT']
                 tdf_sims_map = retrieve_sims_map_with_dates(_.tfidfFacade, text=text, n_articles=n_articles)

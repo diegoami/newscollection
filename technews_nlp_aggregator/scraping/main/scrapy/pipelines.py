@@ -5,5 +5,5 @@ class Pipeline(object):
 
         if (len(item["title"]) >= 10) and (len(item["text"]) >= 600) and item["date"]:
             logging.info("Found url to add: {}".format(item["url"]))
-            spider.article_repo.save_article( item["url"], item, item["text"])
+            spider.article_repo.save_article(  item, item["text"])
         return item

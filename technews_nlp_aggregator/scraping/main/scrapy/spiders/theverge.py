@@ -65,7 +65,7 @@ class ThevergeSpider(scrapy.Spider):
         article_title = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'c-entry-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(./div/twitterwidget)]//text()").extract()
+            "//div[contains(@class, 'c-entry-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(./div/twitterwidget)  and not(.//script) ]//text()").extract()
         article_authors = response.xpath('//div[@class="c-byline"]/span[@class="c-byline__item"]/a/@href').extract()
         article_tags = response.xpath("//li[contains(@class, 'c-entry-group-labels__item')]/a/@href").extract()
 

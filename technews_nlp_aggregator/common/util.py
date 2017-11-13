@@ -1,7 +1,7 @@
-from urllib.parse import urlparse, unquote
+from urllib.parse import urlparse, unquote, urlsplit
 from datetime import date, datetime, timedelta
 import re
-
+import logging
 
 
 def extract_date_str(url):
@@ -57,6 +57,10 @@ def extract_last_part(url):
     else:
         return url
 
+def extract_normpath( url):
+    urlpart = urlsplit(url)
+    url_result = urlpart.scheme +'://'+urlpart.netloc + '/' +urlpart.path
+    return url_result
 
 
 def extract_host( url):

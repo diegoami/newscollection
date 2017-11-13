@@ -18,7 +18,9 @@
 <label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="70" value="{{search_url | default('')}}">
 </INPUT>
 </P>
-<P>
+ </form>
+</div>
+    <P>
 
 <input class="main" type="submit" value="Submit"  />
 <input class="main" type="submit" value="Random" onclick="random_article_id();"  />
@@ -26,6 +28,13 @@
 </p>
 </FORM>
 {% if article_id: %}
+    {% if session['signed_in']: %}
+    <P>
+        <div class="buttonrow">
+        <button id="hide_button" class="buttoncolumn btn-big gray tooltip" value="Hide" onclick="window.location.href='/hide/{{A.AIN_ID}}'">HIDE
+        </button>
+    </P>
+    {% endif %}
 
 
      <div>

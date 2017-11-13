@@ -21,10 +21,7 @@
     <col width="8%">
     <col width="8%">
     <col width="55%">
-    <col width="3%">
-    <col width="3%">
-    <col width="3%">
-    <col width="3%">
+    <col width="12%">
 
 
     <TR>
@@ -33,10 +30,7 @@
 
        <th>Date</th>
        <th><span>Article</span></th>
-       <th><span>Id2</span></th>
-   <th><span>Id3</span></th>
-       <th><span>Id4</span></th>
-       <th><span>Id5</span></th>
+       <th><span>Compare</span></th>
 
     </tr>
     {% for article in article_group %}
@@ -45,11 +39,11 @@
         <TD><A HREF="/statistics/{{article.article_id}}" target="_blank">{{article.article_id}}</A></TD>
         <TD>{{article.date}}</TD>
         <TD><A HREF="{{article.url}}">{{article.title}}</A></TD>
-        <TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[0]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A></TD>
-       {% if article.other_ids|length > 1 %} <TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[1]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A> </TD> {% endif %}
-        {% if article.other_ids|length > 2 %}<TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[2]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A></TD>
+        <TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[0]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[0]}} "></A>
+       {% if article.other_ids|length > 1 %} <A HREF="/compare/{{article.article_id}}/{{article.other_ids[1]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[1]}} "></A>  {% endif %}
+        {% if article.other_ids|length > 2 %}<A HREF="/compare/{{article.article_id}}/{{article.other_ids[2]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[2]}}"></A>
  {% endif %}
-        {% if article.other_ids|length > 3 %}<TD><A HREF="/compare/{{article.article_id}}/{{article.other_ids[3]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare"></A> </TD> {% endif %}
+        {% if article.other_ids|length > 3 %}<A HREF="/compare/{{article.article_id}}/{{article.other_ids[3]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[3]}}" ></A> </TD> {% endif %}
 
 
     </TR>

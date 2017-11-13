@@ -58,7 +58,7 @@ class VenturebeatSpider(scrapy.Spider):
         article_title = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)]//text()").extract()
+            "//div[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) ]//text()").extract()
         article_authors = response.xpath('//div[@class="article-byline"]/a[@rel="author"]/@href').extract()
         article_tags = response.xpath("//a[contains(@class, 'article-category')]/@href").extract()
 

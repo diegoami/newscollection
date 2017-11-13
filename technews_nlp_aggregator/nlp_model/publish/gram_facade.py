@@ -31,9 +31,9 @@ class GramFacade():
 
 
     def create_model(self, doc_list):
-        self.bigrams_phrases = Phrases(doc_list, min_count=6)
+        self.bigrams_phrases = Phrases(doc_list, min_count=8)
         self.bigrams_phraser = Phraser(self.bigrams_phrases)
-        self.trigrams_phrases = Phrases(self.bigrams_phraser[doc_list], min_count=5)
+        self.trigrams_phrases = Phrases(self.bigrams_phraser[doc_list], min_count=7)
         self.trigrams_phraser = Phraser(self.trigrams_phrases)
         self.bigrams_phraser.save(self.model_dir + '/' + BIGRAMS_PHRASER_FILENAME)
         self.trigrams_phraser.save(self.model_dir + '/' + TRIGRAMS_PHRASER_FILENAME)

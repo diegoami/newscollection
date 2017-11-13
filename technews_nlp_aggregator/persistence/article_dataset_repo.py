@@ -4,7 +4,7 @@ import traceback
 import dataset
 from sqlalchemy import create_engine
 
-from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis
+from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis, extract_normpath
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 import pandas as pd
 
@@ -46,15 +46,16 @@ class ArticleDatasetRepo():
         return max_date["MAX_AIN_DATE"]
 
 
-    def update_article(self, url, to_add):
+    def update_article(self, to_add):
         result = False
         if not "date" in to_add:
             to_add["date"] = extract_date(to_add["url"])
-        source = extract_host(url)
+        source = extract_host(to_add["url"])
+        norm_url = extract_normpath(to_add["url"])
         try:
             con = self.get_connection()
             con.begin()
-            row = con['ARTICLE_INFO'].find_one(AIN_URL=to_add["url"])
+            row = con['ARTICLE_INFO'].find_one(AIN_URL=norm_url )
             if row:
                 pk = row["AIN_ID"]
                 new_title = remove_emojis(to_add["title"])
@@ -63,7 +64,7 @@ class ArticleDatasetRepo():
                 pk = con['ARTICLE_INFO'].update(
                     dict({
                         "AIN_ID": pk,
-                        "AIN_URL" : to_add["url"],
+                        "AIN_URL" : norm_url ,
                         "AIN_DATE" : to_add["date"],
                         "AIN_TITLE" : new_title,
                         "AIN_FILENAME": to_add["filename"]
@@ -107,7 +108,7 @@ class ArticleDatasetRepo():
         return result
 
 
-    def save_article(self, url, to_add, text):
+    def save_article(self, to_add, text):
         if not "date" in to_add:
             to_add["date"] = extract_date(to_add["url"])
         text = remove_emojis(text)
@@ -115,17 +116,19 @@ class ArticleDatasetRepo():
         pk = None
         if (len(cleaned_text) < 600):
             return None
-        source = extract_host(url)
+
+        source = extract_host(to_add["url"])
+        norm_url = extract_normpath(to_add["url"])
         found = False
         try:
             con = self.get_connection()
             con.begin()
 
-            row = con['ARTICLE_INFO'].find_one(AIN_URL=to_add["url"])
+            row = con['ARTICLE_INFO'].find_one(AIN_URL=norm_url )
             if not row:
                 pk = con['ARTICLE_INFO'].insert(
                     dict({
-                        "AIN_URL" : to_add["url"],
+                        "AIN_URL" : norm_url ,
                         "AIN_DATE" : to_add["date"],
                         "AIN_TITLE" : remove_emojis(to_add["title"]),
                         "AIN_FILENAME": to_add.get("filename","")
@@ -262,12 +265,13 @@ class ArticleDatasetRepo():
         return tagsDF, articleTagsDF
 
 
-    def delete_short_texts(self):
+    def delete_unrelevant_texts(self):
 
         con = self.get_connection()
         try:
             con.begin()
             con.query('CALL detect_short_txts()')
+            con.query('CALL detect_uninteresting()')
             con.commit()
         except:
             con.rollback()
