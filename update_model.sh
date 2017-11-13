@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source activate tnaggregator-2
-#[ $? -eq 0 ] &&  python scrape_site.py
+[ $? -eq 0 ] &&  python scrape_site.py
 
 [ $? -eq 0 ] &&  python token_model_wf.py --action create
 [ $? -eq 0 ] &&  python gram_model_wf.py

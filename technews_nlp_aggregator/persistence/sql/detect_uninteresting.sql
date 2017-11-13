@@ -1,3 +1,5 @@
+DROP PROCEDURE detect_uninteresting;
+
 create procedure detect_uninteresting ()
 BEGIN
 DECLARE id   INT;
@@ -27,9 +29,12 @@ DECLARE UNINTERESTING_ATX_TXT_ID_CURSOR CURSOR FOR
                                                           AIN_URL LIKE 'http://www.techrepublic.com/blog/microsoft-office/%'
                                                         OR
                                                         (AIN_TITLE LIKE '%Best Buy%' AND AIN_URL LIKE 'https://www.theverge.com/%')
+                                                        OR
+                                                        (AIN_URL LIKE 'https://thenextweb.com/offers/%')
+                                                          OR
+                                                        (AIN_URL LIKE 'https://www.theverge.com/circuitbreaker/%')
 
                                                       )
-                                                    AND LENGTH(ATX_TEXT) < 2000
                                                       ;
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET exit_loop = TRUE;
 OPEN UNINTERESTING_ATX_TXT_ID_CURSOR ;
@@ -43,4 +48,5 @@ OPEN UNINTERESTING_ATX_TXT_ID_CURSOR ;
   END LOOP uninteresting_text_loop;
 END;
 COMMIT;
+
 

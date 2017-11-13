@@ -80,6 +80,7 @@ sentence_excludes = [
     'Starting time: ',
     'Tech Republic may get a share of revenue from the sale'
     '(via'
+    'Click through to find out more'
 ]
 
 sentence_inside_excludes = [
