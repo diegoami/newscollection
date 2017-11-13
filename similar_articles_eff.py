@@ -10,7 +10,8 @@ from technews_nlp_aggregator import Application
 
 def process_for_insertion(id, df, threshold, articleFilterDF):
 
-    for other_id, score in df.iterrows():
+    for other_id, row in df.iterrows():
+        score = row['score']
         if score >= threshold and score < 0.995:
             article_id, article_other_id = articleFilterDF.iloc[id]['article_id'], articleFilterDF.iloc[other_id]['article_id']
             logging.debug("Yielding {}, {}, {}".format(article_id, article_other_id, score))

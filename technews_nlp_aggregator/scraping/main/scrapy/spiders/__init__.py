@@ -9,3 +9,4 @@ from .thenextweb import ThenextwebSpider
 from .theverge import ThevergeSpider
 from .venturebeat import VenturebeatSpider
 from .techrepublic import TechrepublicSpider
+from .wired import WiredSpider

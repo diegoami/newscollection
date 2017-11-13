@@ -112,24 +112,19 @@ class TechArticlesPreprocessor():
 
 if __name__ == '__main__':
     prepr = TechArticlesPreprocessor()
-    text =" 02:12 AM 03:14 PM 30% some other text  12.3% "
-    text2 = "I want 20 percent, 30 percent, 10 percent, 20% "
-    text3 = "$124,000 €243,23 £12.245 $124"
-    text4  = "January 23, 2017 and March 6"
-    text5 = "On January I went home until 2013 and woke up in 1972, then it was 2017 and not 201 "
-    text6 = " to optimize users’ mobile experience"
-    text7 = " April 6th from 2-4pm I paid 30.32m to somebody "
-    text8 = " @somehandle has written with the tag #silent on twitter"
-    text9 = " Visit us on http://www.amicabile.com to know more"
-    text10 = "Uber’s new Asia chief wants to work with governments and taxi firms not against them"
+    texts = [
+      " 02:12 AM 03:14 PM 30% some other text  12.3% ",
+      "I want 20 percent, 30 percent, 10 percent, 20% ",
+      "$124,000 €243,23 £12.245 $124",
+       "January 23, 2017 and March 6",
+         "On January I went home until 2013 and woke up in 1972, then it was 2017 and not 201 ",
+        " to optimize users’ mobile experience",
+        " April 6th from 2-4pm I paid 30.32m to somebody ",
+        " @somehandle has written with the tag #silent on twitter",
+        " Visit us on http://www.amicabile.com to know more",
+        "Uber’s new Asia chief wants to work with governments and taxi firms not against them",
+        "While open source machine learning projects like Google's TensorFlow and Amazon's DSSTNE lower the bar"
+    ]
 
-    print(prepr.process(text))
-    print(prepr.process(text2))
-    print(prepr.process(text3))
-    print(prepr.process(text4))
-    print(prepr.process(text5))
-    print(prepr.process(text6))
-    print(prepr.process(text7))
-    print(prepr.process(text8))
-    print(prepr.process(text9))
-    print(prepr.process(text10))
+    for text in texts:
+        print(prepr.process(text))

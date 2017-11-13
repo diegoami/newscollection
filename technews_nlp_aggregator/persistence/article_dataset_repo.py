@@ -267,21 +267,19 @@ class ArticleDatasetRepo():
 
     def delete_unrelevant_texts(self):
 
-        con = self.get_connection()
         try:
-            con.begin()
-            con.query('CALL detect_short_txts()')
-            con.query('CALL detect_uninteresting()')
-            con.commit()
-        except:
-            con.rollback()
-        try:
-            con.begin()
-            con.query('CALL delete_ids()')
-            con.commit()
-        except:
-            con.rollback()
+            econ = self.engine.connect()
+            econ.execute('call detect_uninteresting()')
+        finally:
+            econ.close()
 
+
+        try:
+            econ = self.engine.connect()
+            econ.execute('call delete_ids()')
+
+        finally:
+            econ.close()
 
 
     def update_to_saved(self,  con=None):

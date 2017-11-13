@@ -4,19 +4,19 @@ from scrapy import Request
 import logging
 
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
+from datetime import date
 
 
 
 
-
-class VenturebeatSpider(scrapy.Spider):
-    name = "venturebeat"
+class WiredSpider(scrapy.Spider):
+    name = "wired"
     pages_C =  0
     urls_V = set()
     pages_V = set()
-    allowed_domains = ["venturebeat.com"]
+    allowed_domains = ["wired.com"]
     start_urls = (
-        'https://venturebeat.com/', 'http://venturebeat.com/'
+        'https://www.wired.com/', 'http://www.wired.com/'
     )
 
 
@@ -35,7 +35,9 @@ class VenturebeatSpider(scrapy.Spider):
                 yield Request(url, callback=self.parse_page,
                               meta={'URL': url})
         else:
-            urls = response.xpath('//h2[@class="article-title"]/a/@href').extract()
+            urls = response.xpath('//div[@class="homepage-main"]/a/@href').extract()
+
+
             for url in urls:
                 absolute_url = response.urljoin(url)
                 article_date = extract_date(url)
@@ -47,34 +49,25 @@ class VenturebeatSpider(scrapy.Spider):
 
 
 
-            if not self.finished:
-                absolute_page = 'https://venturebeat.com/page/'+str(self.pages_C)
-                self.pages_C += 1
 
-
-                logging.info("Adding absolute page "+absolute_page )
-                if (absolute_page not in self.pages_V):
-                    self.pages_V.add(absolute_page)
-
-                    yield Request(absolute_page , callback=self.parse)
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@class="article-title"]//text()').extract()
+        article_title_parts = response.xpath('//h1[@class="title"]//text()').extract()
         article_title = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) ]//text()").extract()
-        article_authors = response.xpath('//div[@class="article-byline"]/a[@rel="author"]/@href').extract()
-        article_tags = response.xpath("//a[contains(@class, 'article-category')]/@href").extract()
-
+            "//article[contains(@class, 'article-body-component')]/div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
+        article_date_str = response.xpath("//li/time[@class='date-mdy']//text()").extract_first()
+        article_authors = response.xpath('//a[@rel="author"]/@href').extract_first()
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
+        month, day, year = map(int, article_date_str.split('.'))
+        article_date = date(year+2000, month, day)
 
 
-        article_date = extract_date(url)
         if (end_condition(article_date, self.go_back_date)):
 
             self.finished = True
-        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
+        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : []}
 
 

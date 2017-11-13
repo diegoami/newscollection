@@ -13,7 +13,7 @@ def do_crawl(articleDatasetRepo):
     crawler_settings.setmodule(settings)
     process = CrawlerProcess(settings=crawler_settings)
     max_date = articleDatasetRepo.get_latest_article_date()
-    go_back_date = max_date-timedelta(days=3)
+    go_back_date = max_date-timedelta(days=6)
     for spider in spiders:
         process.crawl(spider, articleDatasetRepo, max_date)
     process.start()
