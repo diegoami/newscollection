@@ -59,7 +59,7 @@ def extract_last_part(url):
 
 def extract_normpath( url):
     urlpart = urlsplit(url)
-    url_result = urlpart.scheme +'://'+urlpart.netloc + '/' +urlpart.path
+    url_result = urlpart.scheme +'://'+urlpart.netloc  +urlpart.path
     return url_result
 
 

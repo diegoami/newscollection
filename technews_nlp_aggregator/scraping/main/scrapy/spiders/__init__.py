@@ -10,3 +10,7 @@ from .theverge import ThevergeSpider
 from .venturebeat import VenturebeatSpider
 from .techrepublic import TechrepublicSpider
 from .wired import WiredSpider
+from .engadget import EngadgetSpider
+from .gizmodo import GizmodoSpider
+
+
