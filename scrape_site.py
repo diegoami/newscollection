@@ -27,4 +27,3 @@ if __name__ == '__main__':
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     do_crawl(articleDatasetRepo)
-    do_remove_uninteresting(articleDatasetRepo)

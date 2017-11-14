@@ -6,12 +6,12 @@ INDEX_FILENAME        = 'index'
 
 
 from gensim import corpora, models, similarities
-from . import ClfFacade
+
 import logging
 
 
 
-class TfidfGenerator(ClfFacade):
+class TfidfGenerator():
 
     def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None):
         self.model_dir = model_dir

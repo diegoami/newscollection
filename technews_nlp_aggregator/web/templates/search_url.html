@@ -56,7 +56,7 @@
 
         <tr>
             <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</td>
-            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+            <td><B>{{_.source}}</B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td class="date">{{_.date_p}}</td>
             <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
              <td class="columnscore">
@@ -80,7 +80,7 @@
               </span>
             </td>
             <td class="icon">
-                <A HREF="javascript:find_similar('{{_.url}}', '{{_.article_id}}')" target="_blank">
+                <A HREF="javascript:find_similar('{{_.article_id}}')" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
                 </A>
             </td>

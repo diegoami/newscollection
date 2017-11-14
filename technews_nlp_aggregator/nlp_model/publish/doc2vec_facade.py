@@ -1,7 +1,6 @@
 from gensim.models import Doc2Vec
 from gensim import matutils
 
-from technews_nlp_aggregator.nlp_model.publish.clf_facade import ClfFacade
 
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
@@ -27,7 +26,7 @@ class LabeledLineSentence(object):
             yield TaggedDocument(words=wtok, tags=tags)
 
 
-class Doc2VecFacade(ClfFacade):
+class Doc2VecFacade():
 
     def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None):
 
@@ -120,10 +119,6 @@ class Doc2VecFacade(ClfFacade):
         df = pd.DataFrame(scores[args_scores], index=new_index, columns=['score'])
         return df
 
-
-
-        #return articlesFilteredDF.iloc[args_scores].index, scores[args_scores]
-
     def get_vector(self, doc, title=''):
         p_wtok = self.get_tokenized(doc=doc, title=title)
         infer_vector = self.model.infer_vector(p_wtok)
@@ -165,24 +160,7 @@ class Doc2VecFacade(ClfFacade):
         df = pd.DataFrame(scores[args_scores], index=new_index , columns=['score'])
         return df
 
-
-    def compare_articles_from_dates(self,  start, end, thresholds):
-        articles_and_sim = {}
-        interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
-        articlesFilteredDF = self.article_loader.articlesDF[interval_condition]
-        dindex = articlesFilteredDF.index
-        for id in dindex:
-            scores = self.model.docvecs.most_similar([id], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
-
-            scores_in_threshold_condition = (scores >= thresholds[0]) & (scores <= thresholds[1])
-            scores_in_threshold = scores[scores_in_threshold_condition]
-            id_in_threshold = articlesFilteredDF.index[scores_in_threshold_condition]
-
-            articles_and_sim[id] = zip(id_in_threshold, scores_in_threshold)
-        return articles_and_sim
-
     def create_model(self, texts):
-
         it = LabeledLineSentence(range(len(texts)), texts)
         logging.info("Creating model with {} texts".format(len(texts)))
         self.model = Doc2Vec(size=600, window=10, workers=11, alpha=0.05,

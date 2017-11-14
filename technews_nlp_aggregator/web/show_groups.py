@@ -35,7 +35,7 @@ def show_groups(page_id=0):
                 "title" : row['title'],
                 "date" : row['date_p'],
                 "url" : row['url'],
-                "source" : extract_source(row['url']),
+                "source" : row['source'],
                 "other_ids" : [article_id for article_id in article_ids if article_id != row['article_id'] ]
             }
             articles.append(article)

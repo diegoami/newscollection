@@ -1,8 +1,7 @@
 
-find_similar = function(url, article_id) {
+find_similar = function(article_id) {
     var mainForm = document.getElementById("mainForm");
     mainForm.action = '/retrieve_similar_url';
-    document.getElementById("search_url").value = url;
     document.getElementById("article_id").value = article_id;
     mainForm.target= "_blank";
     mainForm.submit();

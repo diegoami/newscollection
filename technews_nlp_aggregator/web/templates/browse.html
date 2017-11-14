@@ -10,7 +10,7 @@
 {% include 'header.html' %}
 
 
-{% if articles: %}
+
 
 <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
 
@@ -29,6 +29,7 @@
 </form>
 </div>
 <BR>
+{% if articles: %}
 <table border="1">
 
 <tr>
@@ -51,7 +52,7 @@
             <td class="date">{{_.date_p}}</td>
               <td> <A HREF="{{_.url}}">{{_.title}}</A></td>
             <td class="icon">
-                       <A HREF="javascript:find_similar('{{_.url}}', '{{_.article_id}}')" target="_blank">
+                       <A HREF="javascript:find_similar('{{_.article_id}}')" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
                 </A>
             </td>

@@ -4,7 +4,6 @@ BIGRAMS_PHRASES_FILENAME   = 'bigrams_phrases'
 TRIGRAMS_PHRASER_FILENAME   = 'trigrams_phraser'
 TRIGRAMS_PHRASES_FILENAME   = 'trigrams_phrases'
 
-import logging
 
 
 from gensim.models.phrases import Phraser, Phrases

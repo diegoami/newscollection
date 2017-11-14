@@ -1,6 +1,7 @@
 
 import logging
 from random import randint
+from technews_nlp_aggregator.common.util import extract_source
 
 
 
@@ -40,5 +41,5 @@ class ArticleLoader:
         logging.info("Loading articles...")
         self.articlesDF =  self.articlesRepo.load_articles(load_text=load_text, load_only_unsaved=load_only_unsaved)
         self.articlesDF.reset_index(inplace=True)
+        self.articlesDF['source'] = self.articlesDF['url'].map(extract_source)
         return self.articlesDF
-

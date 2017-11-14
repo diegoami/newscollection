@@ -36,7 +36,7 @@ class TechArticlesPreprocessor():
     ]
 
     regexprs_month = [
-        re.compile(r'\bJanuary|February|March|April|May|June|July|August|September|October|November|December\b')
+        re.compile(r'\bJanuary|February|March|April|June|July|August|September|October|November|December\b')
     ]
 
     regexprs_dayofweek = [

@@ -21,19 +21,22 @@ def extract_tags(tags):
                 tags]
     return tag_base
 
-
 def conv_to_date(str_date):
     try:
         return date(*(map(int, str_date.split('-'))))
     except:
         return None
 
+def conv_From_(str_date):
+    try:
+        return date(*(map(int, str_date.split('-'))))
+    except:
+        return None
+
+
 def extract_source( url):
     source = str(urlparse(url)[1]).upper()
     return source
-
-
-
 
 def extract_date(url):
     arrs = str(urlparse(url)[2]).split('/')

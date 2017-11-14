@@ -14,7 +14,7 @@ SELECT
     JOIN `tnaggregator`.`SAME_STORY` `S`
   WHERE ((`S`.`SST_AIN_ID_1` = `A1`.`AIN_ID`) AND (`S`.`SST_AIN_ID_2` = `A2`.`AIN_ID`) AND
          (`S`.`SST_AGENT` = 'DOC2VEC-V1-500'))
-  AND SUBSTRING_INDEX(A1.AIN_URL, '.com', 1) <> SUBSTRING_INDEX(A2.AIN_URL, '.com', 1)
+ -- AND SUBSTRING_INDEX(A1.AIN_URL, '.com', 1) <> SUBSTRING_INDEX(A2.AIN_URL, '.com', 1)
   ORDER BY `A1`.`AIN_DATE` DESC;
 
 
@@ -35,7 +35,7 @@ SELECT
     JOIN `tnaggregator`.`SAME_STORY` `S`
   WHERE ((`S`.`SST_AIN_ID_1` = `A1`.`AIN_ID`) AND (`S`.`SST_AIN_ID_2` = `A2`.`AIN_ID`) AND
          (`S`.`SST_AGENT` = 'TFIDF-V1-500'))
-  AND SUBSTRING_INDEX(A1.AIN_URL, '.com', 1) <> SUBSTRING_INDEX(A2.AIN_URL, '.com', 1)
+ -- AND SUBSTRING_INDEX(A1.AIN_URL, '.com', 1) <> SUBSTRING_INDEX(A2.AIN_URL, '.com', 1)
   ORDER BY `A1`.`AIN_DATE` DESC;
 
 

@@ -10,15 +10,13 @@ from gensim.corpora import MmCorpus
 
 from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 import numpy as np
-from . import ClfFacade
-import logging
 from gensim import matutils
 import pandas as pd
 from pandas import DataFrame
 
 
 
-class TfidfFacade(ClfFacade):
+class TfidfFacade():
 
     def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None):
         self.model_dir = model_dir
@@ -31,10 +29,7 @@ class TfidfFacade(ClfFacade):
         self.dictionary = corpora.Dictionary.load(self.model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference
         self.corpus = MmCorpus(self.model_dir + '/'+ CORPUS_FILENAME )
         self.lsi = models.LsiModel.load(self.model_dir + '/'+ LSI_FILENAME)
-        self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and index it
-
-
-
+        self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and
 
     def get_vec(self, doc, title=''):
         vec_bow = self.get_doc_bow(doc=doc, title=title)
@@ -52,7 +47,6 @@ class TfidfFacade(ClfFacade):
         return p_words
 
     def get_vec_docid(self, id):
-
         vec_bow = self.corpus[id]
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
@@ -128,39 +122,3 @@ class TfidfFacade(ClfFacade):
         df = pd.DataFrame(scores[args_scores], index=new_index , columns=['score'])
         return df
 
-
-    def compare_articles_from_dates(self,  start, end, thresholds):
-        articles_and_sim = {}
-        interval_condition = (self.article_loader.articlesDF['date_p'] >= start) & (self.article_loader.articlesDF['date_p'] <= end)
-        articlesFilteredDF = self.article_loader.articlesDF[interval_condition]
-        dindex = articlesFilteredDF.index
-        for id in dindex:
-            vec_lsi = self.get_vec_docid(id)
-            scores = self.matrix_wrapper[(vec_lsi,interval_condition)]
-            scores_in_threshold_condition = (scores >= thresholds[0]) &  (scores <= thresholds[1])
-            scores_in_threshold = scores[scores_in_threshold_condition]
-            id_in_threshold = articlesFilteredDF.index[scores_in_threshold_condition]
-
-            articles_and_sim[id] = zip(id_in_threshold, scores_in_threshold)
-        return articles_and_sim
-"""
-    def process_article(self,articlesSimilarDF, thresholds):
-        for id, row in articlesSimilarDF.iterrows():
-            date = row['date']
-            article_id = row['article_id']
-            vec_lsi = self.get_vec_docid(id)
-            scores = self.matrix_wrapper[(vec_lsi)]
-            scores_in_threshold_condition = (scores >= thresholds[0]) & (scores <= thresholds[1])
-            sims = scores[scores_in_threshold_condition]
-            for other_id, score in scores:
-                        article, otherarticle = articlesDF.iloc[id], articlesDF.iloc[other_id]
-                        article_id, article_other_id = article['article_id'], otherarticle['article_id']
-                        if ((article_id, article_other_id) not in self.inserted_in_session):
-                            self.similarArticlesRepo.persist_association(con, article_id, article_other_id,
-                                                                         self.facade.name, score)
-                            self.inserted_in_session.add((article_id, article_other_id))
-                    con.commit()
-                except:
-                    traceback.print_exc()
-                    con.rollback()
-"""

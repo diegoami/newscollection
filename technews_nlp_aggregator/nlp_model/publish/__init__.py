@@ -1,4 +1,3 @@
-from .clf_facade import ClfFacade
 from .gram_facade import GramFacade
 from .doc2vec_facade import Doc2VecFacade
 from .tfidf_facade import TfidfFacade

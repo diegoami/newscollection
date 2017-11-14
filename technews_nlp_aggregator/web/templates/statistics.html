@@ -37,6 +37,7 @@
         <P><I>Date:</I> {{A.AIN_DATE}}</P>
           <p class="article_text">{{A.ATX_TEXT | safe}}</p>
      </div>
+{% if session['signed_in'] %}
 
 
     <h2>Tokenization</h2>
@@ -92,6 +93,8 @@
         {% endfor %}
     </TABLE>
 {% endif %}
+{% endif %}
+
 {% include 'footer.html' %}
 </body>
 </html>
