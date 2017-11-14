@@ -13,7 +13,7 @@ import numpy as np
 from gensim import matutils
 import pandas as pd
 from pandas import DataFrame
-
+from datetime import timedelta
 
 
 class TfidfFacade():
@@ -100,22 +100,15 @@ class TfidfFacade():
 
         return np.dot(query1, query2.T)
 
-    def get_related_articles_and_score_url(self,  url, d_days = 30   ):
-        articlesModelDF= self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
-        url_condition = articlesModelDF['url'] == url
-        docrow = articlesModelDF[url_condition]
-        if (len(docrow) > 0):
-            docid = docrow.index[0]
-            url_date = docrow.iloc[0]['date_p']
-            return self.get_related_articles_for_id(d_days, docid, url_date)
-        else:
-            return None, None
 
-    def get_related_articles_for_id(self, d_days, docid, url_date):
+
+    def get_related_articles_for_id(self, id, d_days):
         articlesDF = self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
-        interval_condition = abs((articlesDF['date_p'] - url_date).dt.days) <= d_days
+        url_date = articlesDF.iloc[id]['date_p']
+        start, end = url_date - timedelta(d_days) , url_date + timedelta(d_days)
+        interval_condition = (articlesDF['date_p'] >= start) & (articlesDF['date_p'] <= end)
         articlesFilteredDF = articlesDF[interval_condition]
-        vec_lsi = self.get_vec_docid(docid)
+        vec_lsi = self.get_vec_docid(id)
         scores = self.matrix_wrapper[(vec_lsi, interval_condition)]
         args_scores = np.argsort(-scores)
         new_index = articlesFilteredDF.iloc[args_scores].index

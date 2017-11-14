@@ -5,3 +5,4 @@ from .tfidf_generator import TfidfGenerator
 from .lsi_info import LsiInfo
 from .tokenize_info import TokenizeInfo
 from .doc2vec_info import Doc2VecInfo
+from .classifier_aggregator import ClassifierAggregator

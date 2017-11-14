@@ -1,7 +1,7 @@
 from .util import read_int_from_form
 
 from flask import render_template,  request
-from .merge_tables import retrieve_sims_map_with_dates, merge_sims_maps, extract_start_end
+from .merge_tables import retrieve_sims_map_with_dates, merge_sims_maps, extract_start_end, extract_related_articles
 
 
 from . import app
@@ -39,8 +39,7 @@ def retrieve_similar():
                 return render_template('search.html', messages=messages)
             else:
                 end, start = extract_start_end(start_s, end_s)
+                new_DF = _.classifierAggregator.retrieve_articles_for_text(text=text, start=start, end=end, n_articles=n_articles, title='', page_id=page_id)
+                related_articles = extract_related_articles(_.articleLoader, new_DF)
 
-                tdf_sims_map = retrieve_sims_map_with_dates(classifier=_.tfidfFacade, text=text, start=start, end=end, n_articles=n_articles)
-                doc2vec_sims_map = retrieve_sims_map_with_dates(classifier=_.doc2VecFacade, text=text, start=start, end=end,  n_articles=n_articles)
-                related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map, _.articleLoader, n_articles=n_articles, page_id=page_id)
                 return render_template('search.html', articles=related_articles[:n_articles],  search_text=text, n_articles=n_articles, start_s=start_s, end_s=end_s, page_id=page_id )

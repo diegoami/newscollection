@@ -3,6 +3,7 @@ find_similar = function(article_id) {
     var mainForm = document.getElementById("mainForm");
     mainForm.action = '/retrieve_similar_url';
     document.getElementById("article_id").value = article_id;
+    document.getElementById("search_url").value = '';
     mainForm.target= "_blank";
     mainForm.submit();
 }

@@ -23,18 +23,18 @@ def eff_similar_articles(application):
     _ = application
     articleFilterDF = _.articleLoader.articlesDF[:_.tfidfFacade.docs_in_model()]
     articlesToProcessDF =  articleFilterDF [_.articleLoader.articlesDF['processed'].isnull()]
-
+    con = _.similarArticlesRepo.get_connection()
     for id, row in articlesToProcessDF.iterrows():
         article_id = row['article_id']
         article_date = row['date_p']
         logging.debug("Processing article : {}".format(article_id))
 
-        tfidf_DF= _.tfidfFacade.get_related_articles_for_id(2, id, article_date)
-        doc2vec_DF = _.doc2VecFacade.get_related_articles_for_id(2, id, article_date)
-        con = _.similarArticlesRepo.get_connection()
+        tfidf_DF= _.tfidfFacade.get_related_articles_for_id(id, 2, article_date)
+        doc2vec_DF = _.doc2VecFacade.get_related_articles_for_id(id,  2, article_date)
+
         try:
             con.begin()
-            for article1, article2, score in process_for_insertion(id, tfidf_DF, 0.6, articleFilterDF):
+            for article1, article2, score in process_for_insertion(id, tfidf_DF, 0.59, articleFilterDF):
                 _.similarArticlesRepo.persist_association(con, article1, article2,  _.tfidfFacade.name, score)
 
             for article1, article2, score in process_for_insertion(id, doc2vec_DF, 0.26,  articleFilterDF):

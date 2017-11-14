@@ -46,4 +46,4 @@ if __name__ == '__main__':
     config = yaml.safe_load(open('../../config.yml'))
     application = Application(config, True)
     show_related_articles_random_docs(application)
-    show_related_articles_random_urls(application)
+    #show_related_articles_random_urls(application)

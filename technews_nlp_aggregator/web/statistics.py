@@ -61,7 +61,7 @@ def statistics(article_id):
                 bows = _.lsiInfo.get_bows_with_id(bows_vec)
                 topics = _.tfidfFacade.get_vec(doc=saved_text, title=article['AIN_TITLE'], )
                 tokens = _.tfidfFacade.get_tokenized(doc=saved_text, title=article['AIN_TITLE'], )
-                docvecs = _.doc2VecFacade.get_vector_for_doc(doc=saved_text, title=article['AIN_TITLE'] )
+                docvecs = _.doc2VecInfo.get_vector_for_doc(doc=saved_text, title=article['AIN_TITLE'] )
                 summaries = _.summaryFacade.summarize_text(doc=saved_text, title=article['AIN_TITLE'], )
                 summary_text = get_highlighted_text(summaries)
                 article['ATX_TEXT'] = summary_text

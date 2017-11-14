@@ -3,19 +3,16 @@ import logging
 import re, html
 
 
-
 def extract_related_articles(articleLoader, scoresDF):
     related_articles = []
-
 
     for id, row in scoresDF.iterrows():
         score = (row['score_t'], row['score_d'])
         link_obj = articleLoader.articlesDF.iloc[id]
-        related_article = fill_article(link_obj , id, score)
+        related_article = fill_article(link_obj, id, score)
         related_articles.append(related_article)
 
     return related_articles
-
 
 def fill_article(link_obj, id, score):
     related_article = {}
@@ -24,6 +21,7 @@ def fill_article(link_obj, id, score):
     related_article["url"] = str(link_obj["url"])
     date_p = link_obj["date_p"]
     related_article["date_p"] = str(date_p)
+    related_article["source"] = str(link_obj["source"])
 
     related_article["title"] = str(link_obj["title"])
 

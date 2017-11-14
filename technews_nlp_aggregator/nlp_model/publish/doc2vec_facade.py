@@ -9,7 +9,7 @@ import pandas as pd
 
 import numpy as np
 from gensim.models.doc2vec import TaggedDocument
-
+from datetime import timedelta
 import logging
 
 
@@ -40,13 +40,12 @@ class Doc2VecFacade():
         model_filename = self.model_dir+'/'+MODEL_FILENAME
         self.model = Doc2Vec.load(model_filename)
 
+    def get_vector(self, doc, title=''):
+        p_wtok = self.get_tokenized(doc=doc, title=title)
+        infer_vector = self.model.infer_vector(p_wtok)
+        return infer_vector
 
-    def get_related_articles_and_sims(self, doc, n):
-        infer_vector = self.get_vector(doc, '')
 
-        similar_documents = self.model.docvecs.most_similar([infer_vector], topn=n)
-
-        return similar_documents
 
     def get_score_id_id(self, id1, id2):
         docvec1 = self.model.docvecs.doctag_syn0[id1]
@@ -65,34 +64,6 @@ class Doc2VecFacade():
 
         return np.dot(docvec1, docvec2.T)
 
-    def get_related_articles_and_sims_id(self, id, n):
-        similar_documents = self.model.docvecs.most_similar([id], topn=n)
-
-        return similar_documents
-
-
-    def compare_sentences_to_id(self, sentences, id):
-        condition = self.article_loader.articlesDF.index == id
-        articlesFilteredDF = self.article_loader.articlesDF[condition]
-        dindex = articlesFilteredDF.index
-        indexer = DocVec2Indexer(self.model.docvecs, dindex)
-        scores = []
-        for sentence in sentences:
-            infer_vector = self.get_vector(sentence, '')
-
-            score = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
-            scores.append(score[0])
-        return np.array(scores)
-
-
-    def compare_docs_to_id(self, title, doc, id):
-        p_wtok = self.get_tokenized(doc=doc, title=title)
-        condition = self.article_loader.articlesDF.index == id
-        articlesFilteredDF = self.article_loader.articlesDF[condition]
-        dindex = articlesFilteredDF.index
-        infer_vector = self.model.infer_vector(p_wtok)
-        scores = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
-        return scores
 
     def get_tokenized(self, doc, title):
         wtok = self.tokenizer.tokenize_doc(title=title, doc=doc)
@@ -119,44 +90,20 @@ class Doc2VecFacade():
         df = pd.DataFrame(scores[args_scores], index=new_index, columns=['score'])
         return df
 
-    def get_vector(self, doc, title=''):
-        p_wtok = self.get_tokenized(doc=doc, title=title)
-        infer_vector = self.model.infer_vector(p_wtok)
-        return infer_vector
-
-    def get_vector_for_doc(self,  doc, title):
-
-        doclist =  self.get_vector(title=title, doc=doc)
-        doczip = zip(range(len(doclist)), doclist)
-        docsorted = sorted(doczip, key=lambda x: abs(x[1]), reverse=True)
-        return docsorted
-
-    def get_related_articles_and_score_url(self, url, d_days):
-        #docrow = self.article_loader.articlesDF[self.article_loader.articlesDF['article_id'] == docid]
-        articleModelDF = self.article_loader.articlesDF.iloc[:self.model.docvecs.doctag_syn0.shape[0]]
-        url_condition = articleModelDF['url'] == url
-
-        docrow = articleModelDF[url_condition]
-        if (len(docrow) > 0):
-            docid = docrow.index[0]
-            url_date = docrow.iloc[0]['date_p']
-            return self.get_related_articles_for_id( d_days, docid, url_date)
-        else:
-            return None, None
-
-    def get_related_articles_for_id(self,  d_days, docid, url_date):
+    def get_related_articles_for_id(self, id, d_days):
         articleDF = self.article_loader.articlesDF.iloc[:self.model.docvecs.doctag_syn0.shape[0]]
-        interval_condition = abs((articleDF['date_p'] - url_date).dt.days) <= d_days
+        url_date = articleDF.iloc[id]['date_p']
+
+
+        start, end = url_date - timedelta(d_days), url_date + timedelta(d_days)
+        interval_condition = (articleDF['date_p'] >= start) & (articleDF['date_p'] <= end)
+
         articlesFilteredDF = articleDF[interval_condition]
         dindex = articlesFilteredDF.index
         indexer = DocVec2Indexer(self.model.docvecs, dindex)
-        scores = self.model.docvecs.most_similar([docid], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
+        scores = self.model.docvecs.most_similar([id], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
         args_scores = np.argsort(-scores)
-
-
         new_index = articlesFilteredDF.iloc[args_scores].index
-
-
         df = pd.DataFrame(scores[args_scores], index=new_index , columns=['score'])
         return df
 
