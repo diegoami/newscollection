@@ -53,7 +53,7 @@ class WiredSpider(scrapy.Spider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@class="title"]//text()').extract()
+        article_title_parts = response.xpath('//h1[@class="title"]//text()').extract_first()
         article_title = "".join(article_title_parts)
 
         all_paragraphs = response.xpath(

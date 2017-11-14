@@ -29,8 +29,9 @@ def browse(page_id=0):
         articleFilterDF = articlesDF[articlesDF['title'].str.lower().str.contains(filter_browse.lower())]
     else:
         articleFilterDF = articlesDF
+    has_next = len(articleFilterDF) > end
     articleFilterDF = articleFilterDF[start:min(end, len(articleFilterDF ))]
-    has_next = len(articleFilterDF ) > end
+
     articles = articleFilterDF.to_dict('records')
     return render_template('browse.html', articles=articles , page_id=page_id, has_next=has_next, filter_browse=filter_browse)
 

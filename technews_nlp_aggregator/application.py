@@ -12,7 +12,7 @@ from technews_nlp_aggregator.nlp_model.common import ArticleLoader,  defaultToke
 import logging
 
 
-
+from datetime import date
 
 class Application:
     def __init__(self, config, load_text=False):
@@ -53,7 +53,12 @@ class Application:
 
     def reload(self):
         self.articleLoader.load_all_articles(load_text=True)
-        self.gramFacade.load_models()
-        self.doc2VecFacade.load_models()
-        self.tfidfFacade.load_models()
+
+
+    def verify_acceptable_article(self, text, title):
+
+        articles_similar = self.classifierAggregator.retrieve_articles_for_text(text, date.min, date.max, 6, title, 0 )
+        art_df = articles_similar .join(self.articleLoader.articlesDF)
+        sources = art_df['source'].unique()
+        return (len(sources) > 1)
 
