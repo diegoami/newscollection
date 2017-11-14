@@ -46,3 +46,5 @@ class ClassifierAggregator():
         scoreDF = classifier.get_related_articles_for_id(id=id,  d_days=d_days)
 
         return scoreDF
+
+

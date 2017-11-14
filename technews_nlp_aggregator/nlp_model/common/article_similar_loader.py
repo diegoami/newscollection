@@ -27,14 +27,3 @@ class ArticleSimilarLoader:
             index_done -= 1
         return drows
 
-if __name__ == '__main__':
-    dks = [
-        [{1,3}, {2, 3}],
-
-        [{1,2}, {2, 3}],
-        [{1, 4, 7}, {2, 3, 5},  {4 , 8}, {2, 9} , {2, 5,10}, {11, 12} , {6,12,13}]
-
-    ]
-    articleSimilarLoader = ArticleSimilarLoader(None)
-    for dk in dks:
-        print(articleSimilarLoader.merge_sets(dk))

@@ -29,8 +29,8 @@ def eff_similar_articles(application):
         article_date = row['date_p']
         logging.debug("Processing article : {}".format(article_id))
 
-        tfidf_DF= _.tfidfFacade.get_related_articles_for_id(id, 2, article_date)
-        doc2vec_DF = _.doc2VecFacade.get_related_articles_for_id(id,  2, article_date)
+        tfidf_DF= _.tfidfFacade.get_related_articles_for_id(id, 2)
+        doc2vec_DF = _.doc2VecFacade.get_related_articles_for_id(id,  2)
 
         try:
             con.begin()

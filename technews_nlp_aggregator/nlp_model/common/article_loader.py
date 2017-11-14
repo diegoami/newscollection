@@ -44,3 +44,4 @@ class ArticleLoader:
         self.articlesDF['source'] = self.articlesDF['url'].map(extract_source)
     
         return self.articlesDF
+
