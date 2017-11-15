@@ -47,7 +47,7 @@ class MashableSpider(scrapy.Spider):
         article_title_parts = response.xpath("//h1[contains(@class, 'title')]/text()").extract()
         article_title = "".join(article_title_parts )
         all_paragraphs = response.xpath(
-            "//section[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=see-also]) and not(.//p[@class=see-also-link])]//text()").extract()
+            "//section[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class='see-also']) and not(.//p[@class='see-also-link']) and not(contains(@class,'see-also-link'))]//text()").extract()
 
 
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)

@@ -1,7 +1,7 @@
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 from technews_nlp_aggregator.scraping.main.scrapy import settings
-from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider, DigitaltrendsSpider
 from datetime import  timedelta
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
 import yaml

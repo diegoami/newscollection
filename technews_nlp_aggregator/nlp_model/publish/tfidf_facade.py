@@ -13,7 +13,7 @@ import numpy as np
 from gensim import matutils
 import pandas as pd
 from pandas import DataFrame
-from datetime import timedelta
+from datetime import timedelta, date
 
 
 class TfidfFacade():
@@ -100,6 +100,20 @@ class TfidfFacade():
 
         return np.dot(query1, query2.T)
 
+
+
+    def get_related_articles_for_ids(self, ids, start=date.min, end=date.max):
+        articlesDF = self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
+        interval_condition = (articlesDF['date_p'] >= start) & (articlesDF['date_p'] <= end)
+        articlesFilteredDF = articlesDF[interval_condition]
+        vec_lsi_vec = [[x[1] for x in self.get_vec_docid(id)] for id in ids]
+        np_vec_lsi_vec = np.array(vec_lsi_vec )
+        query = matutils.unitvec(np_vec_lsi_vec)
+        return query
+        #args_scores = np.argsort(-scores)
+        #new_index = articlesFilteredDF.iloc[args_scores].index
+        #df = pd.DataFrame(scores[args_scores], index=new_index , columns=['score'])
+        #return df
 
 
     def get_related_articles_for_id(self, id, d_days):
