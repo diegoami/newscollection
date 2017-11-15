@@ -293,3 +293,15 @@ class ArticleDatasetRepo():
         except:
             con.rollback()
             traceback.print_stack()
+
+
+    def update_to_crawled(self, url, con=None):
+        sql_update = "UPDATE URLS_TO_ADD SET UTA_PROCESSED = SYSDATE() WHERE UTA_URL = :url"
+        con = self.get_connection() if not con else con
+        try:
+            con.begin()
+            article_query = con.query(sql_update, {"url" : url})
+            con.commit()
+        except:
+            con.rollback()
+            traceback.print_stack()

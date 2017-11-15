@@ -54,7 +54,7 @@ def retrieve_similar_url():
                                        messages=[
                                            'Could not find neither url nor id'])
             if (id > _.tfidfFacade.docs_in_model() or id > _.doc2VecFacade.docs_in_model()):
-                return retrieve_from_article_id( article_id=article_id, n_articles=n_articles,   url=url, d_days=d_days, page_id = page_id)
+                return retrieve_from_article_id( article_id=article_id, n_articles=n_articles,    d_days=d_days, page_id = page_id)
             else:
                 return common_retrieve_id(  id, d_days, n_articles=n_articles, page_id = page_id, url=url, article_id=article_id)
         else:
@@ -81,7 +81,7 @@ def retrieve_from_article_id( article_id, n_articles, d_days=30, page_id = 0):
 
 
         start, end = art_date - timedelta(d_days), art_date + timedelta(d_days)
-        new_DF = _.classifierAggregator.retrieve_articles_for_text(text=article['ATX_TEXT'], stat=start, end=end, n_articles=n_articles, title=article['AIN_TITLE'], page_id=page_id )
+        new_DF = _.classifierAggregator.retrieve_articles_for_text(text=article['ATX_TEXT'], start=start, end=end, n_articles=n_articles, title=article['AIN_TITLE'], page_id=page_id )
         related_articles = extract_related_articles(_.articleLoader, new_DF)
         start_s, end_s =  str(start.year)+'-'+str(start.month)+'-'+str(start.day), str(end.year)+'-'+str(end.month)+'-'+str(end.day)
         return render_template('search_url.html', articles=related_articles[:n_articles], search_text=text,

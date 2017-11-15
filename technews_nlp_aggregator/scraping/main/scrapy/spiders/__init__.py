@@ -13,4 +13,5 @@ from .wired import WiredSpider
 from .engadget import EngadgetSpider
 from .gizmodo import GizmodoSpider
 from .mashable import MashableSpider
+from .zdnet import ZdnetSpider
 

@@ -18,7 +18,7 @@
 <label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="70" value="{{search_url | default('')}}">
 </INPUT>
 </P>
- </form>
+
 </div>
     <P>
 
@@ -37,7 +37,8 @@
         <P><I>Date:</I> {{A.AIN_DATE}}</P>
           <p class="article_text">{{A.ATX_TEXT | safe}}</p>
      </div>
-{% if session['signed_in'] %}
+{% endif %}
+{% if session['signed_in'] and article_id: %}
 
 
     <h2>Tokenization</h2>
@@ -93,7 +94,7 @@
         {% endfor %}
     </TABLE>
 {% endif %}
-{% endif %}
+
 
 {% include 'footer.html' %}
 </body>

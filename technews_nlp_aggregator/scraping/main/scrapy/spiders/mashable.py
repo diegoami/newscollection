@@ -44,20 +44,19 @@ class MashableSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
 
-        article_title_parts = response.xpath("//h1[contains(@class, 'title')]/a/text()").extract()
+        article_title_parts = response.xpath("//h1[contains(@class, 'title')]/text()").extract()
         article_title = "".join(article_title_parts )
         all_paragraphs = response.xpath(
-            "//section[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
+            "//section[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=see-also]) and not(.//p[@class=see-also-link])]//text()").extract()
 
 
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
-        article_authors = response.xpath("//span[contains(@class, 'author-name')]/a/@href").extract_first()
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
         article_date = extract_date(url)
 
         if (end_condition(article_date, self.go_back_date)):
             self.finished = True
-        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors , "date" :article_date, "filename" : "", "tags" : []}
+        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": [] , "date" :article_date, "filename" : "", "tags" : []}
 
 

@@ -1,7 +1,7 @@
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 from technews_nlp_aggregator.scraping.main.scrapy import settings
-from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider
 from datetime import  timedelta
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
 import yaml
@@ -36,5 +36,4 @@ if __name__ == '__main__':
 
     #do_crawl(articleDatasetRepo, [WiredSpider], ["https://www.wired.com/story/embark-self-driving-truck-deliveries/"])
     do_crawl(articleDatasetRepo, to_process)
-    articleSpiderRepo.update_to_crawled()
 
