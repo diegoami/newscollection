@@ -11,7 +11,7 @@ class SummaryFacade():
 
 
 
-    def summarize(self, id, doc, title):
+    def summarize(self, id, doc, title=''):
 
         return self.summaryStrategy.get_summary_sentences(id, doc)
 
@@ -22,3 +22,8 @@ class SummaryFacade():
         doc_bow = self.tfidfFacade.get_doc_bow(doc=doc, title=title)
         logging.debug("docbow : {}".format(str(doc_bow)))
         return self.summaryStrategy.get_sentences_from_bow(doc_bow , doc)
+
+    def full_text_summarize(self, id, doc):
+        sentences = self.summarize(id, doc)
+        full_text = " ".join([x[1] for x in sentences])
+        return full_text
