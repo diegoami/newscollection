@@ -67,7 +67,7 @@ class ArstechnicaSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@itemprop="headline"]//text()').extract()
-        article_title = "".join(article_title_parts)
+        article_title = "".join(article_title_parts).strip()
         #all_paragraphs = response.xpath('//div[@itemprop="articleBody"]//p/text()|//div[@itemprop="articleBody"]//p/em//text()|//div[@itemprop="articleBody"]//p/a//text()|//div[@itemprop="articleBody"]//p/i//text()').extract()
         first_paragraph = response.xpath(
             '//div[@itemprop="articleBody"]/text()').extract()

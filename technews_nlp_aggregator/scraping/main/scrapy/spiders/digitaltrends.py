@@ -54,7 +54,7 @@ class DigitaltrendsSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@class="title"]//text()').extract_first()
-        article_title = "".join(article_title_parts)
+        article_title = "".join(article_title_parts).strip()
 
         all_paragraphs = response.xpath(
             "//article[contains(@itemprop, 'articleBody')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[contains(@class, 'm-newsletter-minimal')])]//text()").extract()

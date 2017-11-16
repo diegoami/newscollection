@@ -64,7 +64,7 @@ class TechrepublicSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@class="title"]//text()').extract()
-        article_title = "".join(article_title_parts)
+        article_title = "".join(article_title_parts).strip()
         all_paragraphs_r = response.xpath(
             "//div[contains(@class, 'content') and contains(@data-component, 'lazyloadImages')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)  and not(.//script)]//text()")
         all_paragraphs = all_paragraphs_r.extract()

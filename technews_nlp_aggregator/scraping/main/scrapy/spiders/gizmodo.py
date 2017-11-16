@@ -45,7 +45,7 @@ class GizmodoSpider(scrapy.Spider):
         url = response.meta.get('URL')
 
         article_title_parts = response.xpath("//h1[contains(@class, 'entry-title')]/a/text()").extract()
-        article_title = "".join(article_title_parts )
+        article_title = "".join(article_title_parts ).strip()
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'entry-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
 

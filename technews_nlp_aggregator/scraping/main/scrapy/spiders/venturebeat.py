@@ -61,7 +61,7 @@ class VenturebeatSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@class="article-title"]//text()').extract()
-        article_title = "".join(article_title_parts)
+        article_title = "".join(article_title_parts).strip()
 
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'article-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) ]//text()").extract()

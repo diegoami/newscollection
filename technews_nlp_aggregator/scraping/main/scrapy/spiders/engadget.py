@@ -20,7 +20,7 @@ class EngadgetSpider(scrapy.Spider):
     )
 
 
-    def __init__(self, article_repo, go_back_date, url_list):
+    def __init__(self, article_repo, go_back_date, url_list=None):
         super().__init__()
         self.article_repo = article_repo
         self.go_back_date = go_back_date
@@ -35,7 +35,34 @@ class EngadgetSpider(scrapy.Spider):
                 yield Request(url, callback=self.parse_page,
                               meta={'URL': url})
         else:
-            pass
+
+            urls = response.xpath('//h2[contains(@class,"mt-10@tp+")]/a/@href | //div[contains(@class,"container@m")]/article[contains(@class,"o-hit")]/a/@href').extract()
+
+
+            for url in urls:
+
+                absolute_url = response.urljoin(url)
+                article_date = extract_date(url)
+                if (article_date):
+                    if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url)):
+                        self.urls_V.add(absolute_url)
+
+                        yield Request(absolute_url, callback=self.parse_page,
+                                      meta={'URL': absolute_url})
+
+
+
+            if not self.finished:
+                absolute_page = 'https://www.engadget.com/all/page/'+str(self.pages_C)
+                self.pages_C += 1
+
+
+                logging.info("Adding absolute page "+absolute_page )
+                if (absolute_page not in self.pages_V):
+                    self.pages_V.add(absolute_page)
+
+                    yield Request(absolute_page , callback=self.parse)
+
 
 
 
@@ -45,7 +72,7 @@ class EngadgetSpider(scrapy.Spider):
         url = response.meta.get('URL')
 
         article_title_parts = response.xpath("//h1[contains(@class, 't-h4@m-')]//text()").extract()
-        article_title = "".join(article_title_parts )
+        article_title = "".join(article_title_parts ).strip()
         all_paragraph_before = response.xpath("//div[contains(@class, 't-d7@m-')]//text()").extract()
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'article-text')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()

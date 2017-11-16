@@ -20,7 +20,7 @@ class WiredSpider(scrapy.Spider):
     )
 
 
-    def __init__(self, article_repo, go_back_date, url_list):
+    def __init__(self, article_repo, go_back_date, url_list=None):
         super().__init__()
         self.article_repo = article_repo
         self.go_back_date = go_back_date
@@ -35,7 +35,7 @@ class WiredSpider(scrapy.Spider):
                 yield Request(url, callback=self.parse_page,
                               meta={'URL': url})
         else:
-            urls = response.xpath('//div[@class="homepage-main"]/a/@href').extract()
+            urls = response.xpath('//h2[contains(@class,"archive-item-component__link")]/@href').extract()
 
 
             for url in urls:
@@ -46,15 +46,16 @@ class WiredSpider(scrapy.Spider):
                         self.urls_V.add(absolute_url)
                         yield Request(absolute_url, callback=self.parse_page,
                                       meta={'URL': absolute_url})
+            absolute_page = 'https://www.wired.com/most-popular/'
+            if (absolute_page not in self.pages_V):
+                self.pages_V.add(absolute_page)
 
-
-
-
+                yield Request(absolute_page, callback=self.parse)
 
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@class="title"]//text()').extract_first()
-        article_title = "".join(article_title_parts)
+        article_title = "".join(article_title_parts).strip()
 
         all_paragraphs = response.xpath(
             "//article[contains(@class, 'article-body-component')]/div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()

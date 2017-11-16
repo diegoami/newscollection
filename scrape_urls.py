@@ -34,6 +34,6 @@ if __name__ == '__main__':
         list_to_process.append(row["UTA_URL"])
         to_process[row["UTA_SPIDER"]] = list_to_process
 
-    #do_crawl(articleDatasetRepo, [WiredSpider], ["https://www.wired.com/story/embark-self-driving-truck-deliveries/"])
+
     do_crawl(articleDatasetRepo, to_process)
 

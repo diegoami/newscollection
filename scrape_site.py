@@ -1,14 +1,16 @@
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 from technews_nlp_aggregator.scraping.main.scrapy import settings
-from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider
 from datetime import  timedelta
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 import yaml
 
 def do_crawl(articleDatasetRepo):
 
-    spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider])
+    spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider, EngadgetSpider])
+
+
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
     process = CrawlerProcess(settings=crawler_settings)
