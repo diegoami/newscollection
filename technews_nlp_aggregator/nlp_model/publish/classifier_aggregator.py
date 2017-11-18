@@ -1,5 +1,6 @@
 from . import Doc2VecFacade, GramFacade, TfidfFacade
 from datetime import date
+import logging
 class ClassifierAggregator():
 
     def __init__(self, tokenizer, gramFacade, tfidfFacade, doc2VecFacade):
@@ -46,5 +47,21 @@ class ClassifierAggregator():
         scoreDF = classifier.get_related_articles_for_id(id=id,  d_days=d_days)
 
         return scoreDF
+
+
+    def missing_words(self, tok_doc):
+
+        abs_words_gf = self.gramFacade.words_not_in_vocab(tok_doc, 100)
+        abs_words_tf = self.tfidfFacade.get_absent_words(tok_doc)
+        ins_word_gf = abs_words_gf.intersection(abs_words_tf)
+        return ins_word_gf
+
+    def common_miss_words_doc(self, doc1, doc2):
+        tok_doc_1, tok_doc_2 = self.tfidfFacade.get_tokenized(doc1),  self.tfidfFacade.get_tokenized(doc2)
+        mw_1, mw_2 = self.missing_words(tok_doc_1), self.missing_words(tok_doc_2)
+        intw = mw_1.intersection(mw_2)
+        logging.debug("Intersection words: {}".format(intw ))
+        return len(mw_1.intersection(mw_2))
+
 
 
