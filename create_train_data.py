@@ -14,7 +14,7 @@ def direct_confront(_):
     scores = retrieves_scores(_, user_paired)
     df = pd.DataFrame(scores)
     print(df.head())
-    df.to_csv('data/scores.csv')
+    df.to_csv('data/scores_pl.csv')
 
 def create_test_data(_):
 
