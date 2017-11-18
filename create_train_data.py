@@ -110,9 +110,13 @@ def unique_words_diff(aggregator, article1, article2, id1, id2, summary1, summar
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--action', help='action can be create or append')
+    args = parser.parse_args()
 
     config = yaml.safe_load(open('config.yml'))
     application = Application(config, True)
     application.gramFacade.load_phrases()
-    direct_confront(application)
-   # create_test_data(application)
+    if (args.action == 'train'):
+        direct_confront(application)
+    elif (args.action == 'test'):
+        create_test_data(application)
