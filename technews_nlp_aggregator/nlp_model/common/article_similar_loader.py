@@ -5,7 +5,7 @@ class ArticleSimilarLoader:
 
     def __init__(self, articlesSimilarRepo):
         self.articlesSimilarRepo = articlesSimilarRepo
-
+        self.train_data = None
 
     def retrieve_groups(self):
         rows = self.articlesSimilarRepo.retrieve_user_paired()

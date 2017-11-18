@@ -12,6 +12,7 @@ def train_data(page_id=0):
 
     messages = []
     start, end = page_id * 100, (page_id + 1) * 100
+    _.articleSimilarLoader.load_train_data_aug()
     train_dataDF = _.articleSimilarLoader.train_data
 
     has_next = len(train_dataDF ) > end
