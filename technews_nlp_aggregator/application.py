@@ -43,6 +43,8 @@ class Application:
         last_article_date = self.articleDatasetRepo.get_latest_article_date()
 
         self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)
+        self.articleSimilarLoader.load_train_data_aug(config["train_data_file_aug"])
+
         logging.debug("Log in debug mode")
 
 

@@ -21,4 +21,10 @@ bigrams_pickle_file     : /media/diego/QData/techarticles/pickle/bigrams.p
 trigrams_pickle_file     : /media/diego/QData/techarticles/pickle/trigrams.p
 phrases_model_dir_base    : /media/diego/QData/techarticles/models/phrases/phrases__
 phrases_model_dir_link     : /media/diego/QData/techarticles/models/phrases/phrases_model
+train_data_file         : /media/diego/QData/techarticles/models/xgboost/train.txt
+train_data_file_aug         : /media/diego/QData/techarticles/models/xgboost/train_aug.txt
+xgboost_model_file        : /media/diego/QData/techarticles/models/xgboost/xgboost_model
+
+
+
 

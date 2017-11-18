@@ -75,6 +75,27 @@ class ArticlesSimilarRepo:
             traceback.print_exc()
             con.rollback()
 
+    def override_user_association(self, first_id, second_id, similarity, origin):
+        if (first_id > second_id):
+            first_id, second_id = second_id, first_id
+        con = self.get_connection()
+
+        try:
+            con.begin()
+
+            row = con['SAME_STORY_USER'].update(
+                dict({
+                    "SSU_AIN_ID_1": first_id,
+                    "SSU_AIN_ID_2": second_id,
+                    "SSU_ORIGIN": origin,
+                    "SSU_SIMILARITY": similarity,
+                    "SSU_UPDATED": datetime.now()
+                })
+            )
+            con.commit()
+        except:
+            traceback.print_exc()
+            con.rollback()
 
     def persist_user_association(self, first_id, second_id, similarity, origin):
         if (first_id > second_id):

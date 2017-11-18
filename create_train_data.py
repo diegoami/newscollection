@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.application import Application
 import argparse
-def direct_confront(_):
+def direct_confront(application, train_file):
     _ = application
 
     user_paired = _.similarArticlesRepo.retrieve_user_paired()
@@ -14,9 +14,9 @@ def direct_confront(_):
     scores = retrieves_scores(_, user_paired)
     df = pd.DataFrame(scores)
     print(df.head())
-    df.to_csv('data/scores_pl.csv')
+    df.to_csv(train_file)
 
-def create_test_data(_):
+def create_test_data(application):
 
     _ = application
 
@@ -114,9 +114,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     config = yaml.safe_load(open('config.yml'))
+    train_fail_loc = config["train_data_file"]
     application = Application(config, True)
     application.gramFacade.load_phrases()
     if (args.action == 'train'):
-        direct_confront(application)
+        direct_confront(application,train_fail_loc)
     elif (args.action == 'test'):
         create_test_data(application)

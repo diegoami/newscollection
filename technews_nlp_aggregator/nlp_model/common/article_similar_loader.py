@@ -1,9 +1,11 @@
-
+import pandas as pd
+import numpy as np
 class ArticleSimilarLoader:
 
 
     def __init__(self, articlesSimilarRepo):
         self.articlesSimilarRepo = articlesSimilarRepo
+
 
     def retrieve_groups(self):
         rows = self.articlesSimilarRepo.retrieve_user_paired()
@@ -27,3 +29,10 @@ class ArticleSimilarLoader:
             index_done -= 1
         return drows
 
+    def load_train_data_aug(self, filename):
+
+        self.train_data = pd.read_csv(filename)
+        self.train_data['MAX_DIFF'] = abs(self.train_data['SCO_USER'] - self.train_data['SCO_PRED'])
+        self.train_data.sort_values('MAX_DIFF', axis=0, ascending=False, inplace=True)
+        self.train_data['SCO_AIN_ID_1'] = self.train_data['SCO_AIN_ID_1'].astype(int)
+        self.train_data['SCO_AIN_ID_2'] = self.train_data['SCO_AIN_ID_2'].astype(int)

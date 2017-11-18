@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+{% include 'header_files.html' %}
+
+  <title>Browse articles</title>
+ </head>
+<body onload="select_header('topnav_train_data');">
+{% include 'header.html' %}
+
+
+
+
+
+{% if train_data: %}
+<table border="1">
+
+<tr>
+    <th>Article 1</th>
+    <th>Title 1</th>
+    <th>Date 1</th>
+    <th>Article 2</th>
+    <th>Title 2</th>
+    <th>Date 2</th>
+
+    <th>Score User</th>
+    <th>Score Model</th>
+    <th>Compare</th>
+
+</tr>
+
+    {% for _ in train_data: %}
+
+        <tr>
+          <td>{{_.SCO_AIN_ID_1|round|int }}</td>
+          <td><A HREF="{{_.url}}">{{_.title}}</A></td>
+          <td>{{_.date_p}}</td>
+          <td>{{_.SCO_AIN_ID_2|round|int  }}</td>
+          <td><A HREF="{{_.url_2}}">{{_.title_2}}</A></td>
+          <td>{{_.date_p_2}}</td>
+
+          <td>{{_.SCO_USER}}</td>
+          <td>{{_.SCO_PRED}}</td>
+           <td class="icon">
+
+                <A HREF="/compare/{{_.SCO_AIN_ID_1|round|int  }}/{{_.SCO_AIN_ID_2|round|int  }}" target="_blank">
+                    <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
+                </A>
+
+            </td>
+
+        </tr>
+
+
+    {% endfor %}
+</table>
+{% endif %}
+
+
+<HR>
+    <BR>
+<div class="buttonrow">
+        {% if page_id and page_id > 0: %}
+            <form class="buttoncolumn" action="/browse/{{page_id-1}}">
+                <input class="main" type="submit" value="<<< Back" />
+            </form>
+        {% endif %}
+        {% if has_next : %}
+            <form class="buttoncolumn" action="/browse/{{page_id+1}}">
+                <input class="main" type="submit" value="Forward >>> " />
+            </form>
+        {% endif %}
+
+
+</div>
+ <div>
+   Page : <B>{{page_id | default(0) }}</B>
+    </div>
+    <BR>
+
+
+{% include 'footer.html' %}
+
+</body>
+</html>

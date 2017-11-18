@@ -43,7 +43,7 @@ class GramFacade():
         self.trigrams_phraser = Phraser(self.trigrams_phrases)
         self.bigrams_phraser.save(self.model_dir + '/' + BIGRAMS_PHRASER_FILENAME)
         self.trigrams_phraser.save(self.model_dir + '/' + TRIGRAMS_PHRASER_FILENAME)
-        self.bigrams_phrases.save(self.model_dir + '/' + BIGRAMS_PHRASES_FILENAME)
+        #self.bigrams_phrases.save(self.model_dir + '/' + BIGRAMS_PHRASES_FILENAME)
         self.trigrams_phrases.save(self.model_dir + '/' + TRIGRAMS_PHRASES_FILENAME)
 
     def words_not_in_vocab(self, tok_doc, threshold):
