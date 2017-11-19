@@ -62,12 +62,12 @@
     <BR>
 <div class="buttonrow">
         {% if page_id and page_id > 0: %}
-            <form class="buttoncolumn" action="/browse/{{page_id-1}}">
+            <form class="buttoncolumn" action="/train_data/{{page_id-1}}">
                 <input class="main" type="submit" value="<<< Back" />
             </form>
         {% endif %}
         {% if has_next : %}
-            <form class="buttoncolumn" action="/browse/{{page_id+1}}">
+            <form class="buttoncolumn" action="/train_data/{{page_id+1}}">
                 <input class="main" type="submit" value="Forward >>> " />
             </form>
         {% endif %}
