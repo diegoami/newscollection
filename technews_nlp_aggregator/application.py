@@ -24,7 +24,7 @@ class Application:
         self.articleLoader.load_all_articles(load_text=load_text)
         self.similarArticlesRepo = ArticlesSimilarRepo(self.db_url)
 
-        self.articleSimilarLoader = ArticleSimilarLoader(self.similarArticlesRepo )
+        self.articleSimilarLoader = ArticleSimilarLoader(self.similarArticlesRepo, config["train_data_file_aug"])
         self.tokenizer = defaultTokenizer
         self.gramFacade = GramFacade(config["phrases_model_dir_link"])
         self.gramFacade.load_models()

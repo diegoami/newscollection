@@ -24,7 +24,8 @@ phrases_model_dir_link     : /media/diego/QData/techarticles/models/phrases/phra
 train_data_file         : /media/diego/QData/techarticles/models/xgboost/train.txt
 train_data_file_aug         : /media/diego/QData/techarticles/models/xgboost/train_aug.txt
 xgboost_model_file        : /media/diego/QData/techarticles/models/xgboost/xgboost_model
-
+test_data_file         : /media/diego/QData/techarticles/models/xgboost/test.txt
+test_data_file_aug         : /media/diego/QData/techarticles/models/xgboost/test_aug.txt
 
 
 
