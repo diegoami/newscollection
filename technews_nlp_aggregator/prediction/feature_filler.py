@@ -1,6 +1,9 @@
 import logging
 
+
 class FeatureFiller:
+    CURRENT_VERSION = 1
+
     def __init__(self, articleLoader, summaryFacade, classifierAggregator, tfidfFacade, doc2VecFacade):
         self.articleLoader = articleLoader
         self.summaryFacade = summaryFacade
@@ -40,9 +43,10 @@ class FeatureFiller:
                                                     summary2b
                                                     )
         score["SCO_DAYS"] = abs((article2['date_p'] - article1['date_p']).days)
-        score["SCO_VERSION"] = 1
-        logging.info(article1['title'])
-        logging.info(article2['title'])
+        score["SCO_VERSION"] = self.CURRENT_VERSION
+        logging.info("TITLE : {} , DATE : {} ".format(article1['title'],article1['date_p'] ))
+        logging.info("TITLE : {} , DATE : {} ".format(article2['title'], article2['date_p']))
+
 
         return score
 

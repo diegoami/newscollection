@@ -38,6 +38,13 @@ def extract_source( url):
     source = str(urlparse(url)[1]).upper()
     return source
 
+def extract_source_without_www( url):
+    source = extract_source( url).upper()
+    all_parts = source.split('.')
+    parts = [ x for x in all_parts if x not in['COM', 'WWW', 'UK', 'NET', 'ORG']]
+    return "".join(parts)
+
+
 def extract_date(url):
     arrs = str(urlparse(url)[2]).split('/')
     index = 0

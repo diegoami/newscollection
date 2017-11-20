@@ -5,6 +5,8 @@ import pandas as pd
 import dataset
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
+from sqlalchemy.orm import create_session
+from sqlalchemy import create_engine
 
 import re
 from technews_nlp_aggregator.common.util import extract_source
@@ -47,6 +49,7 @@ class ArticlesSimilarRepo:
 
     def __init__(self, db_connection):
         self.db_connection = db_connection
+        self.engine = create_engine(self.db_connection,encoding='UTF-8')
 
     def association_exists(self, con, first_id, second_id, agent):
 
@@ -255,7 +258,7 @@ class ArticlesSimilarRepo:
         return
 
     def retrieve_similar_since(self, dateArg, con=None):
-        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND AIN_DATE >= :dateArg"
+        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND AIN_DATE >= :dateArg ORDER BY AIN_DATE DESC"
         con = self.get_connection() if not con else con
 
         query_result = con.query(sqlSimilarSince, {"dateArg": dateArg})
@@ -263,9 +266,10 @@ class ArticlesSimilarRepo:
         return result
 
 
+
     def insert_score(self, score, con=None):
         con = con if con else self.get_connection()
-        found_row = con['SCORES'].find_one(SCO_AIN_ID_1=score["SCO_AIN_ID_1"], SCO_AIN_ID_2=score["SCO_AIN_ID_2"], SCO_VERSION=score["SCO_VERSION"])
+        found_row = self.score_exists(score, con)
         if found_row:
             logging.info("Found row for score : {}".format(score))
         else:
@@ -277,3 +281,16 @@ class ArticlesSimilarRepo:
             except:
                 traceback.print_exc()
                 con.rollback()
+
+    def score_exists(self,  score, con):
+        found_row = con['SCORES'].find_one(SCO_AIN_ID_1=score["SCO_AIN_ID_1"], SCO_AIN_ID_2=score["SCO_AIN_ID_2"],
+                                           SCO_VERSION=score["SCO_VERSION"])
+        return found_row
+
+    def load_train_set(self):
+        view_sql = "SELECT * FROM TRAIN_SCORES"
+        econ = self.engine.connect()
+        viewDF = pd.read_sql(view_sql, econ)
+        econ.close()
+        return viewDF
+
