@@ -47,5 +47,8 @@ if __name__ == '__main__':
     feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator)
     similarArticlesRepo = application.similarArticlesRepo
     application.gramFacade.load_phrases()
+    direct_confront(train_fail_loc, feature_filler, similarArticlesRepo)
+
+
 
 
