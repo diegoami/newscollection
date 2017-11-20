@@ -57,4 +57,4 @@ if __name__ == '__main__':
     application.gramFacade.load_phrases()
 
 
-    create_test_data(test_file=test_fail_loc, startingdate=sincewhen, feature_filler=feature_filler, similarArticlesRepo=similarArticlesRepo)
+    create_test_data(test_file=test_fail_loc, starting_date=sincewhen, feature_filler=feature_filler, similarArticlesRepo=similarArticlesRepo)
