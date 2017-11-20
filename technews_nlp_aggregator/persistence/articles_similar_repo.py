@@ -294,3 +294,21 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
+
+
+    def load_test_set(self):
+        view_sql = "SELECT * FROM TEST_SCORES"
+        econ = self.engine.connect()
+        viewDF = pd.read_sql(view_sql, econ)
+        econ.close()
+        return viewDF
+
+    def write_predictions(self, test_df):
+        econ = self.engine.connect()
+        replace_sql = 'REPLACE into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_VERSION) values(:PRED_AIN_ID_1, :PRED_AIN_ID_2, :PRED_PROBA, :PRED_VERSION)'
+        econ.begin()
+        for index, row in test_df.iterrows():
+            econ.execute(replace_sql, {})
+        econ.commit()
+        econ.close()
+

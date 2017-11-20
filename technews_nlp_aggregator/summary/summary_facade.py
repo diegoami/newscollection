@@ -21,7 +21,7 @@ class SummaryFacade():
         tokenized_doc = self.tfidfFacade.get_tokenized(doc=doc, title=title)
         doc_bow = self.tfidfFacade.get_doc_bow(tokenized_doc)
         logging.debug("docbow : {}".format(str(doc_bow)))
-        return self.summaryStrategy.get_sentences_from_bow(doc_bow , doc, threshold)
+        return self.summaryStrategy.get_sentences_from_bow(bow=doc_bow , doc=doc, title=title, threshold=threshold)
 
     def full_text_summarize(self, id, doc, title='', threshold=0.8):
         sentences = self.summarize(id, doc, title, threshold)

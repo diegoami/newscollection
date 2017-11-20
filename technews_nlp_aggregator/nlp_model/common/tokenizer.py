@@ -46,7 +46,10 @@ class DefaultTokenizer:
         return articleDF['article_tokens']
 
     def tokenize_doc(self, title, doc):
-        return self.tokenize_fulldoc(title) + self.tokenize_fulldoc(doc)
+        if title:
+            return self.tokenize_fulldoc(title + ". \n" + doc)
+        else:
+            return self.tokenize_fulldoc(doc)
 
     def tokenize_fulldoc(self, all_doc):
         words = self.word_tokenizer.tokenize_fulldoc(all_doc)

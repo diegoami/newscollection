@@ -47,10 +47,10 @@ def add_new_url():
                 article_id = _.articleDatasetRepo.save_article( article, text)
                 saved_article = _.articleDatasetRepo.load_article_with_text(article_id)
                 saved_text = saved_article['ATX_TEXT']
-                tdf_sims_map = retrieve_sims_map_with_dates(_.tfidfFacade, text=text, n_articles=n_articles)
-                doc2vec_sims_map = retrieve_sims_map_with_dates(_.doc2VecFacade, text=text, n_articles=n_articles)
-                tokens = _.tfidfFacade.get_tokenized(doc=text, title=title)
-                summaries = _.summaryFacade.summarize_text(doc=text, title=title)
+                tdf_sims_map = retrieve_sims_map_with_dates(_.tfidfFacade, text=text, n_articles=n_articles, title=saved_article['AIN_TITLE'])
+                doc2vec_sims_map = retrieve_sims_map_with_dates(_.doc2VecFacade, text=text, n_articles=n_articles, title=saved_article['AIN_TITLE'])
+                tokens = _.tfidfFacade.get_tokenized(doc=text, title=saved_article['AIN_TITLE'])
+                summaries = _.summaryFacade.summarize_text(doc=text, title=saved_article['AIN_TITLE'])
                 summary_text = get_highlighted_text(summaries)
                 related_articles = merge_sims_maps(tdf_sims_map, doc2vec_sims_map, _.articleLoader, n_articles=n_articles)
                 return render_template('add_new_url.html', articles=related_articles[:n_articles], tokens=tokens,

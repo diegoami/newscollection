@@ -11,7 +11,7 @@ class SummaryTfidfStrategy():
 
         return self.get_sentences_from_bow(bow, doc, title, threshold)
 
-    def get_sentences_from_bow(self, bow, doc, title='', threshold_mult=0.8):
+    def get_sentences_from_bow(self, bow, doc, title='', threshold=0.8):
         id2word = self.tfidfFacade.lsi.id2word
         tot_docs = len(self.tfidfFacade.corpus)
         tfidf = sorted([(id2word[w], w, c * log(tot_docs / self.tfidfFacade.dictionary.dfs[w])) for w, c in bow],
@@ -19,7 +19,7 @@ class SummaryTfidfStrategy():
         tfidf_m = {id2word[w]: c * log(tot_docs / self.tfidfFacade.dictionary.dfs[w]) for w, c in bow}
         tfidf_left = sum_tfidf = sum(x[1] for x in tfidf_m.items())
         logging.debug("SUMTFIDF : {}".format(round(sum_tfidf)))
-        threshold = sum_tfidf * threshold_mult
+        threshold = sum_tfidf * threshold
         logging.debug("THRESHOLD: {}".format(round(threshold)))
         tokens_to_keep = []
         tfidf_indx = 0
@@ -31,10 +31,10 @@ class SummaryTfidfStrategy():
 
         sents_d = self.tfidfFacade.tokenizer.sentence_tokenizer.sent_tokenize(doc)
         sents_t = [title]+sents_d
-        sents = self.select_sentences(tokens_to_keep, sents_t, tfidf_m)
+        sents = self.select_sentences(tok_to_keep=tokens_to_keep, sents_t=sents_t)
         return sents[1:]
 
-    def select_sentences(self, tok_to_keep, sents_t, tfidf1_m):
+    def select_sentences(self, tok_to_keep, sents_t):
         logging.debug("Trying to match {}".format(tok_to_keep))
         sents_l = []
         seen_in_doc = []
