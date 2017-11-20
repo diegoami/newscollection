@@ -40,6 +40,7 @@ class FeatureFiller:
                                                     summary2b
                                                     )
         score["SCO_DAYS"] = abs((article2['date_p'] - article1['date_p']).days)
+        score["SCO_VERSION"] = 1
         logging.info(article1['title'])
         logging.info(article2['title'])
 

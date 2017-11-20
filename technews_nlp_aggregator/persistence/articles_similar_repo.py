@@ -261,3 +261,19 @@ class ArticlesSimilarRepo:
         query_result = con.query(sqlSimilarSince, {"dateArg": dateArg})
         result = [row for row in query_result]
         return result
+
+
+    def insert_score(self, score, con=None):
+        con = con if con else self.get_connection()
+        found_row = con['SCORES'].find_one(SCO_AIN_ID_1=score["SCO_AIN_ID_1"], SCO_AIN_ID_2=score["SCO_AIN_ID_2"], SCO_VERSION=score["SCO_VERSION"])
+        if found_row:
+            logging.info("Found row for score : {}".format(score))
+        else:
+            try:
+                con.begin()
+                logging.info("Trying to insert score : {}".format(score))
+                row = con['SCORES'].insert(score)
+                con.commit()
+            except:
+                traceback.print_exc()
+                con.rollback()
