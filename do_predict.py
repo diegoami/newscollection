@@ -13,11 +13,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
 
 
-def print_best_parameters( classifier):
-    if hasattr(classifier, "best_estimator_"):
-        best_parameters = classifier.best_estimator_.get_params()
-        for param_name in sorted(best_parameters.keys()):
-            print("\t%s: %r" % (param_name, best_parameters[param_name]))
 
 
 def predict(test_DF, test_file_aug, xboost_model_file):
@@ -30,7 +25,7 @@ def predict(test_DF, test_file_aug, xboost_model_file):
     y_test = clf.predict(X_test)
     test_df['SCO_PRED'] = y_test
     test_df.to_csv(test_file_aug)
-
+    return test_df
 
 if __name__ == '__main__':
 
@@ -44,6 +39,9 @@ if __name__ == '__main__':
     #train_df = pd.read_csv(train_file, index_col=0)
     test_df = similarArticlesRepo.load_test_set()
     test_file_aug = config["test_data_file_aug"]
+    version = config["version"]
+
     xboost_model_file = config["xgboost_model_file"]
 
-    predict(test_df, test_file_aug, xboost_model_file)
+    test_df_res = predict(test_df, test_file_aug, xboost_model_file)
+    similarArticlesRepo.write_predictions(test_df_res, version)

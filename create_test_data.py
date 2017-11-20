@@ -12,26 +12,24 @@ import argparse
 def create_test_data( test_file, starting_date, feature_filler, similarArticlesRepo):
     test_data = similarArticlesRepo.retrieve_similar_since( starting_date)
     logging.info("Retrieved {} ".format(len(test_data)))
-    score_list_test  = retrieves_test( test_data, feature_filler, similarArticlesRepo )
-    df = pd.DataFrame(score_list_test )
-    print(df.head())
-    df.to_csv( test_file)
+    retrieves_test( test_data, feature_filler, similarArticlesRepo )
 
 
 def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
-    score_list = []
+
     con = similarArticlesRepo.get_connection()
     for index, row in enumerate(test_data):
 
         article_id1, article_id2= row['SST_AIN_ID_1'], row['SST_AIN_ID_2']
-        if not similarArticlesRepo.score_exists({"SCO_AIN_ID_1" : article_id1, "SCO_AIN_ID_2" : article_id2, "SCO_VERSION" : FeatureFiller.CURRENT_VERSION  }, con):
-            score = feature_filler.fill_score_map( article_id1, article_id2)
-            similarArticlesRepo.insert_score(score, con)
-            logging.info("Score : {}".format(score))
-            score_list.append(score)
-            if (index % 100 == 0):
-                logging.info("Processed {} rows".format(index))
-    return score_list
+
+        if not similarArticlesRepo.score_exists({"SCO_AIN_ID_1" : article_id1, "SCO_AIN_ID_2" : article_id2, "SCO_VERSION" : feature_filler.version  }, con):
+            logging.info("Processing {}, {}".format(article_id1, article_id2))
+            try:
+                score = feature_filler.fill_score_map( article_id1, article_id2)
+                similarArticlesRepo.insert_score(score, con)
+                logging.info("Score : {}".format(score))
+            except:
+                logging.warn("Error trying to process: {}, {}".format(article_id1, article_id2))
 
 
 
@@ -39,17 +37,24 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--sincewhen', help='since when')
+    parser.add_argument('--startingfrom', help='starting from')
     args = parser.parse_args()
 
     config = yaml.safe_load(open('config.yml'))
 
     train_fail_loc = config["train_data_file"]
     test_fail_loc = config["test_data_file"]
+    version = config["version"]
 
     application = Application(config, True)
-    feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator)
+    if args.sincewhen:
+        sincewhen = args.sincewhen
+    else:
+        sincewhen = application.latest_article_date
+
+    feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator, version=version)
     similarArticlesRepo = application.similarArticlesRepo
     application.gramFacade.load_phrases()
 
 
-    create_test_data(test_fail_loc, args.sincewhen, feature_filler, similarArticlesRepo)
+    create_test_data(test_file=test_fail_loc, startingdate=sincewhen, feature_filler=feature_filler, similarArticlesRepo=similarArticlesRepo)

@@ -9,7 +9,7 @@ from sqlalchemy.orm import create_session
 from sqlalchemy import create_engine
 
 import re
-from technews_nlp_aggregator.common.util import extract_source
+from technews_nlp_aggregator.common.util import extract_source, extract_source_without_www
 
 similarArticlesSQL_select = \
 """
@@ -221,9 +221,9 @@ class ArticlesSimilarRepo:
                 "TITLE_1" : row["TITLE_1"],
                 "TITLE_2" : row["TITLE_2"],
                 "URL_1"   : row["URL_1"],
-                "SOURCE_1" : extract_source(row["URL_1"]),
+                "SOURCE_1" : extract_source_without_www(row["URL_1"]),
                 "URL_2"   : row["URL_2"],
-                "SOURCE_2": extract_source(row["URL_2"]),
+                "SOURCE_2": extract_source_without_www(row["URL_2"]),
                 "T_SCORE" : row["T_SCORE"],
                 "D_SCORE" : row["D_SCORE"],
                 "U_SCORE": row["U_SCORE"]
@@ -258,7 +258,7 @@ class ArticlesSimilarRepo:
         return
 
     def retrieve_similar_since(self, dateArg, con=None):
-        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND AIN_DATE >= :dateArg ORDER BY AIN_DATE DESC"
+        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND  AIN_DATE >= ( :dateArg - INTERVAL 7 DAY ) ORDER BY AIN_DATE DESC"
         con = self.get_connection() if not con else con
 
         query_result = con.query(sqlSimilarSince, {"dateArg": dateArg})
@@ -303,12 +303,11 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
-    def write_predictions(self, test_df):
-        econ = self.engine.connect()
-        replace_sql = 'REPLACE into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_VERSION) values(:PRED_AIN_ID_1, :PRED_AIN_ID_2, :PRED_PROBA, :PRED_VERSION)'
-        econ.begin()
+    def write_predictions(self, test_df, version):
+        con =  self.get_connection()
+        replace_sql = 'REPLACE into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_VERSION) values (:pred1,:pred2,:proba,:ver)'
+        con.begin()
         for index, row in test_df.iterrows():
-            econ.execute(replace_sql, {})
-        econ.commit()
-        econ.close()
+            con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'ver' : version})
+        con.commit()
 

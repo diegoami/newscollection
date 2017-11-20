@@ -2,14 +2,16 @@ import logging
 
 
 class FeatureFiller:
-    CURRENT_VERSION = 1
 
-    def __init__(self, articleLoader, summaryFacade, classifierAggregator, tfidfFacade, doc2VecFacade):
+
+    def __init__(self, articleLoader, summaryFacade, classifierAggregator, tfidfFacade, doc2VecFacade, version):
         self.articleLoader = articleLoader
         self.summaryFacade = summaryFacade
         self.classifierAggregator = classifierAggregator
         self.tfidfFacade = tfidfFacade
         self.doc2VecFacade = doc2VecFacade
+        self.version = version
+
 
     def fill_score_map(self, article_id1, article_id2):
         id1, id2 = self.articleLoader.get_id_from_article_id(article_id1), self.articleLoader.get_id_from_article_id(
@@ -43,7 +45,7 @@ class FeatureFiller:
                                                     summary2b
                                                     )
         score["SCO_DAYS"] = abs((article2['date_p'] - article1['date_p']).days)
-        score["SCO_VERSION"] = self.CURRENT_VERSION
+        score["SCO_VERSION"] = self.version
         logging.info("TITLE : {} , DATE : {} ".format(article1['title'],article1['date_p'] ))
         logging.info("TITLE : {} , DATE : {} ".format(article2['title'], article2['date_p']))
 

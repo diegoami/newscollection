@@ -20,9 +20,10 @@ def print_best_parameters( classifier):
             print("\t%s: %r" % (param_name, best_parameters[param_name]))
 
 
-def create_classifier(config, train_DF, train_file_aug, xboost_model_file):
+def create_classifier(train_DF, train_file_aug, xboost_model_file):
   # train_df = pd.read_csv(train_file, index_col=0)
     relevant_columns = ['SCO_DAYS','SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
+
     result_columns = 'SCO_USER'
     X_train = np.array(train_df[relevant_columns])
     y_train = np.array(train_df[result_columns])
@@ -36,21 +37,23 @@ def create_classifier(config, train_DF, train_file_aug, xboost_model_file):
 
     }
     #clf =  GridSearchCV(XGBRegressor(max_depth=3, min_child_weight=6, gamma=0,colsample_bytree=0.8,subsample=0.8, reg_alpha=0.01, learning_rate=0.1), xgbparams)
-    clf =  GridSearchCV(XGBRegressor(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001), xgbparams)
+    #clf =  GridSearchCV(XGBRegressor(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001), xgbparams)
 
+
+    clf = XGBRegressor(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
     clf.fit(X_train, y_train)
    # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
     scores = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_mean_squared_error')
-    print_best_parameters(clf)
+    #print_best_parameters(clf)
     print(scores)
     print("Error: %0.8f (+/- %0.8f)" % (scores.mean(), scores.std() * 2))
     y_pred = clf.predict(X_train)
 
     train_df['SCO_PRED'] = y_pred
     train_df.to_csv(train_file_aug)
-    print(clf.best_estimator_)
+  #  print(clf.best_estimator_)
 
-    print(clf.best_estimator_.feature_importances_)
+  #  print(clf.best_estimator_.feature_importances_)
 
 
     joblib.dump(clf, xboost_model_file)
@@ -70,4 +73,4 @@ if __name__ == '__main__':
     train_file_aug = config["train_data_file_aug"]
     xboost_model_file = config["xgboost_model_file"]
 
-    create_classifier(config, train_df, train_file_aug, xboost_model_file)
+    create_classifier(train_df, train_file_aug, xboost_model_file)
