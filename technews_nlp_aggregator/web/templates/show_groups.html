@@ -16,17 +16,20 @@
 {% for article_group in article_groups %}
 
 <HR>
+<BR>
+<A HREF="/show_all/{{article_group.article_list}}" target="_blank">Show all articles</A>
+<BR>
 <TABLE>
-    <col width="12%">
+
     <col width="8%">
     <col width="10%">
-    <col width="53%">
-    <col width="17%">
+    <col width="57%">
+    <col width="25%">
 
 
     <TR>
 
-       <th>Id</th>
+
 
        <th>Date</th>
         <th>Source</th>
@@ -34,20 +37,20 @@
        <th><span>Compare</span></th>
 
     </tr>
-    {% for article in article_group %}
+    {% for article in article_group.articles %}
     <TR>
 
-        <TD><A HREF="/statistics/{{article.article_id}}" target="_blank">{{article.article_id}}</A></TD>
         <TD>{{article.date}}</TD>
         <TD>{{article.source}}</TD>
         <TD><A HREF="{{article.url}}">{{article.title}}</A></TD>
-        <TD><span class="buttonrow"><A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{article.other_ids[0]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[0]}} "></A>
-       {% if article.other_ids|length > 1 %} <A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{article.other_ids[1]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[1]}} "></A>  {% endif %}
-        {% if article.other_ids|length > 2 %}<A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{article.other_ids[2]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[2]}}"></A>
- {% endif %}
-        {% if article.other_ids|length > 3 %}<A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{article.other_ids[3]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[3]}}" ></A> </TD> {% endif %}
-</span>
 
+        <TD><span class="buttonrow">
+        {% for other_id in article.other_ids %}
+
+            <A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
+        {% endfor %}
+
+        </span>
     </TR>
     {% endfor %}
 </TABLE>

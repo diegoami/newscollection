@@ -28,7 +28,6 @@ class GizmodoSpider(scrapy.Spider):
         self.finished = False
         self.url_list = url_list
 
-
     def parse(self, response):
         if self.url_list:
             for url in self.url_list:
@@ -36,10 +35,6 @@ class GizmodoSpider(scrapy.Spider):
                               meta={'URL': url})
         else:
             pass
-
-
-
-
 
     def parse_page(self, response):
         url = response.meta.get('URL')

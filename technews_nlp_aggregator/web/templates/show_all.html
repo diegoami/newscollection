@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+{% include 'header_files.html' %}
+
+  <title>Find related news</title>
+ </head>
+<body onload="javascript:select_header('topnav_statistics')">
+{% include 'header.html' %}
+
+{% for A in articles: %}
+
+
+     <div>
+        <h2>{{A.AIN_TITLE}}</h2>
+         <p><I>ID:</I> {{A.AIN_ID}}</p>
+        <p><I>URL:</I> <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
+        <P><I>Date:</I> {{A.AIN_DATE}}</P>
+          <p class="article_text">{{A.ATX_TEXT | safe}}</p>
+     </div>
+{% endfor %}
+
+
+{% include 'footer.html' %}
+</body>
+</html>

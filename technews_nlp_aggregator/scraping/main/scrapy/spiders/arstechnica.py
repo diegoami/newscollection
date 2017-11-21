@@ -54,8 +54,6 @@ class ArstechnicaSpider(scrapy.Spider):
                     yield Request(absolute_url, callback=self.parse_page,
                                   meta={'URL': absolute_url})
 
-
-
             if not self.finished:
                 for page in pages:
 

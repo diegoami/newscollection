@@ -37,11 +37,6 @@ class GuardianSpider(scrapy.Spider):
 
 
 
-
-
-
-
-
     def parse_page(self, response):
         url = response.meta.get('URL')
 

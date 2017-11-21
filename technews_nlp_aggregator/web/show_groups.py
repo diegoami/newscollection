@@ -1,6 +1,7 @@
 
 from flask import  request, render_template, session
 from technews_nlp_aggregator.common.util import extract_source
+from technews_nlp_aggregator.web.summary import convert_summary
 from itertools import product
 
 from . import app
@@ -39,6 +40,17 @@ def show_groups(page_id=0):
                 "other_ids" : [article_id for article_id in article_ids if article_id != row['article_id'] ]
             }
             articles.append(article)
-        article_groups.append(articles)
+        article_groups.append({"articles" : articles, "article_list" : "-".join([ str(article["article_id"]) for article in articles ] ) } )
     return render_template('show_groups.html', article_groups=article_groups, page_id=page_id, has_next=has_next)
 
+
+@app.route('/show_all/<string:id_list>')
+def show_all(id_list):
+    _ = app.application
+    article_ids = map(int, id_list.split('-'))
+    articles = []
+    for article_id in article_ids:
+        article = app.application.articleDatasetRepo.load_article_with_text(article_id)
+        article = convert_summary(article_id)
+        articles.append(article)
+    return render_template('show_all.html', articles=articles)
