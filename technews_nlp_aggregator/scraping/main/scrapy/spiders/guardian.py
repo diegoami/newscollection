@@ -9,14 +9,14 @@ from datetime import date
 
 
 
-class EngadgetSpider(scrapy.Spider):
+class GuardianSpider(scrapy.Spider):
     name = "guardian"
     pages_C =  0
     urls_V = set()
     pages_V = set()
-    allowed_domains = ["guardian.com"]
+    allowed_domains = ["theguardian.com"]
     start_urls = (
-        'https://www.guardian.com/', 'http://www.guardian.com/'
+        'https://www.theguardian.com/', 'http://www.theguardian.com/'
     )
 
 
@@ -45,16 +45,19 @@ class EngadgetSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
 
-        article_title_parts = response.xpath("//h1[contains(@class, 'content__headline')]//text()").extract()
+        article_title_parts = response.xpath("//h1[contains(@class, 'content__headline')]//text()").extract_first()
         article_title = "".join(article_title_parts ).strip()
         all_paragraph_before = response.xpath("//div[contains(@class, 'content__standfirst')]/p//text()").extract()
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'content__article-body')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
 
-
+        article_datetime_ts = response.xpath('//time/@datetime').extract_first()
         all_paragraph_text = build_text_from_paragraphs(all_paragraph_before + all_paragraphs)
 
-        article_date = extract_date( url)
+
+        article_date_str = article_datetime_ts.split('T')[0]
+        article_date = date(*map(int,article_date_str.split('-')))
+        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
 
         if (end_condition(article_date, self.go_back_date)):

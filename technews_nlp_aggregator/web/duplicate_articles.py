@@ -12,7 +12,7 @@ from . import app
 
 #
 
-DEFAULT_FILTER_CRITERIA = 'T_SCORE > 0.8 AND D_SCORE > 0.4 OR ( U_SCORE > 0.5 )'
+DEFAULT_FILTER_CRITERIA = 'P_SCORE > 0.6  OR ( U_SCORE > 0.5 )'
 
 @app.route('/filterduplicates', methods=['POST'])
 def filterduplicates():

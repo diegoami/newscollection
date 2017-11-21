@@ -11,6 +11,8 @@ class FeatureFiller:
         self.tfidfFacade = tfidfFacade
         self.doc2VecFacade = doc2VecFacade
         self.version = version
+        self.summary_cache = {}
+
 
 
     def fill_score_map(self, article_id1, article_id2):

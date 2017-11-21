@@ -13,16 +13,14 @@ from technews_nlp_aggregator.common.util import extract_source, extract_source_w
 
 similarArticlesSQL_select = \
 """
-SELECT T.ID_1, T.ID_2, T.DATE_1, T.DATE_2, T.TITLE_1, T.TITLE_2, T.URL_1, T.URL_2, ROUND(T.SIMILARITY,3) AS T_SCORE
-  , ROUND(D.SIMILARITY,3) AS D_SCORE, ROUND(U.SSU_SIMILARITY_AVG,3) AS U_SCORE FROM TFIDF_SCORE T
-LEFT JOIN DOC2VEC_SCORE D ON D.ID_1=T.ID_1 AND D.ID_2=T.ID_2
-LEFT JOIN (SELECT AVG(SSU_SIMILARITY) SSU_SIMILARITY_AVG, SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2) U
-ON T.ID_1=U.SSU_AIN_ID_1 AND T.ID_2=U.SSU_AIN_ID_2
+SELECT * FROM P_SCORES 
+  WHERE P_SCORE > 0.3 
+
 """
 
 similarArticlesSQL_orderby = \
 """
- ORDER BY T.DATE_1 DESC, T.ID_1 DESC, T.SIMILARITY DESC
+  ORDER BY DATE_2 DESC, DATE_1 DESC, U_SCORE DESC, P_SCORE DESC, TITLE_2 DESC, TITLE_1 DESC
 """
 
 
@@ -158,7 +156,7 @@ class ArticlesSimilarRepo:
     def verify_having_condition(self, filter_criteria=None):
         if filter_criteria:
 
-            allowed_tokens = ["T_SCORE", "D_SCORE", "U_SCORE", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
+            allowed_tokens = ["U_SCORE", "P_SCORE",  "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
             sp_tokens = defaultTokenizer.word_tokenizer.simple_tokenize(filter_criteria)
             if (len(sp_tokens ) >= 3):
                 for sp_token in sp_tokens:
@@ -172,32 +170,6 @@ class ArticlesSimilarRepo:
                 return True
         return False
 
-    def similar_having_condition(self, filter_criteria=None):
-        columnMap = {"tfidf" : "T_SCORE", "doc2vec" : "D_SCORE", "uscore" : "U_SCORE"}
-        conditions = []
-        condition_string = ""
-        if filter_criteria:
-            filter_parts = filter_criteria.split(',')
-            for filter_part in filter_parts:
-                filter_part_l = filter_part.split()
-                if (len(filter_part_l) == 3):
-                    column, operator, value = filter_part_l
-                    column = column.lower()
-                    if column in columnMap:
-                        conditions.append(columnMap[column] + " "+operator+" "+ value)
-                    else:
-                        logging.info("Could not find column : {}".format(column))
-
-                else:
-                    logging.info("Not enough operators : {}".format(filter_part) )
-            if len(conditions) > 0:
-                condition_string = condition_string + " HAVING "
-            for index, condition in enumerate(conditions):
-                if index > 0:
-                    condition_string = condition_string + " AND "
-
-                condition_string = condition_string + condition
-        return condition_string
 
     def retrieve_random_related(self):
 
@@ -210,8 +182,8 @@ class ArticlesSimilarRepo:
     def list_similar_articles(self, filter_criteria= None):
         similar_stories = []
         con = self.get_connection()
-        similarArticlesSQL_having_cond =  "HAVING "+filter_criteria if self.verify_having_condition(filter_criteria) else ""
-        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 500"
+        similarArticlesSQL_having_cond =  ( " AND ( " + filter_criteria +" ) " )  if self.verify_having_condition(filter_criteria) else ""
+        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 10000"
         for row in con.query(similarArticlesSQL):
             similar_story = dict({
                 "ID_1": row["ID_1"],
@@ -224,8 +196,7 @@ class ArticlesSimilarRepo:
                 "SOURCE_1" : extract_source_without_www(row["URL_1"]),
                 "URL_2"   : row["URL_2"],
                 "SOURCE_2": extract_source_without_www(row["URL_2"]),
-                "T_SCORE" : row["T_SCORE"],
-                "D_SCORE" : row["D_SCORE"],
+                "P_SCORE" : round(row["P_SCORE"] * 100,3),
                 "U_SCORE": row["U_SCORE"]
 
             })
@@ -257,11 +228,11 @@ class ArticlesSimilarRepo:
         article_query = con.query(sql_update, {"article_id": article_id})
         return
 
-    def retrieve_similar_since(self, dateArg, con=None):
-        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND  AIN_DATE >= ( :dateArg - INTERVAL 7 DAY ) ORDER BY AIN_DATE DESC"
-        con = self.get_connection() if not con else con
-
-        query_result = con.query(sqlSimilarSince, {"dateArg": dateArg})
+    def retrieve_similar_since(self, dateArg, dateEnd=None):
+        sqlWhereDateEnd = '' if dateEnd == None else ' AND AIN_DATE <= :dateEnd '
+        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND  AIN_DATE >= ( :dateArg ) " + sqlWhereDateEnd + " ORDER BY AIN_DATE DESC"
+        con = self.get_connection()
+        query_result = con.query(sqlSimilarSince, {"dateArg": dateArg} if dateEnd == None else { "dateArg": dateArg, "dateEnd" : dateEnd } )
         result = [row for row in query_result]
         return result
 
@@ -305,8 +276,10 @@ class ArticlesSimilarRepo:
 
     def write_predictions(self, test_df, version):
         con =  self.get_connection()
-        replace_sql = 'REPLACE into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_VERSION) values (:pred1,:pred2,:proba,:ver)'
+        delete_sql = 'DELETE from PREDICTIONS WHERE PRED_VERSION = :ver'
+        replace_sql = 'INSERT into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_VERSION) values (:pred1,:pred2,:proba,:ver)'
         con.begin()
+        con.query(delete_sql, {'ver': version})
         for index, row in test_df.iterrows():
             con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'ver' : version})
         con.commit()

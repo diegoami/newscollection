@@ -22,7 +22,7 @@ import technews_nlp_aggregator.web.show_groups
 import technews_nlp_aggregator.web.sign_in
 import technews_nlp_aggregator.web.browse
 import technews_nlp_aggregator.web.hide
-import technews_nlp_aggregator.web.train_data
+
 
 
 import technews_nlp_aggregator.web.statistics

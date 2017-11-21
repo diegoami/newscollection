@@ -18,7 +18,9 @@
 </form>
 </div>
 
-<P><I>Example: T_SCORE > 0.7 AND D_SCORE > 0.4 AND ( U_SCORE > 0.5 OR U_SCORE IS NULL)</I>
+<P><I>Example: P_SCORE > 0.6 OR U_SCORE > 0.5 </I></P>
+<P> U_SCORE is the similarity score assigned by the aministrator, P_SCORE is the similarity score assigned by the algorithm</P>
+
 
 <table>
 
@@ -28,8 +30,7 @@
     <th class="date">Date2</th>
 
     <th>Article2</th>
-    <th>TFIDF Score</th>
-    <th>Doc2Vec Score</th>
+    <th>% Same story </th>
     <th class="columnscore">User Score</th>
     <th class="icon">Compare</th>
 
@@ -44,8 +45,7 @@
             <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
             <td class="date">{{_.DATE_2}}</td>
             <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
-            <td>{{_.T_SCORE}}</td>
-            <td>{{_.D_SCORE}}</td>
+            <td>{{_.P_SCORE}}</td>
             <td class="columnscore">
               <span id="samestory_{{_.ID_1}}_{{_.ID_2}}" >
                 {% if _.U_SCORE_DEF: %}

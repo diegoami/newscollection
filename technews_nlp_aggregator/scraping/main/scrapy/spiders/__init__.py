@@ -15,4 +15,5 @@ from .gizmodo import GizmodoSpider
 from .mashable import MashableSpider
 from .zdnet import ZdnetSpider
 from .digitaltrends import DigitaltrendsSpider
+from .guardian import GuardianSpider
 
