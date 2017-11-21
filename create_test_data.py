@@ -2,6 +2,7 @@
 
 import yaml
 import pandas as pd
+import traceback
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.application import Application
@@ -27,12 +28,12 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
                                                  "SCO_AIN_ID_2" : article_id2,
                                                  "SCO_VERSION" : feature_filler.version  }, con):
             logging.info("Processing {}, {}".format(article_id1, article_id2))
-            try:
-                score = feature_filler.fill_score_map( article_id1, article_id2)
-                similarArticlesRepo.insert_score(score, con)
-                logging.info("Score : {}".format(score))
-            except:
-                logging.warn("Error trying to process: {}, {}".format(article_id1, article_id2))
+
+            score = feature_filler.fill_score_map( article_id1, article_id2)
+            similarArticlesRepo.insert_score(score, con)
+            logging.info("Score : {}".format(score))
+    #        traceback.print_stack()
+     #       logging.warn("Error trying to process: {}, {}".format(article_id1, article_id2))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

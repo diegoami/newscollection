@@ -41,8 +41,12 @@ class Doc2VecFacade():
         self.model = Doc2Vec.load(model_filename)
 
     def get_vector(self, doc, title=''):
-        p_wtok = self.get_tokenized(doc=doc, title=title)
-        infer_vector = self.model.infer_vector(p_wtok)
+        tokenized_doc = self.get_tokenized(doc=doc, title=title)
+        return self.get_vector_from_tokenized(tokenized_doc)
+
+
+    def get_vector_from_tokenized(self, tokenized):
+        infer_vector = self.model.infer_vector(tokenized)
         return infer_vector
 
 
@@ -55,15 +59,17 @@ class Doc2VecFacade():
 
         return np.dot(docvec1, docvec2.T)
 
-    def get_score_doc_doc(self, doc1, doc2):
-        docvec1 = self.get_vector(doc1)
+    def get_score_doc_doc(self, tok1, tok2):
+
+        docvec1 = self.get_vector_from_tokenized(tok1)
         docvec1 = matutils.unitvec(docvec1)
-        docvec2 = self.get_vector(doc2)
+        docvec2 = self.get_vector_from_tokenized(tok2)
 
         docvec2 = matutils.unitvec(docvec2)
-
-        return np.dot(docvec1, docvec2.T)
-
+        if (len(docvec1) == len(docvec2)):
+            return np.dot(docvec1, docvec2.T)
+        else:
+            return 0
 
     def get_tokenized(self, doc, title):
         wtok = self.tokenizer.tokenize_doc(title=title, doc=doc)

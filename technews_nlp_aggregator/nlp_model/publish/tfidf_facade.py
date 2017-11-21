@@ -33,9 +33,13 @@ class TfidfFacade():
 
     def get_vec(self, doc, title=''):
         tokenized_doc = self.get_tokenized(doc=doc, title=title)
+        return self.get_vec_from_tokenized(tokenized_doc)
+
+    def get_vec_from_tokenized(self, tokenized_doc):
         vec_bow = self.get_doc_bow(tokenized_doc)
         vec_lsi = self.lsi[vec_bow]  # convert the query to LSI space
         return vec_lsi
+
 
     def get_doc_bow(self, tokenized_doc):
         vec_bow = self.dictionary.doc2bow(tokenized_doc)
@@ -93,18 +97,19 @@ class TfidfFacade():
 
         return np.dot(query1, query2.T)
 
-    def get_score_doc_doc(self, doc1, doc2):
+    def get_score_doc_doc(self, tok1, tok2):
 
-        vec_doc1 = self.get_vec(doc1)
+        vec_doc1 = self.get_vec_from_tokenized(tok1)
         query1 = matutils.unitvec(vec_doc1 )
         query1 = np.array([x[1] for x in query1])
 
-        vec_doc2 = self.get_vec(doc2)
+        vec_doc2 = self.get_vec_from_tokenized(tok2)
         query2 = matutils.unitvec(vec_doc2 )
         query2 = np.array([x[1] for x in query2])
-
-        return np.dot(query1, query2.T)
-
+        if (len(query1) == len(query2)):
+            return np.dot(query1, query2.T)
+        else:
+            return 0
 
 
     def get_related_articles_for_ids(self, ids, start=date.min, end=date.max):

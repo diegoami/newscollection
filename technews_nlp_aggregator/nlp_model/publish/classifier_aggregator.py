@@ -56,9 +56,8 @@ class ClassifierAggregator():
         ins_word_gf = abs_words_gf.intersection(abs_words_tf)
         return ins_word_gf
 
-    def common_miss_words_doc(self, doc1, doc2):
-        tok_doc_1, tok_doc_2 = self.tfidfFacade.get_tokenized(doc1),  self.tfidfFacade.get_tokenized(doc2)
-        mw_1, mw_2 = self.missing_words(tok_doc_1), self.missing_words(tok_doc_2)
+    def common_miss_words_doc(self, tok1, tok2):
+        mw_1, mw_2 = self.missing_words(tok1), self.missing_words(tok2)
         intw = mw_1.intersection(mw_2)
         logging.debug("Intersection words: {}".format(intw ))
         return len(mw_1.intersection(mw_2))
