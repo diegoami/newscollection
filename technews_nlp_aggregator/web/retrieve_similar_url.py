@@ -29,7 +29,7 @@ def retrieve_similar_url():
     if request.method == 'POST':
         form = request.form
         if form:
-
+            article = None
             url = form.get("search_url",None)
             article_id = read_int_from_form(form, 'article_id', None)
             n_articles = read_int_from_form(form, 'n_articles')
@@ -45,7 +45,7 @@ def retrieve_similar_url():
                 article_id = _.articleLoader.get_article_id_from_url(url)
                 article = _.articleLoader.get_article(article_id)
 
-            if (len(article) > 0):
+            if (article is not None and len(article) > 0):
                 id = article.index[0]
                 url = article.iloc[0]['url']
 

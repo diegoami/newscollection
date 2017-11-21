@@ -20,7 +20,7 @@ def retrieve_similar():
         if form:
             text = form.get("search_text", None)
             messages = []
-            if not text or len(text.strip()) < 15:
+            if not text or len(text.strip()) < 3:
                 messages.append('Please enter the text of a technical article')
             n_articles = read_int_from_form(form, 'n_articles')
             page_id = read_int_from_form(form, 'page_id', "0")

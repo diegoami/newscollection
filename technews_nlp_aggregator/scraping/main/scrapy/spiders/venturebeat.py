@@ -20,7 +20,7 @@ class VenturebeatSpider(scrapy.Spider):
     )
 
 
-    def __init__(self, article_repo, go_back_date, url_list):
+    def __init__(self, article_repo, go_back_date, url_list=None):
         super().__init__()
         self.article_repo = article_repo
         self.go_back_date = go_back_date
