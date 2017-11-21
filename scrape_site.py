@@ -8,14 +8,14 @@ import yaml
 
 def do_crawl(articleDatasetRepo):
 
-   # spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider, EngadgetSpider])
-    spiders = ([ThevergeSpider, VenturebeatSpider])
+    spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider, EngadgetSpider])
+    #spiders = ([ThevergeSpider, VenturebeatSpider])
 
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
     process = CrawlerProcess(settings=crawler_settings)
     max_date = articleDatasetRepo.get_latest_article_date()
-    go_back_date = max_date-timedelta(days=30)
+    go_back_date = max_date-timedelta(days=6)
     for spider in spiders:
         process.crawl(spider, articleDatasetRepo, max_date)
     process.start()
