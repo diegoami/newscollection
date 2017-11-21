@@ -17,27 +17,29 @@
 
 <HR>
 <TABLE>
-    <col width="17%">
+    <col width="12%">
     <col width="8%">
-    <col width="8%">
-    <col width="50%">
+    <col width="10%">
+    <col width="53%">
     <col width="17%">
 
 
     <TR>
-       <th>SOURCE</th>
+
        <th>Id</th>
 
        <th>Date</th>
+        <th>Source</th>
        <th><span>Article</span></th>
        <th><span>Compare</span></th>
 
     </tr>
     {% for article in article_group %}
     <TR>
-        <TD>{{article.source}}</TD>
+
         <TD><A HREF="/statistics/{{article.article_id}}" target="_blank">{{article.article_id}}</A></TD>
         <TD>{{article.date}}</TD>
+        <TD>{{article.source}}</TD>
         <TD><A HREF="{{article.url}}">{{article.title}}</A></TD>
         <TD><span class="buttonrow"><A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{article.other_ids[0]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[0]}} "></A>
        {% if article.other_ids|length > 1 %} <A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{article.other_ids[1]}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{article.other_ids[1]}} "></A>  {% endif %}
