@@ -51,7 +51,7 @@ if __name__ == '__main__':
     if args.sincewhen:
         sincewhen = args.sincewhen
     else:
-        latest_article_date = application.app.articleDatasetRepo.get_latest_article_date()
+        latest_article_date = application.articleDatasetRepo.get_latest_article_date()
         sincewhen_date = latest_article_date - timedelta(7)
         sincewhen = str(sincewhen_date.year) + '-' + str(sincewhen_date.month) + '-' + str(sincewhen_date.day)
 
