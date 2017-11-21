@@ -24,7 +24,7 @@ def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
     for index, row in enumerate(user_paired):
         article_id1, article_id2, similarity = row['SSU_AIN_ID_1'], row['SSU_AIN_ID_2'],  row['SSU_SIMILARITY']
         if not similarArticlesRepo.score_exists({"SCO_AIN_ID_1": article_id1, "SCO_AIN_ID_2": article_id2,
-                                                 "SCO_VERSION": FeatureFiller.CURRENT_VERSION}, con):
+                                                 "SCO_VERSION": feature_filler.version}, con):
             score = feature_filler.fill_score_map( article_id1, article_id2)
             similarArticlesRepo.insert_score(score, con)
             score["SCO_USER"] = similarity

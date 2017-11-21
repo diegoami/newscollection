@@ -11,9 +11,9 @@ source activate tnaggregator-2
 [ $? -eq 0 ] &&  python tfidf_matrix_wf.py
 [ $? -eq 0 ] &&  python doc2vec_model_wf.py
 [ $? -eq 0 ] &&  python similar_articles_eff.py
-[ $? -eq 0 ] &&  python create_train_data.py
-[ $? -eq 0 ] &&  python do_boost.py
-[ $? -eq 0 ] &&  python create_test_data.py
-[ $? -eq 0 ] &&  python do_predict.py
+#[ $? -eq 0 ] &&  python create_train_data.py
+#[ $? -eq 0 ] &&  python do_boost.py
+#[ $? -eq 0 ] &&  python create_test_data.py
+#[ $? -eq 0 ] &&  python do_predict.py
 
 
