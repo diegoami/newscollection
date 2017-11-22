@@ -6,7 +6,6 @@
 from flask import Flask, render_template
 from .util import read_int_from_form
 
-from . import app
 from flask import request, render_template, session, redirect, url_for
 
 app = Flask(__name__)

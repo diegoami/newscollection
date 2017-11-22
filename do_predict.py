@@ -1,17 +1,11 @@
 
 
-import xgboost as xgb
-
-from xgboost import XGBRegressor, XGBClassifier
-from sklearn.model_selection import cross_val_score
 from sklearn.externals import joblib
-import pandas as pd
 import numpy as np
 import yaml
 from technews_nlp_aggregator.persistence.articles_similar_repo import  ArticlesSimilarRepo
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import GridSearchCV
-
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
 
