@@ -45,6 +45,7 @@ def create_classifier(train_DF, train_file_aug, xboost_model_file):
    # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
     scores = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_mean_squared_error')
     #print_best_parameters(clf)
+    print("Training set : {} data points".format(len(X_train)))
     print(scores)
     print("Error: %0.8f (+/- %0.8f)" % (scores.mean(), scores.std() * 2))
     y_pred = clf.predict(X_train)
