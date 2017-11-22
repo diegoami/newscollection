@@ -269,8 +269,20 @@ class ArticlesSimilarRepo:
         view_sql = "SELECT *  FROM PREDICTIONS"
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
+        viewDF.set_index(['PRED_AIN_ID_1', 'PRED_AIN_ID_2'], inplace=True)
+
         econ.close()
         return viewDF
+
+    def load_classification(self):
+        view_sql = "SELECT *  FROM CLASSIF"
+        econ = self.engine.connect()
+        viewDF = pd.read_sql(view_sql, econ)
+        viewDF.set_index(['CLAS_AIN_ID_1', 'CLAS_AIN_ID_2'], inplace=True)
+
+        econ.close()
+        return viewDF
+
 
     def load_test_set(self):
         view_sql =  "SELECT *  FROM TEST_SCORES"
@@ -288,5 +300,17 @@ class ArticlesSimilarRepo:
         con.begin()
         for index, row in test_df.iterrows():
                 con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'ver' : version})
+        con.commit()
+
+    def write_classifications(self, test_df, version):
+        con = self.get_connection()
+
+        replace_sql = 'INSERT into CLASSIF (CLAS_AIN_ID_1, CLAS_AIN_ID_2, CLAS_CAT, CLAS_VERSION) values (:clas1,:clas2,:clas_cat,:ver)'
+        #        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
+        con.begin()
+        for index, row in test_df.iterrows():
+            con.query(replace_sql,
+                      {'clas1': row['SCO_AIN_ID_1'], 'clas2': row['SCO_AIN_ID_2'], 'clas_cat': row['SCO_PRED'],
+                       'ver': version})
         con.commit()
 
