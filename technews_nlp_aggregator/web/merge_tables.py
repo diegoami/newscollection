@@ -13,13 +13,6 @@ def merge_sims_maps(tdf_DF, doc2vec_DF, articleLoader, n_articles=100, page_id =
         has_next = len(new_DF) > end
         new_DF = new_DF.iloc[start:min(end, len(new_DF))]
         related_articles = extract_related_articles(articleLoader, new_DF )
-    #both_sims_map = {}
-    #for tdf_key in tdf_sims_map:
-    #    both_sims_map[tdf_key] = (round(tdf_sims_map.get(tdf_key, 0) * 100,3) ,  round(doc2vec_sims_map.get(tdf_key, 0) * 100,3) )
-    #for doc2vec_key in doc2vec_sims_map:
-    #    both_sims_map[doc2vec_key] = (round(tdf_sims_map.get(doc2vec_key, 0) * 100,3) , round(doc2vec_sims_map.get(doc2vec_key, 0) * 100,3) )
-    #sims = sorted(both_sims_map.items(), key=lambda x: x[1][0]+x[1][1], reverse=True)
-    #related_articles = extract_related_articles(articleLoader, sims)
         return related_articles
     else:
         return None

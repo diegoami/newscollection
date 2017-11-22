@@ -1,5 +1,4 @@
 <div id="topnav" class="topnav">
-  <a id="topnav_home" href="/">Home</a>
   <a id="topnav_groups" href="/show_groups">Controversial</a>
 
   <a id="topnav_duplicated" href="/duplicates/0">View Similar</a>
@@ -9,8 +8,8 @@
 {% endif %}
   <a id="topnav_search_url" href="/search_url">Look up</a>
   <a id="topnav_search" href="/search">Search</a>
-  <a id="topnav_statistics" href="/statistics_gen">Analyze</a>
 {% if session['signed_in']: %}
+  <a id="topnav_statistics" href="/statistics_gen">Analyze</a>
   <a id="topnav_add_new_url" href="/add_new_url_start">Add url</a>
 {% endif %}
 

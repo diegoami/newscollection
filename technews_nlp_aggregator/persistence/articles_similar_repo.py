@@ -196,7 +196,7 @@ class ArticlesSimilarRepo:
                 "SOURCE_1" : extract_source_without_www(row["URL_1"]),
                 "URL_2"   : row["URL_2"],
                 "SOURCE_2": extract_source_without_www(row["URL_2"]),
-                "P_SCORE" : round(row["P_SCORE"] * 100,3),
+                "P_SCORE" : round(row["P_SCORE"],3),
                 "U_SCORE": row["U_SCORE"]
 
             })
@@ -265,10 +265,16 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
-
+    def load_predictions(self):
+        view_sql = "SELECT *  FROM PREDICTIONS"
+        econ = self.engine.connect()
+        viewDF = pd.read_sql(view_sql, econ)
+        econ.close()
+        return viewDF
 
     def load_test_set(self):
-        view_sql = "SELECT * FROM TEST_SCORES"
+        view_sql =  "SELECT *  FROM TEST_SCORES"
+
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
         econ.close()
@@ -276,11 +282,11 @@ class ArticlesSimilarRepo:
 
     def write_predictions(self, test_df, version):
         con =  self.get_connection()
-        delete_sql = 'DELETE from PREDICTIONS WHERE PRED_VERSION = :ver'
+
         replace_sql = 'INSERT into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_VERSION) values (:pred1,:pred2,:proba,:ver)'
+#        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
         con.begin()
-        con.query(delete_sql, {'ver': version})
         for index, row in test_df.iterrows():
-            con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'ver' : version})
+                con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'ver' : version})
         con.commit()
 

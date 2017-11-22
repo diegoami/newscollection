@@ -6,12 +6,15 @@
 from flask import Flask, render_template
 from .util import read_int_from_form
 
+from . import app
+from flask import request, render_template, session, redirect, url_for
+
 app = Flask(__name__)
 
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return redirect(url_for('show_groups'))
 
 import technews_nlp_aggregator.web.duplicate_articles
 import technews_nlp_aggregator.web.compare_articles
