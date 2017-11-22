@@ -95,9 +95,13 @@ def create_classifier(train_DF, xboost_classifier_file ):
 
     print_best_parameters(clf)
     print("Training set : {} data points".format(len(X_train)))
+    print(f1)
     print("F1: %0.8f (+/- %0.8f)" % (f1.mean(), f1.std() * 2))
+    print(precision)
     print("Precision: %0.8f (+/- %0.8f)" % (precision.mean(), precision.std() * 2))
+    print(recall)
     print("Recall: %0.8f (+/- %0.8f)" % (recall.mean(), recall.std() * 2))
+    print(accuracy)
     print("Accuracy: %0.8f (+/- %0.8f)" % (accuracy.mean(), accuracy.std() * 2))
 
     y_pred = clf.predict(X_train)
