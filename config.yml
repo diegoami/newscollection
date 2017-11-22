@@ -24,6 +24,7 @@ phrases_model_dir_link     : /media/diego/QData/techarticles/models/phrases/phra
 train_data_file         : /media/diego/QData/techarticles/models/xgboost/train.csv
 train_data_file_aug         : /media/diego/QData/techarticles/models/xgboost/train_aug.csv
 xgboost_model_file        : /media/diego/QData/techarticles/models/xgboost/xgboost_model
+xgboost_classifier_file        : /media/diego/QData/techarticles/models/xgboost/xgboost_classifier
 test_data_file         : /media/diego/QData/techarticles/models/xgboost/test.csv
 test_data_file_aug         : /media/diego/QData/techarticles/models/xgboost/test_aug.csv
 version                   : 1
