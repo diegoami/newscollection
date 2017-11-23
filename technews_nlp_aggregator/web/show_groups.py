@@ -22,9 +22,9 @@ def show_groups(page_id=0):
     article_groups = _.article_groups
     groups_list = article_groups[start:min(end, len(article_groups))]
 
-    has_next = len(groups_list) > end
+    has_next = len(article_groups) > end
 
-    return render_template('show_groups.html', article_groups=article_groups, page_id=page_id, has_next=has_next)
+    return render_template('show_groups.html', article_groups=groups_list , page_id=page_id, has_next=has_next)
 
 
 @app.route('/show_all/<string:id_list>')
