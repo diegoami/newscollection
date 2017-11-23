@@ -1,13 +1,16 @@
 
 from flask import  request, render_template, session
-from technews_nlp_aggregator.common.util import extract_source
 from technews_nlp_aggregator.web.summary import convert_summary
-from itertools import product
+
 
 from . import app
 
 
-
+@app.route('/refresh_groups')
+def refresh_groups():
+    _ = app.application
+    _.retrieve_groups()
+    return show_groups()
 
 @app.route('/show_groups', defaults={'page_id': 0})
 @app.route('/show_groups/<int:page_id>')
@@ -17,7 +20,7 @@ def show_groups(page_id=0):
     messages = []
     start, end = page_id * 100, (page_id + 1) * 100
 
-    all_groups_list = _.articleSimilarLoader.retrieve_groups()
+    all_groups_list = _.all_groups_list
     groups_list = all_groups_list [::-1]
     has_next = len(groups_list) > end
     groups_list = groups_list[start:min(end, len(groups_list))]
