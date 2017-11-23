@@ -30,7 +30,9 @@
     <th class="date">Date2</th>
 
     <th>Article2</th>
-    <th>Prob. same story </th>
+    <th>Prob.</th>
+    <th>Clas.</th>
+
     <th class="columnscore">User Score</th>
     <th class="icon">Compare</th>
 
@@ -46,6 +48,7 @@
             <td class="date">{{_.DATE_2}}</td>
             <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
             <td>{{_.P_SCORE}}</td>
+            <td>{{_.C_SCORE}}</td>
             <td class="columnscore">
               <span id="samestory_{{_.ID_1}}_{{_.ID_2}}" >
                 {% if _.U_SCORE_DEF: %}

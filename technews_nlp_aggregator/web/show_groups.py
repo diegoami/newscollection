@@ -41,6 +41,7 @@ def show_groups(page_id=0):
             }
             articles.append(article)
         article_groups.append({"articles" : articles, "article_list" : "-".join([ str(article["article_id"]) for article in articles ] ) } )
+        article_groups.sort(key=lambda article_group : article_group["articles"][0]["date"], reverse=True)
     return render_template('show_groups.html', article_groups=article_groups, page_id=page_id, has_next=has_next)
 
 

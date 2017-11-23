@@ -9,7 +9,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 
 
-def predict(test_DF,  xboost_model_file, predictions_df):
+def predict(test_DF,  xboost_model_file, xboost_classif_file, predictions_df):
     test_DF.set_index(['SCO_AIN_ID_1', 'SCO_AIN_ID_2'], inplace=True)
 
     merged_DF = test_DF[~test_DF.index.isin(predictions_df.index)]
@@ -19,6 +19,11 @@ def predict(test_DF,  xboost_model_file, predictions_df):
     clf = joblib.load(xboost_model_file)
     y_test = clf.predict(X_test)
     merged_DF['SCO_PRED'] = y_test
+
+    clf_clas = joblib.load(xboost_classif_file)
+    y_clas = clf_clas.predict(X_test)
+    merged_DF['SCO_CAT'] = y_clas
+
     merged_DF.reset_index(drop=False, inplace=True)
     return merged_DF
 
@@ -40,10 +45,6 @@ if __name__ == '__main__':
 
     test_df = similarArticlesRepo.load_test_set()
     predictions_df = similarArticlesRepo.load_predictions()
-    test_df_res = predict(test_df, xboost_model_file, predictions_df)
+    test_df_res = predict(test_df, xboost_model_file, xboost_classif_file, predictions_df)
     similarArticlesRepo.write_predictions(test_df_res, version)
 
-    test_df = similarArticlesRepo.load_test_set()
-    classifications_df = similarArticlesRepo.load_classification()
-    test_df_cla = predict(test_df, xboost_classif_file, classifications_df)
-    similarArticlesRepo.write_classifications(test_df_cla, version)

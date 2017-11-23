@@ -197,7 +197,8 @@ class ArticlesSimilarRepo:
                 "URL_2"   : row["URL_2"],
                 "SOURCE_2": extract_source_without_www(row["URL_2"]),
                 "P_SCORE" : round(row["P_SCORE"],3),
-                "U_SCORE": row["U_SCORE"]
+                "U_SCORE": row["U_SCORE"],
+                "C_SCORE": row["C_SCORE"]
 
             })
             if (similar_story["U_SCORE"] is not None):
@@ -218,6 +219,14 @@ class ArticlesSimilarRepo:
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar)
+        result = [row for row in query_result]
+        return result
+
+    def retrieve_classif_paired(self):
+        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_CAT = 1";
+        similar_stories = []
+        con = self.get_connection()
+        query_result= con.query(sql_classif_found)
         result = [row for row in query_result]
         return result
 
@@ -266,7 +275,7 @@ class ArticlesSimilarRepo:
         return viewDF
 
     def load_predictions(self):
-        view_sql = "SELECT *  FROM PREDICTIONS"
+        view_sql = "SELECT * FROM PREDICTIONS"
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
         viewDF.set_index(['PRED_AIN_ID_1', 'PRED_AIN_ID_2'], inplace=True)
@@ -274,14 +283,6 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
-    def load_classification(self):
-        view_sql = "SELECT *  FROM CLASSIF"
-        econ = self.engine.connect()
-        viewDF = pd.read_sql(view_sql, econ)
-        viewDF.set_index(['CLAS_AIN_ID_1', 'CLAS_AIN_ID_2'], inplace=True)
-
-        econ.close()
-        return viewDF
 
 
     def load_test_set(self):
@@ -295,22 +296,9 @@ class ArticlesSimilarRepo:
     def write_predictions(self, test_df, version):
         con =  self.get_connection()
 
-        replace_sql = 'INSERT into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_VERSION) values (:pred1,:pred2,:proba,:ver)'
+        replace_sql = 'INSERT into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_CAT, PRED_VERSION) values (:pred1,:pred2,:proba,:cat, :ver)'
 #        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
         con.begin()
         for index, row in test_df.iterrows():
-                con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'ver' : version})
+                con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'cat' : row['SCO_CAT'], 'ver' : version})
         con.commit()
-
-    def write_classifications(self, test_df, version):
-        con = self.get_connection()
-
-        replace_sql = 'INSERT into CLASSIF (CLAS_AIN_ID_1, CLAS_AIN_ID_2, CLAS_CAT, CLAS_VERSION) values (:clas1,:clas2,:clas_cat,:ver)'
-        #        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
-        con.begin()
-        for index, row in test_df.iterrows():
-            con.query(replace_sql,
-                      {'clas1': row['SCO_AIN_ID_1'], 'clas2': row['SCO_AIN_ID_2'], 'clas_cat': row['SCO_PRED'],
-                       'ver': version})
-        con.commit()
-

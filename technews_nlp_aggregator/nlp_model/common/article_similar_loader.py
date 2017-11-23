@@ -8,13 +8,18 @@ class ArticleSimilarLoader:
         self.train_filename = train_filename
 
     def retrieve_groups(self):
-        rows = self.articlesSimilarRepo.retrieve_user_paired()
+        rows_U = self.articlesSimilarRepo.retrieve_user_paired()
         drows = []
-        for row in rows:
+        for row in rows_U:
             if (row['SSU_SIMILARITY'] > 0.9):
                 id1, id2 = row['SSU_AIN_ID_1'], row['SSU_AIN_ID_2']
                 drows.append({id1,id2})
 
+        rows_C = self.articlesSimilarRepo.retrieve_classif_paired()
+
+        for row in rows_C:
+            id1, id2 = row['PRED_AIN_ID_1'], row['PRED_AIN_ID_2']
+            drows.append({id1, id2})
         return self.merge_sets(drows)
 
     def merge_sets(self, drows):
