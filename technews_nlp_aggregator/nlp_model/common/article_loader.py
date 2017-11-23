@@ -34,6 +34,11 @@ class ArticleLoader:
         else:
             return None
 
+    def are_same_source(self, article_id1, article_id2):
+        article1, article2 = self.get_article(article_id1), self.get_article(article_id2)
+        same_source =  article1.iloc[0]['source'] == article2.iloc[0]['source']
+        return same_source
+
     def articles_in_interval(self,start, end):
         return self.articlesDF[(self.articlesDF['date_p'] >= start) & (self.articlesDF['date_p'] <= end) ]
 

@@ -44,12 +44,13 @@
         <TD>{{article.source}}</TD>
         <TD><A HREF="{{article.url}}">{{article.title}}</A></TD>
 
-        <TD><span class="buttonrow">
-        {% for other_id in article.other_ids %}
+        <TD><span class="smallrow">
+        {% if article.other_ids|length <= 8 %}
+            {% for other_id in article.other_ids %}
 
-            <A class="buttoncolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
-        {% endfor %}
-
+                <A class="smallcolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
+            {% endfor %}
+        {% endif %}
         </span>
     </TR>
     {% endfor %}

@@ -7,19 +7,23 @@ class ArticleSimilarLoader:
         self.articlesSimilarRepo = articlesSimilarRepo
         self.train_filename = train_filename
 
-    def retrieve_groups(self):
+    def retrieve_groups(self, articleLoader, threshold):
+        articlesDF = articleLoader.articlesDF
         rows_U = self.articlesSimilarRepo.retrieve_user_paired()
         drows = []
         for row in rows_U:
             if (row['SSU_SIMILARITY'] > 0.9):
-                id1, id2 = row['SSU_AIN_ID_1'], row['SSU_AIN_ID_2']
-                drows.append({id1,id2})
+                article_id1, article_id2 = row['SSU_AIN_ID_1'], row['SSU_AIN_ID_2']
+                if not articleLoader.are_same_source(article_id1, article_id2 ):
+                    drows.append({article_id1, article_id2 })
 
-        rows_C = self.articlesSimilarRepo.retrieve_classif_paired()
+        rows_C = self.articlesSimilarRepo.retrieve_classif_paired(threshold=threshold)
 
         for row in rows_C:
-            id1, id2 = row['PRED_AIN_ID_1'], row['PRED_AIN_ID_2']
-            drows.append({id1, id2})
+            article_id1, article_id2 = row['PRED_AIN_ID_1'], row['PRED_AIN_ID_2']
+            if not articleLoader.are_same_source(article_id1, article_id2):
+                drows.append({article_id1, article_id2})
+
         return self.merge_sets(drows)
 
     def merge_sets(self, drows):

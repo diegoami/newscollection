@@ -43,7 +43,8 @@ class Application:
         last_article_date = self.articleDatasetRepo.get_latest_article_date()
 
         self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)
-        self.retrieve_groups()
+        self.threshold = config["threshold"]
+        self.refresh_groups()
         logging.debug("Log in debug mode")
 
 
@@ -63,5 +64,26 @@ class Application:
         sources = art_df['source'].unique()
         return (len(sources) > 1)
 
-    def retrieve_groups(self):
-        self.all_groups_list = self.articleSimilarLoader.retrieve_groups()
+    def refresh_groups(self):
+        all_groups_list = self.articleSimilarLoader.retrieve_groups(articleLoader=self.articleLoader, threshold=self.threshold)
+        self.article_groups = []
+        for group in all_groups_list:
+
+            articlesDF = self.articleLoader.articlesDF
+            articles_in_groupDF = articlesDF[articlesDF['article_id'].isin(group)]
+            articles = []
+            article_ids = articles_in_groupDF['article_id'].tolist()
+
+            for id, row in articles_in_groupDF.iterrows():
+                article = {
+                    "article_id": row['article_id'],
+                    "title": row['title'],
+                    "date": row['date_p'],
+                    "url": row['url'],
+                    "source": row['source'],
+                    "other_ids": [article_id for article_id in article_ids if article_id != row['article_id']]
+                }
+                articles.append(article)
+            self.article_groups.append(
+                {"articles": articles, "article_list": "-".join([str(article["article_id"]) for article in articles])})
+        self.article_groups.sort(key=lambda article_group: article_group["articles"][0]["date"], reverse=True)

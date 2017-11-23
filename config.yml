@@ -28,5 +28,6 @@ xgboost_classifier_file        : /media/diego/QData/techarticles/models/xgboost/
 test_data_file         : /media/diego/QData/techarticles/models/xgboost/test.csv
 test_data_file_aug         : /media/diego/QData/techarticles/models/xgboost/test_aug.csv
 version                   : 1
+threshold         : 0.9
 
 

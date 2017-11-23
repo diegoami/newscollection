@@ -22,4 +22,4 @@ trigrams_pickle_file     : /media/diego/QData/techarticles/pickle/trigrams.p
 
 phrases_model_dir_base    : /media/diego/QData/techarticles/models/phrases/phrases__
 phrases_model_dir_link     : /media/diego/QData/techarticles/models/phrases/phrases_model
-
+threshold : 0.85

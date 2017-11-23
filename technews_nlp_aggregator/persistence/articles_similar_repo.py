@@ -222,11 +222,11 @@ class ArticlesSimilarRepo:
         result = [row for row in query_result]
         return result
 
-    def retrieve_classif_paired(self):
-        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_CAT = 1";
+    def retrieve_classif_paired(self, threshold):
+        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold";
         similar_stories = []
         con = self.get_connection()
-        query_result= con.query(sql_classif_found)
+        query_result= con.query(sql_classif_found, {"threshold": threshold})
         result = [row for row in query_result]
         return result
 

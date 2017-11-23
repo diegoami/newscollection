@@ -40,3 +40,22 @@ th.date, td.date {
 .columnscore {
  width:100px;
 }
+
+
+
+.smallcolumn {
+    float: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    font-size: 1.3em;
+
+}
+
+
+/* Clear floats after the columns */
+.smallrow:after {
+    content: "";
+    display: table;
+    clear: both;
+}
