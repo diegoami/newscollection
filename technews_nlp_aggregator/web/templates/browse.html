@@ -11,84 +11,86 @@
 
 
 
+    <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
 
-<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
+    <INPUT type="hidden" id="search_url" name="search_url" maxlength="200" size="70" value="">
+    <INPUT type="hidden" id="article_id" name="article_id" maxlength="200" size="70" value="">
 
-<INPUT type="hidden" id="search_url" name="search_url" maxlength="200" size="70" value="">
-<INPUT type="hidden" id="article_id" name="article_id" maxlength="200" size="70" value="">
+        </INPUT>
+    </FORM>
 
-    </INPUT>
-</FORM>
-<div class="buttonrow" >
-<form action="/filterbrowse" method="POST">
-   <input id="searchCriteria" name = "filterbrowse" type="text" class="buttoncolumn" placeholder="Search in base"
-          value="{{filter_browse}}"
-          title="Type in a search criteria" size="50" maxWidth="100" >   <input class="buttoncolumn" type="submit" value="Search" />
+<div class="buttonrow surrond_form tooltip" >
+    <form action="/filterbrowse" method="POST">
+       <input id="searchCriteria" name = "filterbrowse" type="text" class="buttoncolumn" placeholder="Search in base"
+              value="{{filter_browse}}"
+              title="Type in a search criteria" size="50" maxWidth="100" >   <input class="buttoncolumn" type="submit" value="Search" />
 
-</form>
+    </form>
+    <span class="tooltiptext">
+        <I>WARNING: Simple literal search over the article's titles. A more advanced search <A HREF="/search">is available here</A> </I>
+   </span>
 </div>
 <BR>
-<I>WARNING: Simple literal search over the article's titles. A more advanced search <A HREF="/search">is available here</A> </I>
 
 <BR>
 {% if articles: %}
-<table border="1">
-
-<tr>
-    <th>Article Id</th>
-    <th>Source</th>
-    <th class="date"><span>Date</span></th>
-    <th>Title</th>
-    <th>Similar</th>
-
-
-
-  </tr>
-
-    {% for _ in articles: %}
-
-        <tr>
-            <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
-            <td><B>{{_.source}}</B>
-
-            <td class="date">{{_.date_p}}</td>
-              <td> <A HREF="{{_.url}}">{{_.title}}</A></td>
-            <td class="icon">
-                       <A HREF="javascript:find_similar('{{_.article_id}}')">
-                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
-                </A>
-            </td>
-
-        </tr>
+    <table border="1">
+    <CAPTION>Latest articles</CAPTION>
+    <tr>
+        <th>Article Id</th>
+        <th>Source</th>
+        <th class="date"><span>Date</span></th>
+        <th>Title</th>
+        <th>Similar</th>
 
 
-    {% endfor %}
-</table>
+
+      </tr>
+
+        {% for _ in articles: %}
+
+            <tr>
+                <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
+                <td><B>{{_.source}}</B>
+
+                <td class="date">{{_.date_p}}</td>
+                  <td> <A HREF="{{_.url}}">{{_.title}}</A></td>
+                <td class="icon">
+                           <A HREF="javascript:find_similar('{{_.article_id}}')">
+                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                    </A>
+                </td>
+
+            </tr>
+
+
+        {% endfor %}
+    </table>
 {% endif %}
+{% if articles: %}
 
-
-<HR>
+    <HR>
     <BR>
-<div class="buttonrow">
-        {% if page_id and page_id > 0: %}
-            <form class="buttoncolumn" action="/browse/{{page_id-1}}">
-                <input class="main" type="submit" value="<<< Back" />
-            </form>
-        {% endif %}
-        {% if has_next : %}
-            <form class="buttoncolumn" action="/browse/{{page_id+1}}">
-                <input class="main" type="submit" value="Forward >>> " />
-            </form>
-        {% endif %}
+    <div class="buttonrow">
+            {% if page_id and page_id > 0: %}
+                <form class="buttoncolumn" action="/browse/{{page_id-1}}">
+                    <input class="main" type="submit" value="<<< Back" />
+                </form>
+            {% endif %}
+            {% if has_next : %}
+                <form class="buttoncolumn" action="/browse/{{page_id+1}}">
+                    <input class="main" type="submit" value="Forward >>> " />
+                </form>
+            {% endif %}
 
 
-</div>
- <div>
-   Page : <B>{{page_id | default(0) }}</B>
     </div>
-    <BR>
+    <div>
+       Page : <B>{{page_id | default(0) }}</B>
+    </div>
+        <BR>
 
-
+{% endif %}
 {% include 'footer.html' %}
 
 </body>

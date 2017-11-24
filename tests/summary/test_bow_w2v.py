@@ -10,9 +10,9 @@ def bow_w2v(application, n_articles=20 ):
 
     for i in range(n_articles):
         art_id1, art_id2 = _.similarArticlesRepo.retrieve_random_related()
-        id1 = _.articleLoader.get_article(art_id1).index[0]
+        id1 = _.articleLoader.get_article(art_id1)['index']
 
-        id2 = _.articleLoader.get_article(art_id2).index[0]
+        id2 = _.articleLoader.get_article(art_id2)['index']
         title1, text1 = _.articleLoader.articlesDF.iloc[id1]['title'], _.articleLoader.articlesDF.iloc[id1]['text']
         title2, text2 = _.articleLoader.articlesDF.iloc[id2]['title'],_.articleLoader.articlesDF.iloc[id2]['text']
 

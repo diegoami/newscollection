@@ -10,26 +10,26 @@
 <body onload="select_header('topnav_duplicated')">
 {% include 'header.html' %}
 <div class="buttonrow" >
-<form action="/filterduplicates" method="POST">
+<form action="/filterduplicates" method="POST" class="tooltip">
    <input id="searchCriteria" name = "filterCriteria" type="text" class="buttoncolumn" placeholder="Filter criteria"
           value="{{filter_criteria}}"
           title="Type in a Filter criteria" size="50" maxWidth="100" >   <input class="buttoncolumn" type="submit" value="Filter" />
-
+    <span class="tooltiptext">
+        <P><I>Example: P_SCORE > 0.6 OR U_SCORE > 0.5 </I></P>
+        <P> U_SCORE is the similarity score assigned by the aministrator, P_SCORE is the similarity score assigned by the algorithm</P>
+    </span>
 </form>
 </div>
-
-<P><I>Example: P_SCORE > 0.6 OR U_SCORE > 0.5 </I></P>
-<P> U_SCORE is the similarity score assigned by the aministrator, P_SCORE is the similarity score assigned by the algorithm</P>
 
 
 <table>
 
   <tr>
-    <th class="date">Date1</th>
-    <th><span>Article1</span></th>
-    <th class="date">Date2</th>
+    <th class="date">Date 1</th>
+    <th><span>Article 1</span></th>
+    <th class="date">Date 2</th>
 
-    <th>Article2</th>
+    <th>Article 2</th>
     <th>Prob.</th>
     <th>Clas.</th>
 

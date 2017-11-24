@@ -44,7 +44,7 @@ def statistics(article_id):
         if article:
            # sp_words = retrieve_sp_words(article["ATX_TEXT"])
             row = _.articleLoader.get_article(article_id)
-            id = row.index[0]
+            id = row['index']
             if id < _.tfidfFacade.docs_in_model() or id < _.doc2VecFacade.docs_in_model():
                 tokens = _.tokenizeInfo.get_tokenized_article(title=article["AIN_TITLE"], doc=article["ATX_TEXT"])
                 trigrams = _.gramFacade.phrase(tokens)

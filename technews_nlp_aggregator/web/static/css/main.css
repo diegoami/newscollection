@@ -22,9 +22,11 @@ body {
 
 form  { display: table;      }
 p     { display: table-row;  }
+
 label {
-  display: table-cell;
-  font-size: 1.2em;
+    display: table-cell;
+    font-size: 1em;
+    font-family: Arial;
 }
 input { display: table-cell; }
 
@@ -34,7 +36,7 @@ input[type=submit].main {
     background-color: #555555;
     cursor:pointer;
     color: white;
-    height: 50px;
+    height: 30px;
 }
 
 
@@ -61,9 +63,24 @@ img {
 
 .article_text {
     background: #FFE4B5;
+    font-family: Helvetica;
 }
 
+.metadata {
+    font-size: 90%;
+    font-family: Lucida Console;
+}
+.note_text {
+    font-size: 1em;
+    font-family: Verdana;
+}
 
+.surrond_form {
+    border: 1px dashed;
+    padding: 3px;
+    margin: 2px;
+
+}
 footer {
     position: fixed;
     left: 0;

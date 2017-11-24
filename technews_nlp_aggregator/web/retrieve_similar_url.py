@@ -5,7 +5,7 @@ from . import app
 from technews_nlp_aggregator.nlp_model.publish import ClassifierAggregator
 from datetime import timedelta, date
 from .util import extract_related_articles
-
+from technews_nlp_aggregator.web.summary import convert_summary
 
 @app.route('/search_url')
 def search_url():
@@ -46,8 +46,8 @@ def retrieve_similar_url():
                 article = _.articleLoader.get_article(article_id)
 
             if (article is not None and len(article) > 0):
-                id = article.index[0]
-                url = article.iloc[0]['url']
+                id = article['index']
+                url = article['url']
 
             else:
                 return render_template('search_url.html',
@@ -68,15 +68,18 @@ def common_retrieve_id( id, d_days, n_articles=25,  page_id = 0, url=None, artic
     ssus, sscs = _.similarArticlesRepo.retrieve_ssus_for_id(article_id), _.similarArticlesRepo.retrieve_sscs_for_id(article_id)
 #    new_DF = _.classifierAggregator.merge_with_ss(new_DF, ssus, sscs)
     related_articles = extract_related_articles(_.articleLoader, new_DF, ssus, sscs)
+    #article = _.articleDatasetRepo.load_article_with_text(article_id)
+    article = convert_summary(article_id)
+
     if related_articles:
-        return render_template('search_url.html', articles=related_articles, search_url=url, article_id=article_id, n_articles=n_articles,  d_days=d_days, page_id = page_id)
+        return render_template('search_url.html', articles=related_articles, search_url=url, article=article, article_id=article_id, n_articles=n_articles,  d_days=d_days, page_id = page_id)
 
 def retrieve_from_article_id( article_id, n_articles, d_days=30, page_id = 0):
     _ = app.application
     if article_id is None:
         return render_template('search_url.html', messages=['Could not find the URL in the database'])
     else:
-        article = _.articleDatasetRepo.load_article_with_text(article_id)
+        article = convert_summary(article_id)
 
         title, text, art_date, url = article['AIN_TITLE'], article['ATX_TEXT'], article['AIN_DATE'], article['AIN_URL']
 
@@ -85,7 +88,7 @@ def retrieve_from_article_id( article_id, n_articles, d_days=30, page_id = 0):
         new_DF = _.classifierAggregator.retrieve_articles_for_text(text=article['ATX_TEXT'], start=start, end=end, n_articles=n_articles, title=article['AIN_TITLE'], page_id=page_id )
         related_articles = extract_related_articles(_.articleLoader, new_DF)
         start_s, end_s =  str(start.year)+'-'+str(start.month)+'-'+str(start.day), str(end.year)+'-'+str(end.month)+'-'+str(end.day)
-        return render_template('search_url.html', articles=related_articles[:n_articles], search_text=text,
+        return render_template('search_url.html', articles=related_articles[:n_articles], search_text=text, article=article,
                                n_articles=n_articles, start_s=start_s, end_s=end_s, search_url=url, article_id=article_id, page_id=page_id)
 
 

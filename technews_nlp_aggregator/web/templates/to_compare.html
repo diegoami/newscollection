@@ -35,34 +35,28 @@
 </div>
 <div class="row">
   <div class="column left">
-
-      <p><I>ID:</I> <A HREF="/statistics/{{A1.AIN_ID}}" target="_blank">{{A1.AIN_ID}}</A></p>
-
-    <p>Original url : <A class="shorturl" HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A> </p>
-    <P><I>Date:</I> {{A1.AIN_DATE}}</P>
-
-      <P></P>
-
-    <h3 id="title1_id">{{A1.AIN_TITLE}}</h3>
-      <P></P>
-
-
-      <P id="a1_text" class="article_text">{{A1.ATX_TEXT | safe}}</P>
+    <div class="metadata">
+        <p><I>ID:</I> <A HREF="/statistics/{{A1.AIN_ID}}" target="_blank">{{A1.AIN_ID}}</A></p>
+        <p>Original url : <A class="shorturl" HREF="{{A1.AIN_URL}}">{{A1.AIN_URL}}</A> </p>
+        <P><I>Date:</I> {{A1.AIN_DATE}}</P>
+         <P></P>
+    </div>
+    <div class="article_text">
+        <h3 id="title1_id">{{A1.AIN_TITLE}}</h3>
+        <P id="a1_text" >{{A1.ATX_TEXT | safe}}</P>
+    </div>
   </div>
     <div class="column middle"></div>
   <div class="column right">
+    <div class="metadata">
       <p><I>ID:</I> <A HREF="/statistics/{{A2.AIN_ID}}" target="_blank">{{A2.AIN_ID}}</A></p>
-
       <p>Original url :  <A class="shorturl" HREF="{{A2.AIN_URL}}">{{A2.AIN_URL}}</A>  </p>
       <P><I>Date:</I> {{A2.AIN_DATE}}</P>
-      <P></P>
-
-    <h3 id="title2_id">{{A2.AIN_TITLE}}</h3>
-
-
-      <P></P>
-    <P id="a2_text" class="article_text"> {{A2.ATX_TEXT | safe}}</P>
-
+    </div>
+    <div class="article_text">
+      <h3 id="title2_id">{{A2.AIN_TITLE}}</h3>
+      <P id="a2_text" > {{A2.ATX_TEXT | safe}}</P>
+    </div>
  </div>
 </div>
 <BR>

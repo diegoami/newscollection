@@ -8,90 +8,92 @@
 </head>
 <body onload="javascript:select_header('topnav_search')">
 {% include 'header.html' %}
-<H3> Enter text from a tech article here</H3>
-<I>Can be used also to search in the article database, but results quality may vary</I>
-<div>
-<FORM id="mainForm"  ACTION="/retrieve_similar" METHOD="POST">
-<p>
-<label class="textarea_label" for="search_text" >Enter text here</label>
+<div class="surrond_form tooltip">
+    <FORM id="mainForm"  ACTION="/retrieve_similar" METHOD="POST">
+    <p>
+    <label class="textarea_label" for="search_text" >Enter text here</label>
 
-<textarea id="search_text" name="search_text" rows="30" cols="90">{{search_text | default('') }}
-</textarea>
-</p>
-    <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(100) }}"></p>
+    <textarea id="search_text" name="search_text" rows="30" cols="90">{{search_text | default('') }}
+    </textarea>
+    </p>
+        <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(100) }}"></p>
 
-<p><label for="start">From:</label><input type="text" id="start" name="start" value="{{start_s | default('2017-01-1') }}"></p>
-<p><label for="end">To:</label><input type="text" id="end" name="end" value="{{end_s | default('2017-12-31')}}"><br/><br/></p>
+    <p><label for="start">From:</label><input type="text" id="start" name="start" value="{{start_s | default('2017-01-1') }}"></p>
+    <p><label for="end">To:</label><input type="text" id="end" name="end" value="{{end_s | default('2017-12-31')}}"><br/><br/></p>
 
-<p>
-<input name="search_url" id="search_url" type="hidden" />
-<input id="page_id" name="page_id" type="hidden" value="0"  />
+    <p>
+    <input name="search_url" id="search_url" type="hidden" />
+    <input id="page_id" name="page_id" type="hidden" value="0"  />
 
-<INPUT type="hidden" id="article_id" name="article_id" >
+    <INPUT type="hidden" id="article_id" name="article_id" >
 
-<input class="main"  type="submit" value="submit"  />
-</p>
-</FORM>
+    <input class="main"  type="submit" value="submit"  />
+    </p>
+    </FORM>
+    <span class="tooltiptext">
+        <P> Enter text from a tech article here</P>
+        <P><I>Can be used also to search in the article database, but results quality may vary</I></P>
+    </span>
 </div>
 {% if articles: %}
-<h2>RESULTS (Tfidf+Doc2vec)</h2>
 
-<table border="1">
+    <table border="1">
+    <CAPTION>Similar articles</CAPTION>
 
-<tr>
-    <th>Article Id</th>
-    <th><span>Title</span></th>
-    <th class="date"><span>Date</span></th>
-    <th>Score</th>
+    <tr>
+        <th>Article Id</th>
+        <th><span>Title</span></th>
+        <th class="date"><span>Date</span></th>
+        <th>Score</th>
 
-    <th class="icon">Similar</th>
-
-
-  </tr>
-
-    {% for _ in articles: %}
-
-        <tr>
-
-            <td> <A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.id}}</A></td>
-            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
-            <td class="date">{{_.date_p}}</td>
-            <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
-
-             <td class="icon">
-                <A HREF="javascript:find_similar('{{_.article_id}}')">
-
-                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
-                </A>
-            </td>
+        <th class="icon">Similar</th>
 
 
+      </tr>
+
+        {% for _ in articles: %}
+
+            <tr>
+
+                <td> <A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.id}}</A></td>
+                <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+                <td class="date">{{_.date_p}}</td>
+                <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
+
+                 <td class="icon">
+                    <A HREF="javascript:find_similar('{{_.article_id}}')">
+
+                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                    </A>
+                </td>
 
 
-        </tr>
 
 
-    {% endfor %}
-</table>
+            </tr>
+
+
+        {% endfor %}
+    </table>
 {% endif %}
+{% if articles: %}
+    <div class="buttonrow">
+            {% if page_id and page_id > 0: %}
+                    <input class="main" type="submit" value="<<< Back" onclick="move_to_page('{{ page_id - 1 }}')"/>
 
-<div class="buttonrow">
-        {% if page_id and page_id > 0: %}
-                <input class="main" type="submit" value="<<< Back" onclick="move_to_page('{{ page_id - 1 }}')"/>
+            {% endif %}
+            {% if n_articles == articles|length : %}
 
-        {% endif %}
-        {% if n_articles == articles|length : %}
+                    <input class="main" type="submit" value="Forward >>> " onclick="move_to_page('{{ page_id + 1 }}')" />
 
-                <input class="main" type="submit" value="Forward >>> " onclick="move_to_page('{{ page_id + 1 }}')" />
+            {% endif %}
 
-        {% endif %}
-
-
-</div>
- <div>
-   Page : <B>{{page_id | default(0) }}</B>
+    </div>
+    <div>
+       Page : <B>{{page_id | default(0) }}</B>
     </div>
     <BR>
+{% endif %}
 {% include 'footer.html' %}
 </body>
 </html>

@@ -6,110 +6,128 @@
 
   <title>Search by URL</title>
  </head>
-<body onload="select_header('topnav_search_url'); check_loggedin()">
+<BR onload="select_header('topnav_search_url'); check_loggedin()">
 {% include 'header.html' %}
-<div>
-<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
+<div class="surrond_form">
+    <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST" >
+        <P>
+    <label for="article_id">Article Id: </label><INPUT id="article_id" name="article_id" maxlength="64" size="10" value="{{article_id | default('')}}">
+    </INPUT>
+    </P>
     <P>
-<label for="article_id">Article Id: </label><INPUT id="article_id" name="article_id" maxlength="64" size="10" value="{{article_id | default('')}}">
-</INPUT>
-</P>
-<P>
-<label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="70" value="{{search_url | default('')}}">
-</INPUT>
-</P>
-<P>
-<label for="n_articles">N articles: </label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(100) }}"><br/></P>
+    <label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="80" value="{{search_url | default('')}}">
+    </INPUT>
+    </P>
+    <P>
+    <label for="n_articles">N articles: </label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"><br/></P>
 
-<p>
-<P>
-<label for="d_days">Date range in days</label><input type="text" id="d_days" name="d_days" value="{{d_days | default(30) }}"><br/></P>
+    <p>
+    <P>
+    <label for="d_days">Date range in days</label><input type="text" id="d_days" name="d_days" value="{{d_days | default(30) }}"><br/></P>
 
-<p>
-<input id="page_id" name="page_id"  type="hidden" value="0"  />
+    <p>
+    <input id="page_id" name="page_id"  type="hidden" value="0"  />
 
-<input class="main" type="submit" value="Submit"  />
+    <input class="main" type="submit" value="Submit"  />
 
-<input class="main" type="submit" value="Random" onclick="random_url();"  />
-</p>
-</FORM>
+    <input class="main" type="submit" value="Random" onclick="random_url();"  />
+    </p>
+    </FORM>
 </div>
+</BR>
+{% if article: %}
+<div class="surrond_form">
 
-{% if articles: %}
-<h2>TFIDF+Doc2Vec </h2>
+         <div class="metadata">
 
-<table border="1">
-
-<tr>
-    <th>Article Id</th>
-    <th><span>Title</span></th>
-
-
-    <th class="date"><span>Date</span></th>
-    <th class="columnscore">User Score</th>
-    <th class="columnscore">Prob</th>
-
-    <th>Score</th>
-
-    <th class="icon">Similar</th>
-    <th class="icon">Compare</th>
-  </tr>
-
-    {% for _ in articles: %}
-
-        <tr>
-            <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</td>
-            <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
-            <td class="date">{{_.date_p}}</td>
-             <td class="columnscore">
-              <span id="samestory_{{article_id}}_{{_.article_id}}" >
-                {% if _.u_score > 0: %}
-                    {{_.u_score}}
-                {% else %}
-                  {% if session['signed_in'] %}
-                     <div class="buttonrow">
-                        <button class="buttoncolumn btn-small green"  onclick="send_same_story('samestory_xhr','{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}' );">Y
-                        </button>
-                        <button class="buttoncolumn btn-small yellow" onclick="send_same_story('related_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">A
-                        </button>
-
-                        <button class="buttoncolumn btn-small red"  onclick="send_same_story('unrelated_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">N
-
-                        </button>
-                     </div>
-                  {% endif %}
-                {% endif %}
-              </span>
-            </td>
-            <td class="columnscore">
-              {% if _.p_score > 0: %}
-                  {{'%0.3f'| format(_.p_score|float)}}
-              {% endif %}
-            </td>
-            <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
-
-            <td class="icon">
-                <A HREF="javascript:find_similar('{{_.article_id}}')" >
-                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
-                </A>
-            </td>
-             <td class="icon">
-                {% if _article_id != _.id: %}
-                    <A HREF="/compare/{{article_id}}/{{_.article_id}}" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
-                    </A>
-                {% endif %}
-            </td>
-
-        </tr>
-
-
-    {% endfor %}
-</table>
+             <p><I>ID:</I> {{article.AIN_ID}}</p>
+             <p><I>URL:</I> <A HREF="{{article.AIN_URL}}">{{article.AIN_URL}}</A></p>
+             <P><I>Date:</I> {{article.AIN_DATE}}</P>
+         </div>
+         <div class="article_text">
+             <h2>{{article.AIN_TITLE}}</h2>
+             <p>{{article.ATX_TEXT | safe}}</p>
+         </div>
+    <BR>
+</div>
+<HR>
 {% endif %}
 
+{% if articles: %}
+
+    <table border="1">
+    <CAPTION>Similar articles</CAPTION>
+    <tr>
+        <th>Article Id</th>
+        <th><span>Title</span></th>
+
+
+        <th class="date"><span>Date</span></th>
+        <th class="columnscore">User Score</th>
+        <th class="columnscore">Prob</th>
+
+        <th>Score</th>
+
+        <th class="icon">Similar</th>
+        <th class="icon">Compare</th>
+      </tr>
+
+        {% for _ in articles: %}
+
+            <tr>
+                <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</td>
+                <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
+                <td class="date">{{_.date_p}}</td>
+                 <td class="columnscore">
+                  <span id="samestory_{{article_id}}_{{_.article_id}}" >
+                    {% if _.u_score > 0: %}
+                        {{_.u_score}}
+                    {% else %}
+                      {% if session['signed_in'] %}
+                         <div class="buttonrow">
+                            <button class="buttoncolumn btn-small green"  onclick="send_same_story('samestory_xhr','{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}' );">Y
+                            </button>
+                            <button class="buttoncolumn btn-small yellow" onclick="send_same_story('related_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">A
+                            </button>
+
+                            <button class="buttoncolumn btn-small red"  onclick="send_same_story('unrelated_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">N
+
+                            </button>
+                         </div>
+                      {% endif %}
+                    {% endif %}
+                  </span>
+                </td>
+                <td class="columnscore">
+                  {% if _.p_score > 0: %}
+                      {{'%0.3f'| format(_.p_score|float)}}
+                  {% endif %}
+                </td>
+                <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
+
+                <td class="icon">
+                    <A HREF="javascript:find_similar('{{_.article_id}}')" >
+                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                    </A>
+                </td>
+                 <td class="icon">
+                    {% if _article_id != _.id: %}
+                        <A HREF="/compare/{{article_id}}/{{_.article_id}}" target="_blank">
+                            <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
+                        </A>
+                    {% endif %}
+                </td>
+
+            </tr>
+
+
+        {% endfor %}
+    </table>
+{% endif %}
+{% if articles: %}
 <BR>
-<div class="buttonrow">
+
+    <div class="buttonrow">
         {% if page_id and page_id > 0: %}
                 <input class="main" type="submit" value="<<< Back" onclick="move_to_page('{{ page_id - 1 }}')"/>
 
@@ -121,13 +139,13 @@
         {% endif %}
 
 
-</div>
- <div>
-   Page : <B>{{page_id | default(0) }}</B>
     </div>
-    <BR>
+     <div>
+       Page : <B>{{page_id | default(0) }}</B>
+        </div>
+        <BR>
 
-
+{% endif %}
 {% include 'footer.html' %}
 
 </body>

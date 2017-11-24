@@ -19,11 +19,11 @@ class ArticleLoader:
         return rand_index, self.articlesDF.iloc[rand_index]
 
     def get_article(self, article_id):
-        article_row = self.articlesDF[(self.articlesDF['article_id'] == article_id)]
+        article_row = self.articlesDF[(self.articlesDF['article_id'] == article_id)].iloc[0]
         return article_row
 
     def get_id_from_article_id(self, article_id):
-        article_row = self.get_article(article_id)
+        article_row = self.articlesDF[(self.articlesDF['article_id'] == article_id)].index[0]
         return article_row.index[0]
 
     def get_article_id_from_url(self, url):
@@ -36,7 +36,7 @@ class ArticleLoader:
 
     def are_same_source(self, article_id1, article_id2):
         article1, article2 = self.get_article(article_id1), self.get_article(article_id2)
-        same_source =  article1.iloc[0]['source'] == article2.iloc[0]['source']
+        same_source =  article1['source'] == article2['source']
         return same_source
 
     def articles_in_interval(self,start, end):

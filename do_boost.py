@@ -44,12 +44,15 @@ def create_regressor(train_DF, xboost_model_file):
     clf = XGBRegressor(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
     clf.fit(X_train, y_train)
    # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
-    scores = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_mean_squared_error')
     #print_best_parameters(clf)
     print("Training set : {} data points".format(len(X_train)))
-    print(scores)
-    print("Error: %0.8f (+/- %0.8f)" % (scores.mean(), scores.std() * 2))
+    neg_mean_squared_error = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_mean_squared_error')
+    print(neg_mean_squared_error )
+    print("Neg Mean Squared Error: %0.8f (+/- %0.8f)" % (neg_mean_squared_error.mean(), neg_mean_squared_error .std() * 2))
 
+    #neg_log_loss = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_log_loss')
+   # print(neg_log_loss)
+  #  print("Neg Log Loss: %0.8f (+/- %0.8f)" % (neg_log_loss.mean(), neg_log_loss.std() * 2))
 
     joblib.dump(clf, xboost_model_file)
 
@@ -103,6 +106,11 @@ def create_classifier(train_DF, xboost_classifier_file ):
     print("Recall: %0.8f (+/- %0.8f)" % (recall.mean(), recall.std() * 2))
     print(accuracy)
     print("Accuracy: %0.8f (+/- %0.8f)" % (accuracy.mean(), accuracy.std() * 2))
+
+    neg_log_loss = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_log_loss')
+    print(neg_log_loss)
+    print("Neg Log Loss: %0.8f (+/- %0.8f)" % (neg_log_loss.mean(), neg_log_loss.std() * 2))
+
 
     y_pred = clf.predict(X_train)
 
