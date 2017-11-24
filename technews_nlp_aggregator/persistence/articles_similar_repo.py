@@ -230,6 +230,43 @@ class ArticlesSimilarRepo:
         result = [row for row in query_result]
         return result
 
+    def retrieve_ssus_for_id(self, id):
+        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER WHERE SSU_AIN_ID_1 = :id OR SSU_AIN_ID_2 = :id GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2";
+        similar_stories = []
+        con = self.get_connection()
+        query_result= con.query(sql_user_similar,  {"id": id})
+        result = pd.DataFrame(columns=["article_id", "u_score"])
+        for row in query_result:
+            if (row["SSU_AIN_ID_1"] == id):
+                result = result.append({"article_id": int(row["SSU_AIN_ID_2"]), "u_score": row["SSU_SIMILARITY"]}, ignore_index=True)
+            elif (row["SSU_AIN_ID_2"] == id):
+                result = result.append({"article_id": int(row["SSU_AIN_ID_1"]), "u_score": row["SSU_SIMILARITY"]}, ignore_index=True)
+
+        result.set_index("article_id",inplace=True)
+        return result
+
+    def retrieve_sscs_for_id(self, id):
+        sql_classif_similar = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA FROM PREDICTIONS WHERE ( PRED_AIN_ID_1=:id OR PRED_AIN_ID_2=:id ) ";
+        similar_stories = []
+        con = self.get_connection()
+        query_result = con.query(sql_classif_similar , {"id": id})
+        result = pd.DataFrame(columns=["article_id", "p_score"])
+        for row in query_result:
+            if (row["PRED_AIN_ID_1"] == id):
+                result  = result.append({"article_id" : int(row["PRED_AIN_ID_2"]) , "p_score" : row["PRED_PROBA"]}, ignore_index=True)
+            elif (row["PRED_AIN_ID_2"] == id):
+                result = result.append({"article_id" : int(row["PRED_AIN_ID_1"]) , "p_score" : row["PRED_PROBA"]}, ignore_index=True)
+
+        result.set_index("article_id",inplace=True)
+        return result
+
+    def retrieve_classif_paired(self, threshold):
+        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold";
+        similar_stories = []
+        con = self.get_connection()
+        query_result= con.query(sql_classif_found, {"threshold": threshold})
+        result = [row for row in query_result]
+        return result
 
     def update_to_processed(self, article_id, con=None):
         sql_update = "UPDATE ARTICLE_INFO SET AIN_PROCESSED = SYSDATE() WHERE AIN_ID = :article_id"

@@ -3,18 +3,25 @@ import logging
 import re, html
 
 
-def extract_related_articles(articleLoader, scoresDF):
+def extract_related_articles(articleLoader, scoresDF, ssusDF=None, sscsDF=None):
     related_articles = []
 
     for id, row in scoresDF.iterrows():
         score = (row['score_t'], row['score_d'])
+        p_score, u_score = -1, -1
         link_obj = articleLoader.articlesDF.iloc[id]
-        related_article = fill_article(link_obj, id, score)
+        article_id = link_obj["article_id"]
+        if ssusDF is not None and article_id in ssusDF.index:
+            u_score = ssusDF.loc[article_id]["u_score"]
+        if sscsDF is not None and article_id in sscsDF.index:
+            p_score = sscsDF.loc[article_id]["p_score"]
+
+        related_article = fill_article(link_obj, id, score, u_score, p_score)
         related_articles.append(related_article)
 
     return related_articles
 
-def fill_article(link_obj, id, score):
+def fill_article(link_obj, id, score, u_score, p_score):
     related_article = {}
     related_article["id"] = str(id)
     related_article["article_id"] = str(link_obj["article_id"])
@@ -27,7 +34,9 @@ def fill_article(link_obj, id, score):
 
     related_article["date"] = str(date_p.year)+'-'+str(date_p.month)+'-'+str(date_p.day)
     related_article["similarity"] = score
+    related_article["p_score"] = p_score
 
+    related_article["u_score"] = u_score
 
     return related_article
 

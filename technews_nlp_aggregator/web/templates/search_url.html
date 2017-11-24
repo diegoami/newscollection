@@ -46,8 +46,11 @@
 
 
     <th class="date"><span>Date</span></th>
-    <th>Score</th>
     <th class="columnscore">User Score</th>
+    <th class="columnscore">Prob</th>
+
+    <th>Score</th>
+
     <th class="icon">Similar</th>
     <th class="icon">Compare</th>
   </tr>
@@ -58,11 +61,10 @@
             <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</td>
             <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
             <td class="date">{{_.date_p}}</td>
-            <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
              <td class="columnscore">
               <span id="samestory_{{article_id}}_{{_.article_id}}" >
-                {% if _.U_SCORE_DEF: %}
-                    {{_.U_SCORE}}
+                {% if _.u_score > 0: %}
+                    {{_.u_score}}
                 {% else %}
                   {% if session['signed_in'] %}
                      <div class="buttonrow">
@@ -79,6 +81,13 @@
                 {% endif %}
               </span>
             </td>
+            <td class="columnscore">
+              {% if _.p_score > 0: %}
+                  {{'%0.3f'| format(_.p_score|float)}}
+              {% endif %}
+            </td>
+            <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
+
             <td class="icon">
                 <A HREF="javascript:find_similar('{{_.article_id}}')" >
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">

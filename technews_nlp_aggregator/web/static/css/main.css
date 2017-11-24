@@ -1,7 +1,4 @@
-
-
 body {
-
   background-color:  #bbffe1;
   font-size: 100%;
 }
@@ -60,6 +57,10 @@ img {
 
 .monospace {
     font-family: monospace;
+}
+
+.article_text {
+    background: #FFE4B5;
 }
 
 

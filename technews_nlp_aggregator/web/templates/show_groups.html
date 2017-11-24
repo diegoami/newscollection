@@ -15,15 +15,29 @@
 
 {% for article_group in article_groups %}
 
-<HR>
+
 <BR>
-<A HREF="/show_all/{{article_group.article_list}}" target="_blank">Show all articles</A>
+
+<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
+<input id="search_url" name="search_url"  type="hidden" value=""  />
+
+<input id="article_id" name="article_id"  type="hidden" value=""  />
+<input id="n_articles" name="n_articles"  type="hidden" value="25"  />
+
+<input id="d_days" name="d_days"  type="hidden" value="2"  />
+<input id="page_id" name="page_id"  type="hidden" value="0"  />
+
+</FORM>
+</p>
 <BR>
 <TABLE>
+    <CAPTION><A HREF="/show_all/{{article_group.article_list}}" target="_blank">Show all articles</A></CAPTION>
 
     <col width="8%">
     <col width="10%">
     <col width="57%">
+    <col width="5%">
+
     <col width="25%">
 
 
@@ -34,6 +48,7 @@
        <th>Date</th>
         <th>Source</th>
        <th><span>Article</span></th>
+       <th><span>Search</span></th>
        <th><span>Compare</span></th>
 
     </tr>
@@ -43,7 +58,11 @@
         <TD>{{article.date}}</TD>
         <TD>{{article.source}}</TD>
         <TD><A HREF="{{article.url}}">{{article.title}}</A></TD>
-
+        <td class="icon">
+                <A HREF="javascript:find_similar('{{article.article_id}}')" >
+                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                </A>
+            </td>
         <TD><span class="smallrow">
         {% if article.other_ids|length <= 8 %}
             {% for other_id in article.other_ids %}

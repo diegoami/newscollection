@@ -45,6 +45,7 @@ class Application:
         self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)
         self.threshold = config["threshold"]
         self.refresh_groups()
+
         logging.debug("Log in debug mode")
 
 
@@ -87,3 +88,4 @@ class Application:
             self.article_groups.append(
                 {"articles": articles, "article_list": "-".join([str(article["article_id"]) for article in articles])})
         self.article_groups.sort(key=lambda article_group: article_group["articles"][0]["date"], reverse=True)
+

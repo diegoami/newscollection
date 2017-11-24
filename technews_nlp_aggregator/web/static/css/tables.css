@@ -23,6 +23,11 @@ table, th, td {
     border: 1px solid black;
 }
 
+caption {
+    padding-bottom: 10px;
+    font-size:larger;
+}
+
 
 tr:nth-child(even) {background-color:  #FAFAD2}
 tr:nth-child(odd)  {background-color:  #FFFFCC}
