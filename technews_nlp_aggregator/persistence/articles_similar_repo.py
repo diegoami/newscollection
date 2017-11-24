@@ -182,30 +182,14 @@ class ArticlesSimilarRepo:
     def list_similar_articles(self, filter_criteria= None):
         similar_stories = []
         con = self.get_connection()
+        econ = self.engine.connect()
         similarArticlesSQL_having_cond =  ( " AND ( " + filter_criteria +" ) " )  if self.verify_having_condition(filter_criteria) else ""
         similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 10000"
-        for row in con.query(similarArticlesSQL):
-            similar_story = dict({
-                "ID_1": row["ID_1"],
-                "ID_2": row["ID_2"],
-                "DATE_1"  : row["DATE_1"],
-                "DATE_2": row["DATE_2"],
-                "TITLE_1" : row["TITLE_1"],
-                "TITLE_2" : row["TITLE_2"],
-                "URL_1"   : row["URL_1"],
-                "SOURCE_1" : extract_source_without_www(row["URL_1"]),
-                "URL_2"   : row["URL_2"],
-                "SOURCE_2": extract_source_without_www(row["URL_2"]),
-                "P_SCORE" : round(row["P_SCORE"],3),
-                "U_SCORE": row["U_SCORE"],
-                "C_SCORE": row["C_SCORE"]
-
-            })
-            if (similar_story["U_SCORE"] is not None):
-                similar_story["U_SCORE_DEF"] = True
-            similar_stories.append(similar_story)
-
-        return similar_stories
+        similarArticlesDF = pd.read_sql(similarArticlesSQL , econ)
+        similarArticlesDF["SOURCE_1"] = similarArticlesDF["URL_1"].map(extract_source_without_www)
+        similarArticlesDF["SOURCE_2"] = similarArticlesDF["URL_2"].map(extract_source_without_www)
+        econ.close()
+        return similarArticlesDF
 
     def get_last_similar_story(self):
         sql_last_similar = "SELECT AIN_DATE FROM ARTICLE_INFO WHERE AIN_ID = (SELECT MAX(SST_AIN_ID_2) FROM SAME_STORY )"

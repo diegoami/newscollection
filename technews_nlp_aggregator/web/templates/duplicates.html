@@ -30,10 +30,11 @@
     <th class="date">Date 2</th>
 
     <th>Article 2</th>
+    <th>Admin</th>
     <th>Prob.</th>
     <th>Clas.</th>
 
-    <th class="columnscore">User Score</th>
+
     <th class="icon">Compare</th>
 
 
@@ -47,11 +48,9 @@
             <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
             <td class="date">{{_.DATE_2}}</td>
             <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
-            <td>{{_.P_SCORE}}</td>
-            <td>{{_.C_SCORE}}</td>
-            <td class="columnscore">
+            <td >
               <span id="samestory_{{_.ID_1}}_{{_.ID_2}}" >
-                {% if _.U_SCORE_DEF: %}
+                {% if _.U_SCORE > 0: %}
                     {{_.U_SCORE}}
                 {% else %}
                   {% if session['signed_in'] %}
@@ -69,6 +68,10 @@
                 {% endif %}
               </span>
             </td>
+
+            <td> {{'%0.3f'| format(_.P_SCORE|float)}}</td>
+            <td>{{_.C_SCORE}}</td>
+
 
             <td class="icon">
                 {% if _.ID_1 != _.ID_2: %}

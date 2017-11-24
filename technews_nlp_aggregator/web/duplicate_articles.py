@@ -30,8 +30,9 @@ def duplicates(page_id=0):
     filter_criteria = session.get('filterCriteria', DEFAULT_FILTER_CRITERIA )
     messages = []
     try:
-        all_articles = _.similarArticlesRepo.list_similar_articles(filter_criteria=filter_criteria )
-        start, end = page_id*100, (page_id+1)*100
+        all_articles_DF = _.similarArticlesRepo.list_similar_articles(filter_criteria=filter_criteria )
+        all_articles = all_articles_DF.to_dict(orient='records')
+        start, end = page_id*50, (page_id+1)*50
         if (len(all_articles) > start):
             has_next = len(all_articles) > end
             dup_articles = all_articles[start:min(end,len(all_articles))]
