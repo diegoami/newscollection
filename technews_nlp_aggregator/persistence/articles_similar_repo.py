@@ -226,7 +226,7 @@ class ArticlesSimilarRepo:
             elif (row["SSU_AIN_ID_2"] == id):
                 result = result.append({"article_id": int(row["SSU_AIN_ID_1"]), "u_score": row["SSU_SIMILARITY"]}, ignore_index=True)
 
-        result.set_index("article_id",inplace=True)
+
         return result
 
     def retrieve_sscs_for_id(self, id):
@@ -241,7 +241,7 @@ class ArticlesSimilarRepo:
             elif (row["PRED_AIN_ID_2"] == id):
                 result = result.append({"article_id" : int(row["PRED_AIN_ID_1"]) , "p_score" : row["PRED_PROBA"]}, ignore_index=True)
 
-        result.set_index("article_id",inplace=True)
+
         return result
 
     def retrieve_classif_paired(self, threshold):

@@ -4,53 +4,22 @@ import re, html
 
 
 def extract_related_articles(articleLoader, scoresDF, ssusDF=None, sscsDF=None):
-    related_articles = []
 
-    for id, row in scoresDF.iterrows():
-        score = (row['score_t'], row['score_d'])
-        p_score, u_score = -1, -1
-        link_obj = articleLoader.articlesDF.iloc[id]
-        article_id = link_obj["article_id"]
-        if ssusDF is not None and article_id in ssusDF.index:
-            u_score = ssusDF.loc[article_id]["u_score"]
-        if sscsDF is not None and article_id in sscsDF.index:
-            p_score = sscsDF.loc[article_id]["p_score"]
+    def score_row(row):
+        row["similarity"] = (row['score_t'], row['score_d'])
+        return row
 
-        related_article = fill_article(link_obj, id, score, u_score, p_score)
-        related_articles.append(related_article)
-
+    merged_DF =  scoresDF.join(articleLoader.articlesDF)
+    if (ssusDF is not None):
+        merged_DF =  merged_DF.merge(ssusDF, on='article_id', how='left')
+    if (sscsDF is not None):
+        merged_DF =  merged_DF.merge(sscsDF, on='article_id', how='left')
+    merged_DF = merged_DF.apply(score_row,axis=1)
+    merged_DF['date'] = merged_DF['date_p'].map(lambda date_p: str(date_p.year)+'-'+str(date_p.month)+'-'+str(date_p.day))
+    related_articles = merged_DF.to_dict(orient='records')
     return related_articles
 
-def fill_article(link_obj, id, score, u_score, p_score):
-    related_article = {}
-    related_article["id"] = str(id)
-    related_article["article_id"] = str(link_obj["article_id"])
-    related_article["url"] = str(link_obj["url"])
-    date_p = link_obj["date_p"]
-    related_article["date_p"] = str(date_p)
-    related_article["source"] = str(link_obj["source"])
 
-    related_article["title"] = str(link_obj["title"])
-
-    related_article["date"] = str(date_p.year)+'-'+str(date_p.month)+'-'+str(date_p.day)
-    related_article["similarity"] = score
-    related_article["p_score"] = p_score
-
-    related_article["u_score"] = u_score
-
-    return related_article
-
-
-def filter_double(articleLoader, sims):
-    related_articles = []
-    found_articles = []
-    for id, score, connected_ids in sims:
-        if id in found_articles:
-            continue
-        else:
-            related_articles.append((id,score, connected_ids))
-            found_articles.extend(connected_ids)
-    return related_articles
 
 def read_int_from_form(form, id, default_value="50"):
     intv_str = form.get(id, default_value)
@@ -66,17 +35,6 @@ def read_int_from_form(form, id, default_value="50"):
 
 def enclose_with_span(article, str, class_id):
     try:
-
         article["ATX_TEXT"] = re.sub(r'\b(%s)\b'%str, '<SPAN class="'+class_id+'">' + str+ '</SPAN>', article["ATX_TEXT"], flags=re.IGNORECASE)
     except:
         logging.warning("Could not replace "+str)
-
-
-def highlight_entities(article, organizations, persons, nouns):
-    #article["ATX_TEXT"] = html.escape(article["ATX_TEXT"], True)
-    for organization in organizations:
-        enclose_with_span(article, organization, 'organization')
-    for person in persons:
-        enclose_with_span(article, person, 'person')
-    #for noun in nouns:
-    #   enclose_with_span(article, noun, 'noun')

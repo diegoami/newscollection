@@ -111,7 +111,7 @@
                     </A>
                 </td>
                  <td class="icon">
-                    {% if _article_id != _.id: %}
+                    {% if _article_id != _.article_id: %}
                         <A HREF="/compare/{{article_id}}/{{_.article_id}}" target="_blank">
                             <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
                         </A>

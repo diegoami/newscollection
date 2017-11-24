@@ -36,10 +36,6 @@ class ClassifierAggregator():
         else:
             return None
 
-    def merge_with_ss(self, new_DF, ssusDF, sscsDF):
-        new_DF = new_DF.join(ssusDF, how='left')
-        new_DF = new_DF.join(sscsDF, how='left')
-        return new_DF
 
 
     def retrieve_sims_map_with_dates(self, classifier, text, start=date.min, end=date.max,  title=''):

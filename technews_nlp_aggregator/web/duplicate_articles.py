@@ -31,13 +31,15 @@ def duplicates(page_id=0):
     messages = []
     try:
         all_articles_DF = _.similarArticlesRepo.list_similar_articles(filter_criteria=filter_criteria )
-        all_articles = all_articles_DF.to_dict(orient='records')
         start, end = page_id*50, (page_id+1)*50
-        if (len(all_articles) > start):
-            has_next = len(all_articles) > end
-            dup_articles = all_articles[start:min(end,len(all_articles))]
+        if (len(all_articles_DF) > start):
+            has_next = len(all_articles_DF) > end
+            dup_articles_DF = all_articles_DF.iloc[start:min(end,len(all_articles_DF))]
+            dup_articles = dup_articles_DF.to_dict(orient='records')
+
         else:
             dup_articles = []
+
             return render_template('duplicates.html', messages=['No articles found with this query'],
                                    filter_criteria=filter_criteria)
 
