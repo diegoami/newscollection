@@ -1,4 +1,6 @@
 
+
+
 find_similar = function(article_id) {
     var mainForm = document.getElementById("mainForm");
     mainForm.action = '/retrieve_similar_url';
@@ -9,8 +11,9 @@ find_similar = function(article_id) {
 }
 
 select_header = function(element) {
-    var topNav_element = document.getElementById(element);
-    topNav_element.setAttribute("class", "active");
+    $(".nav li").removeClass("active");//this will remove the active class from
+                                     //previously active menu item
+    $(element).addClass('active');
 }
 
 

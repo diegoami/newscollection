@@ -1,20 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li id="show_groups" class="nav-item active">
+        <a class="nav-link" href="/show_groups">Controversial</a>
+      </li>
+      <li id="duplicates" class="nav-item">
+        <a class="nav-link" href="/duplicates">View Similar</a>
+      </li>
+      <li id="search" class="nav-item">
+        <a class="nav-link" href="/search">Search</a>
+      </li>
+      <li id="search_url" class="nav-item">
+        <a class="nav-link" href="/search_url">Look up</a>
+      </li>
+      <li id="browse" class="nav-item">
+        <a class="nav-link" href="/browse">Browse</a>
+      </li>
+  {% if session['signed_in']: %}
+      <li id="randomrelated" class="nav-item">
+        <a class="nav-link" href="/randomrelated">Compare</a>
+      </li>
+      <li id="statistics_gen" class="nav-item">
+        <a class="nav-link" href="/statistics_gen">Statistics</a>
+      </li>
+      <li id="add_new_url_start" class="nav-item">
+        <a class="nav-link" href="/add_new_url_start">Add url</a>
+      </li>
+  {% endif %}
+    </ul>
+  </div>
+</nav>
+<!--
 <div id="topnav" class="topnav">
   <a id="topnav_groups" href="/show_groups">Controversial</a>
 
   <a id="topnav_duplicated" href="/duplicates/0">View Similar</a>
       <a id="topnav_browse" href="/browse">Browse</a>
-{% if session['signed_in']: %}
-  <a id="topnav_compare" href="/randomrelated">Compare</a>
-{% endif %}
+{
   <a id="topnav_search_url" href="/search_url">Look up</a>
   <a id="topnav_search" href="/search">Search</a>
 {% if session['signed_in']: %}
+ <a id="topnav_compare" href="/randomrelated">Compare</a>
   <a id="topnav_statistics" href="/statistics_gen">Analyze</a>
   <a id="topnav_add_new_url" href="/add_new_url_start">Add url</a>
 {% endif %}
 
  </div>
-
+-->
 <BR>
 {% if messages: %}
      <ul class="errors">
