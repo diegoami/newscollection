@@ -57,6 +57,13 @@ img {
 
 }
 
+.small-img {
+    width: 16px;
+    height: 16px;
+    display:block;
+
+}
+
 .monospace {
     font-family: monospace;
 }

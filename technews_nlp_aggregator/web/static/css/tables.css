@@ -76,28 +76,29 @@ th.date, td.date {
     border: 2px solid black;
 }
 
-.col-source  {
-    width: 15%;
-    font-weight: bolder;
-    font-size: larger;
-}
+
 .col-title  {
     width: 70%;
-    font-size: larger;
+    font-size: large;
     font-family: Impact;
+    padding: 20px;
+
 }
 
+.rcol-source  {
+    width: 15%;
+}
 
 .rcol-date {
-    width: 8%;
+    width: 12%;
 }
 
-.rcol-show_all {
-    width: 5%;
+.rcol-showall {
+    width: 3%;
 }
 
-.rcol-find_similar  {
-    width: 5%;
+.rcol-findsimilar  {
+    width: 3%;
 }
 .rcol-compare  {
     width: 30%;
@@ -147,6 +148,8 @@ th.date, td.date {
 
 [class*="rcol-"] {
     float: right;
+    margin: 2px;
+    padding: 3px;
 }
 
 [class*="tcol-"] {

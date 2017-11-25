@@ -34,25 +34,26 @@
     {% for article in article_group.articles %}
     <div class="gridentry">
         <div class="mainrow">
-            <div class="col-source">{{article.source}}</div>
+
             <div class="col-title"><A HREF="{{article.url}}">{{article.title}}</A></div>
         </div>
         <div class="smallrow">
 
 
-            <div class="rcol-show_all">
+            <div class="rcol-showall">
                     <A HREF="/show_all/{{article_group.article_list}}" target="_blank" >
-                        <IMG SRC="{{ url_for('static', filename='images/show_all.png') }}" ALT="Show all articles">
+                        <IMG class="small-img" SRC="{{ url_for('static', filename='images/show_all.png') }}" ALT="Show all articles">
                     </A>
                 </td>
             </div>
 
-            <div class="rcol-find_similar">
+            <div class="rcol-findsimilar">
                     <A HREF="javascript:find_similar('{{article.article_id}}')" >
-                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                        <IMG class="small-img" SRC="{{ url_for('static', filename='images/find_similar.png') }}"  ALT="Find similar">
                     </A>
                 </td>
             </div>
+            <div class="rcol-source">{{article.source}}</div>
             <div class="rcol-date">{{article.date}}</div>
         </div>
         <div class="compare_row">
@@ -60,7 +61,7 @@
             {% if article.other_ids|length <= 16 %}
                 {% for other_id in article.other_ids %}
 
-                    <A class="smallcolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
+                    <A class="smallcolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG class="small-img" SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
                 {% endfor %}
             {% endif %}
             </div>
