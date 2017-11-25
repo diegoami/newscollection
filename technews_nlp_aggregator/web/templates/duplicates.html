@@ -92,8 +92,23 @@
             <form class="buttoncolumn" action="/duplicates/{{page_id-1}}">
                 <input class="main" type="submit" value="<<< Back" />
             </form>
+            {% for p in range(begin_page, page_id) %}
+                 <div class="buttoncolumn">
+                    <A HREF="/duplicates/{{p}}">{{p+1}}</A>
+                 </div>
+            {% endfor %}
+
         {% endif %}
+        <div class="buttoncolumn">
+          {{page_id+1 | default(0) }}
+        </div>
+
         {% if has_next : %}
+            {% for p in range(page_id+1, page_id+how_many_pages+1) %}
+             <div class="buttoncolumn">
+                <A HREF="/duplicates/{{p}}">{{p+1}}</A>
+             </div>
+            {% endfor %}
             <form class="buttoncolumn" action="/duplicates/{{page_id+1}}">
                 <input class="main" type="submit" value="Forward >>> " />
             </form>
@@ -101,10 +116,6 @@
 
 
 </div>
- <div>
-   Page : <B>{{page_id | default(0) }}</B>
-    </div>
-    <BR>
 
 {% include 'footer.html' %}
 </body>

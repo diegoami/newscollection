@@ -66,11 +66,9 @@ def common_retrieve_id( id, d_days, n_articles=25,  page_id = 0, url=None, artic
     _ = app.application
     new_DF = _.classifierAggregator.retrieve_articles_for_id(id=id, d_days=d_days, n_articles=n_articles, page_id=page_id)
     ssus_DF, sscs_DF = _.similarArticlesRepo.retrieve_ssus_for_id(article_id), _.similarArticlesRepo.retrieve_sscs_for_id(article_id)
-#    new_DF = _.classifierAggregator.merge_with_ss(new_DF, ssus, sscs)
     related_articles = extract_related_articles(_.articleLoader, new_DF, ssus_DF, sscs_DF)
-    #article = _.articleDatasetRepo.load_article_with_text(article_id)
-    article = convert_summary(article_id)
 
+    article = convert_summary(article_id)
     if related_articles:
         return render_template('search_url.html', articles=related_articles, search_url=url, article=article, article_id=article_id, n_articles=n_articles,  d_days=d_days, page_id = page_id)
 
