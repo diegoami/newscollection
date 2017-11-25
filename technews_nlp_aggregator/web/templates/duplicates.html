@@ -50,7 +50,7 @@
             <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
             <td >
               <span id="samestory_{{_.ID_1}}_{{_.ID_2}}" >
-                {% if _.U_SCORE: %}
+                {% if _.U_SCORE >= 0: %}
                     {{_.U_SCORE}}
                 {% else %}
                   {% if session['signed_in'] %}
@@ -76,7 +76,7 @@
             <td class="icon">
                 {% if _.ID_1 != _.ID_2: %}
                     <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
+                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare side-by-side" TITLE="Compare side-by-side">
                     </A>
                 {% endif %}
             </td>

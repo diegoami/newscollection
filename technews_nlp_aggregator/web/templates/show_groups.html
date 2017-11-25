@@ -30,9 +30,21 @@
 
 
 <div class="gridbox">
+    <div class="gridtop">
+        <div class="toprow">
+            <div class="tcol-showindex"><A HREF="/show_all/{{article_group.article_list}}" target="_blank">{{article_group.index}}</A></div>
+            <div class="tcol-showall tooltip">
+                <A HREF="/show_all/{{article_group.article_list}}" target="_blank" >
+                    <IMG class="small-img" SRC="{{ url_for('static', filename='images/show_all.png') }}" TITLE="Show all articles" ALT="Show all articles">
+                </A>
+                <SPAN class="tooltiptext">Click here to see all the articles in one page</SPAN>
 
-    {% for article in article_group.articles %}
+            </div>
+        </div>
+    </div>
+   {% for article in article_group.articles %}
     <div class="gridentry">
+
         <div class="mainrow">
 
             <div class="col-title"><A HREF="{{article.url}}">{{article.title}}</A></div>
@@ -40,32 +52,28 @@
         <div class="smallrow">
 
 
-            <div class="rcol-showall">
-                    <A HREF="/show_all/{{article_group.article_list}}" target="_blank" >
-                        <IMG class="small-img" SRC="{{ url_for('static', filename='images/show_all.png') }}" ALT="Show all articles">
-                    </A>
-                </td>
-            </div>
 
             <div class="rcol-findsimilar">
                     <A HREF="javascript:find_similar('{{article.article_id}}')" >
-                        <IMG class="small-img" SRC="{{ url_for('static', filename='images/find_similar.png') }}"  ALT="Find similar">
+                        <IMG class="small-img" SRC="{{ url_for('static', filename='images/find_similar.png') }}" TITLE="Find similar" ALT="Find similar">
                     </A>
-                </td>
+
             </div>
             <div class="rcol-source">{{article.source}}</div>
             <div class="rcol-date">{{article.date}}</div>
-        </div>
-        <div class="compare_row">
-             <div class="tcol-compare">
-            {% if article.other_ids|length <= 16 %}
-                {% for other_id in article.other_ids %}
+            <div class="rcol-articleid">{{article.article_id}}</div>
 
-                    <A class="smallcolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG class="small-img" SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
-                {% endfor %}
-            {% endif %}
+            <div class="col-compare">
+                        {% if article.other_ids|length <= 16 %}
+                            {% for other_id in article.other_ids %}
+
+                                <A class="smallcolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG class="small-img" SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}}" TITLE="Compare with {{other_id}}" ></A>
+                            {% endfor %}
+                        {% endif %}
+
             </div>
         </div>
+
     </div>
     {% endfor %}
 </div>
@@ -74,33 +82,32 @@
 <HR>
     <BR>
 <div class="buttonrow">
+    {% if page_id and page_id > 0: %}
+        <form class="buttoncolumn" action="/show_groups/{{page_id-1}}">
+            <input class="main" type="submit" value="<<< Back" />
+        </form>
+        {% for p in range(begin_page, page_id) %}
+         <div class="buttoncolumn">
+            <A HREF="/show_groups/{{p}}">{{p+1}}</A>
+         </div>
+        {% endfor %}
+    {% endif %}
 
-        {% if page_id and page_id > 0: %}
-            <form class="buttoncolumn" action="/show_groups/{{page_id-1}}">
-                <input class="main" type="submit" value="<<< Back" />
-            </form>
-            {% for p in range(begin_page, page_id) %}
+
+    <div class="buttoncolumn">
+      {{page_id+1 | default(0) }}
+    </div>
+
+    {% if has_next : %}
+        {% for p in range(page_id+1, page_id+how_many_pages+1) %}
              <div class="buttoncolumn">
                 <A HREF="/show_groups/{{p}}">{{p+1}}</A>
              </div>
-            {% endfor %}
-        {% endif %}
-
-
-        <div class="buttoncolumn">
-          {{page_id+1 | default(0) }}
-        </div>
-
-        {% if has_next : %}
-            {% for p in range(page_id+1, page_id+how_many_pages+1) %}
-                 <div class="buttoncolumn">
-                    <A HREF="/show_groups/{{p}}">{{p+1}}</A>
-                 </div>
-            {% endfor %}
-            <form class="buttoncolumn" action="/show_groups/{{page_id+1}}">
-                <input class="main" type="submit" value="Forward >>> " />
-            </form>
-        {% endif %}
+        {% endfor %}
+        <form class="buttoncolumn" action="/show_groups/{{page_id+1}}">
+            <input class="main" type="submit" value="Forward >>> " />
+        </form>
+    {% endif %}
 
 
 </div>

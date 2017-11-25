@@ -67,7 +67,7 @@ th.date, td.date {
 
 .gridbox {
     box-sizing: border-box;
-    border: 3px solid black;
+
     text-align: left;
     width: 100%;
 }
@@ -76,33 +76,63 @@ th.date, td.date {
     border: 2px solid black;
 }
 
+.gridtop {
+
+}
 
 .col-title  {
-    width: 70%;
+    width: 90%;
     font-size: large;
     font-family: Impact;
     padding: 20px;
 
 }
 
+
+.rcol-articleid {
+    width: 10%;
+}
+
+
 .rcol-source  {
     width: 15%;
+    font-weight: bolder;
 }
 
 .rcol-date {
     width: 12%;
 }
 
-.rcol-showall {
-    width: 3%;
-}
 
 .rcol-findsimilar  {
     width: 3%;
 }
-.rcol-compare  {
+.col-compare  {
+
+}
+
+.toprow {
+    background-color: #ffc319;
+    width : 20%;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.toprow::after {
+    content: "";
+    clear: both;
+    display: table;
+
+}
+
+.tcol-showall {
     width: 30%;
 }
+
+.tcol-showindex {
+    width: 70%;
+}
+
 
 .mainrow {
     background-color: #FFFFCC;
@@ -131,7 +161,7 @@ th.date, td.date {
 }
 
 .compare_row {
-    background-color: #FAF4DD;
+    background-color: #FAFAD2;
     font-size: smaller;
 }
 
@@ -148,8 +178,7 @@ th.date, td.date {
 
 [class*="rcol-"] {
     float: right;
-    margin: 2px;
-    padding: 3px;
+
 }
 
 [class*="tcol-"] {

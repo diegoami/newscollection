@@ -107,13 +107,13 @@
 
                 <td class="icon">
                     <A HREF="javascript:find_similar('{{_.article_id}}')" >
-                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
                     </A>
                 </td>
                  <td class="icon">
                     {% if _article_id != _.article_id: %}
                         <A HREF="/compare/{{article_id}}/{{_.article_id}}" target="_blank">
-                            <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
+                            <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare side-by-side" TITLE="Compare side-by-side">
                         </A>
                     {% endif %}
                 </td>

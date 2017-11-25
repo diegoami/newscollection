@@ -188,6 +188,7 @@ class ArticlesSimilarRepo:
         similarArticlesDF = pd.read_sql(similarArticlesSQL , econ)
         similarArticlesDF["SOURCE_1"] = similarArticlesDF["URL_1"].map(extract_source_without_www)
         similarArticlesDF["SOURCE_2"] = similarArticlesDF["URL_2"].map(extract_source_without_www)
+        similarArticlesDF["U_SCORE"].fillna(-1, inplace=True)
         econ.close()
         return similarArticlesDF
 
