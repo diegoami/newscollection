@@ -5,9 +5,12 @@
     text-align: center;
     font-size: 1.3em;
 
+
 }
 
-
+.buttonrow {
+    padding-bottm: 5px;
+}
 /* Clear floats after the columns */
 .buttonrow:after {
     content: "";
