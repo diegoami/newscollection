@@ -50,7 +50,7 @@
             <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
             <td >
               <span id="samestory_{{_.ID_1}}_{{_.ID_2}}" >
-                {% if _.U_SCORE > 0: %}
+                {% if _.U_SCORE: %}
                     {{_.U_SCORE}}
                 {% else %}
                   {% if session['signed_in'] %}
@@ -99,11 +99,12 @@
             {% endfor %}
 
         {% endif %}
-        <div class="buttoncolumn">
-          {{page_id+1 | default(0) }}
-        </div>
-
-        {% if has_next : %}
+        {% if page_id %}
+            <div class="buttoncolumn">
+              {{page_id+1 | default(0) }}
+            </div>
+        {% endif %}
+        {% if has_next and page_id: %}
             {% for p in range(page_id+1, page_id+how_many_pages+1) %}
              <div class="buttoncolumn">
                 <A HREF="/duplicates/{{p}}">{{p+1}}</A>
