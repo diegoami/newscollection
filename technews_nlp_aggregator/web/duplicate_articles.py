@@ -21,11 +21,11 @@ def filterduplicates():
         if form:
             filterCriteria = form["filterCriteria"]
             session['filterCriteria'] = request.form['filterCriteria']
-    return duplicates(0)
+    return duplicates()
 
-@app.route('/duplicates', defaults={'page_id': 0})
+@app.route('/duplicates', defaults={'page_id': 1})
 @app.route('/duplicates/<int:page_id>')
-def duplicates(page_id=0):
+def duplicates(page_id=1):
     _ = app.application
     filter_criteria = session.get('filterCriteria', DEFAULT_FILTER_CRITERIA )
     messages = []
@@ -33,7 +33,7 @@ def duplicates(page_id=0):
     back_forth = 6
     try:
         all_articles_DF = _.similarArticlesRepo.list_similar_articles(filter_criteria=filter_criteria )
-        start, end = page_id*paging_rate, (page_id+1)*paging_rate
+        start, end = (page_id-1)*paging_rate, (page_id)*paging_rate
         if (len(all_articles_DF) > start):
             has_next = len(all_articles_DF) > end
             dup_articles_DF = all_articles_DF.iloc[start:min(end,len(all_articles_DF))]
@@ -44,8 +44,8 @@ def duplicates(page_id=0):
 
             return render_template('duplicates.html', messages=['No articles found with this query'],
                                    filter_criteria=filter_criteria)
-        how_many_pages = min(max((len(all_articles_DF) - end) // paging_rate, 0), back_forth)
-        begin_page = max(0, page_id - back_forth)
+        how_many_pages = min(max((len(all_articles_DF) - end) // paging_rate, 1), back_forth)
+        begin_page = max(1, page_id - back_forth)
         return render_template('duplicates.html', dup_articles=dup_articles, page_id=page_id, has_next=has_next, filter_criteria=filter_criteria, how_many_pages=how_many_pages, begin_page = begin_page)
     except:
         traceback.print_exc()

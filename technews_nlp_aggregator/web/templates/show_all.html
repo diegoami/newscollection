@@ -9,16 +9,23 @@
 <body onload="javascript:select_header('topnav_statistics')">
 {% include 'header.html' %}
 
-{% for A in articles: %}
+{% for article in articles: %}
+<div class="surrond_form">
 
+         <div class="metadata">
 
-     <div>
-        <h2>{{A.AIN_TITLE}}</h2>
-         <p><I>ID:</I> {{A.AIN_ID}}</p>
-        <p><I>URL:</I> <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
-        <P><I>Date:</I> {{A.AIN_DATE}}</P>
-          <p class="article_text">{{A.ATX_TEXT | safe}}</p>
-     </div>
+             <p><I>ID:</I> {{article.AIN_ID}}</p>
+             <p><I>URL:</I> <A HREF="{{article.AIN_URL}}">{{article.AIN_URL}}</A></p>
+             <P><I>Date:</I> {{article.AIN_DATE}}</P>
+         </div>
+         <div class="article_text">
+             <h3>{{article.AIN_TITLE}}</h3>
+             <p>{{article.ATX_TEXT | safe}}</p>
+         </div>
+    <BR>
+</div>
+<BR>
+
 {% endfor %}
 
 

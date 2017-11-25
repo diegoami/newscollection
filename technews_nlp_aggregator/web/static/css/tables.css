@@ -64,3 +64,91 @@ th.date, td.date {
     display: table;
     clear: both;
 }
+
+.gridbox {
+    box-sizing: border-box;
+    border: 3px solid black;
+    text-align: left;
+    width: 100%;
+}
+
+.gridentry {
+    border: 2px solid black;
+}
+
+.col-source  {
+    width: 15%;
+    font-weight: bolder;
+    font-size: larger;
+}
+.col-title  {
+    width: 70%;
+    font-size: larger;
+    font-family: Impact;
+}
+
+
+.rcol-date {
+    width: 8%;
+}
+
+.rcol-show_all {
+    width: 5%;
+}
+
+.rcol-find_similar  {
+    width: 5%;
+}
+.rcol-compare  {
+    width: 30%;
+}
+
+.mainrow {
+    background-color: #FFFFCC;
+    font-size: larger;
+    border: 1px solid black;
+}
+
+.mainrow::after {
+    content: "";
+    clear: both;
+    display: table;
+
+}
+
+.smallrow {
+    background-color:  #FAFAD2;
+    font-size: smaller;
+}
+
+.smallrow::after {
+    content: "";
+    clear: both;
+    display: table;
+    font-size: smaller;
+    font-family: Consolas;
+}
+
+.compare_row {
+    background-color: #FAF4DD;
+    font-size: smaller;
+}
+
+.compare_row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+[class*="col-"] {
+    float: left;
+}
+
+[class*="rcol-"] {
+    float: right;
+}
+
+[class*="tcol-"] {
+    float: right;
+}

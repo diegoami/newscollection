@@ -7,7 +7,7 @@
     <title>Controversial news</title>
 
 </head>
-<body onload="select_header('topnav_groups')">
+<div onload="select_header('topnav_groups')">
 {% include 'header.html' %}
 
 <BR>
@@ -28,50 +28,47 @@
 {% for article_group in article_groups %}
 
 
-<TABLE>
-    <CAPTION><A HREF="/show_all/{{article_group.article_list}}" target="_blank">Show all articles</A></CAPTION>
 
-    <col width="8%">
-    <col width="10%">
-    <col width="57%">
-    <col width="5%">
+<div class="gridbox">
 
-    <col width="25%">
-
-
-    <TR>
-
-
-
-       <th>Date</th>
-        <th>Source</th>
-       <th><span>Article</span></th>
-       <th><span>Search</span></th>
-       <th><span>Compare</span></th>
-
-    </tr>
     {% for article in article_group.articles %}
-    <TR>
+    <div class="gridentry">
+        <div class="mainrow">
+            <div class="col-source">{{article.source}}</div>
+            <div class="col-title"><A HREF="{{article.url}}">{{article.title}}</A></div>
+        </div>
+        <div class="smallrow">
 
-        <TD>{{article.date}}</TD>
-        <TD>{{article.source}}</TD>
-        <TD><A HREF="{{article.url}}">{{article.title}}</A></TD>
-        <td class="icon">
-                <A HREF="javascript:find_similar('{{article.article_id}}')" >
-                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
-                </A>
-            </td>
-        <TD><span class="smallrow">
-        {% if article.other_ids|length <= 8 %}
-            {% for other_id in article.other_ids %}
 
-                <A class="smallcolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
-            {% endfor %}
-        {% endif %}
-        </span>
-    </TR>
+            <div class="rcol-show_all">
+                    <A HREF="/show_all/{{article_group.article_list}}" target="_blank" >
+                        <IMG SRC="{{ url_for('static', filename='images/show_all.png') }}" ALT="Show all articles">
+                    </A>
+                </td>
+            </div>
+
+            <div class="rcol-find_similar">
+                    <A HREF="javascript:find_similar('{{article.article_id}}')" >
+                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar">
+                    </A>
+                </td>
+            </div>
+            <div class="rcol-date">{{article.date}}</div>
+        </div>
+        <div class="compare_row">
+             <div class="tcol-compare">
+            {% if article.other_ids|length <= 16 %}
+                {% for other_id in article.other_ids %}
+
+                    <A class="smallcolumn" HREF="/compare/{{article.article_id}}/{{other_id}}" target="_blank"><IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare with {{other_id}} "></A>
+                {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
     {% endfor %}
-</TABLE>
+</div>
+<BR><BR><BR>
 {% endfor %}
 <HR>
     <BR>

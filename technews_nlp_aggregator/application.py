@@ -68,7 +68,7 @@ class Application:
     def refresh_groups(self):
         all_groups_list = self.articleSimilarLoader.retrieve_groups(articleLoader=self.articleLoader, threshold=self.threshold)
         self.article_groups = []
-        for group in all_groups_list:
+        for index, group in enumerate(all_groups_list):
 
             articlesDF = self.articleLoader.articlesDF
             articles_in_groupDF = articlesDF[articlesDF['article_id'].isin(group)]
@@ -86,6 +86,6 @@ class Application:
                 }
                 articles.append(article)
             self.article_groups.append(
-                {"articles": articles, "article_list": "-".join([str(article["article_id"]) for article in articles])})
+                {"articles": articles, "article_list": "-".join([str(article["article_id"]) for article in articles]), "index" : index})
         self.article_groups.sort(key=lambda article_group: article_group["articles"][0]["date"], reverse=True)
 
