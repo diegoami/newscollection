@@ -22,6 +22,8 @@ body {
 
 form  { display: table;      }
 p     { display: table-row;  }
+h2    { display: table-row;  }
+h3    { display: table-row;  }
 
 label {
     display: table-cell;
