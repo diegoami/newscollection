@@ -30,10 +30,10 @@
     <th class="date">Date 2</th>
 
     <th>Article 2</th>
-    <th>Admin</th>
+
     <th>Prob.</th>
     <th>Regr.</th>
-
+     <th>Admin</th>
 
     <th class="icon">Compare</th>
 
@@ -48,7 +48,18 @@
             <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
             <td class="date">{{_.DATE_2}}</td>
             <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
-            <td >
+
+
+            <td>
+                <div class="tooltip">{{'%0.3f'| format(_.P_SCORE|float)}}<span class="smalltooltiptext">Probability that <BR> relate to the same story.</span>
+                </div>
+            </td>
+            <td>
+                <div class="tooltip">{{'%0.3f'| format(_.R_SCORE|float)}}<span class="smalltooltiptext">Similarity score <BR>given by regression.</span>
+                </div>
+
+            </td>
+            <td>
               <span id="samestory_{{_.ID_1}}_{{_.ID_2}}" >
                 {% if _.U_SCORE >= 0: %}
                     {{_.U_SCORE}}
@@ -59,7 +70,6 @@
                         </button>
                         <button class="buttoncolumn btn-small yellow" onclick="send_same_story('related_xhr', '{{_.ID_1}}', '{{_.ID_2}}', 'samestory_{{_.ID_1}}_{{_.ID_2}}');">A
                         </button>
-
                         <button class="buttoncolumn btn-small red"  onclick="send_same_story('unrelated_xhr', '{{_.ID_1}}', '{{_.ID_2}}', 'samestory_{{_.ID_1}}_{{_.ID_2}}');">N
 
                         </button>
@@ -68,10 +78,6 @@
                 {% endif %}
               </span>
             </td>
-
-            <td> {{'%0.3f'| format(_.P_SCORE|float)}}</td>
-            <td>{{'%0.3f'| format(_.R_SCORE|float)}}</td>
-
 
             <td class="icon">
                 {% if _.ID_1 != _.ID_2: %}
