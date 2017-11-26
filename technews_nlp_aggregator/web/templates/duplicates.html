@@ -25,9 +25,8 @@
 <table>
 
   <tr>
-    <th class="date">Date 1</th>
     <th><span>Article 1</span></th>
-    <th class="date">Date 2</th>
+
 
     <th>Article 2</th>
 
@@ -44,10 +43,10 @@
         {% if _.SOURCE_1 != _.SOURCE_2: %}
         <tr>
 
-            <td class="date">{{_.DATE_1}}</td>
-            <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
-            <td class="date">{{_.DATE_2}}</td>
-            <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
+
+            <td><B>{{_.SOURCE_1}}</B> <I>{{_.DATE_1}}</I>:<BR><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
+
+            <td><B>{{_.SOURCE_2}} </B><I>{{_.DATE_2}}</I>:<BR><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
 
 
             <td>
