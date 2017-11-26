@@ -305,8 +305,6 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
-
-
     def load_test_set(self):
         view_sql =  "SELECT *  FROM TEST_SCORES"
 
@@ -318,9 +316,9 @@ class ArticlesSimilarRepo:
     def write_predictions(self, test_df, version):
         con =  self.get_connection()
 
-        replace_sql = 'INSERT into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA, PRED_CAT, PRED_VERSION) values (:pred1,:pred2,:proba,:cat, :ver)'
+        replace_sql = 'INSERT into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_REGR, PRED_PROBA, PRED_VERSION) values (:pred1,:pred2,:regr, :proba,:ver)'
 #        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
         con.begin()
         for index, row in test_df.iterrows():
-                con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'proba' : row['SCO_PRED'], 'cat' : row['SCO_CAT'], 'ver' : version})
+                con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'regr' : row['SCO_REGR'], 'proba' : row['SCO_PROBA'], 'ver' : version})
         con.commit()

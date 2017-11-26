@@ -82,9 +82,9 @@ th.date, td.date {
 
 .col-title  {
     width: 90%;
-    font-size: large;
+    font-size: largest;
     font-family: Impact;
-    padding: 20px;
+    padding: 15px;
 
 }
 
