@@ -137,7 +137,22 @@ footer {
 .textarea {
   float: left;
   height: auto;
-  width: 300px;
+  width: 200px;
+}
+
+@media screen and (min-width: 400px) {
+    .textarea { width:280px; } /* Increase the font size */
+}
+
+
+@media screen and (min-width: 500px) {
+    .textarea { width:300px; } /* Increase the font size */
+}
+
+
+@media screen and (min-width: 600px) {
+    .textarea { width:400px; } /* Increase the font size */
+
 }
 
 @media screen and (min-width: 700px) {
@@ -151,6 +166,6 @@ footer {
 }
 
 @media screen and (min-width:1400px) {
-    .textarea { width:1000px; } /* Increase the font size */
+    .textarea { width:900px; } /* Increase the font size */
 
 }
