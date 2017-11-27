@@ -1,4 +1,5 @@
 
+
 .filterInput {
   background-image: url('../images/searchicon.png');
   background-position: 10px 10px;
@@ -95,8 +96,16 @@ th.date, td.date {
 
 
 .rcol-source  {
-    width: 15%;
     font-weight: bolder;
+}
+
+
+@media screen and (min-width:1200px) {
+    .rcol-source  { width: 10%; } /* Increase the font size */
+}
+
+@media screen and (min-width:1600px) {
+    .rcol-source  { width: 15%; } /* Increase the font size */
 }
 
 .rcol-date {
@@ -104,8 +113,8 @@ th.date, td.date {
 }
 
 
-.rcol-findsimilar  {
-    width: 3%;
+@media screen and (min-width:1200px) {
+    .rcol-findsimilar  { width: 3%;  }
 }
 .col-compare  {
 
@@ -116,6 +125,10 @@ th.date, td.date {
     width : 20%;
     border: 1px solid black;
     padding: 5px;
+}
+
+@media screen and (max-width:800px) {
+    .toprow { width : 30%; }
 }
 
 .toprow::after {
@@ -184,3 +197,6 @@ th.date, td.date {
 [class*="tcol-"] {
     float: right;
 }
+
+
+

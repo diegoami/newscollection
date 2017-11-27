@@ -13,6 +13,16 @@
   font-size: 17px;
 }
 
+
+@media screen and (max-width:800px) {
+    .topnav a {
+      padding: 10px 4px;
+      font-size: 14px;
+    } /* Increase the font size */
+}
+@m
+
+
 .topnav a:hover {
   background-color: #ddd;
   color: black;

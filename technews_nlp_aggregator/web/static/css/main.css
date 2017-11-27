@@ -19,7 +19,7 @@ body {
     body { font-size:125%; } /* Increase the font size */
 }
 @media screen and (min-width:1800px) {
-    html { padding:0 20%; } /* Reduce the container width */
+    html { padding:0 10%; } /* Reduce the container width */
 }
 
 @media (max-width: 1000px) {
