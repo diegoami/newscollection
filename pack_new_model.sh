@@ -6,6 +6,6 @@ rm /media/diego/QData/techarticles/pickle/bigrams*
 rm /media/diego/QData/techarticles/pickle/trigrams*
 find /media/diego/QData/techarticles/pickle/ -name texts_*.p -mmin +240 | xargs -n1 rm
 rm /media/diego/QData/techarticles.tgz
-pushd /media/diego/QData/
-tar cvfz techarticles.tgz techarticles
-popd
+#pushd /media/diego/QData/
+#tar cvfz techarticles.tgz techarticles
+#popd

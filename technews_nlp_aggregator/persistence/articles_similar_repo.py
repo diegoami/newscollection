@@ -67,7 +67,6 @@ class ArticlesSimilarRepo:
                     "SSJ_AGENT": agentname,
                     "SSJ_THRESHOLD_LO": thresholds[0],
                     "SSJ_THRESHOLD_HI": thresholds[1],
-
                     "SSJ_EXEC_DATE" : datetime.now()
                 })
             )
@@ -156,7 +155,7 @@ class ArticlesSimilarRepo:
     def verify_having_condition(self, filter_criteria=None):
         if filter_criteria:
 
-            allowed_tokens = ["U_SCORE", "P_SCORE",  "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
+            allowed_tokens = ["U_SCORE", "P_SCORE", "R_SCORE", "BETWEEN", "OR", "AND", "(", ")", "NOT", "=", "<", ">", "<=", ">=", "<>", "IS", "NULL"]
             sp_tokens = defaultTokenizer.word_tokenizer.simple_tokenize(filter_criteria)
             if (len(sp_tokens ) >= 3):
                 for sp_token in sp_tokens:
@@ -289,15 +288,15 @@ class ArticlesSimilarRepo:
                                            SCO_VERSION=score["SCO_VERSION"])
         return found_row
 
-    def load_train_set(self):
-        view_sql = "SELECT * FROM TRAIN_SCORES"
+    def load_train_set(self, version):
+        view_sql = "SELECT * FROM TRAIN_SCORES WHERE SCO_VERSION="+str(version)
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
         econ.close()
         return viewDF
 
-    def load_predictions(self):
-        view_sql = "SELECT * FROM PREDICTIONS"
+    def load_predictions(self, version):
+        view_sql = "SELECT * FROM PREDICTIONS WHERE PRED_VERSION="+str(version)
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
         viewDF.set_index(['PRED_AIN_ID_1', 'PRED_AIN_ID_2'], inplace=True)
@@ -305,8 +304,8 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
-    def load_test_set(self):
-        view_sql =  "SELECT *  FROM TEST_SCORES"
+    def load_test_set(self, version):
+        view_sql =  "SELECT *  FROM TEST_SCORES WHERE SCO_VERSION="+str(version)
 
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)

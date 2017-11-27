@@ -43,7 +43,9 @@ if __name__ == '__main__':
 
     train_fail_loc = config["train_data_file"]
     test_fail_loc = config["test_data_file"]
-    version = config["version"]
+
+    db_config = yaml.safe_load(open(config["key_file"]))
+    version = db_config["version"]
     application = Application(config, True)
     feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator, version=version)
     similarArticlesRepo = application.similarArticlesRepo

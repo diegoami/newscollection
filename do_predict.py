@@ -37,13 +37,15 @@ if __name__ == '__main__':
     similarArticlesRepo = ArticlesSimilarRepo(db_url)
 
 
-    version = config["version"]
+    db_config = yaml.safe_load(open(config["key_file"]))
+    version = db_config["version"]
+
 
     xboost_model_file = config["xgboost_model_file"]
     xboost_classif_file = config["xgboost_classifier_file"]
 
-    test_df = similarArticlesRepo.load_test_set()
-    predictions_df = similarArticlesRepo.load_predictions()
+    test_df = similarArticlesRepo.load_test_set(version)
+    predictions_df = similarArticlesRepo.load_predictions(version)
     test_df_res = predict(test_df, xboost_model_file, xboost_classif_file, predictions_df)
 
     similarArticlesRepo.write_predictions(test_df_res, version)
