@@ -3,6 +3,29 @@ body {
   font-size: 100%;
 }
 
+
+@media screen and (min-width:1000px) {
+    body { font-size:120%; } /* Increase the font size */
+
+}
+
+@media screen and (min-width:1200px) {
+    body { font-size:110%; } /* Increase the font size */
+}
+@media screen and (min-width:1400px) {
+    html { padding:0 15%; } /* Reduce the container width */
+}
+@media screen and (min-width:1600px) {
+    body { font-size:125%; } /* Increase the font size */
+}
+@media screen and (min-width:1800px) {
+    html { padding:0 20%; } /* Reduce the container width */
+}
+
+@media (max-width: 1000px) {
+    .hide-1000 {display: none}
+}
+
 .articleLink {
   font-size: 1.3em;
 }
