@@ -15,15 +15,15 @@
     </INPUT>
     </P>
     <P>
-    <label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="60" value="{{search_url | default('')}}">
+    <label for="search_url">Url in database: </label><INPUT class="textarea" id="search_url" name="search_url" maxlength="200" size="60" value="{{search_url | default('')}}">
     </INPUT>
     </P>
     <P>
-    <label for="n_articles">N articles: </label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"><br/></P>
+    <label for="n_articles">N articles: </label><input type="text" id="n_articles" name="n_articles" size="10" value="{{n_articles | default(25) }}"><br/></P>
 
     <p>
     <P>
-    <label for="d_days">Date range in days</label><input type="text" id="d_days" name="d_days" value="{{d_days | default(30) }}"><br/></P>
+    <label for="d_days">Date range in days</label><input type="text" id="d_days" name="d_days" size="10" value="{{d_days | default(30) }}"><br/></P>
 
     <p>
     <input id="page_id" name="page_id"  type="hidden" value="0"  />
@@ -58,32 +58,33 @@
     <table border="1">
     <CAPTION>Similar articles</CAPTION>
     <tr>
-        <th>Article Id</th>
+        <th class="hide-1000">Article Id</th>
         <th><span>Title</span></th>
 
-
-        <th class="date"><span>Date</span></th>
+{% if session['signed_in'] %}
         <th class="columnscore">Admin</th>
-        <th class="columnscore">Prob</th>
+{% endif %}
+        <th>Prob</th>
 
         <th>Score</th>
 
-        <th class="icon">Similar</th>
-        <th class="icon">Compare</th>
+        <th class="icon"><span class="hide-1000">Similar</span></th>
+        <th class="icon"><span class="hide-1000">Compare</span></th>
       </tr>
 
         {% for _ in articles: %}
 
             <tr>
-                <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</td>
-                <td><B>{{_.source}}: </B><A HREF="{{_.url}}">{{_.title}}</A></td>
-                <td class="date">{{_.date_p}}</td>
+                <td class="hide-1000"><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</td>
+                <td><STRONG>{{_.source}}</STRONG><I> {{_.date}}</I>: <BR><A HREF="{{_.url}}">{{_.title}}</A></td>
+                {% if session['signed_in'] %}
                  <td class="columnscore">
+
                   <span id="samestory_{{article_id}}_{{_.article_id}}" >
                     {% if _.u_score > 0: %}
                         {{_.u_score}}
                     {% else %}
-                      {% if session['signed_in'] %}
+
                          <div class="buttonrow">
                             <button class="buttoncolumn btn-small green"  onclick="send_same_story('samestory_xhr','{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}' );">Y
                             </button>
@@ -94,11 +95,12 @@
 
                             </button>
                          </div>
-                      {% endif %}
+
                     {% endif %}
                   </span>
                 </td>
-                <td class="columnscore">
+                {% endif %}
+                <td>
                   {% if _.p_score > 0: %}
                       {{'%0.3f'| format(_.p_score|float)}}
                   {% endif %}

@@ -3,23 +3,28 @@ body {
   font-size: 100%;
 }
 
+@media screen and (max-width:400px) {
+    body { font-size:90%; }
+
+}
+
 
 @media screen and (min-width:1000px) {
-    body { font-size:120%; } /* Increase the font size */
+    body { font-size:120%; }
 
 }
 
 @media screen and (min-width:1200px) {
-    body { font-size:110%; } /* Increase the font size */
+    body { font-size:110%; }
 }
 @media screen and (min-width:1400px) {
-    html { padding:0 15%; } /* Reduce the container width */
+    html { padding:0 15%; }
 }
 @media screen and (min-width:1600px) {
-    body { font-size:125%; } /* Increase the font size */
+    body { font-size:125%; }
 }
 @media screen and (min-width:1800px) {
-    html { padding:0 10%; } /* Reduce the container width */
+    html { padding:0 10%; }
 }
 
 @media (max-width: 1000px) {
@@ -111,6 +116,7 @@ img {
     border: 1px dashed;
     padding: 3px;
     margin: 2px;
+    width: 100%;
 
 }
 footer {
@@ -127,4 +133,24 @@ footer {
 
 .textarea_label {
  vertical-align: middle;
+}
+.textarea {
+  float: left;
+  height: auto;
+  width: 300px;
+}
+
+@media screen and (min-width: 700px) {
+    .textarea { width:500px; } /* Increase the font size */
+
+}
+
+@media screen and (min-width:1000px) {
+    .textarea { width:800px; } /* Increase the font size */
+
+}
+
+@media screen and (min-width:1400px) {
+    .textarea { width:1000px; } /* Increase the font size */
+
 }

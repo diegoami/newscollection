@@ -15,8 +15,10 @@
           value="{{filter_criteria}}"
           title="Type in a Filter criteria" size="40" maxWidth="100" >   <input class="buttoncolumn" type="submit" value="Filter" />
     <span class="tooltiptext">
-        <P><I>Example: P_SCORE > 0.6 OR U_SCORE > 0.5 </I></P>
-        <P> U_SCORE is the similarity score assigned by the aministrator, P_SCORE is the similarity score assigned by the algorithm</P>
+        <P><I>Example: P_SCORE > 0.6</I></P>
+        <P>P_SCORE is the probability that two articles relate to the same story</P>
+        <P>R_SCORE is the similary score given by regression</P>
+
     </span>
 </form>
 </div>
@@ -25,16 +27,17 @@
 <table>
 
   <tr>
-    <th><span>Article 1</span></th>
+    <th>Article 1</th>
 
 
     <th>Article 2</th>
 
     <th>Prob.</th>
-    <th>Regr.</th>
-     <th>Admin</th>
-
-    <th class="icon">Compare</th>
+    <th class="hide-1000">Regr.</th>
+     {% if session['signed_in'] %}
+        <th>Admin</th>
+     {% endif %}
+      <th class="icon"><span class="hide-1000">Compare</span></th>
 
 
   </tr>
@@ -53,17 +56,19 @@
                 <div class="tooltip">{{'%0.3f'| format(_.P_SCORE|float)}}<span class="smalltooltiptext">Probability that <BR> relate to the same story.</span>
                 </div>
             </td>
-            <td>
+
+            <td class="hide-1000">
                 <div class="tooltip">{{'%0.3f'| format(_.R_SCORE|float)}}<span class="smalltooltiptext">Similarity score <BR>given by regression.</span>
                 </div>
 
             </td>
+             {% if session['signed_in'] %}
             <td class="columnscore">
               <span id="samestory_{{_.ID_1}}_{{_.ID_2}}" >
                 {% if _.U_SCORE >= 0: %}
                     {{_.U_SCORE}}
                 {% else %}
-                  {% if session['signed_in'] %}
+
                      <div class="buttonrow">
                         <button class="buttoncolumn btn-small green"  onclick="send_same_story('samestory_xhr','{{_.ID_1}}', '{{_.ID_2}}', 'samestory_{{_.ID_1}}_{{_.ID_2}}' );">Y
                         </button>
@@ -73,11 +78,11 @@
 
                         </button>
                      </div>
-                  {% endif %}
+
                 {% endif %}
               </span>
             </td>
-
+            {% endif %}
             <td class="icon">
                 {% if _.ID_1 != _.ID_2: %}
                     <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
