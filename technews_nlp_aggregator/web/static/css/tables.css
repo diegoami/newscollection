@@ -105,7 +105,7 @@ th.date, td.date {
 }
 
 @media screen and (min-width:1600px) {
-    .rcol-source  { width: 15%; } /* Increase the font size */
+    .rcol-source  { width: 13%; } /* Increase the font size */
 }
 
 .rcol-date {
