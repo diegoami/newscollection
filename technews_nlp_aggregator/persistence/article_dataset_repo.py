@@ -4,7 +4,7 @@ import traceback
 import dataset
 from sqlalchemy import create_engine
 
-from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis, extract_normpath
+from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis, extract_normpath, extract_source_without_www
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 import pandas as pd
 
@@ -247,6 +247,7 @@ class ArticleDatasetRepo():
         con = self.get_connection() if not con else con
         article_query = con.query(article_info_sql, {"id": id})
         article = next(article_query , None)
+        article["SOURCE"] = extract_source_without_www(article["AIN_URL"] )
         if article:
             return article
         else:

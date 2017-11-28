@@ -4,6 +4,7 @@ find_similar = function(article_id) {
     mainForm.action = '/retrieve_similar_url';
     document.getElementById("article_id").value = article_id;
     document.getElementById("search_url").value = '';
+    mainForm.method="POST";
     mainForm.target= "_blank";
     mainForm.submit();
 }

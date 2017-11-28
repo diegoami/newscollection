@@ -5,7 +5,7 @@ import numpy as np
 import yaml
 from technews_nlp_aggregator.persistence.articles_similar_repo import  ArticlesSimilarRepo
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 
 
 

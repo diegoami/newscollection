@@ -15,7 +15,7 @@
     </INPUT>
     </P>
     <P>
-    <label for="search_url">Url in database: </label><INPUT class="textarea" id="search_url" name="search_url" maxlength="200" size="60" value="{{search_url | default('')}}">
+    <label for="search_url">Url in database: </label><INPUT class="textarea" id="search_url" name="search_url" maxlength="200"  value="{{search_url | default('')}}">
     </INPUT>
     </P>
     <P>
@@ -131,14 +131,14 @@
 
     <div class="buttonrow">
         {% if page_id and page_id > 0: %}
-                <input class="main" type="submit" value="<<< Back" onclick="move_to_page('{{ page_id - 1 }}')"/>
+                <input class="main" type="submit" value="<<<" onclick="move_to_page('{{ page_id - 1 }}')"/>
         {% endif %}
         <div class="buttoncolumn">
             {{page_id+1 | default(0) }}
          </div>
         {% if n_articles == articles|length : %}
 
-            <input class="main" type="submit" value="Forward >>> " onclick="move_to_page('{{ page_id + 1 }}')" />
+            <input class="main" type="submit" value=">>>" onclick="move_to_page('{{ page_id + 1 }}')" />
 
         {% endif %}
 

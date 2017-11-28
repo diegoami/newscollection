@@ -92,24 +92,27 @@ th.date, td.date {
 
 .rcol-articleid {
     width: 10%;
+    padding-top: 6px;
 }
 
 
 .rcol-source  {
     font-weight: bolder;
+    padding-top: 6px;
 }
 
 
 @media screen and (min-width:1200px) {
-    .rcol-source  { width: 10%; } /* Increase the font size */
+    .rcol-source  { width: 15%; } /* Increase the font size */
 }
 
 @media screen and (min-width:1600px) {
-    .rcol-source  { width: 13%; } /* Increase the font size */
+    .rcol-source  { width: 18%; } /* Increase the font size */
 }
 
 .rcol-date {
     width: 12%;
+    padding-top: 6px;
 }
 
 

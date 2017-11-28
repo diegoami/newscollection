@@ -9,11 +9,12 @@
 </head>
 <body onload="select_header('topnav_duplicated')">
 {% include 'header.html' %}
+{% if session['signed_in'] %}
 <div class="buttonrow" >
 <form action="/filterduplicates" method="POST" class="tooltip">
-   <input id="searchCriteria" name = "filterCriteria" type="text" class="buttoncolumn" placeholder="Filter criteria"
+   <input class="textarea" id="searchCriteria" name = "filterCriteria" type="text" class="buttoncolumn" placeholder="Filter criteria"
           value="{{filter_criteria}}"
-          title="Type in a Filter criteria" size="40" maxWidth="100" >   <input class="buttoncolumn" type="submit" value="Filter" />
+          title="Type in a Filter criteria" size="20" maxWidth="100" >   <input class="buttoncolumn" type="submit" value="Filter" />
     <span class="tooltiptext">
         <P><I>Example: P_SCORE > 0.6</I></P>
         <P>P_SCORE is the probability that two articles relate to the same story</P>
@@ -23,16 +24,16 @@
 </form>
 </div>
 
-
-<table>
+{% endif %}
+<table class="small_text" >
 
   <tr>
-    <th>Article 1</th>
+    <th><span class="hide-1000">Article 1</span></th>
 
 
-    <th>Article 2</th>
+    <th><span class="hide-1000">Article 2</span></th>
 
-    <th>Prob.</th>
+    <th><span class="hide-1000">Prob.</span></th>
     <th class="hide-1000">Regr.</th>
      {% if session['signed_in'] %}
         <th>Admin</th>
@@ -100,7 +101,7 @@
 <div class="buttonrow">
         {% if page_id and page_id > 1: %}
             <form class="buttoncolumn" action="/duplicates/{{page_id-1}}">
-                <input class="main" type="submit" value="<<< Back" />
+                <input class="main" type="submit" value="<<<" />
             </form>
             {% for p in range(begin_page, page_id) %}
                  <div class="buttoncolumn">
@@ -121,7 +122,7 @@
              </div>
             {% endfor %}
             <form class="buttoncolumn" action="/duplicates/{{page_id+1}}">
-                <input class="main" type="submit" value="Forward >>> " />
+                <input class="main" type="submit" value=">>> " />
             </form>
         {% endif %}
 

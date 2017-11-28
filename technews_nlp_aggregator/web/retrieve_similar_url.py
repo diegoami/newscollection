@@ -11,6 +11,7 @@ from technews_nlp_aggregator.web.summary import convert_summary
 def search_url():
     return render_template('search_url.html')
 
+
 @app.route('/random_url', methods=['POST'])
 def random_url():
     if request.method == 'POST':
@@ -22,6 +23,8 @@ def random_url():
             index, article = app.application.articleLoader.get_random_article()
             url = article["url"]
             return common_retrieve_id(id=index,  d_days=d_days, article_id=article["article_id"],  n_articles=n_articles, url=url )
+
+
 
 @app.route('/retrieve_similar_url', methods=['POST'])
 def retrieve_similar_url():

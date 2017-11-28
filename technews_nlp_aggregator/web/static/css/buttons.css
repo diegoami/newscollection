@@ -6,6 +6,13 @@
 
 
 }
+@media screen and (max-width:500px) {
+    .buttoncolumn {
+        padding-left: 4px;
+        padding-right: 4px;
+    } /* Increase the font size */
+}
+
 
 .buttonrow {
     padding-bottm: 5px;

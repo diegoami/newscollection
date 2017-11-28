@@ -8,6 +8,10 @@ body {
 
 }
 
+@media screen and (max-width:400px) {
+    .small_text { font-size:75%; }
+
+}
 
 @media screen and (min-width:1000px) {
     body { font-size:120%; }
@@ -24,7 +28,7 @@ body {
     body { font-size:125%; }
 }
 @media screen and (min-width:1800px) {
-    html { padding:0 10%; }
+    html { padding:0 5%; }
 }
 
 @media (max-width: 1000px) {
@@ -88,8 +92,8 @@ img {
 }
 
 .small-img {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     display:block;
 
 }
@@ -162,6 +166,43 @@ footer {
 
 @media screen and (min-width:1000px) {
     .textarea { width:800px; } /* Increase the font size */
+
+}
+
+@media screen and (min-width:1400px) {
+    .textarea { width:900px; } /* Increase the font size */
+
+}
+
+
+.textarea_big {
+  float: left;
+  height: auto;
+  width: 250px;
+}
+
+@media screen and (min-width: 400px) {
+    .textarea_big { width:330px; } /* Increase the font size */
+}
+
+
+@media screen and (min-width: 500px) {
+    .textarea_big { width:370px; } /* Increase the font size */
+}
+
+
+@media screen and (min-width: 600px) {
+    .textarea_big { width:450px; } /* Increase the font size */
+
+}
+
+@media screen and (min-width: 700px) {
+    .textarea_big { width:550px; } /* Increase the font size */
+
+}
+
+@media screen and (min-width:1000px) {
+    .textarea { width:850px; } /* Increase the font size */
 
 }
 
