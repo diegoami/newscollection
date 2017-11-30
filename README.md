@@ -3,7 +3,7 @@
 
 ## General purpose
 
-The general idea is to build a technology news portal aggregating tech news from several sources and draw conclusions from them
+The idea is to build a technology news portal aggregating tech news from several sources and draw conclusions from them
 
 * find articles discussing the same news item as a provided text, but from a different source
 * get a different angle about a specific news item or topic from a different source
@@ -22,19 +22,19 @@ Currently the dataset includes technical articles from the year 2017, mainly fro
 * [Tech Republic](http://www.techrepublic.com)
 * [Engadget](http://www.engadget.com)
 
-The database contains around 50.000 articles.
+The database contains around 50.000 articles and is growing by the day. It is updated almost every day with the latest news.
 
 ## Currently deployed
 
 ### Prototype
 
-The web application is currently accessible [on this site](http://www.techcontroversy.com).
+The web application is currently accessible [here](http://www.techcontroversy.com).
 
 ### Similar articles and conteroversial topics
 
 You can find "controversial" topics in the database. [You can browse through the articles](http://www.techcontroversy.com/duplicates) that have been paired because the system considers it likely that they are talking about the same topic, possibly under a different slant.
 
-Articles about the same stories can be found [aggregated here](http://www.techcontroversy.com/show_groups).
+Articles about the same stories can be found on the first page[aggregated here](http://www.techcontroversy.com/show_groups).
 
 ### Finding Related articles
 
