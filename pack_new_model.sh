@@ -1,3 +1,4 @@
+cd /home/ubuntu/projects/newscollection/
 
 find /media/diego/QData/techarticles/models/doc2vec -mmin +240  -type d | xargs rm -f -r
 find /media/diego/QData/techarticles/models/lsi -mmin +240 -type d | xargs rm -f -r

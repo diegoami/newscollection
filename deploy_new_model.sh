@@ -1,3 +1,4 @@
+cd /home/ubuntu/projects/newscollection/
 ssh ubuntu@18.194.147.93 'find /media/diego/QData/techarticles/models/doc2vec -mtime +3 -type d | xargs rm -f -r'
 ssh ubuntu@18.194.147.93 'find /media/diego/QData/techarticles/models/lsi -mtime +3 -type d | xargs rm -f -r'
 ssh ubuntu@18.194.147.93 'find /media/diego/QData/techarticles/models/phrases -mtime +3 -type d | xargs rm -f -r'
