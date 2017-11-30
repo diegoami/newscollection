@@ -207,6 +207,6 @@ footer {
 }
 
 @media screen and (min-width:1400px) {
-    .textarea { width:900px; } /* Increase the font size */
+    .textarea_big { width:900px; } /* Increase the font size */
 
 }
