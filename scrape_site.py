@@ -1,15 +1,19 @@
+from datetime import timedelta
+
+import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
-from technews_nlp_aggregator.scraping.main.scrapy import settings
-from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider
-from datetime import  timedelta
+
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
-import yaml
+from technews_nlp_aggregator.scraping.main.scrapy import settings
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, \
+    ThevergeSpider, VenturebeatSpider, TechrepublicSpider, EngadgetSpider
+
 
 def do_crawl(articleDatasetRepo):
 
     spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider, EngadgetSpider])
-    #spiders = ([ThevergeSpider, VenturebeatSpider])
+
 
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
@@ -25,7 +29,8 @@ def do_remove_uninteresting(articleDatasetRepo):
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
-    db_config = yaml.safe_load(open(config["key_file"]))
+
+    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     do_crawl(articleDatasetRepo)

@@ -13,16 +13,17 @@
 {% include 'header.html' %}
 {% if session['signed_in']: %}
 
-<P><STRONG>Are these two articles about the same story ????? </STRONG> <A HREF="/examples" target="_blank">See examples</A></P>
+<P><STRONG>Are these two articles about the same story ????? </STRONG> <!--suppress HtmlUnknownTarget -->
+    <A HREF="/examples" target="_blank">See examples</A></P>
 
 <div class="buttonrow">
-<form id="samestory" action="">
+  <form id="samestory" action="">
     <button id="yes_button" class="buttoncolumn btn-big green tooltip"  onclick="submit_story('samestory','{{A1.AIN_ID}}', '{{A2.AIN_ID}}' );">YES <span class="tooltiptext">Could these two articles have the same title?<BR>Is the main story of each article covered also in the other article?</span>
     </button>
     <button id="almost_button" class="buttoncolumn btn-big yellow tooltip" onclick="submit_story('related', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">ALMOST<span class="tooltiptext">Could the content of one of two articles be added seamlessly to the other article?<BR> Can you think of at least two common tags for these two articles?</span>
     </button>
 
-    <button id="no_button" class="buttoncolumn btn-big red tooltip"  onclick="submit_story('unrelated', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">NO<span class="tooltiptext">Does not satisfy the previous conditions.</span>
+      <button id="no_button" class="buttoncolumn btn-big red tooltip"  onclick="submit_story('unrelated', '{{A1.AIN_ID}}', '{{A2.AIN_ID}}');">NO<span class="tooltiptext">Does not satisfy the previous conditions.</span></button>
      <button class="buttoncolumn btn-medium grey tooltip"  onclick="skip();">SKIP<span class="tooltiptext">I wouldn't know.</span>
 
     </button>
@@ -30,15 +31,14 @@
 </div>
 {% endif %}
 
-</div>
-
-</div>
 <div class="row">
   <div class="column left">
     <div class="metadata">
         <p>Source: <STRONG>{{A1.SOURCE}}</STRONG></p>
-        <p>ID: <A HREF="/statistics/{{A1.AIN_ID}}" target="_blank">{{A1.AIN_ID}}</A></p>
-        <p>Go to <A HREF="{{A1.AIN_URL}}">original url</A> </p>
+        <p>ID: <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+            <A HREF="/statistics/{{A1.AIN_ID}}" target="_blank">{{A1.AIN_ID}}</A></p>
+        <p>Go to <!--suppress HtmlUnknownTarget -->
+            <A HREF="{{A1.AIN_URL}}">original url</A> </p>
         <P>Date: {{A1.AIN_DATE}}</P>
          <P></P>
     </div>
@@ -52,8 +52,10 @@
   <div class="column right">
     <div class="metadata">
        <p>Source: <STRONG>{{A2.SOURCE}}</STRONG></p>
-      <p>ID: <A HREF="/statistics/{{A2.AIN_ID}}" target="_blank">{{A2.AIN_ID}}</A></p>
-      <p>Go to <A HREF="{{A2.AIN_URL}}">original url</A> </p>
+      <p>ID: <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+          <A HREF="/statistics/{{A2.AIN_ID}}" target="_blank">{{A2.AIN_ID}}</A></p>
+      <p>Go to <!--suppress HtmlUnknownTarget -->
+          <A HREF="{{A2.AIN_URL}}">original url</A> </p>
       <P>Date: {{A2.AIN_DATE}}</P>
     </div>
     <div class="article_text">

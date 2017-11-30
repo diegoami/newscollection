@@ -5,11 +5,10 @@ import pandas as pd
 import dataset
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 
-from sqlalchemy.orm import create_session
 from sqlalchemy import create_engine
 
 import re
-from technews_nlp_aggregator.common.util import extract_source, extract_source_without_www
+from technews_nlp_aggregator.common.util import extract_source_without_www
 
 similarArticlesSQL_select = \
 """
@@ -200,23 +199,15 @@ class ArticlesSimilarRepo:
         return max_date["AIN_DATE"]
 
     def retrieve_user_paired(self):
-        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2";
+        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2"
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar)
         result = [row for row in query_result]
         return result
 
-    def retrieve_classif_paired(self, threshold):
-        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold";
-        similar_stories = []
-        con = self.get_connection()
-        query_result= con.query(sql_classif_found, {"threshold": threshold})
-        result = [row for row in query_result]
-        return result
-
     def retrieve_ssus_for_id(self, id):
-        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER WHERE SSU_AIN_ID_1 = :id OR SSU_AIN_ID_2 = :id GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2";
+        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER WHERE SSU_AIN_ID_1 = :id OR SSU_AIN_ID_2 = :id GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2"
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar,  {"id": id})
@@ -231,7 +222,7 @@ class ArticlesSimilarRepo:
         return result
 
     def retrieve_sscs_for_id(self, id):
-        sql_classif_similar = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA FROM PREDICTIONS WHERE ( PRED_AIN_ID_1=:id OR PRED_AIN_ID_2=:id ) ";
+        sql_classif_similar = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA FROM PREDICTIONS WHERE ( PRED_AIN_ID_1=:id OR PRED_AIN_ID_2=:id ) "
         similar_stories = []
         con = self.get_connection()
         query_result = con.query(sql_classif_similar , {"id": id})
@@ -245,8 +236,9 @@ class ArticlesSimilarRepo:
 
         return result
 
+
     def retrieve_classif_paired(self, threshold):
-        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold";
+        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold"
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_classif_found, {"threshold": threshold})

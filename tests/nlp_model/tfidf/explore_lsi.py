@@ -1,8 +1,7 @@
-import logging
-
 import yaml
+
 from technews_nlp_aggregator.application import Application
-from random import randint
+
 
 def show_topics(application):
     _ = application

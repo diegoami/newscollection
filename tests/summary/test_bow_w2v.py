@@ -1,6 +1,3 @@
-import logging
-
-
 
 from technews_nlp_aggregator.application import Application
 import yaml
@@ -78,6 +75,25 @@ def select_sentences(_, avg_tfidf1, sents_t, tfidf1_m):
     return sents_l
 
 
+def select_sentences_2(_, tok_to_keep, sents_t, tfidf1_m):
+    print("TOKENS : {}".format(tok_to_keep))
+    sents_l = []
+    seen_in_doc = []
+    for idx, sent in enumerate(sents_t):
+        mustAdd = False
+        for token in _.tokenizer.tokenize_fulldoc(sent):
+
+
+            if token in tok_to_keep and token not in seen_in_doc:
+
+                mustAdd = True
+                seen_in_doc.append(token)
+        if mustAdd:
+            sents_l.append((1, sent))
+        else:
+            sents_l.append((0, sent))
+    return sents_l
+
 def bow_w2s(application, n_articles=20 ):
     _ = application
 
@@ -114,24 +130,7 @@ def bow_w2s(application, n_articles=20 ):
             print( '{} : {} '.format(idx, sent) )
 
 
-def select_sentences(_, tok_to_keep, sents_t, tfidf1_m):
-    print("TOKENS : {}".format(tok_to_keep))
-    sents_l = []
-    seen_in_doc = []
-    for idx, sent in enumerate(sents_t):
-        mustAdd = False
-        for token in _.tokenizer.tokenize_fulldoc(sent):
 
-
-            if token in tok_to_keep and token not in seen_in_doc:
-
-                mustAdd = True
-                seen_in_doc.append(token)
-        if mustAdd:
-            sents_l.append((1, sent))
-        else:
-            sents_l.append((0, sent))
-    return sents_l
 
 
 

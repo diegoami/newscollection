@@ -2,14 +2,14 @@ import logging
 import traceback
 
 import dataset
-from sqlalchemy import create_engine
-
-from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis, extract_normpath, extract_source_without_www
-from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 import pandas as pd
-
-from sqlalchemy.orm import create_session
 from sqlalchemy import create_engine
+from sqlalchemy.orm import create_session
+
+from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis, \
+    extract_normpath, extract_source_without_www
+from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
+
 
 class ArticleDatasetRepo():
 
@@ -54,8 +54,9 @@ class ArticleDatasetRepo():
             to_add["date"] = extract_date(to_add["url"])
         source = extract_host(to_add["url"])
         norm_url = extract_normpath(to_add["url"])
+        con = self.get_connection()
         try:
-            con = self.get_connection()
+
             con.begin()
             row = con['ARTICLE_INFO'].find_one(AIN_URL=norm_url )
             if row:
@@ -122,8 +123,9 @@ class ArticleDatasetRepo():
         source = extract_host(to_add["url"])
         norm_url = extract_normpath(to_add["url"])
         found = False
+        con = self.get_connection()
         try:
-            con = self.get_connection()
+
             con.begin()
 
             row = con['ARTICLE_INFO'].find_one(AIN_URL=norm_url )

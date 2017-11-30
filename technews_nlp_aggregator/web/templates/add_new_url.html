@@ -11,25 +11,23 @@
 <H3> Add a new article</H3>
 
 <div>
-<FORM id="mainForm"  ACTION="/add_new_url" METHOD="POST">
+<!--suppress HtmlUnknownTarget -->
+    <FORM id="mainForm"  ACTION="/add_new_url" METHOD="POST">
 <p>
     <p><label for="article_date_s">Date:</label><input type="text" id="article_date_s" name="article_date_s" value=""></p>
 <P>
 <label for="article_url">Url of article: </label><INPUT id="article_url" name="article_url" maxlength="256" size="80" value="">
-</INPUT>
 </P>
     <P>
 <label for="article_title">Title: </label><INPUT id="article_title" name="article_title" maxlength="256" size="80" value="">
-</INPUT>
 </P>
 <label class="textarea_label" for="article_text" >Enter text here</label>
 
-<textarea id="article_text" name="article_text" rows="30" cols="90">
-</textarea>
-</p>
+    <textarea id="article_text" name="article_text" rows="30" cols="90">
+    </textarea>
+
    <p><label for="n_articles">N Articles:</label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"></p>
 <input class="main"  type="submit" value="submit"  />
-</p>
 </FORM>
 {% if A %}
     </div>
@@ -38,7 +36,8 @@
              <h2>{{A.AIN_TITLE}}</h2>
              <p><I>ID:</I>
                  {{A.AIN_ID}}</p>
-            <p><I>URL:</I> <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
+            <p><I>URL:</I> <!--suppress HtmlUnknownTarget -->
+                <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
             <P><I>Date:</I> {{A.AIN_DATE}}</P>
 
              <p class="article_text">{{summary_text | safe}}</p>
@@ -69,8 +68,10 @@
 
             <tr>
 
-                <td><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
-                <td><STRONG>{{_.source}}: </STRONG><A HREF="{{_.url}}">{{_.title}}</A></td>
+                <td><!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+                    <A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
+                <td><STRONG>{{_.source}}: </STRONG><!--suppress HtmlUnknownTarget -->
+                    <A HREF="{{_.url}}">{{_.title}}</A></td>
                 <td class="date">{{_.date_p}}</td>
                 <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
 

@@ -3,9 +3,7 @@ import re
 
 
 class TechArticlesPreprocessor():
-    regexprs_year = [
-        re.compile(r'\b(20|19)(\d+)\b')
-    ]
+
 
 
     regexprs_hour = [
@@ -24,9 +22,9 @@ class TechArticlesPreprocessor():
     ]
 
     regexprs_money = [
-        # re.compile(r'\b[\$\£\€]{1}(\d+)(\,\d+)?(\,\d+)?(\.\d+)?\b')
-        re.compile(r'[\$\£\€]{1}(\d+)([\,\.]\d+)\b'),
-        re.compile(r'[\$\£\€]{1}(\d+)\b')
+
+        re.compile(r'[\$\£\€](\d+)([\,\.]\d+)\b'),
+        re.compile(r'[\$\£\€](\d+)\b')
     ]
 
     monthExpr = 'January|February|March|April|May|June|July|August|September|October|November|December'
@@ -50,6 +48,7 @@ class TechArticlesPreprocessor():
     digit_to_zero = str.maketrans("1234567890","0000000000")
 
     regexprs_year = [
+
         re.compile(r'\b(20)[01]\d\b'),
         re.compile(r'\b(19)[4-9]\d\b')
 

@@ -1,5 +1,3 @@
-
-from gensim.interfaces import utils, matutils
 class TfidfMatrixWrapper():
 
     def __init__(self, similarityMatrix):

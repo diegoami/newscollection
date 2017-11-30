@@ -1,6 +1,3 @@
-import logging
-from string import punctuation
-
 from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
 sentence_excludes = [
     'This post originally appeared',
@@ -108,7 +105,6 @@ class TechArticlesSentenceTokenizer():
         sents = doc_sent.sents
         return [sent.text for sent in sents]
 
-        return sentences
 
     def clean_sentences(self, document):
         sentences = self.sent_tokenize(document)

@@ -1,7 +1,6 @@
-from urllib.parse import urlparse, unquote, urlsplit
-from datetime import date, datetime, timedelta
 import re
-import logging
+from datetime import date, timedelta
+from urllib.parse import urlparse, unquote, urlsplit
 
 
 def extract_date_str(url):

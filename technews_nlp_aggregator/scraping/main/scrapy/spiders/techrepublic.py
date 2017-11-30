@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
+import logging
+
 import scrapy
 from scrapy import Request
 
-import logging
-
-from datetime import date
-from . import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled
-
-
+from . import end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled
 
 
 class TechrepublicSpider(scrapy.Spider):

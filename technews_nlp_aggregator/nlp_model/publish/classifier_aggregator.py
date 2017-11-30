@@ -1,6 +1,7 @@
-from . import Doc2VecFacade, GramFacade, TfidfFacade
-from datetime import date
 import logging
+from datetime import date
+
+
 class ClassifierAggregator():
 
     def __init__(self, tokenizer, gramFacade, tfidfFacade, doc2VecFacade):

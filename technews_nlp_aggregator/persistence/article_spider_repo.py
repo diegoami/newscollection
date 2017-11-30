@@ -1,13 +1,6 @@
-import logging
 import traceback
-from datetime import datetime
-import pandas as pd
+
 import dataset
-from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
-
-
-import re
-from technews_nlp_aggregator.common.util import extract_source
 
 
 class ArticlesSpiderRepo:

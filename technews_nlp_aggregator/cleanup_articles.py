@@ -1,8 +1,7 @@
 import yaml
-from .application import Application
-from technews_nlp_aggregator.nlp_model.common import TechArticlesCleaner
 
-import logging
+from technews_nlp_aggregator.nlp_model.common import TechArticlesCleaner
+from .application import Application
 
 
 def cleanup(application):

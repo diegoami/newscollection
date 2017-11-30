@@ -9,6 +9,7 @@
 <body onload="javascript:select_header('topnav_search')">
 {% include 'header.html' %}
 <P>Enter text of a technical article here </P>
+<!--suppress HtmlUnknownTarget -->
 <FORM id="mainForm" class="tooltip" ACTION="/retrieve_similar" METHOD="POST">
 
     <p>
@@ -60,13 +61,16 @@
 
             <tr>
 
-                <td class="hide-1000"> <A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
-                <td><STRONG>{{_.source}} </STRONG><I>{{_.date_p}}</I>: <BR><A HREF="{{_.url}}">{{_.title}}</A></td>
+                <td class="hide-1000"> <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+                    <A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
+                <td><STRONG>{{_.source}} </STRONG><I>{{_.date_p}}</I>: <BR><!--suppress HtmlUnknownTarget -->
+                    <A HREF="{{_.url}}">{{_.title}}</A></td>
                 <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
 
                  <td class="icon">
                     <A HREF="javascript:find_similar('{{_.article_id}}')">
 
+                        <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
                         <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
                     </A>
                 </td>

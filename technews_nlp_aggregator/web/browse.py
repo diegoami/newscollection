@@ -1,9 +1,8 @@
 
-from flask import  request, render_template, session
-
-from itertools import product
+from flask import request, render_template, session
 
 from . import app
+
 
 @app.route('/filterbrowse', methods=['POST'])
 def filterbrowse():

@@ -1,11 +1,12 @@
-from .util import read_int_from_form
-from .merge_tables import merge_sims_maps,retrieve_sims_map_with_dates
-from flask import render_template,  request
-from . import app
-from technews_nlp_aggregator.nlp_model.publish import ClassifierAggregator
-from datetime import timedelta, date
-from .util import extract_related_articles
+from datetime import timedelta
+
+from flask import render_template, request
+
 from technews_nlp_aggregator.web.summary import convert_summary
+from . import app
+from .util import extract_related_articles
+from .util import read_int_from_form
+
 
 @app.route('/search_url')
 def search_url():

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy import Request
-import logging
 
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
 

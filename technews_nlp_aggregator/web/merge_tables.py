@@ -1,8 +1,8 @@
 from datetime import date
+
 from technews_nlp_aggregator.common.util import conv_to_date
 from .util import extract_related_articles
-import numpy as np
-import pandas as pd
+
 
 def merge_sims_maps(tdf_DF, doc2vec_DF, articleLoader, n_articles=100, page_id = 0):
     new_DF = tdf_DF.join(doc2vec_DF, lsuffix='_t', rsuffix='_d')

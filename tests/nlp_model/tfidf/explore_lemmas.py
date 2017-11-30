@@ -1,12 +1,10 @@
-import logging
-
-from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
-from technews_nlp_aggregator.application import Application
-
 import yaml
 
+from technews_nlp_aggregator.application import Application
+from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
 
-def explore_lemmas(application, n_articles):
+
+def explore_lemmas(application, n_articles=20):
     _ = application
 
     for i in range(n_articles):

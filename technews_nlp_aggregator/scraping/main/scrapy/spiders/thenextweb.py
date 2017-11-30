@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-import scrapy
-from scrapy import Request
-from string import punctuation
-from time import sleep
 import logging
 
+import scrapy
+from scrapy import Request
+
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
-
-
-
 
 
 class ThenextwebSpider(scrapy.Spider):

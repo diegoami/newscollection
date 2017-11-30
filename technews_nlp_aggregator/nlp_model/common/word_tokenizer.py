@@ -1,4 +1,4 @@
-import logging
+
 from string import punctuation
 
 from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp

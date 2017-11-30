@@ -1,6 +1,5 @@
-from technews_nlp_aggregator.common import extract_source, extract_date_str, extract_tags
 import logging
-import re, html
+import re
 
 
 def extract_related_articles(articleLoader, scoresDF, ssusDF=None, sscsDF=None):

@@ -1,1 +1,0 @@
-from .article_comparator import  ArticleComparatorJob

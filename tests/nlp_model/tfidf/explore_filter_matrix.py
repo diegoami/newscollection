@@ -1,9 +1,11 @@
-import logging
-
-from technews_nlp_aggregator.nlp_model.publish.tdidf import FilterMatrixSimilarity
 from datetime import date
+
 import yaml
+from technews_nlp_aggregator.nlp_model.publish.tdidf import FilterMatrixSimilarity
+
 from technews_nlp_aggregator.application import Application
+
+
 #tfidfFacade.lsi.show_topics(num_topics=300, num_words=30, log=True)
 def test_filter_matrix(application, start, end):
     _ = application

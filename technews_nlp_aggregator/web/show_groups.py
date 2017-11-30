@@ -1,8 +1,7 @@
 
-from flask import  request, render_template, session
+from flask import render_template
+
 from technews_nlp_aggregator.web.summary import convert_summary
-
-
 from . import app
 
 

@@ -1,16 +1,10 @@
-
-
-import xgboost as xgb
-
-from xgboost import XGBRegressor, XGBClassifier
-from sklearn.model_selection import cross_val_score
-from sklearn.externals import joblib
-import pandas as pd
 import numpy as np
 import yaml
-from technews_nlp_aggregator.persistence.articles_similar_repo import  ArticlesSimilarRepo
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import GridSearchCV
+from sklearn.externals import joblib
+from sklearn.model_selection import cross_val_score
+from xgboost import XGBRegressor, XGBClassifier
+
+from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
 
 
 def print_best_parameters( classifier):
@@ -115,10 +109,6 @@ def create_classifier(train_DF, xboost_classifier_file ):
     y_pred = clf.predict(X_train)
 
     train_df['SCO_PRED'] = y_pred
-    #train_df.to_csv(train_file_aug)
-    #print(clf.best_estimator_)
-
-    #print(clf.best_estimator_.feature_importances_)
 
 
     joblib.dump(clf, xboost_classifier_file )
@@ -127,17 +117,12 @@ def create_classifier(train_DF, xboost_classifier_file ):
 if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
-    db_config = yaml.safe_load(open(config["key_file"]))
+    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
     db_url = db_config["db_url"]
     similarArticlesRepo = ArticlesSimilarRepo(db_url)
-
-    train_file = config["train_data_file"]
-
-    #train_df = pd.read_csv(train_file, index_col=0)
     train_df = similarArticlesRepo.load_train_set()
-    train_file_aug = config["train_data_file_aug"]
-    xboost_model_file = config["xgboost_model_file"]
-    xboost_classifier_file = config["xgboost_classifier_file"]
+    xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
+    xboost_classifier_file = config["root_dir"] + config["xgboost_classifier_file"]
 
     create_regressor(train_df,  xboost_model_file)
     create_classifier(train_df, xboost_classifier_file )

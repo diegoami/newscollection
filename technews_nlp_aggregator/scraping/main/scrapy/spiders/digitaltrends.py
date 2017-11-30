@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import scrapy
-from scrapy import Request
-import logging
-
-from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
 from datetime import date
 
+import scrapy
+from scrapy import Request
 
+from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
 
 
 class DigitaltrendsSpider(scrapy.Spider):

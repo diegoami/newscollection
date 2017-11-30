@@ -8,16 +8,17 @@
  </head>
 <body onload="javascript:select_header('topnav_statistics')">
 {% include 'header.html' %}
+<div>
+    <!--suppress HtmlUnknownTarget -->
+    <FORM id="statistics_form" ACTION="/statistics_form" METHOD="POST">
+    <P>
+    <label for="article_id">Article_id</label><INPUT id="article_id" name="article_id"  maxlength="64" size="10" value="{{article_id}}">
 
-<FORM id="statistics_form" ACTION="/statistics_form" METHOD="POST">
-<P>
-<label for="article_id">Article_id</label><INPUT id="article_id" name="article_id"  maxlength="64" size="10" value="{{article_id}}">
-</INPUT>
-</P>
-<P>
-<label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="70" value="{{search_url | default('')}}">
-</INPUT>
-</P>
+    </P>
+    <P>
+    <label for="search_url">Url in database: </label><INPUT id="search_url" name="search_url" maxlength="200" size="70" value="{{search_url | default('')}}">
+
+    </P>
 
 </div>
     <P>
@@ -33,7 +34,8 @@
      <div>
         <h2>{{A.AIN_TITLE}}</h2>
          <p><I>ID:</I> {{A.AIN_ID}}</p>
-        <p><I>URL:</I> <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
+        <p><I>URL:</I> <!--suppress HtmlUnknownTarget -->
+            <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
         <P><I>Date:</I> {{A.AIN_DATE}}</P>
           <p class="article_text">{{A.ATX_TEXT | safe}}</p>
      </div>

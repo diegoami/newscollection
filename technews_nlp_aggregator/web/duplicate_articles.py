@@ -1,18 +1,13 @@
 
-from flask import  request, render_template, session
-from technews_nlp_aggregator.nlp_model.spacy.utils import retrieve_entities
-
-import logging
 import traceback
 
-
+from flask import request, render_template, session
 
 from . import app
 
-
 #
 
-DEFAULT_FILTER_CRITERIA = 'P_SCORE > 0.6  OR ( U_SCORE > 0.5 )'
+DEFAULT_FILTER_CRITERIA = 'P_SCORE > 0.7  AND ( U_SCORE IS NULL)'
 
 @app.route('/filterduplicates', methods=['POST'])
 def filterduplicates():

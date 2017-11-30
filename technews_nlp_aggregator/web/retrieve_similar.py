@@ -1,10 +1,8 @@
-from .util import read_int_from_form
-
-from flask import render_template,  request
-from .merge_tables import retrieve_sims_map_with_dates, merge_sims_maps, extract_start_end, extract_related_articles
-
+from flask import render_template, request
 
 from . import app
+from .merge_tables import extract_start_end, extract_related_articles
+from .util import read_int_from_form
 
 
 @app.route('/search')

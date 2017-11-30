@@ -34,7 +34,7 @@ def eff_similar_articles(application):
 
         try:
             con.begin()
-            for article1, article2, score in process_for_insertion(id, tfidf_DF, 0.56, articleFilterDF):
+            for article1, article2, score in process_for_insertion(id, tfidf_DF, 0.55, articleFilterDF):
                 _.similarArticlesRepo.persist_association(con, article1, article2,  _.tfidfFacade.name, score)
 
             for article1, article2, score in process_for_insertion(id, doc2vec_DF, 0.28,  articleFilterDF):

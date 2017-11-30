@@ -1,12 +1,13 @@
-from scrapy.crawler import CrawlerProcess
-from scrapy.settings import Settings
-from technews_nlp_aggregator.scraping.main.scrapy import settings
-from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider, DigitaltrendsSpider, GuardianSpider
-from datetime import  timedelta
-from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
-import yaml
 import logging
 from datetime import date
+
+import yaml
+from scrapy.crawler import CrawlerProcess
+from scrapy.settings import Settings
+
+from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
+from technews_nlp_aggregator.scraping.main.scrapy import settings
+
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 def do_crawl(articleDatasetRepo, spidermap):
 
@@ -23,7 +24,7 @@ def do_crawl(articleDatasetRepo, spidermap):
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
-    db_config = yaml.safe_load(open(config["key_file"]))
+    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     articleSpiderRepo = ArticlesSpiderRepo(db_config.get("db_url"))

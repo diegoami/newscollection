@@ -5,15 +5,15 @@ LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
 
+from datetime import timedelta, date
+
+import numpy as np
+import pandas as pd
 from gensim import corpora, models, similarities
+from gensim import matutils
 from gensim.corpora import MmCorpus
 
 from .tfidf_matrix_wrapper import TfidfMatrixWrapper
-import numpy as np
-from gensim import matutils
-import pandas as pd
-from pandas import DataFrame
-from datetime import timedelta, date
 
 
 class TfidfFacade():

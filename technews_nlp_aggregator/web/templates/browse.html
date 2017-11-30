@@ -11,15 +11,15 @@
 
 
 
-    <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
+    <!--suppress HtmlUnknownTarget -->
+<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
 
     <INPUT type="hidden" id="search_url" name="search_url" maxlength="200" size="70" value="">
     <INPUT type="hidden" id="article_id" name="article_id" maxlength="200" size="70" value="">
-
-        </INPUT>
     </FORM>
 
 <div class="buttonrow surrond_form tooltip" >
+    <!--suppress HtmlUnknownTarget -->
     <form action="/filterbrowse" method="POST">
        <input  class="textarea" id="searchCriteria" name = "filterbrowse" type="text" class="buttoncolumn" placeholder="Search in base"
               value="{{filter_browse}}"
@@ -27,7 +27,8 @@
 
     </form>
     <span class="tooltiptext">
-        <I>WARNING: Simple literal search over the article's titles. A more advanced search <A HREF="/search">is available here</A> </I>
+        <I>WARNING: Simple literal search over the article's titles. A more advanced search <!--suppress HtmlUnknownTarget -->
+            <A HREF="/search">is available here</A> </I>
    </span>
 </div>
 <BR>
@@ -48,11 +49,14 @@
         {% for _ in articles: %}
 
             <tr>
-                <td class="hide-1000"><A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
-                <td><B>{{_.source}}</B> <I>{{_.date_p}}</I>:<BR><A HREF="{{_.url}}}">{{_.title}}</A></td>
+                <td class="hide-1000"><!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+                    <A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
+                <td><B>{{_.source}}</B> <I>{{_.date_p}}</I>:<BR><!--suppress HtmlUnknownTarget -->
+                    <A HREF="{{_.url}}}">{{_.title}}</A></td>
                 <td class="icon">
                            <A HREF="javascript:find_similar('{{_.article_id}}')">
-                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
+                        <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+                               <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
                     </A>
                 </td>
 
@@ -68,7 +72,8 @@
     <BR>
     <div class="buttonrow">
         {% if page_id and page_id > 0: %}
-            <form class="buttoncolumn" action="/browse/{{page_id-1}}">
+            <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+        <form class="buttoncolumn" action="/browse/{{page_id-1}}">
                 <input class="main" type="submit" value="<<< Back" />
             </form>
         {% endif %}

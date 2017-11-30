@@ -1,9 +1,5 @@
-import logging
-
-from gensim import similarities
-
 import yaml
-from datetime import date
+
 from technews_nlp_aggregator.application import Application
 
 

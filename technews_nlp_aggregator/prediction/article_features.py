@@ -1,6 +1,3 @@
-import logging
-
-
 class ArticleFeatures:
     def __init__ (self, id, article_id, article):
         self.id = id

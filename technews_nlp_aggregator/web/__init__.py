@@ -3,10 +3,10 @@
 #################
 
 
-from flask import Flask, render_template
-from .util import read_int_from_form
+from flask import Flask
+from flask import redirect, url_for
 
-from flask import request, render_template, session, redirect, url_for
+from .util import read_int_from_form
 
 app = Flask(__name__)
 
@@ -23,9 +23,5 @@ import technews_nlp_aggregator.web.add_new_url
 import technews_nlp_aggregator.web.show_groups
 import technews_nlp_aggregator.web.sign_in
 import technews_nlp_aggregator.web.browse
-import technews_nlp_aggregator.web.hide
-
-
-
 import technews_nlp_aggregator.web.statistics
-import technews_nlp_aggregator.web.admin
+

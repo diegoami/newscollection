@@ -11,7 +11,8 @@
 {% include 'header.html' %}
 {% if session['signed_in'] %}
 <div class="buttonrow" >
-<form action="/filterduplicates" method="POST" class="tooltip">
+<!--suppress HtmlUnknownTarget -->
+    <form action="/filterduplicates" method="POST" class="tooltip">
    <input class="textarea" id="searchCriteria" name = "filterCriteria" type="text" class="buttoncolumn" placeholder="Filter criteria"
           value="{{filter_criteria}}"
           title="Type in a Filter criteria" size="20" maxWidth="100" >   <input class="buttoncolumn" type="submit" value="Filter" />
@@ -48,9 +49,11 @@
         <tr>
 
 
-            <td><STRONG>{{_.SOURCE_1}}</STRONG> <I>{{_.DATE_1}}</I>:<BR><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
+            <td><STRONG>{{_.SOURCE_1}}</STRONG> <I>{{_.DATE_1}}</I>:<BR><!--suppress HtmlUnknownTarget -->
+                <A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
 
-            <td><STRONG>{{_.SOURCE_2}} </STRONG><I>{{_.DATE_2}}</I>:<BR><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
+            <td><STRONG>{{_.SOURCE_2}} </STRONG><I>{{_.DATE_2}}</I>:<BR><!--suppress HtmlUnknownTarget -->
+                <A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
 
 
             <td>
@@ -86,8 +89,9 @@
             {% endif %}
             <td class="icon">
                 {% if _.ID_1 != _.ID_2: %}
-                    <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare side-by-side" TITLE="Compare side-by-side">
+
+                <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}">
+                                       <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare side-by-side" TITLE="Compare side-by-side">
                     </A>
                 {% endif %}
             </td>
@@ -105,7 +109,7 @@
             </form>
             {% for p in range(begin_page, page_id) %}
                  <div class="buttoncolumn">
-                    <A HREF="/duplicates/{{p}}">{{p}}</A>
+                     <A HREF="/duplicates/{{p}}">{{p}}</A>
                  </div>
             {% endfor %}
 
@@ -118,7 +122,8 @@
         {% if has_next and page_id: %}
             {% for p in range(page_id+1, page_id+how_many_pages+1) %}
              <div class="buttoncolumn">
-                <A HREF="/duplicates/{{p}}">{{p}}</A>
+
+                 <A HREF="/duplicates/{{p}}">{{p}}</A>
              </div>
             {% endfor %}
             <form class="buttoncolumn" action="/duplicates/{{page_id+1}}">

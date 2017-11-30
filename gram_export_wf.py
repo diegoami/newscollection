@@ -13,12 +13,12 @@ import yaml
 
 
 def export_to_phrases(config):
-    pickle_dir = config["pickle_dir"]
-    pickle_file = config["text_pickle_file"]
-    bigrams_pickle_file = config["bigrams_pickle_file"]
-    trigrams_pickle_file = config["trigrams_pickle_file"]
+    pickle_dir = config["root_dir"]+config["pickle_dir"]
+    pickle_file = config["root_dir"]+config["text_pickle_file"]
+    bigrams_pickle_file = config["root_dir"]+config["bigrams_pickle_file"]
+    trigrams_pickle_file = config["root_dir"]+config["trigrams_pickle_file"]
 
-    phrase_model_dir = config["phrases_model_dir_link"]
+    phrase_model_dir = config["root_dir"]+config["phrases_model_dir_link"]
     with open(pickle_file, 'rb') as f:
         texts = pickle.load(f)
         logging.info("Loaded {} texts".format(len(texts)))
@@ -38,13 +38,13 @@ def export_to_phrases(config):
         with open(trigrams_file, 'wb') as f:
             pickle.dump(trigrams, f)
 
-        if os.path.islink(config["bigrams_pickle_file"]):
-            os.unlink(config["bigrams_pickle_file"])
-        os.symlink(bigrams_file, config["bigrams_pickle_file"])
+        if os.path.islink( config["root_dir"]+config["bigrams_pickle_file"]):
+            os.unlink( config["root_dir"]+config["bigrams_pickle_file"])
+        os.symlink(bigrams_file,  config["root_dir"]+config["bigrams_pickle_file"])
 
-        if os.path.islink(config["trigrams_pickle_file"]):
-            os.unlink(config["trigrams_pickle_file"])
-        os.symlink(trigrams_file, config["trigrams_pickle_file"])
+        if os.path.islink( config["root_dir"]+config["trigrams_pickle_file"]):
+            os.unlink( config["root_dir"]+config["trigrams_pickle_file"])
+        os.symlink(trigrams_file, config["root_dir"] +  config["trigrams_pickle_file"])
 
 
 

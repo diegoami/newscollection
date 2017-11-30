@@ -34,18 +34,23 @@
 
         <tr>
           <td>{{_.SCO_AIN_ID_1|round|int }}</td>
-          <td><A HREF="{{_.url}}">{{_.title}}</A></td>
+          <td><!--suppress HtmlUnknownTarget -->
+              <A HREF="{{_.url}}">{{_.title}}</A></td>
           <td>{{_.date_p}}</td>
           <td>{{_.SCO_AIN_ID_2|round|int  }}</td>
-          <td><A HREF="{{_.url_2}}">{{_.title_2}}</A></td>
+          <td><!--suppress HtmlUnknownTarget -->
+              <A HREF="{{_.url_2}}">{{_.title_2}}</A></td>
           <td>{{_.date_p_2}}</td>
 
           <td>{{_.SCO_USER}}</td>
           <td>{{_.SCO_PRED}}</td>
            <td class="icon">
 
-                <A HREF="/compare/{{_.SCO_AIN_ID_1|round|int  }}/{{_.SCO_AIN_ID_2|round|int  }}" target="_blank">
-                    <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
+                <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+               -->
+               <A HREF="/compare/{{_.SCO_AIN_ID_1|round|int  }}/{{_.SCO_AIN_ID_2|round|int  }}" target="_blank">
+                    <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+                   <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare">
                 </A>
 
             </td>
@@ -60,14 +65,17 @@
 
 <HR>
     <BR>
-<div class="buttonrow">
+<div
         {% if page_id and page_id > 0: %}
-            <form class="buttoncolumn" action="/train_data/{{page_id-1}}">
+            <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+    nownTarget -->
+    <form class="buttoncolumn" action="/train_data/{{page_id-1}}">
                 <input class="main" type="submit" value="<<< Back" />
             </form>
         {% endif %}
         {% if has_next : %}
-            <form class="buttoncolumn" action="/train_data/{{page_id+1}}">
+            <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+    <form class="buttoncolumn" action="/train_data/{{page_id+1}}">
                 <input class="main" type="submit" value="Forward >>> " />
             </form>
         {% endif %}

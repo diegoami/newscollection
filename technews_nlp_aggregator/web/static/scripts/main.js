@@ -56,17 +56,6 @@ function send_same_story(method, id1, id2, element_id) {
     xhr.send();
 }
 
-function request_summary(id, element_id, text_id, title_element_id) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/summary/'+id,   true);
-    document.getElementById(element_id).innerHTML = 'Processing....'
-    xhr.onreadystatechange = function () {
-        var response_text = xhr.responseText ;
-        document.getElementById(element_id).innerHTML = '<P class="article_text"><B>'+ document.getElementById(title_element_id).innerHTML+'.</B> </P><P></P>'
-        document.getElementById(text_id).innerHTML = response_text ;
-    }
-    xhr.send();
-}
 
 function move_to_page(page_id) {
     var mainForm = document.getElementById("mainForm");

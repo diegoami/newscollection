@@ -1,10 +1,8 @@
 
 import logging
 from random import randint
-from technews_nlp_aggregator.common.util import extract_source, extract_source_without_www
-import pandas as pd
 
-
+from technews_nlp_aggregator.common.util import extract_source_without_www
 
 
 class ArticleLoader:

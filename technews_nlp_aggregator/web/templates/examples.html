@@ -34,13 +34,17 @@
         <tr>
 
             <td class="date">{{_.DATE_1}}</td>
-            <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
-            <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
+            <td><B>{{_.SOURCE_1}}: </B><!--suppress HtmlUnknownTarget -->
+                <A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
+            <td><B>{{_.SOURCE_2}}: </B><!--suppress HtmlUnknownTarget -->
+                <A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
 
             <td class="icon">
                 {% if _.ID_1 != _.ID_2 %}
-                    <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
+                    <!--suppress HtmlUnknownTarget, HtmlUnknownTarget, HtmlUnknownTarget -->
+                <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
+                        <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+                    <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
                     </A>
                 {% endif %}
             </td>
@@ -76,12 +80,16 @@
         <tr>
 
             <td class="date">{{_.DATE_1}}</td>
-            <td><B>{{_.SOURCE_1}}: </B><A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
-            <td><B>{{_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
+            <td><B>{{_.SOURCE_1}}: </B><!--suppress HtmlUnknownTarget -->
+                <A HREF="{{_.URL_1}}">{{_.TITLE_1}}</A></td>
+            <td><B>{<!--suppress HtmlUnknownTarget -->
+                {_.SOURCE_2}}: </B><A HREF="{{_.URL_2}}">{{_.TITLE_2}}</A></td>
 
             <td class="icon">
                 {% if _.ID_1 != _.ID_2 %}
-                    <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
+                    <!--suppress HtmlUnknownTarget, HtmlUnknownTarget, HtmlUnknownTarget -->
+                <A HREF="/compare/{{_.ID_1}}/{{_.ID_2}}" target="_blank">
+                        <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
                         <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare and Analyze">
                     </A>
                 {% endif %}

@@ -1,4 +1,3 @@
-import operator
 class Doc2VecInfo():
     def __init__(self, model, facade):
         self.model = model

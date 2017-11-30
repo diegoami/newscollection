@@ -1,10 +1,5 @@
 import logging
 
-import logging
-import pickle
-
-
-
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.WARN)
 
 from technews_nlp_aggregator.application import Application

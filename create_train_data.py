@@ -7,7 +7,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 from technews_nlp_aggregator.application import Application
 from technews_nlp_aggregator.prediction import FeatureFiller
 import argparse
-def direct_confront(train_file, feature_filler, similarArticlesRepo):
+def direct_confront(feature_filler, similarArticlesRepo):
 
 
     user_paired = similarArticlesRepo.retrieve_user_paired()
@@ -15,8 +15,6 @@ def direct_confront(train_file, feature_filler, similarArticlesRepo):
     scores = retrieves_scores(user_paired, feature_filler, similarArticlesRepo)
     df = pd.DataFrame(scores)
     print(df.head())
-    df.to_csv(train_file)
-
 
 def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
     score_list = []
@@ -41,14 +39,12 @@ if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
 
-    train_fail_loc = config["train_data_file"]
-    test_fail_loc = config["test_data_file"]
     version = config["version"]
     application = Application(config, True)
     feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator, version=version)
     similarArticlesRepo = application.similarArticlesRepo
     application.gramFacade.load_phrases()
-    direct_confront(train_fail_loc, feature_filler, similarArticlesRepo)
+    direct_confront( feature_filler, similarArticlesRepo)
 
 
 

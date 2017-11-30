@@ -1,7 +1,7 @@
-import logging
-
 import yaml
+
 from technews_nlp_aggregator.application import Application
+
 
 def parse_articles_with_docvec(application, n=100):
     _ = application

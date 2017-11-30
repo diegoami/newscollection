@@ -1,6 +1,5 @@
-import logging
-
 import yaml
+
 from technews_nlp_aggregator.application import Application
 
 
