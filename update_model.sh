@@ -1,6 +1,7 @@
 #!/bin/bash
 cd /home/ubuntu/projects/newscollection/
 source /home/ubuntu/anaconda3/bin/activate tnaggregator-2
+[ $? -eq 0 ] &&  git pull origin master
 [ $? -eq 0 ] &&  python scrape_site.py
 [ $? -eq 0 ] &&  python scrape_urls.py
 [ $? -eq 0 ] &&  python token_model_wf.py --action append
