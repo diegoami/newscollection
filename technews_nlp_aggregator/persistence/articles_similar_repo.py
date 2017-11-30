@@ -317,8 +317,11 @@ class ArticlesSimilarRepo:
         con =  self.get_connection()
 
         replace_sql = 'INSERT into PREDICTIONS (PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_REGR, PRED_PROBA, PRED_VERSION) values (:pred1,:pred2,:regr, :proba,:ver)'
+        count = 0
 #        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
         con.begin()
         for index, row in test_df.iterrows():
-                con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'regr' : row['SCO_REGR'], 'proba' : row['SCO_PROBA'], 'ver' : version})
+            con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'regr' : row['SCO_REGR'], 'proba' : row['SCO_PROBA'], 'ver' : version})
+            if (count % 1000 == 0):
+                logging.info("At {} predictions".format(count))
         con.commit()
