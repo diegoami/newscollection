@@ -65,8 +65,9 @@ class ArstechnicaSpider(scrapy.Spider):
     def parse_page(self, response):
         url = response.meta.get('URL')
         article_title_parts = response.xpath('//h1[@itemprop="headline"]//text()').extract()
-        article_title = "".join(article_title_parts).strip()
+        article_title = " ".join([x for x in article_title_parts if "ars_ab" not in x]).strip()
         #all_paragraphs = response.xpath('//div[@itemprop="articleBody"]//p/text()|//div[@itemprop="articleBody"]//p/em//text()|//div[@itemprop="articleBody"]//p/a//text()|//div[@itemprop="articleBody"]//p/i//text()').extract()
+        all_paragraph_before = response.xpath('//h2[@itemprop="description"]//text()').extract()
         first_paragraph = response.xpath(
             '//div[@itemprop="articleBody"]/text()').extract()
         all_paragraphs = response.xpath(
@@ -78,7 +79,7 @@ class ArstechnicaSpider(scrapy.Spider):
 
         article_date_str = article_datetime_tsstring.split('T')[0]
         article_date = date(*map(int,article_date_str.split('-')))
-        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
+        all_paragraph_text = build_text_from_paragraphs( all_paragraph_before + all_paragraphs)
 
         if (end_condition(article_date, self.go_back_date )):
             self.finished = True
