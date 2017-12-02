@@ -78,7 +78,9 @@ sentence_excludes = [
     'Tech Republic may get a share of revenue from the sale'
     '(via'
     'Click through to find out more'
-    'Image:'
+    'Image:',
+    'Images:',
+    'Sign up for our'
 ]
 
 sentence_inside_excludes = [

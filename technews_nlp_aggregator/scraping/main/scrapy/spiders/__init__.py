@@ -17,4 +17,6 @@ from .zdnet import ZdnetSpider
 from .digitaltrends import DigitaltrendsSpider
 from .guardian import GuardianSpider
 from .qz import QzSpider
+from .recode import RecodeSpider
+
 

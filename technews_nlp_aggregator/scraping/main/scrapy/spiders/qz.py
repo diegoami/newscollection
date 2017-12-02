@@ -10,7 +10,7 @@ from . import extract_date, end_condition, build_text_from_paragraphs, already_c
 
 
 class QzSpider(scrapy.Spider):
-    name = "zdnet"
+    name = "qz"
     pages_C =  0
     urls_V = set()
     pages_V = set()
