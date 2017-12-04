@@ -10,8 +10,8 @@
 {% include 'header.html' %}
 <P>Enter text of a technical article here </P>
 <!--suppress HtmlUnknownTarget -->
-<FORM id="mainForm" class="tooltip" ACTION="/retrieve_similar" METHOD="POST">
-
+<FORM id="textForm" ACTION="/retrieve_similar" METHOD="POST">
+    <div class="surrond_form">
     <p>
     <label class="textarea_label" for="search_text" ></label>
 
@@ -19,29 +19,30 @@
     </textarea>
     </p>
 
-    <div class="surrond_form tooltip">
 
-            <p><label for="n_articles"># per page:</label><input type="text" id="n_articles" name="n_articles" value="{{n_articles | default(25) }}"></p>
+
+            <p><label for="n_articles"># per page:</label><input type="text" id="n_articles_txt" name="n_articles" value="{{n_articles | default(25) }}"></p>
 
         <p><label for="start">From:</label><input type="text" id="start" name="start" value="{{start_s | default('2017-01-1') }}"></p>
         <p><label for="end">To:</label><input type="text" id="end" name="end" value="{{end_s | default('2017-12-31')}}"><br/><br/></p>
 
-        <p>
-        <input name="search_url" id="search_url" type="hidden" />
-        <input id="page_id" name="page_id" type="hidden" value="0"  />
-
-        <INPUT type="hidden" id="article_id" name="article_id" >
-
-        <input class="main"  type="submit" value="submit"  />
-        </p>
-
-
+         <P><input class="main"  type="submit" value="submit"  /></P>
     </div>
-    <span class="tooltiptext">
-        <P> Enter text from a tech article here</P>
-        <P><I>Can be used also to search in the article database, but results quality may vary</I></P>
-    </span>
  </FORM>
+<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
+    <p>
+    <input name="search_url" id="search_url" type="hidden" />
+    <input name="n_articles" id="n_articles" value="25" type="hidden" />
+    <input id="page_id" name="page_id" type="hidden" value="0"  />
+
+    <INPUT type="hidden" id="article_id" name="article_id" >
+
+
+    </p>
+</FORM>
+
+
+
 {% if articles: %}
 
     <table border="1">

@@ -95,7 +95,7 @@
                             <button class="buttoncolumn btn-small yellow" onclick="send_same_story('related_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">A
                             </button>
 
-                            <button class="buttoncolumn btn-small red"  onclick="send_same_story('unrelated_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">N
+                            <button class="buttoncolumn btn-small red"  onclick="send_same_story('unrelated_xhr', '{{article_id}}', '{{_.article_id}}', 'samestory_{{article_id}}_{{_.article_id}}');">
 
                             </button>
                          </div>
@@ -105,7 +105,7 @@
                 </td>
                 {% endif %}
                 <td>
-                  {% if _.p_score > 0: %}
+                  {% if _.p_score  and _.p_score > 0: %}
                       {{'%0.3f'| format(_.p_score|float)}}
                   {% endif %}
                 </td>
