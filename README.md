@@ -34,7 +34,7 @@ The web application is currently accessible [here](http://www.techcontroversy.co
 
 You can find "controversial" topics in the database. [You can browse through the articles](http://www.techcontroversy.com/duplicates) that have been paired because the system considers it likely that they are talking about the same topic, possibly under a different slant.
 
-Articles about the same stories can be found on the first page[aggregated here](http://www.techcontroversy.com/show_groups).
+Articles about the same stories can be found on the first page [aggregated here](http://www.techcontroversy.com/show_groups).
 
 ### Finding Related articles
 
