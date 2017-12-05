@@ -43,3 +43,6 @@ Articles about the same stories can be found on the first page[aggregated here](
 
 Alternatively, you can see how articles in the database related to each other [entering the url of an article in this page](http://www.techcontroversy.com/search_url).
 
+## Video introduction
+
+A video introduction to this project can be found on my [Youtube channel](https://www.youtube.com/channel/UCHf5Uk_0nawvJDx3oA7WziA/).
