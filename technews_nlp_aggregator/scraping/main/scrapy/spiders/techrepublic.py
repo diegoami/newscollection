@@ -21,7 +21,7 @@ class TechrepublicSpider(scrapy.Spider):
         super().__init__()
         self.article_repo = article_repo
         self.go_back_date = go_back_date
-        self.finished = False
+        self.finished = 0
         self.url_list = url_list
 
 
@@ -43,10 +43,14 @@ class TechrepublicSpider(scrapy.Spider):
                     yield Request(absolute_url, callback=self.parse_page,
                                   meta={'URL': absolute_url})
 
+                else:
+                    article_date = self.article_repo.url_date(absolute_url)
+                    if (article_date):
+                        if (end_condition(article_date, self.go_back_date)):
+                            logging.info("Found article at date {}, finishing crawling".format(article_date))
+                            self.finished += 1
 
-
-
-            if not self.finished:
+            if self.finished < 5:
                 absolute_page = 'http://www.techrepublic.com/'+str(self.pages_C)
                 self.pages_C += 1
 
@@ -74,6 +78,6 @@ class TechrepublicSpider(scrapy.Spider):
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs, punct_add_point=")")
 
         if (end_condition(article_date,  self.go_back_date)):
-            self.finished = True
+            self.finished += 1
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 

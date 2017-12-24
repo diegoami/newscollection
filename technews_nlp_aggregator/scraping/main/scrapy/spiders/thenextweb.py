@@ -23,7 +23,7 @@ class ThenextwebSpider(scrapy.Spider):
         self.article_repo = article_repo
         self.go_back_date = go_back_date
 
-        self.finished = False
+        self.finished = 0
         self.url_list = url_list
 
     def parse(self, response):
@@ -45,8 +45,11 @@ class ThenextwebSpider(scrapy.Spider):
 
                         yield Request(absolute_url, callback=self.parse_page,
                                       meta={'URL': absolute_url})
-
-            if not self.finished:
+                    else:
+                        if (end_condition(article_date, self.go_back_date)):
+                            logging.info("Found article at date {}, finishing crawling".format(article_date))
+                            self.finished += 1
+            if self.finished < 5:
                 absolute_page = 'https://thenextweb.com/latest/page/'+str(self.pages_C)
                 self.pages_C += 1
 
@@ -73,6 +76,6 @@ class ThenextwebSpider(scrapy.Spider):
         article_date = extract_date(url)
         if (end_condition(article_date,  self.go_back_date)):
 
-            self.finished = True
+            self.finished += 1
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 

@@ -37,6 +37,15 @@ class ArticleDatasetRepo():
         result = found_one is not None
         return result
 
+    def url_date(self, url):
+        if not self.con_find:
+            self.init_con_find()
+        found_date =  self.con_find['ARTICLE_INFO'].find_one(AIN_URL=url)
+        if found_date is not None:
+            result = found_date['AIN_DATE']
+        else:
+            return None
+
     def close_con_find(self):
         self.con_find = None
 

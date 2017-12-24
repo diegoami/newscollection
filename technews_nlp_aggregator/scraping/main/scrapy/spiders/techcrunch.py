@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy import Request
+import logging
 
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
 
@@ -19,7 +20,7 @@ class TechcrunchSpider(scrapy.Spider):
         self.article_repo = article_repo
         self.go_back_date = go_back_date
 
-        self.finished = False
+        self.finished = 0
         self.url_list = url_list
 
 
@@ -41,10 +42,13 @@ class TechcrunchSpider(scrapy.Spider):
 
                     yield Request(absolute_url, callback=self.parse_page,
                                   meta={'URL': absolute_url})
+                else:
+                    article_date = self.article_repo.url_date(absolute_url)
+                    if (end_condition(article_date, self.go_back_date)):
+                        logging.info("Found article at date {}, finishing crawling".format(article_date))
+                        self.finished += 1
 
-
-
-            if not self.finished:
+            if self.finished < 5:
                 for page in pages:
                     absolute_page = response.urljoin(page)
                     if (absolute_page not in self.pages_V):
@@ -67,6 +71,6 @@ class TechcrunchSpider(scrapy.Spider):
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
         if (end_condition(article_date, self.go_back_date)):
-            self.finished = True
+            self.finished += 1
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : article_tags}
 
