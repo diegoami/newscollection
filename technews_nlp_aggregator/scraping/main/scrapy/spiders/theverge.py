@@ -37,7 +37,7 @@ class ThevergeSpider(scrapy.Spider):
         else:
 
 
-            urls = response.xpath('//h3/a/@href').extract()
+            urls = response.xpath('//h3/a/@href | //h2/a/@href').extract()
 
 
             for url in urls:
