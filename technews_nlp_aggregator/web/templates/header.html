@@ -1,3 +1,4 @@
+
 <div id="topnav" class="topnav">
   <!--suppress HtmlUnknownTarget -->
     <a id="topnav_groups" href="/show_groups">Controversial</a>
@@ -21,7 +22,10 @@
 {% endif %}
 
  </div>
-
+<div class="buttonrow">
+<img class="logo buttoncolumn" src="{{ url_for('static', filename='images/logo.png') }}">
+    <span class="buttoncolumn logotext"><EM>Aggregating technical articles related to the same story. </EM> <a href="https://github.com/diegoami/newscollection/blob/master/README.md" target="_blank">More info</a></span>
+</div>
 <BR>
 {% if messages: %}
      <ul class="errors">

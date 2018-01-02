@@ -98,6 +98,19 @@ img {
 
 }
 
+.logo {
+    width: 150px;
+    height: 35px;
+    display:block;
+    padding-top: 5px;
+}
+
+.logotext {
+    margin-top: 8px;
+}
+
+
+
 .monospace {
     font-family: monospace;
 }
