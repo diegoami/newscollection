@@ -57,7 +57,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     config = yaml.safe_load(open('config.yml'))
-    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
+    db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     articleLoader = ArticleLoader(articleDatasetRepo)

@@ -26,7 +26,7 @@ def do_crawl(articleDatasetRepo, spidermap):
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
-    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
+    db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     articleSpiderRepo = ArticlesSpiderRepo(db_config.get("db_url"))

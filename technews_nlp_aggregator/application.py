@@ -12,7 +12,7 @@ from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 
 class Application:
     def __init__(self, config, load_text=False):
-        self.db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
+        self.db_config = yaml.safe_load(open(config["key_file"]))
         self.db_url = self.db_config["db_url"]
         self.load_text = load_text
         self.articleDatasetRepo = ArticleDatasetRepo(self.db_config.get("db_url"))

@@ -12,7 +12,7 @@ INDEX_FILENAME        = 'index'
 
 from gensim.corpora import MmCorpus
 def create_tfidf_model(config):
-    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
+    db_config = yaml.safe_load(open(config["key_file"]))
     model_dir = config["root_dir"]+config["lsi_models_dir_link"]
     corpus = MmCorpus(model_dir + '/' + CORPUS_FILENAME)
     dictionary =  corpora.Dictionary.load(model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference

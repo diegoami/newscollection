@@ -9,7 +9,7 @@ from datetime import datetime
 import yaml
 
 def create_doc2vec_model(config):
-    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
+    db_config = yaml.safe_load(open(config["key_file"]))
     pickle_dir = config["root_dir"]+config["pickle_dir"]
 
     models_dir = config["root_dir"]+config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'

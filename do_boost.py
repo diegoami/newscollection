@@ -117,7 +117,7 @@ def create_classifier(train_DF, xboost_classifier_file ):
 if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
-    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
+    db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     similarArticlesRepo = ArticlesSimilarRepo(db_url)
     train_df = similarArticlesRepo.load_train_set()

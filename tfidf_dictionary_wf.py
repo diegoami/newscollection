@@ -13,7 +13,7 @@ LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
 def create_tfidf_model(config):
-    db_config = yaml.safe_load(open(config["root_dir"]+config["key_file"]))
+    db_config = yaml.safe_load(open(config["key_file"]))
     models_dir = config["root_dir"] + config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'
     os.mkdir(models_dir)
 
