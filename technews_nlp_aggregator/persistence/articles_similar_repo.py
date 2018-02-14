@@ -39,14 +39,16 @@ FLOAT_REGEX = re.compile('\d+(\.\d+)?')
 class ArticlesSimilarRepo:
 
     def get_connection(self):
-        con = dataset.connect(self.db_connection, engine_kwargs={
-            'connect_args': {'charset': 'utf8'}
-        })
-        return con
+        return self.dataset_connection
 
     def __init__(self, db_connection):
         self.db_connection = db_connection
-        self.engine = create_engine(self.db_connection,encoding='UTF-8')
+
+        self.dataset_connection = dataset.connect(self.db_connection, engine_kwargs={
+            'connect_args': {'charset': 'utf8'}
+        })
+        self.engine = self.dataset_connection.engine
+
 
     def association_exists(self, con, first_id, second_id, agent):
 
@@ -180,7 +182,7 @@ class ArticlesSimilarRepo:
 
     def list_similar_articles(self, filter_criteria= None):
         similar_stories = []
-        con = self.get_connection()
+
         econ = self.engine.connect()
         similarArticlesSQL_having_cond =  ( " AND ( " + filter_criteria +" ) " )  if self.verify_having_condition(filter_criteria) else ""
         similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 10000"

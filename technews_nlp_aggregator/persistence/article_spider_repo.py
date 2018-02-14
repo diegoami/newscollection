@@ -6,13 +6,14 @@ import dataset
 class ArticlesSpiderRepo:
 
     def get_connection(self):
-        con = dataset.connect(self.db_connection, engine_kwargs={
-            'connect_args': {'charset': 'utf8'}
-        })
-        return con
+        return self.dataset_connection
 
     def __init__(self, db_connection):
         self.db_connection = db_connection
+        self.dataset_connection = dataset.connect(self.db_connection, engine_kwargs={
+            'connect_args': {'charset': 'utf8'}
+        })
+        self.engine = self.dataset_connection.engine
 
     def retrieve_urls_queued(self):
         sql_user_similar = "SELECT UTA_SPIDER, UTA_URL FROM URLS_TO_ADD WHERE UTA_PROCESSED IS NULL"

@@ -27,15 +27,16 @@
         <p><label for="end">To:</label><input type="text" id="end" name="end" value="{{end_s | default('2017-12-31')}}"><br/><br/></p>
 
          <P><input class="main"  type="submit" value="submit"  /></P>
+        <input id="page_id" name="page_id" type="hidden" value="{{page_id | default(0)}}"  />
     </div>
  </FORM>
 <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
     <p>
     <input name="search_url" id="search_url" type="hidden" />
     <input name="n_articles" id="n_articles" value="25" type="hidden" />
-    <input id="page_id" name="page_id" type="hidden" value="0"  />
 
-    <INPUT type="hidden" id="article_id" name="article_id" >
+
+    <INPUT type="hidden" id="article_id" name="article_id" value="" >
 
 
     </p>
@@ -88,7 +89,7 @@
 {% if articles: %}
     <div class="buttonrow">
             {% if page_id and page_id > 0: %}
-                    <input class="main" type="submit" value="<<< Back" onclick="move_to_page('{{ page_id - 1 }}')"/>
+                    <input class="main" type="submit" value="<<< Back" onclick="move_to_page('{{ page_id - 1 }}','textForm')"/>
 
             {% endif %}
 
@@ -97,7 +98,7 @@
             </div>
             {% if n_articles == articles|length : %}
 
-                    <input class="main" type="submit" value="Forward >>> " onclick="move_to_page('{{ page_id + 1 }}')" />
+                    <input class="main" type="submit" value="Forward >>> " onclick="move_to_page('{{ page_id + 1 }}','textForm')" />
 
             {% endif %}
 

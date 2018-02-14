@@ -22,7 +22,7 @@ def random_url():
             d_days = read_int_from_form(form, 'd_days')
 
             index, article = app.application.articleLoader.get_random_article()
-            url = article["url"]
+            url, article_id = article["url"], article["article_id"]
             return common_retrieve_id(id=index,  d_days=d_days, article_id=article["article_id"],  n_articles=n_articles, url=url )
 
 

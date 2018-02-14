@@ -136,14 +136,14 @@
 
     <div class="buttonrow">
         {% if page_id and page_id > 0: %}
-                <input class="main" type="submit" value="<<<" onclick="move_to_page('{{ page_id - 1 }}')"/>
+                <input class="main" type="submit" value="<<<" onclick="move_to_page('{{ page_id - 1 }}','mainForm')"/>
         {% endif %}
         <div class="buttoncolumn">
             {{page_id+1 | default(0) }}
          </div>
         {% if n_articles == articles|length : %}
 
-            <input class="main" type="submit" value=">>>" onclick="move_to_page('{{ page_id + 1 }}')" />
+            <input class="main" type="submit" value=">>>" onclick="move_to_page('{{ page_id + 1 }}','mainForm')" />
 
         {% endif %}
 

@@ -57,8 +57,8 @@ function send_same_story(method, id1, id2, element_id) {
 }
 
 
-function move_to_page(page_id) {
-    var mainForm = document.getElementById("mainForm");
+function move_to_page(page_id, form) {
+    var mainForm = document.getElementById(form);
     document.getElementById("page_id").value = page_id
     mainForm.target= "";
     mainForm.submit();

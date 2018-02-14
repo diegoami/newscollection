@@ -14,16 +14,16 @@ from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
 class ArticleDatasetRepo():
 
     def get_connection(self):
-        con = dataset.connect(self.db_connection, engine_kwargs={
-            'connect_args': {'charset': 'utf8'}
-        })
-        return con
+        return self.dataset_connection
 
     def __init__(self, db_connection, limit_article_id=None):
         self.db_connection = db_connection
 
         self.con_find = None
-        self.engine = create_engine(self.db_connection,encoding='UTF-8')
+        self.dataset_connection = dataset.connect(self.db_connection, engine_kwargs={
+            'connect_args': {'charset': 'utf8'}
+        })
+        self.engine = self.dataset_connection.engine
 
 
     def init_con_find(self):
