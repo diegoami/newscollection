@@ -1,0 +1,7 @@
+min_count_bigrams : 7
+min_count_trigrams : 8
+tdf_no_below : 5
+tdf_no_above : 0.78
+docvec_window : 10
+docvec_min_count : 5
+docvec_sample : 0.001

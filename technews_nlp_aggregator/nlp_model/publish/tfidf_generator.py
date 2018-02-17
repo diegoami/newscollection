@@ -13,15 +13,16 @@ import logging
 
 class TfidfGenerator():
 
-    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None):
+    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None, no_below=5, no_above=0.78):
         self.model_dir = model_dir
-
+        self.no_below=no_below
+        self.no_above=no_above
 
     def create_dictionary(self, texts):
         dictionary = corpora.Dictionary(texts)
         logging.info("Initializing dictionary with {} texts".format(len(texts)))
 
-        dictionary.filter_extremes(no_below=5, no_above=0.78, keep_n=150000)
+        dictionary.filter_extremes(no_below=self.no_below, no_above=self.no_above, keep_n=150000)
         dictionary.save(self.model_dir+DICTIONARY_FILENAME)  # store the dictionary, for future reference
         corpus = [dictionary.doc2bow(text) for text in texts]
         logging.info("Created {} bags of words".format(len(corpus)))
@@ -35,7 +36,7 @@ class TfidfGenerator():
         logging.info("Tfidf initialized with {} docs ".format(tfidf.num_docs))
 
         corpus_tfidf = tfidf[corpus]
-        lsi = models.LsiModel(corpus_tfidf, num_topics=500, id2word=dictionary, chunksize=50000)  # initialize an LSI transformation
+        lsi = models.LsiModel(corpus_tfidf, num_topics=500, id2word=dictionary, chunksize=70000)  # initialize an LSI transformation
         corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
 
         lsi.save(self.model_dir+'/'+LSI_FILENAME)  # same for tfidf, lda, ...

@@ -2,7 +2,7 @@
 from string import punctuation
 
 from technews_nlp_aggregator.nlp_model.spacy import spacy_nlp
-from spacy.en.word_sets import STOP_WORDS
+from spacy.lang.en.stop_words import STOP_WORDS
 import logging
 
 

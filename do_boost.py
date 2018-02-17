@@ -35,7 +35,7 @@ def create_regressor(train_DF, xboost_model_file):
     #clf =  GridSearchCV(XGBRegressor(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001), xgbparams)
 
 
-    clf = XGBRegressor(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
+    clf = XGBRegressor(max_depth=5, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
     clf.fit(X_train, y_train)
    # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
     #print_best_parameters(clf)
@@ -73,7 +73,7 @@ def create_classifier(train_DF, xboost_classifier_file ):
     #clf =  GridSearchCV(XGBClassifier(), xgbparams)
 
 
-    clf = XGBClassifier(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
+    clf = XGBClassifier(max_depth=5, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
 
 
    # clf = XGBClassifier()
@@ -118,11 +118,12 @@ if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
     db_config = yaml.safe_load(open(config["key_file"]))
+    version = config["version"]
     db_url = db_config["db_url"]
     similarArticlesRepo = ArticlesSimilarRepo(db_url)
-    train_df = similarArticlesRepo.load_train_set()
+    train_df = similarArticlesRepo.load_train_set(version)
     xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
     xboost_classifier_file = config["root_dir"] + config["xgboost_classifier_file"]
 
     create_regressor(train_df,  xboost_model_file)
-    create_classifier(train_df, xboost_classifier_file )
+    create_classifier(train_df, xboost_classifier_file)

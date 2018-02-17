@@ -8,7 +8,7 @@ from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade
 from datetime import datetime
 import yaml
 
-def create_doc2vec_model(config):
+def create_doc2vec_model(config, param_config):
     db_config = yaml.safe_load(open(config["key_file"]))
     pickle_dir = config["root_dir"]+config["pickle_dir"]
 
@@ -18,7 +18,8 @@ def create_doc2vec_model(config):
     pickle_file = config["root_dir"]+config["trigrams_pickle_file"]
     with open(pickle_file, 'rb') as f:
         trigrams = pickle.load(f)
-        doc2VecFacade = Doc2VecFacade( models_dir)
+        doc2VecFacade = Doc2VecFacade( models_dir, min_count=int(param_config['docvec_min_count']), window=int(param_config['docvec_window']),
+                                       sample=float(param_config['docvec_sample']))
 
         doc2VecFacade.create_model(trigrams)
 
@@ -29,4 +30,6 @@ def create_doc2vec_model(config):
 if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
-    create_doc2vec_model(config)
+    version = config['version']
+    param_config = yaml.safe_load(open('v_' + str(version) + '.yml'))
+    create_doc2vec_model(config, param_config)

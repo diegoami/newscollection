@@ -19,7 +19,7 @@ def process_for_insertion(id, df, threshold, articleFilterDF):
 
 
 
-def eff_similar_articles(application):
+def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3):
     _ = application
     articleFilterDF = _.articleLoader.articlesDF[:_.tfidfFacade.docs_in_model()]
     articlesToProcessDF =  articleFilterDF [_.articleLoader.articlesDF['processed'].isnull()]
@@ -34,10 +34,10 @@ def eff_similar_articles(application):
 
         try:
             con.begin()
-            for article1, article2, score in process_for_insertion(id, tfidf_DF, 0.55, articleFilterDF):
+            for article1, article2, score in process_for_insertion(id, tfidf_DF, tf_threshold, articleFilterDF):
                 _.similarArticlesRepo.persist_association(con, article1, article2,  _.tfidfFacade.name, score)
 
-            for article1, article2, score in process_for_insertion(id, doc2vec_DF, 0.28,  articleFilterDF):
+            for article1, article2, score in process_for_insertion(id, doc2vec_DF, doc_threshold,  articleFilterDF):
                 _.similarArticlesRepo.persist_association(con, article1, article2, _.doc2VecFacade.name, score)
 
             _.similarArticlesRepo.update_to_processed(article_id, con)
@@ -53,4 +53,4 @@ if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
     application = Application(config, True)
-    eff_similar_articles(application)
+    eff_similar_articles(application, float(config['tf_threshold']), float(config['doc_threshold']) )

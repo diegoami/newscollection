@@ -12,8 +12,10 @@ TRIGRAMS_PICKLE = 'bigrams.p'
 from gensim.models.phrases import Phraser, Phrases
 class GramFacade():
 
-    def __init__(self, model_dir):
+    def __init__(self, model_dir, min_count_bigrams=8, min_count_trigrams=7):
         self.model_dir = model_dir
+        self.min_count_bigrams=min_count_bigrams
+        self.min_count_trigrams=min_count_trigrams
 
     def load_models(self):
         self.bigrams_phraser = Phraser.load(self.model_dir + '/' + BIGRAMS_PHRASER_FILENAME)
@@ -37,9 +39,9 @@ class GramFacade():
 
 
     def create_model(self, doc_list):
-        self.bigrams_phrases = Phrases(doc_list, min_count=8)
+        self.bigrams_phrases = Phrases(doc_list, min_count=self.min_count_bigrams)
         self.bigrams_phraser = Phraser(self.bigrams_phrases)
-        self.trigrams_phrases = Phrases(self.bigrams_phraser[doc_list], min_count=7)
+        self.trigrams_phrases = Phrases(self.bigrams_phraser[doc_list], min_count=self.min_count_trigrams)
         self.trigrams_phraser = Phraser(self.trigrams_phrases)
         self.bigrams_phraser.save(self.model_dir + '/' + BIGRAMS_PHRASER_FILENAME)
         self.trigrams_phraser.save(self.model_dir + '/' + TRIGRAMS_PHRASER_FILENAME)

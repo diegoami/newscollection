@@ -283,8 +283,8 @@ class ArticlesSimilarRepo:
                                            SCO_VERSION=score["SCO_VERSION"])
         return found_row
 
-    def load_train_set(self):
-        view_sql = "SELECT * FROM TRAIN_SCORES"
+    def load_train_set(self, version):
+        view_sql = "SELECT * FROM TRAIN_SCORES WHERE SCO_VERSION = "+str(version)
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
         econ.close()
@@ -299,8 +299,8 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
-    def load_test_set(self):
-        view_sql =  "SELECT *  FROM TEST_SCORES"
+    def load_test_set(self, version):
+        view_sql =  "SELECT *  FROM TEST_SCORES WHERE SCO_VERSION = "+str(version)
 
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)

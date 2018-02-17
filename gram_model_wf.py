@@ -12,7 +12,7 @@ import yaml
 
 
 
-def generate_model(config):
+def generate_model(config, param_config ):
 
     models_dir =  config["root_dir"]+config["phrases_model_dir_base"] + datetime.now().isoformat() + '/'
     os.mkdir(models_dir)
@@ -22,7 +22,7 @@ def generate_model(config):
     with open(pickle_file, 'rb') as f:
         texts = pickle.load(f)
         logging.info("Loaded {} texts".format(len(texts)))
-        gramFacade = GramFacade(models_dir)
+        gramFacade = GramFacade(models_dir, min_count_bigrams=int(param_config["min_count_bigrams"]), min_count_trigrams=int(param_config["min_count_trigrams"]) )
         gramFacade.create_model(texts)
     if os.path.islink(config["root_dir"]+config["phrases_model_dir_link"]):
         os.unlink(config["root_dir"]+config["phrases_model_dir_link"])
@@ -34,5 +34,7 @@ def generate_model(config):
 if __name__ == '__main__':
 
     config = yaml.safe_load(open('config.yml'))
-    generate_model(config)
+    version = config['version']
+    param_config = yaml.safe_load(open('v_'+str(version)+'.yml'))
+    generate_model(config, param_config )
 
