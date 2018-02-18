@@ -73,3 +73,12 @@ def build_text_from_paragraphs(all_paragraphs, punct_end = ".!?", punct_add_poin
 
         all_paragraph_text = all_paragraph_text + paragraph
     return all_paragraph_text
+
+
+
+def build_from_timestamp(self, article_datetime_ts):
+    article_date_str = article_datetime_ts.split('T')[0]
+    article_date = date(*map(int, article_date_str.split('-')))
+    return article_date
+
+

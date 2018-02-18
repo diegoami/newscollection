@@ -42,7 +42,7 @@ if __name__ == '__main__':
     xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
     xboost_classif_file = config["root_dir"] + config["xgboost_classifier_file"]
 
-    test_df = similarArticlesRepo.load_test_set()
+    test_df = similarArticlesRepo.load_test_set(version)
     predictions_df = similarArticlesRepo.load_predictions()
     test_df_res = predict(test_df, xboost_model_file, xboost_classif_file, predictions_df)
 

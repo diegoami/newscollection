@@ -290,8 +290,8 @@ class ArticlesSimilarRepo:
         econ.close()
         return viewDF
 
-    def load_predictions(self):
-        view_sql = "SELECT * FROM PREDICTIONS"
+    def load_predictions(self, version):
+        view_sql = "SELECT * FROM PREDICTIONS WHERE PRED_VERSION = "+str(version)
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
         viewDF.set_index(['PRED_AIN_ID_1', 'PRED_AIN_ID_2'], inplace=True)

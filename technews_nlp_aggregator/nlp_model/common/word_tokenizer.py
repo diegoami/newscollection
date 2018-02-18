@@ -49,7 +49,7 @@ class TechArticlesWordTokenizer:
         tok_doc = spacy_nlp(doc)
         self.count += 1
         if (self.count % 100 == 0):
-            logging.debug("Processed {} documents ".format(self.count))
+            logging.info("Processed {} documents ".format(self.count))
         return [word.lemma_ for word in tok_doc if not word.is_stop and not word.is_space ]
 
     def tokenize_doc(self, title, document):

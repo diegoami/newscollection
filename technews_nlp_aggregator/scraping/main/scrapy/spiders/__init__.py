@@ -2,7 +2,7 @@
 #
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
-from .util import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled
+from .util import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled, build_from_timestamp
 from .arstechnica import ArstechnicaSpider
 from .techcrunch import TechcrunchSpider
 from .thenextweb import ThenextwebSpider
@@ -17,6 +17,8 @@ from .zdnet import ZdnetSpider
 from .digitaltrends import DigitaltrendsSpider
 from .guardian import GuardianSpider
 from .qz import QzSpider
+from .inquisitr import InquisitrSpider
 from .recode import RecodeSpider
+from .reuters import ReutersSpider
 
 
