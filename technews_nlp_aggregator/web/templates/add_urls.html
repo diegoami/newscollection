@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'header_files.html' %}
+  <meta charset="UTF-8">
+  <title>Add new article</title>
+
+</head>
+<body onload="javascript:select_header('topnav_add_urls')">
+{% include 'header.html' %}
+<H3> Add a new article</H3>
+
+<div>
+<!--suppress HtmlUnknownTarget -->
+    <FORM id="mainForm"  ACTION="/add_urls" METHOD="POST">
+<p>
+    <textarea id="urls" name="urls" rows="30" cols="90">
+    </textarea>
+
+   <p></p>
+<input class="main"  type="submit" value="submit"  />
+</FORM>
+{% include 'footer.html' %}
+</body>
+</html>

@@ -7,6 +7,8 @@ from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade
     GramFacade, ClassifierAggregator
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
+from technews_nlp_aggregator.persistence.articles_spider_repo import ArticlesSpiderRepo
+
 from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 
 
@@ -19,7 +21,7 @@ class Application:
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
         self.articleLoader.load_all_articles(load_text=load_text)
         self.similarArticlesRepo = ArticlesSimilarRepo(self.db_url)
-
+        self.articlesSpiderRepo = ArticlesSpiderRepo(self.db_url)
         self.articleSimilarLoader = ArticleSimilarLoader(self.similarArticlesRepo)
         self.tokenizer = defaultTokenizer
         self.gramFacade = GramFacade(config["root_dir"]+config["phrases_model_dir_link"])

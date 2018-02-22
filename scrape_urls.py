@@ -19,10 +19,23 @@ def do_crawl(articleDatasetRepo, spidermap):
     process = CrawlerProcess(settings=crawler_settings)
 
     for spider_name in spidermap:
-        spider = globals()[spider_name+"Spider"]
-        urls = spidermap[spider_name]
-        process.crawl(spider, articleDatasetRepo, date.min, urls)
+        spider_class = spider_name+"Spider"
+        if spider_class in globals():
+            spider = globals()[spider_name+"Spider"]
+            urls = spidermap[spider_name]
+            process.crawl(spider, articleDatasetRepo, date.min, urls)
+        else:
+            logging.ERROR("COULD NOT FIND SPIDER {}".format(spider_class))
     process.start()
+
+
+def create_spider_map(url_queued):
+    to_process = {}
+    for spider, url in url_queued:
+        list_to_process = to_process.get(spider, [])
+        list_to_process.append(url)
+        to_process[spider] = list_to_process
+    return to_process
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
@@ -31,11 +44,7 @@ if __name__ == '__main__':
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     articleSpiderRepo = ArticlesSpiderRepo(db_config.get("db_url"))
     url_queued = articleSpiderRepo.retrieve_urls_queued()
-    to_process = {}
-    for row in url_queued:
-        list_to_process = to_process.get(row["UTA_SPIDER"], [])
-        list_to_process.append(row["UTA_URL"])
-        to_process[row["UTA_SPIDER"]] = list_to_process
+    to_process = create_spider_map(url_queued)
 
 
     do_crawl(articleDatasetRepo, to_process)
