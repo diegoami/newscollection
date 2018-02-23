@@ -7,10 +7,17 @@ from .summary import get_highlighted_text
 from . import app
 
 
+@app.route('/add_urls_start')
+def add_urls_start():
+    if (session["signed_in"]):
+        return render_template('add_urls.html')
+    else:
+        return redirect(url_for('show_groups'))
+
 
 
 @app.route('/add_urls', methods=['POST'])
-def add_new_url():
+def add_urls():
     _ = app.application
     if request.method == 'POST':
         form = request.form
