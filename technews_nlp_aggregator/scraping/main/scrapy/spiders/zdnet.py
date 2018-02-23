@@ -14,8 +14,7 @@ class ZdnetSpider(scrapy.Spider):
     pages_V = set()
     allowed_domains = ["zdnet.com"]
     start_urls = (
-        'https://www.zdnet.com/', 'http://www.zdnet.com/'
-    )
+        'https://www.zdnet.com/', 'http://www.zdnet.com/'   )
 
 
     def __init__(self, article_repo, go_back_date, url_list):
