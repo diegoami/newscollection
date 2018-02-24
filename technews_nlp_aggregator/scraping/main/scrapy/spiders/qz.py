@@ -57,7 +57,7 @@ class QzSpider(scrapy.Spider):
         article_title = "".join(article_title_parts).strip()
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'item-body')]/div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
-        article_date_str_l = response.xpath("//span[@class='timestamp']//text()").extract_first()
+        article_date_str_l = response.xpath("//p[contains(@class, 'storydate')]//text()").extract_first()
         article_authors = response.xpath('//a[@class="author-name"]/@href').extract_first()
         all_paragraph_text = build_text_from_paragraphs( all_paragraphs)
         month_name, day, year= re.split('\W+', article_date_str_l)

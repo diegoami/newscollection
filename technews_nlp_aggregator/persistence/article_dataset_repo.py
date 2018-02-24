@@ -308,11 +308,11 @@ class ArticleDatasetRepo():
 
 
     def update_to_crawled(self, url, con=None):
-        sql_update = "UPDATE URLS_TO_ADD SET UTA_PROCESSED = SYSDATE() WHERE UTA_URL = :url"
+        sql_update = "UPDATE URLS_TO_ADD SET UTA_PROCESSED = SYSDATE() WHERE UTA_URL LIKE :url"
         con = self.get_connection() if not con else con
         try:
             con.begin()
-            article_query = con.query(sql_update, {"url" : url})
+            article_query = con.query(sql_update, {"url" : '%'+url.strip()+'%'})
             con.commit()
         except:
             con.rollback()

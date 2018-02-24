@@ -7,8 +7,8 @@ from scrapy import Request
 from . import end_condition, build_text_from_paragraphs, build_from_timestamp
 
 
-class GuardianSpider(scrapy.Spider):
-    name = "guardian"
+class TheguardianSpider(scrapy.Spider):
+    name = "theguardian"
     pages_C =  0
     urls_V = set()
     pages_V = set()

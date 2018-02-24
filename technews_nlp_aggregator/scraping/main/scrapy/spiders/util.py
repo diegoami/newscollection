@@ -2,7 +2,7 @@ from urllib.parse import urlparse
 from datetime import date
 from string import punctuation
 import logging
-
+import re
 
 def extract_date(url):
     arrs = str(urlparse(url)[2]).split('/')
@@ -44,6 +44,21 @@ def get_date_from_string(date_str):
                     result = article_date
     return result
 
+def get_date_from_string_mdy(date_str):
+    result = None
+    if (date_str):
+        date_str_l = date_str.split(',')[1].split()
+        if (len(date_str_l) >= 3):
+            month, days, year = date_str_l[0], date_str_l[1], date_str_l[2]
+            if month in month_names:
+                month_index = month_names.index(month) + 1
+            if month in month_names_short:
+                month_index = month_names_short.index(month) + 1
+            day = re.sub('[a-zA-Z]', '', days )
+            article_date = date(int(year), month_index , int(day))
+            result = article_date
+    return result
+
 def end_condition(date, go_back_date):
     if not date:
         return False
@@ -71,12 +86,12 @@ def build_text_from_paragraphs(all_paragraphs, punct_end = ".!?", punct_add_poin
         elif (paragraph[-1] in punctuation):
             paragraph = paragraph + " "
 
-        all_paragraph_text = all_paragraph_text + paragraph
+        all_paragraph_text = all_paragraph_text +  paragraph
     return all_paragraph_text
 
 
 
-def build_from_timestamp(self, article_datetime_ts):
+def build_from_timestamp(article_datetime_ts):
     article_date_str = article_datetime_ts.split('T')[0]
     article_date = date(*map(int, article_date_str.split('-')))
     return article_date

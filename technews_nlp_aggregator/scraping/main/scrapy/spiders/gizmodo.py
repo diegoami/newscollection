@@ -53,7 +53,6 @@ class GizmodoSpider(scrapy.Spider):
         article_date_str_l = response.xpath("//div/time[contains(@class, 'meta__time')]/a/@title").extract_first()
         article_date_str = article_date_str_l.split()[0]
         article_authors = response.xpath("//div[contains(@class, 'author')]/a/@href").extract_first()
-        all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
         month, day, year = map(int, article_date_str.split('/'))
         article_date = date(year + 2000, month, day)
 

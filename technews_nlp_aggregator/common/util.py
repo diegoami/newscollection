@@ -41,7 +41,7 @@ def extract_source_without_www( url):
     try:
         source = extract_source( url).upper()
         all_parts = source.split('.')
-        parts = [ x for x in all_parts if x not in['COM', 'WWW', 'UK', 'NET', 'ORG']]
+        parts = [ x for x in all_parts if x not in['COM', 'WWW', 'UK', 'NET', 'ORG', 'CO']]
         return "".join(parts)
     except:
         return url
@@ -75,10 +75,13 @@ def extract_normpath( url):
     return url_result
 
 
-def extract_host( url):
+def extract_host( url, with_http=True):
     urlparts = urlparse(url)
-    source = str(urlparts[0])+'://'+ str(urlparts[1])
-    return source
+    if (len(urlparts)) >= 2:
+        source = str(urlparts[0])+'://'+ str(urlparts[1])
+        return source if with_http else urlparts[1]
+    else:
+        return None
 
 def remove_emojis(text):
     re_pattern = re.compile(u'[^\u0000-\uD7FF\uE000-\uFFFF]', re.UNICODE)

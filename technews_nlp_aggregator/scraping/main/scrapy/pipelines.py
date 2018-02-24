@@ -9,5 +9,6 @@ class Pipeline(object):
             if spider.url_list:
                 spider.article_repo.update_to_crawled(item["url"])
         else:
-            logging.warning("Could not add url : {}".format(item["url"]))
+            logging.warning("Could not add url : {} (date: {}, len(text) : {})".format(item["url"], item["date"], len(item["text"])))
+
         return item

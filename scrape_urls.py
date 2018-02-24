@@ -5,7 +5,7 @@ import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 from technews_nlp_aggregator.scraping.main.scrapy import settings
-from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider, DigitaltrendsSpider, GuardianSpider, QzSpider, RecodeSpider, InquisitrSpider, ReutersSpider
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider, DigitaltrendsSpider, TheguardianSpider, QzSpider, RecodeSpider, InquisitrSpider, ReutersSpider, TechdirtSpider, InverseSpider, BleepingcomputerSpider
 from datetime import  timedelta
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
 from technews_nlp_aggregator.scraping.main.scrapy import settings
@@ -25,7 +25,7 @@ def do_crawl(articleDatasetRepo, spidermap):
             urls = spidermap[spider_name]
             process.crawl(spider, articleDatasetRepo, date.min, urls)
         else:
-            logging.ERROR("COULD NOT FIND SPIDER {}".format(spider_class))
+            logging.error("COULD NOT FIND SPIDER {}".format(spider_name))
     process.start()
 
 

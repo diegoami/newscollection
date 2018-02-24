@@ -1,7 +1,7 @@
 import traceback
 
 import dataset
-from technews_nlp_aggregator.common.util import extract_host
+from technews_nlp_aggregator.common.util import extract_host, extract_normpath, extract_source_without_www
 
 class ArticlesSpiderRepo:
 
@@ -20,7 +20,7 @@ class ArticlesSpiderRepo:
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar )
-        result = [(row["UTA_SPIDER"], row["UTA_URL"]) for row in query_result]
+        result = [(row["UTA_SPIDER"], row["UTA_URL"].strip()) for row in query_result]
         return result
 
     def add_url_list(self, url_list):
@@ -28,12 +28,11 @@ class ArticlesSpiderRepo:
         con = self.get_connection()
         messages = []
         for url in url_list:
-            host_part = extract_host(url)
-            host_parts = host_part .split('.')
-            host = host_parts[-2].capitalize()
+            url = extract_normpath(url)
+            host = extract_source_without_www(url).lower().capitalize()
             try:
                 con.begin()
-                con.query(sql_add_user , {"uta_spider": host, "uta_url": url})
+                con.query(sql_add_user , {"uta_spider": host, "uta_url": url.strip()})
                 messages.append("Added {} : {}".format(host, url))
                 con.commit()
             except:
