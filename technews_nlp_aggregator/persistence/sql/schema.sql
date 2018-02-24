@@ -133,4 +133,110 @@ ALTER TABLE ARTICLE_TAGS CONVERT TO CHARACTER SET utf8;
 ALTER TABLE TAGS CONVERT TO CHARACTER SET utf8;
 ALTER TABLE ARTICLE_TEXT CONVERT TO CHARACTER SET utf8;
 ALTER TABLE ARTICLE_INFO CONVERT TO CHARACTER SET utf8;
+
+
+create table SAME_STORY
+(
+	SST_ID int auto_increment
+		primary key,
+	SST_AIN_ID_1 int not null,
+	SST_AIN_ID_2 int not null,
+	SST_AGENT varchar(32) null,
+	SST_SIMILARITY float null,
+	SST_UPDATED timestamp null,
+	constraint SAME_STORY_SST_ID_uindex
+		unique (SST_ID),
+	constraint SAME_STORY_ARTICLE_INFO_AIN_ID_1_fk
+		foreign key (SST_AIN_ID_1) references ARTICLE_INFO (AIN_ID),
+	constraint SAME_STORY_ARTICLE_INFO_AIN_ID_2_fk
+		foreign key (SST_AIN_ID_2) references ARTICLE_INFO (AIN_ID)
+)
+;
+
+create index SAME_STORY_ARTICLE_INFO_AIN_ID_1_fk
+	on SAME_STORY (SST_AIN_ID_1)
+;
+
+create index SAME_STORY_ARTICLE_INFO_AIN_ID_2_fk
+	on SAME_STORY (SST_AIN_ID_2)
+;
+
+
+create table SAME_STORY_USER
+(
+	SSU_ID int auto_increment
+		primary key,
+	SSU_AIN_ID_1 int not null,
+	SSU_AIN_ID_2 int not null,
+	SSU_SIMILARITY float null,
+	SSU_UPDATED timestamp null,
+	SSU_ORIGIN varchar(32) null,
+	constraint SAME_STORY_USER_SSU_ID_uindex
+		unique (SSU_ID),
+	constraint SAME_STORY_USER_ARTICLE_INFO_AIN_ID_1_fk
+		foreign key (SSU_AIN_ID_1) references ARTICLE_INFO (AIN_ID),
+	constraint SAME_STORY_USER_ARTICLE_INFO_AIN_ID_2_fk
+		foreign key (SSU_AIN_ID_2) references ARTICLE_INFO (AIN_ID)
+)
+;
+
+create index SAME_STORY_USER_ARTICLE_INFO_AIN_ID_1_fk
+	on SAME_STORY_USER (SSU_AIN_ID_1)
+;
+
+create index SAME_STORY_USER_ARTICLE_INFO_AIN_ID_2_fk
+	on SAME_STORY_USER (SSU_AIN_ID_2)
+;
+
+create table URLS_TO_ADD
+(
+	UTA_ID int auto_increment
+		primary key,
+	UTA_SPIDER varchar(32) null,
+	UTA_URL varchar(256) null,
+	UTA_PROCESSED datetime null,
+	constraint URLS_TO_ADD_UTA_ID_uindex
+		unique (UTA_ID)
+)
+;
+
+create table SCORES
+(
+	SCO_ID int auto_increment
+		primary key,
+	SCO_AIN_ID_1 int not null,
+	SCO_AIN_ID_2 int not null,
+	SCO_DAYS int null,
+	SCO_T_TITLE float null,
+	SCO_D_TITLE float null,
+	SCO_CW_TITLE float null,
+	SCO_T_TEXT float null,
+	SCO_D_TEXT float null,
+	SCO_CW_TEXT float null,
+	SCO_T_SUMMARY float null,
+	SCO_D_SUMMARY float null,
+	SCO_CW_SUMMARY float null,
+	SCO_T_SUMMARY_2 float null,
+	SCO_D_SUMMARY_2 float null,
+	SCO_CW_SUMMARY_2 float null,
+	constraint SCORES_SCO_ID_uindex
+		unique (SCO_ID)
+
+);
+
+
+ALTER TABLE SCORES
+			ADD CONSTRAINT SCORES_ARTICLE_INFO_AIN_ID_2_fk
+			FOREIGN KEY (SCO_AIN_ID_2) REFERENCES ARTICLE_INFO (AIN_ID);
+
+ALTER TABLE SCORES DROP FOREIGN KEY SCORES_ARTICLE_INFO_AIN_ID_fk;
+
+ALTER TABLE SCORES
+			ADD CONSTRAINT SCORES_ARTICLE_INFO_AIN_ID_1_fk
+			FOREIGN KEY (SCO_AIN_ID_1) REFERENCES ARTICLE_INFO (AIN_ID);
+
+
+
+
+
 COMMIT;
