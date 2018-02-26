@@ -19,7 +19,7 @@ def create_doc2vec_model(config, param_config):
     with open(pickle_file, 'rb') as f:
         trigrams = pickle.load(f)
         doc2VecFacade = Doc2VecFacade( models_dir, min_count=int(param_config['docvec_min_count']), window=int(param_config['docvec_window']),
-                                       sample=float(param_config['docvec_sample']), epochs=int(param_config['docvec_epochs']), alpha=float(param_config['docvec_alpha']),                       vector_size=int(param_config['vector_size']), version=config['version']              )
+                                       sample=float(param_config['docvec_sample']), epochs=int(param_config['docvec_epochs']), alpha=float(param_config['docvec_alpha']),                       vector_size=int(param_config['docvec_vector_size']), version=config['version']              )
 
         doc2VecFacade.create_model(trigrams)
 
