@@ -21,7 +21,7 @@ def create_tfidf_model(config, param_config):
     with open(trigrams_file , 'rb') as f:
         trigrams = pickle.load(f)
         logging.info("Loaded {} trigrams".format(len(trigrams)))
-        tfidfGenerator = TfidfGenerator( models_dir, no_below=int(param_config['tdf_no_below']), no_above=int(param_config['tdf_no_above']) , num_topics=int(param_config['tdf_num_topics']), version=config['version'])
+        tfidfGenerator = TfidfGenerator( models_dir, no_below=int(param_config['tdf_no_below']), no_above=float(param_config['tdf_no_above']) , num_topics=int(param_config['tdf_num_topics']), version=config['version'])
         corpus, dictionary = tfidfGenerator.create_dictionary(trigrams)
 
 
