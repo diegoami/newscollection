@@ -30,7 +30,7 @@ class Application:
         self.doc2VecFacade = Doc2VecFacade(config["root_dir"]+config["doc2vec_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer  )
         self.doc2VecFacade.load_models()
 
-        self.tfidfFacade = TfidfFacade(config["root_dir"]+config["lsi_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer  )
+        self.tfidfFacade = TfidfFacade(config["root_dir"]+config["lsi_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer, version=config['version']  )
         self.tfidfFacade.load_models()
 
         self.lsiInfo = LsiInfo(self.tfidfFacade.lsi, self.tfidfFacade.corpus)

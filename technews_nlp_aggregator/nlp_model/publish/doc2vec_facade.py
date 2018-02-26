@@ -28,11 +28,11 @@ class LabeledLineSentence(object):
 
 class Doc2VecFacade():
 
-    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None, window=10, min_count=5, sample=0.001, epochs=30, alpha=0.05):
+    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None, window=10, min_count=5, sample=0.001, epochs=30, alpha=0.1, vector_size=400, version=1):
 
         self.model_dir = model_dir
         self.article_loader = article_loader
-        self.name="DOC2VEC-V4-600"
+        self.name="DOC2VEC-V"+str(version)
         self.gramFacade = gramFacade
         self.tokenizer = defaultTokenizer if not tokenizer else tokenizer
         self.window=window
@@ -40,6 +40,7 @@ class Doc2VecFacade():
         self.sample = sample
         self.epochs = epochs
         self.alpha = alpha
+        self.vector_size = vector_size
 
     def load_models(self):
         model_filename = self.model_dir+'/'+MODEL_FILENAME
@@ -121,7 +122,7 @@ class Doc2VecFacade():
     def create_model(self, texts):
         it = LabeledLineSentence(range(len(texts)), texts)
         logging.info("Creating model with {} texts".format(len(texts)))
-        self.model = Doc2Vec(size=600, window=self.window, workers=11, alpha=self.alpha, min_alpha=0.0001,
+        self.model = Doc2Vec(size=self.vector_size, window=self.window, workers=8, alpha=self.alpha, min_alpha=0.0001,
                              epochs=self.epochs, min_count=self.min_count, sample=self.sample)  # use fixed learning rate
         self.model.build_vocab(it)
 

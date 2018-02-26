@@ -18,10 +18,10 @@ from .tfidf_matrix_wrapper import TfidfMatrixWrapper
 
 class TfidfFacade():
 
-    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None):
+    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None, version=1):
         self.model_dir = model_dir
         self.article_loader = article_loader
-        self.name = 'TFIDF-V4-500'
+        self.name = 'TFIDF-V'+str(version)
         self.gramFacade = gramFacade
         self.tokenizer = tokenizer
 
