@@ -32,9 +32,10 @@ def do_crawl(articleDatasetRepo, spidermap):
 def create_spider_map(url_queued):
     to_process = {}
     for spider, url in url_queued:
-        list_to_process = to_process.get(spider, [])
-        list_to_process.append(url)
-        to_process[spider] = list_to_process
+        if spider and url:
+            list_to_process = to_process.get(spider, [])
+            list_to_process.append(url)
+            to_process[spider] = list_to_process
     return to_process
 
 if __name__ == '__main__':

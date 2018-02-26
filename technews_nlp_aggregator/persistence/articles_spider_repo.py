@@ -30,14 +30,15 @@ class ArticlesSpiderRepo:
         for url in url_list:
             url = extract_normpath(url)
             host = extract_source_without_www(url).lower().capitalize()
-            try:
-                con.begin()
-                con.query(sql_add_user , {"uta_spider": host, "uta_url": url.strip()})
-                messages.append("Added {} : {}".format(host, url))
-                con.commit()
-            except:
-                con.rollback()
-                traceback.print_stack()
+            if url and host:
+                try:
+                    con.begin()
+                    con.query(sql_add_user , {"uta_spider": host, "uta_url": url.strip()})
+                    messages.append("Added {} : {}".format(host, url))
+                    con.commit()
+                except:
+                    con.rollback()
+                    traceback.print_stack()
         return messages
 
 
