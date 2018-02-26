@@ -4,7 +4,6 @@ tdf_no_below : 5
 tdf_no_above : 0.78
 docvec_window : 10
 docvec_min_count : 5
-docvec_sample : 0.001
+docvec_sample : 0.0005
 docvec_alpha : 0.05
-docvec_epochs : 70
-tdf_num_topics : 500
+docvec_epochs : 60
