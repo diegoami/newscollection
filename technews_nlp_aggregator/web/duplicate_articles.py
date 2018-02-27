@@ -27,7 +27,7 @@ def duplicates(page_id=1):
     paging_rate = 50
     back_forth = 6
     try:
-        all_articles_DF = _.similarArticlesRepo.list_similar_articles(filter_criteria=filter_criteria )
+        all_articles_DF = _.similarArticlesRepo.list_similar_articles(version=_.version, filter_criteria=filter_criteria )
         start, end = (page_id-1)*paging_rate, (page_id)*paging_rate
         if (len(all_articles_DF) > start):
             has_next = len(all_articles_DF) > end

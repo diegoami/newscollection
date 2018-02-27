@@ -14,24 +14,11 @@ similarArticlesSQL_select = \
 """
 SELECT * FROM P_SCORES 
   WHERE P_SCORE > 0.3 
-
 """
 
 similarArticlesSQL_orderby = \
 """
   ORDER BY DATE_2 DESC, DATE_1 DESC, U_SCORE DESC, P_SCORE DESC, TITLE_2 DESC, TITLE_1 DESC
-"""
-
-
-
-controversialArticlesSQL = \
-"""
-SELECT ID, DATE, TITLE, URL, SUM_SCORE FROM CONTROVERSIAL_ARTICLES C WHERE DATE BETWEEN :start AND :end
-"""
-
-relatedArticlesSQL = \
-"""
-SELECT OTHER_ID AS O_ID, OTHER_DATE AS DATE, OTHER_TITLE AS TITLE, OTHER_URL AS URL, SCORE FROM TFIDF_SCORE_NORM WHERE ID = :id
 """
 
 
@@ -180,10 +167,12 @@ class ArticlesSimilarRepo:
         id1, id2   =  row["ID_1"], row["ID_2"]
         return id1, id2
 
-    def list_similar_articles(self, filter_criteria= None):
+    def list_similar_articles(self, version, filter_criteria= None):
         similar_stories = []
 
         econ = self.engine.connect()
+        similarArticlesSQL_having_version = " AND VERSION = "+str(version)
+
         similarArticlesSQL_having_cond =  ( " AND ( " + filter_criteria +" ) " )  if self.verify_having_condition(filter_criteria) else ""
         similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 10000"
         similarArticlesDF = pd.read_sql(similarArticlesSQL , econ)
