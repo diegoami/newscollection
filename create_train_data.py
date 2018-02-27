@@ -12,9 +12,7 @@ def direct_confront(feature_filler, similarArticlesRepo):
 
     user_paired = similarArticlesRepo.retrieve_user_paired()
 
-    scores = retrieves_scores(user_paired, feature_filler, similarArticlesRepo)
-    df = pd.DataFrame(scores)
-    print(df.head())
+    retrieves_scores(user_paired, feature_filler, similarArticlesRepo)
 
 def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
     score_list = []
@@ -25,12 +23,9 @@ def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
                                                  "SCO_VERSION": feature_filler.version}, con):
             score = feature_filler.fill_score_map( article_id1, article_id2)
             similarArticlesRepo.insert_score(score, con)
-            score["SCO_USER"] = similarity
             logging.info("Score : {}".format(score))
-            score_list.append(score)
             if (index % 100 == 0):
                 logging.info("Processed {} rows".format(index))
-    return score_list
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

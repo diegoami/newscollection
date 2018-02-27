@@ -13,11 +13,12 @@ import logging
 
 class TfidfGenerator():
 
-    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None, no_below=5, no_above=0.78, num_topics=500):
+    def __init__(self, model_dir, article_loader=None, gramFacade=None, tokenizer=None, no_below=5, no_above=0.78, num_topics=500, version=1):
         self.model_dir = model_dir
         self.no_below=no_below
         self.no_above=no_above
         self.num_topics= num_topics
+        self.version = version
 
     def create_dictionary(self, texts):
         dictionary = corpora.Dictionary(texts)

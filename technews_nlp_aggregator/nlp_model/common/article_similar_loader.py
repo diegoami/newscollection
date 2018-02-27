@@ -1,8 +1,9 @@
 class ArticleSimilarLoader:
 
 
-    def __init__(self, articlesSimilarRepo):
+    def __init__(self, articlesSimilarRepo, version):
         self.articlesSimilarRepo = articlesSimilarRepo
+        self.version = version
 
     def retrieve_groups(self, articleLoader, threshold):
         articlesDF = articleLoader.articlesDF
@@ -14,7 +15,7 @@ class ArticleSimilarLoader:
                 if not articleLoader.are_same_source(article_id1, article_id2 ):
                     drows.append({article_id1, article_id2 })
 
-        rows_C = self.articlesSimilarRepo.retrieve_classif_paired(threshold=threshold)
+        rows_C = self.articlesSimilarRepo.retrieve_classif_paired(threshold=threshold, version=self.version)
 
         for row in rows_C:
             article_id1, article_id2 = row['PRED_AIN_ID_1'], row['PRED_AIN_ID_2']

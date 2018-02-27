@@ -12,7 +12,7 @@ CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
 
-def create_tfidf_model(config):
+def create_tfidf_model(config, param_config):
     db_config = yaml.safe_load(open(config["key_file"]))
     models_dir = config["root_dir"] + config["lsi_models_dir_base"] + datetime.now().isoformat()+'/'
     os.mkdir(models_dir)
@@ -21,7 +21,7 @@ def create_tfidf_model(config):
     with open(trigrams_file , 'rb') as f:
         trigrams = pickle.load(f)
         logging.info("Loaded {} trigrams".format(len(trigrams)))
-        tfidfGenerator = TfidfGenerator( models_dir)
+        tfidfGenerator = TfidfGenerator( models_dir, no_below=int(param_config['tdf_no_below']), no_above=float(param_config['tdf_no_above']) , num_topics=int(param_config['tdf_num_topics']), version=config['version'])
         corpus, dictionary = tfidfGenerator.create_dictionary(trigrams)
 
 
@@ -35,4 +35,6 @@ def create_tfidf_model(config):
 
 if __name__ == '__main__':
     config = yaml.safe_load(open('config.yml'))
-    create_tfidf_model(config)
+    version = config['version']
+    param_config = yaml.safe_load(open('v_' + str(version) + '.yml'))
+    create_tfidf_model(config, param_config)
