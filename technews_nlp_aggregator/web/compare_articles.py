@@ -16,8 +16,8 @@ from . import app
 @app.route('/examples')
 def examples(page_id=0):
     _ = app.application
-    yes_articles = _.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE > 0.9 ")
-    almost_articles = _.similarArticlesRepo.list_similar_articles(filter_criteria=" U_SCORE > 0.3 AND U_SCORE < 0.7 ")
+    yes_articles = _.similarArticlesRepo.list_similar_articles(version=_.version, filter_criteria=" U_SCORE > 0.9 ")
+    almost_articles = _.similarArticlesRepo.list_similar_articles(version=_.version, filter_criteria=" U_SCORE > 0.3 AND U_SCORE < 0.7 ")
     return render_template('examples.html', yes_examples=yes_articles[:8], almost_examples=almost_articles[:8] )
 
 
