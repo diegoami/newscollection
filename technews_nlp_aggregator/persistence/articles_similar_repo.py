@@ -174,7 +174,7 @@ class ArticlesSimilarRepo:
         similarArticlesSQL_having_version = " AND VERSION = "+str(version)
 
         similarArticlesSQL_having_cond =  ( " AND ( " + filter_criteria +" ) " )  if self.verify_having_condition(filter_criteria) else ""
-        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 10000"
+        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_version + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 10000"
         similarArticlesDF = pd.read_sql(similarArticlesSQL , econ)
         similarArticlesDF["SOURCE_1"] = similarArticlesDF["URL_1"].map(extract_source_without_www)
         similarArticlesDF["SOURCE_2"] = similarArticlesDF["URL_2"].map(extract_source_without_www)
