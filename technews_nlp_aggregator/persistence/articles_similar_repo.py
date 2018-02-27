@@ -223,11 +223,11 @@ class ArticlesSimilarRepo:
 
         return result
 
-    def retrieve_sscs_for_id(self, id):
-        sql_classif_similar = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA FROM PREDICTIONS WHERE ( PRED_AIN_ID_1=:id OR PRED_AIN_ID_2=:id ) "
+    def retrieve_sscs_for_id(self, id, version):
+        sql_classif_similar = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA FROM PREDICTIONS WHERE ( PRED_AIN_ID_1=:id OR PRED_AIN_ID_2=:id ) AND PRED_VERSION = :version"
         similar_stories = []
         con = self.get_connection()
-        query_result = con.query(sql_classif_similar , {"id": id})
+        query_result = con.query(sql_classif_similar , {"id": id, "version" : version})
         result = pd.DataFrame(columns=["article_id", "p_score"])
         for row in query_result:
             if (row["PRED_AIN_ID_1"] == id):
@@ -239,11 +239,11 @@ class ArticlesSimilarRepo:
         return result
 
 
-    def retrieve_classif_paired(self, threshold):
-        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold"
+    def retrieve_classif_paired(self, threshold, version):
+        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold AND PRED_VERSION = :version"
         similar_stories = []
         con = self.get_connection()
-        query_result= con.query(sql_classif_found, {"threshold": threshold})
+        query_result= con.query(sql_classif_found, {"threshold": threshold, "version" : version})
         result = [row for row in query_result]
         return result
 

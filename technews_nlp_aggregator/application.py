@@ -14,6 +14,7 @@ from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 
 class Application:
     def __init__(self, config, load_text=False):
+        self.version = config['version']
         self.db_config = yaml.safe_load(open(config["key_file"]))
         self.db_url = self.db_config["db_url"]
         self.load_text = load_text
@@ -27,10 +28,10 @@ class Application:
         self.gramFacade = GramFacade(config["root_dir"]+config["phrases_model_dir_link"])
         self.gramFacade.load_models()
 
-        self.doc2VecFacade = Doc2VecFacade(config["root_dir"]+config["doc2vec_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer  )
+        self.doc2VecFacade = Doc2VecFacade(config["root_dir"]+config["doc2vec_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer, version= self.version  )
         self.doc2VecFacade.load_models()
 
-        self.tfidfFacade = TfidfFacade(config["root_dir"]+config["lsi_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer, version=config['version']  )
+        self.tfidfFacade = TfidfFacade(config["root_dir"]+config["lsi_models_dir_link"], article_loader=self.articleLoader, gramFacade=self.gramFacade, tokenizer=defaultTokenizer, version=self.version  )
         self.tfidfFacade.load_models()
 
         self.lsiInfo = LsiInfo(self.tfidfFacade.lsi, self.tfidfFacade.corpus)
