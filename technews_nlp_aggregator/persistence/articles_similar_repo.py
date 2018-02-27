@@ -41,7 +41,7 @@ class ArticlesSimilarRepo:
     def get_connection(self):
         return self.dataset_connection
 
-    def __init__(self, db_connection):
+    def     __init__(self, db_connection):
         self.db_connection = db_connection
 
         self.dataset_connection = dataset.connect(self.db_connection, engine_kwargs={
