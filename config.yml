@@ -15,7 +15,7 @@ xgboost_model_file        : models/xgboost/xgboost_model
 xgboost_classifier_file        : models/xgboost/xgboost_classifier
 version                   : 13
 threshold         : 0.9
-go_back  : 180
+go_back  : 30
 tf_threshold : 0.58
 doc_threshold : 0.3
 
