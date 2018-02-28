@@ -242,11 +242,11 @@ class ArticlesSimilarRepo:
         article_query = con.query(sql_update, {"article_id": article_id})
         return
 
-    def retrieve_similar_since(self, dateArg, dateEnd=None):
-        sqlWhereDateEnd = '' if dateEnd == None else ' AND AIN_DATE <= :dateEnd '
-        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND  AIN_DATE >= ( :dateArg ) " + sqlWhereDateEnd + " ORDER BY AIN_DATE DESC"
+    def retrieve_similar_since(self, dateArg):
+
+        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID  AND  AIN_DATE >= ( :dateArg ) ORDER BY AIN_DATE DESC"
         con = self.get_connection()
-        query_result = con.query(sqlSimilarSince, {"dateArg": dateArg} if dateEnd == None else { "dateArg": dateArg, "dateEnd" : dateEnd } )
+        query_result = con.query(sqlSimilarSince, {"dateArg": dateArg})
         result = [row for row in query_result]
         return result
 

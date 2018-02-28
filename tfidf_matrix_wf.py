@@ -1,8 +1,9 @@
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
+from technews_nlp_aggregator.common import load_config
 from technews_nlp_aggregator.nlp_model.publish import TfidfGenerator
 import yaml
+import sys
 CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 from gensim import models
@@ -18,5 +19,5 @@ def create_tfidfmatrix(config):
 
 
 if __name__ == '__main__':
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     create_tfidfmatrix(config)

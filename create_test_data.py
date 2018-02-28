@@ -9,8 +9,9 @@ from technews_nlp_aggregator.application import Application
 from technews_nlp_aggregator.prediction import FeatureFiller
 import argparse
 from datetime import timedelta
+import sys
 
-def create_test_data( starting_date, feature_filler, similarArticlesRepo, until_date=None):
+def create_test_data( starting_date, feature_filler, similarArticlesRepo):
     test_data = similarArticlesRepo.retrieve_similar_since( starting_date, until_date)
     logging.info("Retrieved {} ".format(len(test_data)))
     retrieves_test( test_data, feature_filler, similarArticlesRepo)
@@ -34,27 +35,15 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
             logging.info("Score : {}".format(score))
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--sincewhen', help='since when')
-    parser.add_argument('--untilwhen', help='until when')
-    args = parser.parse_args()
 
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
 
     version = config["version"]
 
     application = Application(config, True)
-    if args.sincewhen:
-        sincewhen = args.sincewhen
-    else:
-        latest_article_date = application.articleDatasetRepo.get_latest_article_date()
-        sincewhen_date = latest_article_date - timedelta(config["go_back"])
-        sincewhen = str(sincewhen_date.year) + '-' + str(sincewhen_date.month) + '-' + str(sincewhen_date.day)
-
-    if args.untilwhen:
-        untilwhen = args.untilwhen
-    else:
-        untilwhen = None
+    latest_article_date = application.articleDatasetRepo.get_latest_article_date()
+    sincewhen_date = latest_article_date - timedelta(config["go_back"])
+    sincewhen = str(sincewhen_date.year) + '-' + str(sincewhen_date.month) + '-' + str(sincewhen_date.day)
 
     feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator, version=version)
     similarArticlesRepo = application.similarArticlesRepo

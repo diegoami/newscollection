@@ -7,6 +7,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 from technews_nlp_aggregator.application import Application
 from technews_nlp_aggregator.prediction import FeatureFiller
 import argparse
+from technews_nlp_aggregator.common import load_config
 def direct_confront(feature_filler, similarArticlesRepo):
 
 
@@ -31,8 +32,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     args = parser.parse_args()
-
-    config = yaml.safe_load(open('config.yml'))
+    config_file = sys.argv[1] if (len(sys.argv) > 1) else 'config.yml'
+    config = yaml.safe_load(open(config_file))
 
     version = config["version"]
     application = Application(config, True)

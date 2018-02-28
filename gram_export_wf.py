@@ -5,9 +5,10 @@ import pickle
 
 
 from technews_nlp_aggregator.nlp_model.publish import GramFacade
+from technews_nlp_aggregator.common import load_config
 from datetime import datetime
 import yaml
-
+import sys
 
 
 
@@ -50,7 +51,6 @@ def export_to_phrases(config):
 
 
 if __name__ == '__main__':
-
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     export_to_phrases(config)
 

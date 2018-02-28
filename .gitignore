@@ -4,4 +4,6 @@ id_rsa.pub
 known_hosts
 __pycache__/
 *.pyc
+*.log
+*.out
 

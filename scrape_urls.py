@@ -1,6 +1,6 @@
 import logging
 from datetime import date
-
+import sys
 import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
@@ -9,8 +9,9 @@ from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpid
 from datetime import  timedelta
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
 from technews_nlp_aggregator.scraping.main.scrapy import settings
+from technews_nlp_aggregator.common import load_config
 
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 def do_crawl(articleDatasetRepo, spidermap):
 
 
@@ -39,7 +40,7 @@ def create_spider_map(url_queued):
     return to_process
 
 if __name__ == '__main__':
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))

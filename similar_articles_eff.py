@@ -1,9 +1,8 @@
 
-
-import yaml
 import traceback
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+from technews_nlp_aggregator.common import load_config
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from technews_nlp_aggregator import Application
 
@@ -50,7 +49,6 @@ def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3):
 
 
 if __name__ == '__main__':
-
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     application = Application(config, True)
     eff_similar_articles(application, float(config['tf_threshold']), float(config['doc_threshold']) )

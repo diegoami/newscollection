@@ -3,9 +3,11 @@
 from sklearn.externals import joblib
 import numpy as np
 import yaml
+import sys
 from technews_nlp_aggregator.persistence.articles_similar_repo import  ArticlesSimilarRepo
+from technews_nlp_aggregator.common import load_config
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
 
@@ -30,8 +32,7 @@ def predict(test_DF,  xboost_model_file, xboost_classif_file, predictions_df):
 
 
 if __name__ == '__main__':
-
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     similarArticlesRepo = ArticlesSimilarRepo(db_url)

@@ -2,13 +2,15 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import pickle
 import os
-
+from technews_nlp_aggregator.common import load_config
 import sys
 from datetime import datetime
 
 import yaml
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer
+from technews_nlp_aggregator.common import load_config
+
 import argparse
 
 
@@ -52,24 +54,22 @@ def update_pickle(config, articleLoader, tokenizer):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--action', help='action can be create or append')
-    args = parser.parse_args()
 
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
+    action = config['tok_action']
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     articleLoader = ArticleLoader(articleDatasetRepo)
     logging.info("Loading articles....")
 
-    if (args.action == 'append'):
+    if (action == 'append'):
         logging.info("Appending....")
         articleLoader.load_all_articles(load_text=True, load_only_unsaved=True)
         logging.info("Finished loading articles....")
         update_pickle(config, articleLoader, defaultTokenizer)
         articleDatasetRepo.update_to_saved()
-    elif (args.action == 'create'):
+    elif (action  == 'create'):
         logging.info("Creating new pickle file....")
         articleLoader.load_all_articles(load_text=True, load_only_unsaved=False)
         logging.info("Finished loading articles....")
@@ -77,7 +77,7 @@ if __name__ == '__main__':
         articleDatasetRepo.update_to_saved()
 
     else:
-        print("Please choose create or append")
+        print("Please choose create or append for tok_action")
         sys.exit(1)
 
 

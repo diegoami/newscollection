@@ -3,9 +3,9 @@ import yaml
 from sklearn.externals import joblib
 from sklearn.model_selection import cross_val_score
 from xgboost import XGBRegressor, XGBClassifier
-
+from technews_nlp_aggregator.common import load_config
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
-
+import sys
 
 def print_best_parameters( classifier):
     if hasattr(classifier, "best_estimator_"):
@@ -115,8 +115,7 @@ def create_classifier(train_DF, xboost_classifier_file ):
 
 
 if __name__ == '__main__':
-
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     db_config = yaml.safe_load(open(config["key_file"]))
     version = config["version"]
     db_url = db_config["db_url"]

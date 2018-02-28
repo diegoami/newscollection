@@ -4,9 +4,10 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade
-
+from technews_nlp_aggregator.common import load_config
 from datetime import datetime
 import yaml
+import sys
 
 def create_doc2vec_model(config, param_config):
     db_config = yaml.safe_load(open(config["key_file"]))
@@ -30,8 +31,7 @@ def create_doc2vec_model(config, param_config):
     os.symlink(models_dir,config["root_dir"]+config["doc2vec_models_dir_link"])
 
 if __name__ == '__main__':
-
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     version = config['version']
     param_config = yaml.safe_load(open('v_' + str(version) + '.yml'))
     create_doc2vec_model(config, param_config)

@@ -2,7 +2,8 @@
 import yaml
 from technews_nlp_aggregator.web import *
 from technews_nlp_aggregator import Application
-import argparse
+import sys
+from technews_nlp_aggregator.common import load_config
 
 from werkzeug.contrib.fixers import ProxyFix
 import logging
@@ -10,14 +11,12 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
-
-config = yaml.safe_load(open('config.yml'))
+config = load_config(sys.argv)
 
 key_config = yaml.safe_load(open(config["key_file"]))
 
 key_config.get("secret_key")
 app.config['SECRET_KEY'] = key_config.get("secret_key")
-#app.run(debug=True,  use_reloader=False, host='0.0.0.0',port=8080)
 app.application = Application(config)
 if __name__ == '__main__':
 

@@ -2,8 +2,9 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 import os
 import pickle
-
+import sys
 from technews_nlp_aggregator.nlp_model.publish import TfidfGenerator
+from technews_nlp_aggregator.common import load_config
 from datetime import datetime
 import yaml
 
@@ -34,7 +35,7 @@ def create_tfidf_model(config, param_config):
 
 
 if __name__ == '__main__':
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     version = config['version']
     param_config = yaml.safe_load(open('v_' + str(version) + '.yml'))
     create_tfidf_model(config, param_config)

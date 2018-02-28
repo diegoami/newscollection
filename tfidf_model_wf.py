@@ -1,10 +1,10 @@
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
+from technews_nlp_aggregator.common import load_config
 from technews_nlp_aggregator.nlp_model.publish import TfidfGenerator
 import yaml
 from gensim import corpora
-
+import sys
 DICTIONARY_FILENAME   = 'dictionary'
 CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
@@ -20,7 +20,7 @@ def create_tfidf_model(config, param_config):
     lsi = tfidfGenerator.create_model(corpus, dictionary)
 
 if __name__ == '__main__':
-    config = yaml.safe_load(open('config.yml'))
+    config = load_config(sys.argv)
     version = config['version']
     param_config = yaml.safe_load(open('v_' + str(version) + '.yml'))
     create_tfidf_model(config, param_config)

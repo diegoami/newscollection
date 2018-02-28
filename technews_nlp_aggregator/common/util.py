@@ -1,7 +1,9 @@
 import re
 from datetime import date, timedelta
 from urllib.parse import urlparse, unquote, urlsplit
-
+import yaml
+import logging
+import sys
 
 def extract_date_str(url):
     arrs = str(urlparse(url)[2]).split('/')
@@ -96,3 +98,10 @@ def daterange(start_date, end_date, days_diff=1):
             yield start_date + timedelta(n1), start_date + timedelta(n2)
     else:
         raise(ValueError)
+
+
+def load_config(argv):
+    config_file = sys.argv[1] if (len(sys.argv) > 1) else 'config.yml'
+    logging.info("Loading {}".format(config_file))
+    config = yaml.safe_load(open(config_file))
+    return config
