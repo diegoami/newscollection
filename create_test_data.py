@@ -14,7 +14,7 @@ from datetime import timedelta
 import sys
 
 def create_test_data( starting_date, feature_filler, similarArticlesRepo):
-    test_data = similarArticlesRepo.retrieve_similar_since( starting_date, until_date)
+    test_data = similarArticlesRepo.retrieve_similar_since( starting_date)
     logging.info("Retrieved {} ".format(len(test_data)))
     retrieves_test( test_data, feature_filler, similarArticlesRepo)
 
@@ -50,4 +50,4 @@ if __name__ == '__main__':
     feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator, version=version)
     similarArticlesRepo = application.similarArticlesRepo
     application.gramFacade.load_phrases()
-    create_test_data(starting_date=sincewhen, feature_filler=feature_filler, similarArticlesRepo=similarArticlesRepo, until_date=untilwhen)
+    create_test_data(starting_date=sincewhen, feature_filler=feature_filler, similarArticlesRepo=similarArticlesRepo)
