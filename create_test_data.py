@@ -1,12 +1,14 @@
 
 
 import logging
-
+import sys
 import yaml
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.application import Application
 from technews_nlp_aggregator.prediction import FeatureFiller
+from technews_nlp_aggregator.common import load_config
+
 import argparse
 from datetime import timedelta
 import sys

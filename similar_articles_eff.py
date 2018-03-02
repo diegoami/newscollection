@@ -1,6 +1,7 @@
 
 import traceback
 import logging
+import sys
 from technews_nlp_aggregator.common import load_config
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 

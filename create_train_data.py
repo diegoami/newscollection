@@ -2,6 +2,7 @@
 
 import yaml
 import pandas as pd
+import sys
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.application import Application
