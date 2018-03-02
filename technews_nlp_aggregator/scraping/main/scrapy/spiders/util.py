@@ -76,14 +76,15 @@ def already_crawled(repo, url):
 
 def build_text_from_paragraphs(all_paragraphs, punct_end = ".!?", punct_add_point= ""):
     all_paragraph_text = ""
-    for paragraph in all_paragraphs:
+
+    for index, paragraph in enumerate(all_paragraphs):
         if len(paragraph) == 0 or paragraph[0] == '\n':
             continue
         if (paragraph[-1] in punct_add_point):
             paragraph = paragraph + "."
         if (paragraph[-1] in punct_end):
             paragraph = paragraph + "\n"
-        elif (paragraph[-1] in punctuation):
+        elif (paragraph[-1] in punctuation) or (index == 0):
             paragraph = paragraph + " "
 
         all_paragraph_text = all_paragraph_text +  paragraph
