@@ -1,5 +1,4 @@
-#Put this
+#Put this into /media/diego/keys/db_coords.yml
 db_url : mysql://diegoami:amicabile@localhost:3306/tnaggregator?charset=utf8
 secret_key     : <PUT YOUR SECRET KEY HERE>
-version      : 1
 signin_key   : bambi
