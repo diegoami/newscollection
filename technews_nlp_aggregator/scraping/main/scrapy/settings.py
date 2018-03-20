@@ -5,7 +5,7 @@ NEWSPIDER_MODULE = 'technews_nlp_aggregator.scraping.main.scrapy.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
