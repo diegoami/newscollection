@@ -1,18 +1,22 @@
 
 <div id="topnav" class="topnav">
   <!--suppress HtmlUnknownTarget -->
-    <a id="topnav_groups" href="/show_groups">Controversial</a>
+    <a id="topnav_groups" href="/show_groups">Groups</a>
 
   <!--suppress HtmlUnknownTarget -->
     <a id="topnav_duplicated" href="/duplicates">Similar</a>
   <!--suppress HtmlUnknownTarget -->
-    <a id="topnav_search" href="/search">Search</a>
+    <a id="topnav_search" href="/exact_search">Search</a>
   <!--suppress HtmlUnknownTarget -->
     <a id="topnav_search_url" href="/search_url">Look up</a>
   <!--suppress HtmlUnknownTarget -->
+    <a id="topnav_fulltext" href="/similar">By Text</a>
+   <!--suppress HtmlUnknownTarget -->
     <a id="topnav_browse" href="/browse">Browse</a>
+    <!--suppress HtmlUnknownTarget -->
 
-{% if session['signed_in']: %}
+
+    {% if session['signed_in']: %}
   <!--suppress HtmlUnknownTarget -->
     <a id="topnav_compare" href="/randomrelated">Compare</a>
   <!--suppress HtmlUnknownTarget -->

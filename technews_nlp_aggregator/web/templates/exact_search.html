@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'header_files.html' %}
+  <meta charset="UTF-8">
+  <title>Search by Text</title>
+
+</head>
+<body onload="javascript:select_header('topnav_search')">
+{% include 'header.html' %}
+<P>Search for</P>
+<!--suppress HtmlUnknownTarget -->
+<FORM id="textForm" ACTION="/retrieve_search" METHOD="POST">
+    <div class="surrond_form">
+    <p>
+    <label class="textarea_label" for="search_text" ></label>
+        <INPUT class="textarea" id="search_text" name="search_text" maxlength="200"  value="{{search_text | default('')}}">
+    </p>
+
+        <p><label for="n_articles"># per page:</label><input type="text" id="n_articles_txt" name="n_articles" value="{{n_articles | default(25) }}"></p>
+
+        <P><input class="main"  type="submit" value="submit"  /></P>
+        <input id="page_id" name="page_id" type="hidden" value="{{page_id | default(0)}}"  />
+
+    </div>
+ </FORM>
+<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
+    <p>
+    <input name="search_url" id="search_url" type="hidden" />
+    <input name="n_articles" id="n_articles" value="25" type="hidden" />
+
+
+    <INPUT type="hidden" id="article_id" name="article_id" value="" >
+
+
+    </p>
+</FORM>
+
+
+
+
+{% if articles: %}
+
+    <table border="1">
+    <CAPTION>Exact Search Results </CAPTION>
+
+    <tr>
+        <th class="hide-1000">Article Id</th>
+        <th><span>Title</span></th>
+        <th class="icon"><span class="hide-1000">Similar</span></th>
+      </tr>
+        {% for _ in articles: %}
+            <tr>
+                <td class="hide-1000"> <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
+                    <A HREF="/statistics/{{_.AIN_ID}}" target="_blank">{{_.AIN_ID}}</A></td>
+                <td><STRONG>{{_.SOURCE}} </STRONG><I>{{_.AIN_DATE}}</I>: <BR><!--suppress HtmlUnknownTarget -->
+                    <A HREF="{{_.AIN_URL}}">{{_.AIN_TITLE}}</A></td>
+                 <td class="icon">
+                    <A HREF="javascript:find_similar('{{_.AIN_ID}}')">
+                    <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
+                    </A>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if articles: %}
+    <div class="buttonrow">
+            {% if page_id and page_id > 0: %}
+                    <input class="main" type="submit" value="<<< Back" onclick="move_to_page('{{ page_id  - 1 }}','textForm')"/>
+            {% endif %}
+
+            <div class="buttoncolumn">
+                <B>{{page_id +1 | default(0) }}</B>
+            </div>
+            {% if n_articles == articles|length : %}
+                    <input class="main" type="submit" value="Forward >>> " onclick="move_to_page('{{ page_id  + 1 }}','textForm')" />
+            {% endif %}
+
+        <BR>
+    </div>
+{% endif %}
+<BR>
+
+{% include 'footer.html' %}
+</body>
+</html>

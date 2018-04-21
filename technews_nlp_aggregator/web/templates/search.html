@@ -6,7 +6,7 @@
   <title>Search by Text</title>
 
 </head>
-<body onload="javascript:select_header('topnav_search')">
+<body onload="javascript:select_header('topnav_fulltext')">
 {% include 'header.html' %}
 <P>Enter text of a technical article here </P>
 <!--suppress HtmlUnknownTarget -->
@@ -15,8 +15,7 @@
     <p>
     <label class="textarea_label" for="search_text" ></label>
 
-    <textarea class="textarea_big" id="search_text" name="search_text" rows="20">{{search_text | default('') }}
-    </textarea>
+    <textarea class="textarea_big" id="search_text" name="search_text" rows="20">{{search_text | default('')}}</textarea>
     </p>
 
 
@@ -28,6 +27,7 @@
 
          <P><input class="main"  type="submit" value="submit"  /></P>
         <input id="page_id" name="page_id" type="hidden" value="{{page_id | default(0)}}"  />
+
     </div>
  </FORM>
 <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
@@ -44,6 +44,8 @@
 
 
 
+
+<BR>
 {% if articles: %}
 
     <table border="1">

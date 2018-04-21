@@ -306,7 +306,6 @@ class ArticleDatasetRepo():
             con.rollback()
             traceback.print_stack()
 
-
     def update_to_crawled(self, url, con=None):
         sql_update = "UPDATE URLS_TO_ADD SET UTA_PROCESSED = SYSDATE() WHERE UTA_URL LIKE :url"
         con = self.get_connection() if not con else con
@@ -317,3 +316,13 @@ class ArticleDatasetRepo():
         except:
             con.rollback()
             traceback.print_stack()
+
+    def load_articles_containing(self, text_to_search, page_id, n_articles):
+        offset = page_id  * n_articles
+        article_query_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND "+\
+                            "(AIN_TITLE LIKE '%%"+text_to_search+"%%' OR ATX_TEXT LIKE '%%"+text_to_search+"%%') LIMIT " + str(offset) + "," + str(n_articles)
+        econ = self.engine.connect()
+        articlesFoundDF = pd.read_sql(article_query_sql, econ, index_col=None)
+        articlesFoundDF["SOURCE"] =   articlesFoundDF['AIN_URL'].map(extract_source_without_www)
+        econ.close()
+        return articlesFoundDF
