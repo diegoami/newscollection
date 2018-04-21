@@ -18,7 +18,8 @@
     </p>
 
         <p><label for="n_articles"># per page:</label><input type="text" id="n_articles_txt" name="n_articles" value="{{n_articles | default(25) }}"></p>
-
+        <p><label for="start">From:</label><input type="text" id="start" name="start" value="{{start_s | default('2017-01-1') }}"></p>
+        <p><label for="end">To:</label><input type="text" id="end" name="end" value="{{end_s | default('2017-12-31')}}"><br/><br/></p>
         <P><input class="main"  type="submit" value="submit"  /></P>
         <input id="page_id" name="page_id" type="hidden" value="{{page_id | default(0)}}"  />
 

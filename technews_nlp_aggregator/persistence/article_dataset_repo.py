@@ -280,9 +280,7 @@ class ArticleDatasetRepo():
 
 
     def delete_unrelevant_texts(self):
-
         session = create_session()
-
         connection = self.engine.raw_connection()
         cursor = connection.cursor()
         cursor.callproc("detect_uninteresting")
@@ -291,8 +289,6 @@ class ArticleDatasetRepo():
         cursor = connection.cursor()
         cursor.callproc("delete_ids")
         cursor.close()
-
-
         connection.commit()
 
     def update_to_saved(self,  con=None):
@@ -317,12 +313,14 @@ class ArticleDatasetRepo():
             con.rollback()
             traceback.print_stack()
 
-    def load_articles_containing(self, text_to_search, page_id, n_articles):
+    def load_articles_containing(self, text_to_search, page_id, n_articles, start_s=None, end_s=None):
         offset = page_id  * n_articles
-        article_query_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID AND "+\
-                            "(AIN_TITLE LIKE '%%"+text_to_search+"%%' OR ATX_TEXT LIKE '%%"+text_to_search+"%%') LIMIT " + str(offset) + "," + str(n_articles)
+        article_query_sql = "SELECT AIN_ID, AIN_URL, AIN_TITLE, AIN_DATE FROM ARTICLE_INFO, ARTICLE_TEXT WHERE ATX_AIN_ID = AIN_ID "+\
+                            (start_s and ( " AND AIN_DATE >= '" + start_s + "' " )) + \
+                            (end_s and ( " AND AIN_DATE <= '" + end_s + "' ")) + \
+                            " AND (AIN_TITLE LIKE '%%"+text_to_search+"%%' OR ATX_TEXT LIKE '%%"+text_to_search+"%%') ORDER BY AIN_ID DESC LIMIT " + str(offset) + "," + str(n_articles)
         econ = self.engine.connect()
         articlesFoundDF = pd.read_sql(article_query_sql, econ, index_col=None)
-        articlesFoundDF["SOURCE"] =   articlesFoundDF['AIN_URL'].map(extract_source_without_www)
+        articlesFoundDF["SOURCE"] = articlesFoundDF['AIN_URL'].map(extract_source_without_www)
         econ.close()
         return articlesFoundDF
