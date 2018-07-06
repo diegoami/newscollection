@@ -51,7 +51,7 @@ class VenturebeatSpider(scrapy.Spider):
                             self.finished += 1
 
 
-            if self.finished < 5:
+            if self.finished < 5 and self.pages_C < 200:
                 absolute_page = 'https://venturebeat.com/page/'+str(self.pages_C)
                 self.pages_C += 1
 

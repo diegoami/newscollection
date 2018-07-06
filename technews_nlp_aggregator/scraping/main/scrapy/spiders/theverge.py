@@ -56,7 +56,7 @@ class ThevergeSpider(scrapy.Spider):
                             logging.info("Found article at date {}, finishing crawling".format(article_date))
                             self.finished += 1
 
-            if self.finished < 5:
+            if self.finished < 5 and self.pages_C < 200:
                 absolute_page = 'https://www.theverge.com/archives/'+str(self.pages_C)
                 self.pages_C += 1
 
