@@ -28,6 +28,7 @@ class ArstechnicaSpider(scrapy.Spider):
         self.go_back_date = go_back_date
 
         self.finished = 0
+        self.skipped = 0
         self.url_list = url_list
 
 
@@ -58,7 +59,9 @@ class ArstechnicaSpider(scrapy.Spider):
                     if (end_condition(article_date, self.go_back_date)):
                         logging.info("Found article at date {}, finishing crawling".format(article_date))
                         self.finished += 1
-            if self.finished < 5:
+                    else:
+                        self.skipped += 1
+            if self.finished < 5 and self.skipped < 500:
                 for page in pages:
 
                     absolute_page = response.urljoin(page)
@@ -87,5 +90,7 @@ class ArstechnicaSpider(scrapy.Spider):
 
         if (end_condition(article_date, self.go_back_date )):
             self.finished += 1
+
+
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : ""}
 

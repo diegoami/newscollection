@@ -26,6 +26,7 @@ class VenturebeatSpider(scrapy.Spider):
         self.go_back_date = go_back_date
 
         self.finished = 0
+        self.skipped = 0
         self.url_list = url_list
 
 
@@ -49,9 +50,10 @@ class VenturebeatSpider(scrapy.Spider):
                         if (end_condition(article_date, self.go_back_date)):
                             logging.info("Found article at date {}, finishing crawling".format(article_date))
                             self.finished += 1
+                        else:
+                            self.skipped += 1
 
-
-            if self.finished < 5 and self.pages_C < 200:
+            if self.finished < 5 and self.pages_C < 200 and self.skipped < 500:
                 absolute_page = 'https://venturebeat.com/page/'+str(self.pages_C)
                 self.pages_C += 1
 
