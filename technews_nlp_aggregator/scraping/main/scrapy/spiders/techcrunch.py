@@ -23,6 +23,7 @@ class TechcrunchSpider(scrapy.Spider):
 
         self.finished = 0
         self.url_list = url_list
+        self.skipped = 0
 
 
     def parse(self, response):
