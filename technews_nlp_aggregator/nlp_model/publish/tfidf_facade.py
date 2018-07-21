@@ -3,6 +3,7 @@ DICTIONARY_FILENAME   = 'dictionary'
 CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
+TFIDF_FILENAME        = 'tfidf'
 
 
 from datetime import timedelta, date
@@ -25,11 +26,13 @@ class TfidfFacade():
         self.gramFacade = gramFacade
         self.tokenizer = tokenizer
 
+
     def load_models(self):
         self.dictionary = corpora.Dictionary.load(self.model_dir + '/'+DICTIONARY_FILENAME)  # store the dictionary, for future reference
         self.corpus = MmCorpus(self.model_dir + '/'+ CORPUS_FILENAME )
         self.lsi = models.LsiModel.load(self.model_dir + '/'+ LSI_FILENAME)
         self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and
+        self.tfidf = models.TfidfModel.load(self.model_dir + '/'+ TFIDFtf2wv_mapper.py_FILENAME)
 
     def get_vec(self, doc, title=''):
         tokenized_doc = self.get_tokenized(doc=doc, title=title)

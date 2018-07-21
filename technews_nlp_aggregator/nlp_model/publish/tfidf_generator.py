@@ -3,6 +3,7 @@ DICTIONARY_FILENAME   = 'dictionary'
 CORPUS_FILENAME       = 'corpus'
 LSI_FILENAME          = 'lsi'
 INDEX_FILENAME        = 'index'
+TFIDF_FILENAME        = 'tfidf'
 
 
 from gensim import corpora, models, similarities
@@ -42,6 +43,7 @@ class TfidfGenerator():
         corpus_lsi = lsi[corpus_tfidf]  # create a double wrapper over the original corpus: bow->tfidf->fold-in-lsi
 
         lsi.save(self.model_dir+'/'+LSI_FILENAME)  # same for tfidf, lda, ...
+        tfidf.save(self.model_dir+'/'+TFIDF_FILENAME)
         return lsi
 
     def create_matrix(self, lsi, corpus):
