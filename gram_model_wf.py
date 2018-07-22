@@ -23,7 +23,7 @@ def generate_model(config, param_config ):
     with open(pickle_file, 'rb') as f:
         texts = pickle.load(f)
         logging.info("Loaded {} texts".format(len(texts)))
-        gramFacade = GramFacade(models_dir, min_count_bigrams=int(param_config["min_count_bigrams"]), min_count_trigrams=int(param_config["min_count_trigrams"]) )
+        gramFacade = GramFacade(models_dir, bigrams_threshold=float(param_config["bigrams_threshold"]), trigrams_threshold=float(param_config["trigrams_threshold"]))
         gramFacade.create_model(texts)
     if os.path.islink(config["root_dir"]+config["phrases_model_dir_link"]):
         os.unlink(config["root_dir"]+config["phrases_model_dir_link"])
