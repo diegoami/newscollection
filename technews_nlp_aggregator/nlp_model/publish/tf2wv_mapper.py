@@ -46,9 +46,9 @@ class Tf2WvMapper:
 
                 vec = self.get_wv(token)
                 vec_sum = vec_sum + (token_count * idf) * vec
-                logging.info(
-                    "Processed token {} with tf frequency {} ".format(token, self.tfidf_facade.dictionary.dfs.get(
-                                                                                          token_id, 0)))
+          #      logging.info(
+           #         "Processed token {} with tf frequency {} ".format(token, self.tfidf_facade.dictionary.dfs.get(
+            #                                                                              token_id, 0)))
 
             except KeyError:
                 logging.info("Ignoring token {} with tf frequency {} - not found in WV".format(token,
