@@ -38,7 +38,8 @@ if __name__ == '__main__':
 
     version = config["version"]
     application = Application(config, True)
-    feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator, version=version)
+    feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator,
+                                   tf2wv_mapper=application.tf2wv_mapper, version=version)
     similarArticlesRepo = application.similarArticlesRepo
     application.gramFacade.load_phrases()
     direct_confront( feature_filler, similarArticlesRepo)

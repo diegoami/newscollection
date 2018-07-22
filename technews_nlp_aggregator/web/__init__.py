@@ -11,9 +11,9 @@ from .util import read_int_from_form
 app = Flask(__name__)
 
 
-@app.route('/')
+
 def home():
-    return redirect(url_for('show_groups'))
+    return redirect(url_for('show_groups', _external=True))
 
 import technews_nlp_aggregator.web.duplicate_articles
 import technews_nlp_aggregator.web.compare_articles

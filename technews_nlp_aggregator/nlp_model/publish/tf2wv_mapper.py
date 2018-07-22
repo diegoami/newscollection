@@ -5,8 +5,8 @@ import logging
 from gensim.matutils import unitvec
 
 class Tf2WvMapper:
-    def __init__(self, model_dir, gram_facade, tfidf_facade, doc2vec_facade):
-        self.model_dir = model_dir
+    def __init__(self, gram_facade, tfidf_facade, doc2vec_facade):
+
         self.gram_facade = gram_facade
         self.tfidf_facade = tfidf_facade
         self.doc2vec_facade = doc2vec_facade
@@ -37,14 +37,16 @@ class Tf2WvMapper:
         return self.get_vec_bow(vec_bow)
 
     def get_vec_bow(self, vec_bow):
-        vec_sum = np.zeros((1,self.doc_shape))
+        vec_sum = np.zeros((1,self.doc2vec_facade.vector_size))
 
         for token_id, token_count in vec_bow:
             idf = self.idfs[token_id]
             token = self.dictionary[token_id]
             try:
+
                 vec = self.get_wv(token)
                 vec_sum = vec_sum + (token_count * idf) * vec
+
             except KeyError:
                 logging.info("Ignoring token {} - not found in WV".format(token))
                 continue
@@ -52,20 +54,26 @@ class Tf2WvMapper:
         return vec_norm
 
     def get_vec_list(self, vec_bow):
+
         vec_list = []
 
         for token_id, token_count in vec_bow:
             idf = self.idfs[token_id]
             token = self.dictionary[token_id]
             try:
+                logging.info("Trying token {} ".format(token))
                 vec = self.get_wv(token)
                 vec_weight_tuple = (vec, idf * token_count)
+                logging.info("Vec of token {} for {}".format(token, idf * token_count))
+
                 if (idf > 0 ):
                     vec_list.append(vec_weight_tuple )
             except KeyError:
                 logging.info("Ignoring token {} - not found in WV".format(token))
                 continue
         return vec_list
+
+
 
     def get_weighted_list(self, trigrams):
         vec_bow = self.dictionary.doc2bow(trigrams)
@@ -77,16 +85,16 @@ class Tf2WvMapper:
         docvec2 = self.get_weighted_vector_id(id2)
         docvec2 = matutils.unitvec(docvec2)
 
-        return np.dot(docvec1, docvec2.T)
+        return np.dot(docvec1, docvec2.T)[0][0]
 
     def get_score_doc_doc(self, tok1, tok2):
 
-        docvec1 = self.get_weighted_list(tok1)
+        docvec1 = self.get_weighted_vector(tok1)
         docvec1 = matutils.unitvec(docvec1)
-        docvec2 = self.get_weighted_list(tok2)
+        docvec2 = self.get_weighted_vector(tok2)
 
         docvec2 = matutils.unitvec(docvec2)
         if (len(docvec1) == len(docvec2)):
-            return np.dot(docvec1, docvec2.T)
+            return np.dot(docvec1, docvec2.T)[0][0]
         else:
             return 0

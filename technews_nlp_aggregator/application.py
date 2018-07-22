@@ -4,7 +4,7 @@ import yaml
 
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer, ArticleSimilarLoader
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade, LsiInfo, TokenizeInfo, Doc2VecInfo, \
-    GramFacade, ClassifierAggregator
+    GramFacade, ClassifierAggregator, Tf2WvMapper
 from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
 from technews_nlp_aggregator.persistence.articles_spider_repo import ArticlesSpiderRepo
@@ -37,6 +37,8 @@ class Application:
         self.lsiInfo = LsiInfo(self.tfidfFacade.lsi, self.tfidfFacade.corpus)
         self.tokenizeInfo = TokenizeInfo(self.tokenizer)
         self.doc2VecInfo = Doc2VecInfo(self.doc2VecFacade.model, self.doc2VecFacade)
+        self.tf2wv_mapper = Tf2WvMapper(self.gramFacade, self.tfidfFacade, self.doc2VecFacade)
+        self.tf2wv_mapper.remap()
         self.summaryFacade = SummaryFacade(self.tfidfFacade, self.doc2VecFacade)
         self.classifierAggregator = ClassifierAggregator(self.tokenizer, self.gramFacade, self.tfidfFacade, self.doc2VecFacade)
         last_article_date = self.articleDatasetRepo.get_latest_article_date()

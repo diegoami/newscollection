@@ -1,11 +1,11 @@
-min_count_bigrams : 16
-min_count_trigrams : 18
+min_count_bigrams : 25
+min_count_trigrams : 30
 tdf_no_below : 6
 tdf_no_above : 0.75
 docvec_window : 10
 docvec_min_count : 5
 docvec_sample : 0
-docvec_alpha : 0.025
+docvec_alpha : 0.02
 docvec_epochs : 40
 tdf_num_topics : 400
 docvec_vector_size : 400

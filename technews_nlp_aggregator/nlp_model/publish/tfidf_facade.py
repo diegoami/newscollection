@@ -32,7 +32,7 @@ class TfidfFacade():
         self.corpus = MmCorpus(self.model_dir + '/'+ CORPUS_FILENAME )
         self.lsi = models.LsiModel.load(self.model_dir + '/'+ LSI_FILENAME)
         self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and
-        self.tfidf = models.TfidfModel.load(self.model_dir + '/'+ TFIDFtf2wv_mapper.py_FILENAME)
+        self.tfidf = models.TfidfModel.load(self.model_dir + '/'+ TFIDF_FILENAME)
 
     def get_vec(self, doc, title=''):
         tokenized_doc = self.get_tokenized(doc=doc, title=title)

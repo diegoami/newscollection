@@ -4,12 +4,13 @@ from .article_features import ArticleFeatures
 class FeatureFiller:
 
 
-    def __init__(self, articleLoader, summaryFacade, classifierAggregator, tfidfFacade, doc2VecFacade, version):
+    def __init__(self, articleLoader, summaryFacade, classifierAggregator, tfidfFacade, doc2VecFacade, tf2wv_mapper, version):
         self.articleLoader = articleLoader
         self.summaryFacade = summaryFacade
         self.classifierAggregator = classifierAggregator
         self.tfidfFacade = tfidfFacade
         self.doc2VecFacade = doc2VecFacade
+        self.tf2wv_mapper = tf2wv_mapper
         self.version = version
         self.features_cache = {}
 
@@ -35,7 +36,7 @@ class FeatureFiller:
         score["SCO_T_TEXT"], score["SCO_T_TITLE"], score["SCO_T_SUMMARY"], score[
             "SCO_T_SUMMARY_2"] = self.scores_from_classifiers(self.tfidfFacade, features_id1, features_id2)
         score["SCO_D_TEXT"], score["SCO_D_TITLE"], score["SCO_D_SUMMARY"], score[
-            "SCO_D_SUMMARY_2"] = self.scores_from_classifiers(self.doc2VecFacade, features_id1, features_id2)
+            "SCO_D_SUMMARY_2"] = self.scores_from_classifiers(self.tf2wv_mapper, features_id1, features_id2)
 
         score["SCO_CW_TEXT"], score["SCO_CW_TITLE"], score["SCO_CW_SUMMARY"], score[
             "SCO_CW_SUMMARY_2"] = self.unique_words_diff(self.classifierAggregator, features_id1, features_id2)
