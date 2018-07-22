@@ -47,7 +47,8 @@ if __name__ == '__main__':
     sincewhen_date = latest_article_date - timedelta(config["go_back"])
     sincewhen = str(sincewhen_date.year) + '-' + str(sincewhen_date.month) + '-' + str(sincewhen_date.day)
 
-    feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator, version=version)
+    feature_filler = FeatureFiller(articleLoader=application.articleLoader, summaryFacade=application.summaryFacade, tfidfFacade=application.tfidfFacade, doc2VecFacade=application.doc2VecFacade, classifierAggregator=application.classifierAggregator,
+                                   tf2wv_mapper=application.tf2wv_mapper,version=version)
     similarArticlesRepo = application.similarArticlesRepo
     application.gramFacade.load_phrases()
     create_test_data(starting_date=sincewhen, feature_filler=feature_filler, similarArticlesRepo=similarArticlesRepo)
