@@ -6,7 +6,7 @@ from scrapy import Request
 import re
 import calendar
 
-from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled, get_date_from_string
+from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled, build_from_timestamp
 
 class QzSpider(scrapy.Spider):
     name = "qz"
@@ -52,20 +52,19 @@ class QzSpider(scrapy.Spider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@itemprop="headline"]//text()').extract()
+        article_title_parts = response.xpath('//h1//text()').extract()
         article_title = "".join(article_title_parts).strip()
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'item-body')]/div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
-        article_date_str_l = response.xpath("//span[@itemprop='datePublished']//text()").extract_first()
-        article_authors = response.xpath('//a[@class="author-name"]/@href').extract_first()
+            "//article//div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
+
         all_paragraph_text = build_text_from_paragraphs( all_paragraphs)
+        article_datetime_ts = response.xpath('//time/@datetime').extract_first()
 
-        article_date = get_date_from_string(article_date_str_l )
-
+        article_date = build_from_timestamp(article_datetime_ts)
 
         if (end_condition(article_date, self.go_back_date)):
 
             self.finished += 1
-        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors, "date" :article_date, "filename" : "", "tags" : []}
+        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": "", "date" :article_date, "filename" : "", "tags" : []}
 
 

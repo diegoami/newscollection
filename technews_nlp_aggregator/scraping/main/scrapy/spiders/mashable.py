@@ -2,7 +2,7 @@
 import scrapy
 from scrapy import Request
 
-from . import extract_date, end_condition, build_text_from_paragraphs
+from . import extract_date, end_condition, build_text_from_paragraphs, build_from_timestamp
 
 
 class MashableSpider(scrapy.Spider):
@@ -48,8 +48,9 @@ class MashableSpider(scrapy.Spider):
 
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
-        article_date = extract_date(url)
+        article_datetime_ts = response.xpath("//time/text()").extract_first()
 
+        article_date = build_from_timestamp(article_datetime_ts, ' ')
         if (end_condition(article_date, self.go_back_date)):
             self.finished += 1
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": [] , "date" :article_date, "filename" : "", "tags" : []}

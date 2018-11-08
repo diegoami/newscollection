@@ -4,7 +4,7 @@ from datetime import date
 import scrapy
 from scrapy import Request
 
-from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
+from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled, build_from_timestamp
 
 
 class WiredSpider(scrapy.Spider):
@@ -52,16 +52,17 @@ class WiredSpider(scrapy.Spider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@class="title"]//text()').extract_first()
+        article_title_parts = response.xpath('//h1//text()').extract_first()
         article_title = "".join(article_title_parts).strip()
 
         all_paragraphs = response.xpath(
-            "//article[contains(@class, 'article-body-component')]/div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
-        article_date_str = response.xpath("//li/time[@class='date-mdy']//text()").extract_first()
-        article_authors = response.xpath('//a[@rel="author"]/@href').extract_first()
+            "//div[contains(@class, 'article')]/div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
+
+        article_authors = ""
+        article_datetime_ts = response.xpath('//time/@datetime').extract_first()
+
+        article_date = build_from_timestamp(article_datetime_ts)
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
-        month, day, year = map(int, article_date_str.split('.'))
-        article_date = date(year+2000, month, day)
 
 
         if (end_condition(article_date, self.go_back_date)):
