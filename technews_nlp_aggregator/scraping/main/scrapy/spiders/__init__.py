@@ -23,5 +23,6 @@ from .reuters import ReutersSpider
 from .techdirt import TechdirtSpider
 from .inverse import InverseSpider
 from .bleepingcomputer import BleepingcomputerSpider
+from .inc import IncSpider
 
 
