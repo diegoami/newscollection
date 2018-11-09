@@ -1,11 +1,18 @@
 import numpy as np
 import yaml
+from datetime import datetime
 from sklearn.externals import joblib
 from sklearn.model_selection import cross_val_score
 from xgboost import XGBRegressor, XGBClassifier
 from technews_nlp_aggregator.common import load_config
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
+from technews_nlp_aggregator.persistence.model_repo import ModelRepo
 import sys
+
+from collections import namedtuple
+
+training_model = {}
+
 
 def print_best_parameters( classifier):
     if hasattr(classifier, "best_estimator_"):
@@ -14,7 +21,7 @@ def print_best_parameters( classifier):
             print("\t%s: %r" % (param_name, best_parameters[param_name]))
 
 
-def create_regressor(train_DF, xboost_model_file):
+def create_regressor(train_DF, xboost_model_file, training_model):
     print(" ============= REGRESSOR ====================== ")
   # train_df = pd.read_csv(train_file, index_col=0)
     relevant_columns = ['SCO_DAYS','SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
@@ -42,6 +49,7 @@ def create_regressor(train_DF, xboost_model_file):
     print("Training set : {} data points".format(len(X_train)))
     neg_mean_squared_error = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_mean_squared_error')
     print(neg_mean_squared_error )
+    training_model["TMO_NMSE"] = neg_mean_squared_error.mean()
     print("Neg Mean Squared Error: %0.8f (+/- %0.8f)" % (neg_mean_squared_error.mean(), neg_mean_squared_error .std() * 2))
 
     #neg_log_loss = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_log_loss')
@@ -49,9 +57,10 @@ def create_regressor(train_DF, xboost_model_file):
   #  print("Neg Log Loss: %0.8f (+/- %0.8f)" % (neg_log_loss.mean(), neg_log_loss.std() * 2))
 
     joblib.dump(clf, xboost_model_file)
+    return training_model
 
 
-def create_classifier(train_DF, xboost_classifier_file ):
+def create_classifier(train_DF, xboost_classifier_file, training_model):
     print(" ============= CLASSIFIER ===================== ")
   # train_df = pd.read_csv(train_file, index_col=0)
     relevant_columns = ['SCO_DAYS','SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
@@ -84,12 +93,14 @@ def create_classifier(train_DF, xboost_classifier_file ):
 
 
     f1 = cross_val_score(clf, X_train, y_train, cv=5, scoring='f1')
+    training_model["TMO_F1"] = f1.mean()
     precision = cross_val_score(clf, X_train, y_train, cv=5, scoring='precision')
+    training_model["TMO_PRECISION"] = precision.mean()
     recall = cross_val_score(clf, X_train, y_train, cv=5, scoring='recall')
-
+    training_model["TMO_RECALL"] = recall.mean()
 
     accuracy = cross_val_score(clf, X_train, y_train, cv=5, scoring='accuracy')
-
+    training_model["TMO_ACCURACY"] = accuracy.mean()
     print_best_parameters(clf)
     print("Training set : {} data points".format(len(X_train)))
     print(f1)
@@ -103,6 +114,7 @@ def create_classifier(train_DF, xboost_classifier_file ):
 
     neg_log_loss = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_log_loss')
     print(neg_log_loss)
+    training_model["TMO_LOG_LOSS"] = neg_log_loss.mean()
     print("Neg Log Loss: %0.8f (+/- %0.8f)" % (neg_log_loss.mean(), neg_log_loss.std() * 2))
 
 
@@ -112,6 +124,7 @@ def create_classifier(train_DF, xboost_classifier_file ):
 
 
     joblib.dump(clf, xboost_classifier_file )
+    return training_model
 
 
 if __name__ == '__main__':
@@ -120,9 +133,12 @@ if __name__ == '__main__':
     version = config["version"]
     db_url = db_config["db_url"]
     similarArticlesRepo = ArticlesSimilarRepo(db_url)
+    modelRepo = ModelRepo(db_url)
     train_df = similarArticlesRepo.load_train_set(version)
     xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
     xboost_classifier_file = config["root_dir"] + config["xgboost_classifier_file"]
-
-    create_regressor(train_df,  xboost_model_file)
-    create_classifier(train_df, xboost_classifier_file)
+    training_model["TMO_TRAINING_SET"] = len(train_df)
+    training_model = create_regressor(train_df,  xboost_model_file, training_model)
+    training_model = create_classifier(train_df, xboost_classifier_file, training_model)
+    training_model["TMO_DATE"] = datetime.now()
+    modelRepo.save_model_performance(training_model)
