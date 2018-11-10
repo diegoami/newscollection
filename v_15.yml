@@ -12,4 +12,3 @@ docvec_vector_size : 400
 docvec_batch_size : 25000
 docvec_queue_factor : 4
 docvec_workers : 16
-

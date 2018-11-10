@@ -10,7 +10,7 @@ def refresh_groups():
     _ = app.application
     _.refresh_groups()
     return show_groups()
-
+@app.route('/')
 @app.route('/show_groups', defaults={'page_id': 0})
 @app.route('/show_groups/<int:page_id>')
 def show_groups(page_id=0):
