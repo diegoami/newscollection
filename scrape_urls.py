@@ -50,6 +50,7 @@ if __name__ == '__main__':
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     articleSpiderRepo = ArticlesSpiderRepo(db_config.get("db_url"))
     url_queued = articleSpiderRepo.retrieve_urls_queued()
+    result = [(row["UTA_SPIDER"], row["UTA_URL"].strip()) for row in url_queued]
     to_process = create_spider_map(url_queued)
 
 

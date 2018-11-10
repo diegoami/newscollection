@@ -14,11 +14,13 @@ Retrieve the latest dump from https://s3.console.aws.amazon.com/s3/buckets/techc
 Import the dump into a mysql user called 'tnaggregator'. From the mysql prompt execute
 
 ~~~~
+CREATE USER 'diegoami'@'%' IDENTIFYED by <password>;
+
 SET AUTOCOMMIT=0;
 source <dumpfile>.sql;
 COMMIT;
-GRANT ALL ON tnaggregator.* TO '<youruser>'@'%';
-GRANT CREATE ON tnaggregator TO '<youruser>'@'%';
+GRANT ALL ON tnaggregator.* TO 'diegoami'@'%';
+GRANT CREATE ON tnaggregator TO 'diegoami'@'%';
 FLUSH PRIVILEGES;
 ~~~~
 

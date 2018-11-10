@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include 'header_files.html' %}
+    <meta charset="UTF-8">
+    <title>Controversial news</title>
+
+</head>
+<body onload="select_header('topnav_report')">
+{% include 'header.html' %}
+
+<BR>
+<h3>Model performances</h3>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>F1</th>
+        <th>PRECISION</th>
+        <th>RECALL</th>
+        <th>ACCURACY</th>
+
+    </tr>
+
+ {% for _ in model_performances: %}
+
+        <tr>
+
+            <td>{{_.TMO_DATE}}</td>
+            <td>{{_.TMO_F1}}</td>
+            <td>{{_.TMO_PRECISION}}</td>
+            <td>{{_.TMO_RECALL}}</td>
+            <td>{{_.TMO_ACCURACY}}</td>
+
+        </tr>
+
+ {% endfor %}
+</table>
+
+<h3>Scrape Report</h3>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Report</th>
+
+    </tr>
+
+ {% for _ in scrape_reports: %}
+        <tr>
+
+            <td class="date">{{_.SRE_DATE}}</td>
+            <td>{{_.SRE_REPORT}}</td>
+
+        </tr>
+
+ {% endfor %}
+</table>
+
+
+
+
+
+<h3>Urls queued</h3>
+<table>
+    <tr>
+        <th>Spider</th>
+        <th>Url</th>
+
+    </tr>
+
+ {% for _ in urls_queued: %}
+        <tr>
+
+            <td>{{_.UTA_SPIDER}}</td>
+            <td>{{_.UTA_URL}}</td>
+
+        </tr>
+
+ {% endfor %}
+</table>
+
+
+{% include 'footer.html' %}
+</body>
+</html>

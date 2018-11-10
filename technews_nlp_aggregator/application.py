@@ -5,9 +5,9 @@ import yaml
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer, ArticleSimilarLoader
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade, LsiInfo, TokenizeInfo, Doc2VecInfo, \
     GramFacade, ClassifierAggregator
-from technews_nlp_aggregator.persistence.article_dataset_repo import ArticleDatasetRepo
-from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
-from technews_nlp_aggregator.persistence.articles_spider_repo import ArticlesSpiderRepo
+from technews_nlp_aggregator.persistence import ArticleDatasetRepo, \
+    ArticlesSimilarRepo, ArticlesSpiderRepo, ModelRepo, ScrapeRepo
+
 
 from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 
@@ -44,7 +44,8 @@ class Application:
         self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)
         self.threshold = config["threshold"]
         self.refresh_groups()
-
+        self.model_repo = ModelRepo(self.db_url)
+        self.scrape_repo = ScrapeRepo(self.db_url)
         logging.debug("Log in debug mode")
 
     def reload(self):

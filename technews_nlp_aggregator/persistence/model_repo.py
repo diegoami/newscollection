@@ -32,4 +32,9 @@ class ModelRepo:
             traceback.print_exc()
             con.rollback()
 
+    def load_model_performances(self):
+        found = False
+        con = self.get_connection()
+
+        return con['TRAINING_MODEL'].find(order_by=['-TMO_DATE'])
 

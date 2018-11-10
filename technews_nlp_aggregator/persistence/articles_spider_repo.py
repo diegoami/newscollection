@@ -20,8 +20,8 @@ class ArticlesSpiderRepo:
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar )
-        result = [(row["UTA_SPIDER"], row["UTA_URL"].strip()) for row in query_result]
-        return result
+
+        return query_result
 
     def add_url_list(self, url_list):
         sql_add_user = "INSERT INTO URLS_TO_ADD (UTA_SPIDER, UTA_URL) VALUES (:uta_spider, :uta_url) "

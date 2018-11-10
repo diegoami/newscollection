@@ -34,3 +34,13 @@ class ScrapeRepo:
             con.rollback()
 
 
+    def load_report(self):
+        found = False
+        con = self.get_connection()
+
+        return con['SPIDER_REPORT'].find(order_by=['-SRE_DATE'])
+
+
+
+
+
