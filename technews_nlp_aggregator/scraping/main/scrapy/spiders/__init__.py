@@ -2,7 +2,8 @@
 #
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
-from .util import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled, build_from_timestamp, get_date_from_string_mdy
+from .util import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled, build_from_timestamp, get_date_from_string_mdy, get_simple_date
+from .tech_controversy_spider import TechControversySpider
 from .arstechnica import ArstechnicaSpider
 from .techcrunch import TechcrunchSpider
 from .thenextweb import ThenextwebSpider

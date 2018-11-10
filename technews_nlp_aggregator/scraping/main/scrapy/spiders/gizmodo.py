@@ -6,8 +6,8 @@ from scrapy import Request
 
 from . import end_condition, build_text_from_paragraphs
 
-
-class GizmodoSpider(scrapy.Spider):
+from . import TechControversySpider
+class GizmodoSpider(TechControversySpider):
     name = "gizmodo"
     pages_C =  0
     urls_V = set()
@@ -18,24 +18,8 @@ class GizmodoSpider(scrapy.Spider):
     )
 
 
-    def __init__(self, article_repo, go_back_date, url_list):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = 0
-        self.url_list = url_list
-
-
-    def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
-        else:
-            pass
-
-
+    def __init__(self, article_repo, go_back_date, url_list = None):
+        super().__init__(article_repo, go_back_date, url_list)
 
 
 
@@ -56,9 +40,7 @@ class GizmodoSpider(scrapy.Spider):
         month, day, year = map(int, article_date_str.split('/'))
         article_date = date(year + 2000, month, day)
 
-
         if (end_condition(article_date, self.go_back_date)):
-
             self.finished += 1
         yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": article_authors , "date" :article_date, "filename" : "", "tags" : []}
 

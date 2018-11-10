@@ -4,10 +4,10 @@ from datetime import date
 import scrapy
 from scrapy import Request
 
-from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled, build_from_timestamp
+from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled, build_from_timestamp, get_simple_date
 
-
-class WiredSpider(scrapy.Spider):
+from . import TechControversySpider
+class WiredSpider(TechControversySpider):
     name = "wired"
     pages_C =  0
     urls_V = set()
@@ -17,38 +17,8 @@ class WiredSpider(scrapy.Spider):
         'https://www.wired.com/', 'http://www.wired.com/'
     )
 
-
     def __init__(self, article_repo, go_back_date, url_list=None):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = 0
-        self.url_list = url_list
-
-
-    def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
-        else:
-            urls = response.xpath('//h2[contains(@class,"archive-item-component__link")]/@href').extract()
-
-
-            for url in urls:
-                absolute_url = response.urljoin(url)
-                article_date = extract_date(url)
-                if (article_date):
-                    if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url)):
-                        self.urls_V.add(absolute_url)
-                        yield Request(absolute_url, callback=self.parse_page,
-                                      meta={'URL': absolute_url})
-            absolute_page = 'https://www.wired.com/most-popular/'
-            if (absolute_page not in self.pages_V):
-                self.pages_V.add(absolute_page)
-
-                yield Request(absolute_page, callback=self.parse)
+        super().__init__(article_repo, go_back_date, url_list)
 
     def parse_page(self, response):
         url = response.meta.get('URL')
@@ -59,9 +29,9 @@ class WiredSpider(scrapy.Spider):
             "//div[contains(@class, 'article')]/div//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
 
         article_authors = ""
-        article_datetime_ts = response.xpath('//time/@datetime').extract_first()
+        article_datetime_ts = response.xpath('//time/text()').extract_first()
 
-        article_date = build_from_timestamp(article_datetime_ts)
+        article_date = get_simple_date(article_datetime_ts)
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
 

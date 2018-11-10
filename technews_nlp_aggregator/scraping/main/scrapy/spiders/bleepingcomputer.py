@@ -8,8 +8,8 @@ import calendar
 
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled, get_date_from_string
 
-
-class BleepingcomputerSpider(scrapy.Spider):
+from . import TechControversySpider
+class BleepingcomputerSpider(TechControversySpider):
     name = "bleepingcomputer"
     pages_C =  0
     urls_V = set()
@@ -21,27 +21,13 @@ class BleepingcomputerSpider(scrapy.Spider):
 
 
     def __init__(self, article_repo, go_back_date, url_list):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = 0
-        self.url_list = url_list
-
-
-    def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
-
-
+        super().__init__(article_repo, go_back_date, url_list)
 
 
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath("//div[contains(@class, 'article_section')]/h2//text()").extract()
+        article_title_parts = response.xpath("//h1//text()").extract()
         article_title = "".join(article_title_parts).strip()
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'articleBody')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()

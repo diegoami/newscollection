@@ -4,9 +4,13 @@ import sys
 import yaml
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
-from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider, WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider, DigitaltrendsSpider, TheguardianSpider, QzSpider, RecodeSpider, InquisitrSpider, ReutersSpider, TechdirtSpider, InverseSpider, BleepingcomputerSpider, IncSpider
 from datetime import  timedelta
+
+from datetime import  timedelta
+
+from technews_nlp_aggregator.scraping.main.scrapy import settings
+from technews_nlp_aggregator.scraping.main.scrapy.pipelines import Pipeline
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
 from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.common import load_config
@@ -51,3 +55,4 @@ if __name__ == '__main__':
 
     do_crawl(articleDatasetRepo, to_process)
 
+    print(Pipeline.successfully_crawled)

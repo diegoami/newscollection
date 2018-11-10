@@ -22,6 +22,11 @@ def extract_date(url):
 month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
+def get_simple_date(date_str):
+    month, day, year = map(int, date_str.split('.'))
+    year = year + 2000
+    return date(year, month, day)
+
 def get_date_from_string(date_str):
     result = None
     if (date_str):
@@ -44,10 +49,10 @@ def get_date_from_string(date_str):
                     result = article_date
     return result
 
-def get_date_from_string_mdy(date_str):
+def get_date_from_string_mdy(date_str, split_c=','):
     result = None
     if (date_str):
-        date_str_l = date_str.split(',')[1].split()
+        date_str_l = date_str.split(split_c)[1].split()
         if (len(date_str_l) >= 3):
             month, days, year = date_str_l[0], date_str_l[1], date_str_l[2]
             if month in month_names:

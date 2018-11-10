@@ -5,8 +5,8 @@ import logging
 import json
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
 
-
-class TechcrunchSpider(scrapy.Spider):
+from . import TechControversySpider
+class TechcrunchSpider(TechControversySpider):
     name = "techcrunch"
     pages_V = set()
     pages_C = 0
@@ -17,50 +17,35 @@ class TechcrunchSpider(scrapy.Spider):
     )
 
     def __init__(self, article_repo, go_back_date, url_list=None):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
+        super().__init__(article_repo, go_back_date, url_list)
 
-        self.finished = 0
-        self.url_list = url_list
-        self.skipped = 0
-
+    def get_next_page(self):
+        return 'https://techcrunch.com/wp-json/tc/v1/magazine?page='+str(self.pages_C)
 
     def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url , callback=self.parse_page,
-                          meta={'URL': url})
-        else:
-            if response.headers['Content-Type'] == b'application/json; charset=UTF-8':
-                jsonresponse = json.loads(response.body_as_unicode())
+        super().parse(response)
+        if response.headers['Content-Type'] == b'application/json; charset=UTF-8':
+            jsonresponse = json.loads(response.body_as_unicode())
 
-                urls = [obj["link"] for obj in jsonresponse]
-                for url in urls:
+            urls = [obj["link"] for obj in jsonresponse]
+            for url in urls:
 
-                    absolute_url = response.urljoin(url)
-                    if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url) ):
-                        self.urls_V.add(absolute_url)
+                absolute_url = response.urljoin(url)
+                if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url) ):
+                    self.urls_V.add(absolute_url)
 
-                        yield Request(absolute_url, callback=self.parse_page,
-                                      meta={'URL': absolute_url})
+                    yield Request(absolute_url, callback=self.parse_page,
+                                  meta={'URL': absolute_url})
+                else:
+                    article_date = self.article_repo.url_date(absolute_url)
+                    if (end_condition(article_date, self.go_back_date)):
+                        logging.info("Found article at date {}, finishing crawling".format(article_date))
+                        self.finished += 1
                     else:
-                        article_date = self.article_repo.url_date(absolute_url)
-                        if (end_condition(article_date, self.go_back_date)):
-                            logging.info("Found article at date {}, finishing crawling".format(article_date))
-                            self.finished += 1
-                        else:
-                            self.skipped += 1
+                        self.skipped += 1
 
-            if self.finished < 5 and self.pages_C < 200 and self.skipped < 500:
-                absolute_page =  'https://techcrunch.com/wp-json/tc/v1/magazine?page='+str(self.pages_C)
-                self.pages_C += 1
-
-                logging.info("Adding absolute page " + absolute_page)
-                if (absolute_page not in self.pages_V):
-                    self.pages_V.add(absolute_page)
-
-                    yield Request(absolute_page, callback=self.parse)
+        if not self.crawl_finished():
+            yield self.request_for_next_page()
 
     def parse_page(self, response):
         url = response.meta.get('URL')
@@ -73,7 +58,7 @@ class TechcrunchSpider(scrapy.Spider):
 
 
 
-        article_date = extract_date( url)
+        article_date = extract_date(url)
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
 
         if (end_condition(article_date, self.go_back_date)):

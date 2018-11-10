@@ -8,8 +8,8 @@ import calendar
 
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled, build_from_timestamp
 
-
-class InquisitrSpider(scrapy.Spider):
+from . import TechControversySpider
+class InquisitrSpider(TechControversySpider):
     name = "inquisitr"
     pages_C =  0
     urls_V = set()
@@ -21,23 +21,7 @@ class InquisitrSpider(scrapy.Spider):
 
 
     def __init__(self, article_repo, go_back_date, url_list):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = 0
-        self.url_list = url_list
-
-
-    def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
-
-
-
-
+        super().__init__(article_repo, go_back_date, url_list)
 
     def parse_page(self, response):
         url = response.meta.get('URL')

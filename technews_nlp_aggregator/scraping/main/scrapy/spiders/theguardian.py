@@ -6,8 +6,8 @@ from scrapy import Request
 
 from . import end_condition, build_text_from_paragraphs, build_from_timestamp
 
-
-class TheguardianSpider(scrapy.Spider):
+from . import TechControversySpider
+class TheguardianSpider(TechControversySpider):
     name = "theguardian"
     pages_C =  0
     urls_V = set()
@@ -19,21 +19,7 @@ class TheguardianSpider(scrapy.Spider):
 
 
     def __init__(self, article_repo, go_back_date, url_list=None):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = 0
-        self.url_list = url_list
-
-
-    def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
-
-
+        super().__init__(article_repo, go_back_date, url_list)
 
     def parse_page(self, response):
         url = response.meta.get('URL')

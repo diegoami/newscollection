@@ -6,8 +6,8 @@ from scrapy import Request
 
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
 
-
-class DigitaltrendsSpider(scrapy.Spider):
+from . import TechControversySpider
+class DigitaltrendsSpider(TechControversySpider):
     name = "digitaltrends"
     pages_C =  0
     urls_V = set()
@@ -17,35 +17,8 @@ class DigitaltrendsSpider(scrapy.Spider):
         'https://www.digitaltrends.com', 'http://www.digitaltrends.com'
     )
 
-
     def __init__(self, article_repo, go_back_date, url_list):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = 0
-        self.url_list = url_list
-
-
-    def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
-        else:
-            urls = response.xpath('//div[@class="homepage-main"]/a/@href').extract()
-
-
-            for url in urls:
-                absolute_url = response.urljoin(url)
-                article_date = extract_date(url)
-                if (article_date):
-                    if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url)):
-                        self.urls_V.add(absolute_url)
-                        yield Request(absolute_url, callback=self.parse_page,
-                                      meta={'URL': absolute_url})
-
-
+        super().__init__(article_repo, go_back_date, url_list)
 
 
 

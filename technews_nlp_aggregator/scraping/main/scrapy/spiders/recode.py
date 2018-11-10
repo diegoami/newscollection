@@ -8,8 +8,8 @@ import calendar
 
 from . import extract_date, end_condition, build_text_from_paragraphs, already_crawled
 
-
-class RecodeSpider(scrapy.Spider):
+from . import TechControversySpider
+class RecodeSpider(TechControversySpider):
     name = "recode"
     pages_C =  0
     urls_V = set()
@@ -19,37 +19,8 @@ class RecodeSpider(scrapy.Spider):
         'https://www.recode.net/', 'http://www.recode.net/'
     )
 
-
     def __init__(self, article_repo, go_back_date, url_list):
-        super().__init__()
-        self.article_repo = article_repo
-        self.go_back_date = go_back_date
-
-        self.finished = 0
-        self.url_list = url_list
-
-
-    def parse(self, response):
-        if self.url_list:
-            for url in self.url_list:
-                yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
-        else:
-            urls = response.xpath('//div[@class="homepage-main"]/a/@href').extract()
-
-
-            for url in urls:
-                absolute_url = response.urljoin(url)
-                article_date = extract_date(url)
-                if (article_date):
-                    if (absolute_url not in self.urls_V and not already_crawled(self.article_repo, absolute_url)):
-                        self.urls_V.add(absolute_url)
-                        yield Request(absolute_url, callback=self.parse_page,
-                                      meta={'URL': absolute_url})
-
-
-
-
+        super().__init__(article_repo, go_back_date, url_list)
 
     def parse_page(self, response):
         url = response.meta.get('URL')
