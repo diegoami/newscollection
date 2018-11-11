@@ -1,5 +1,5 @@
 from urllib.parse import urlparse
-from datetime import date
+from datetime import date, datetime
 from string import punctuation
 import logging
 import re
@@ -36,6 +36,8 @@ def get_date_from_string(date_str):
             month_and_day, year, time = date_str.split(',')
         if (len(date_str_l) == 2):
             month_and_day, year = date_str.split(',')
+        if (len(date_str_l) == 1):
+            month_and_day, year = date_str_l[0], datetime.now().year
         if (month_and_day and year):
             month_and_day_l = month_and_day.split()
             if (len(month_and_day_l ) == 2):
