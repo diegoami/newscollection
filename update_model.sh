@@ -4,7 +4,7 @@ source /home/ubuntu/anaconda3/bin/activate tnaggregator-3
 if [ -f nohup.out ] ; then
     rm $file
 fi
-#git pull origin master
+git pull origin master
 [ $? -eq 0 ] &&  python scrape_site.py
 [ $? -eq 0 ] &&  python scrape_urls.py
 [ $? -eq 0 ] &&  python token_model_wf.py
