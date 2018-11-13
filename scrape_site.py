@@ -16,8 +16,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 def do_crawl(articleDatasetRepo,go_back=15):
 
-#    spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider, EngadgetSpider])
-    spiders = ([TechcrunchSpider])
+    spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider, EngadgetSpider])
 
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
