@@ -48,7 +48,7 @@ class ArstechnicaSpider(TechControversySpider):
                     self.finished += 1
                 else:
                     self.skipped += 1
-        if not self.crawl_finished():
+        if self.crawl_allowed():
             for page in pages:
                 absolute_page = response.urljoin(page)
                 if (absolute_page not in self.pages_V):

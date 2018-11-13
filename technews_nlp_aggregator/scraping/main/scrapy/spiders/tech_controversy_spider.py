@@ -33,7 +33,7 @@ class TechControversySpider(scrapy.Spider):
         pass
 
 
-    def crawl_finished(self):
+    def crawl_allowed(self):
         return self.finished < 5 and self.pages_C < 200 and self.skipped < 500
 
     def request_for_next_page(self):

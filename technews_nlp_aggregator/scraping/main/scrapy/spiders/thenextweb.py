@@ -45,7 +45,7 @@ class ThenextwebSpider(TechControversySpider):
                         self.finished += 1
                     else:
                         self.skipped += 1
-        if not self.crawl_finished():
+        if self.crawl_allowed():
             yield self.request_for_next_page()
 
     def parse_page(self, response):
