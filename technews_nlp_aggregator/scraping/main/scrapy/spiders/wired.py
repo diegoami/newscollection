@@ -14,7 +14,7 @@ class WiredSpider(TechControversySpider):
     pages_V = set()
     allowed_domains = ["wired.com"]
     start_urls = (
-        'https://www.wired.com/', 'http://www.wired.com/'
+        'https://www.wired.com/', 'http://www.wired.com/', 'https://www.wired.co.uk', 'http://www.wired.co.uk'
     )
 
     def __init__(self, article_repo, go_back_date, url_list=None):
