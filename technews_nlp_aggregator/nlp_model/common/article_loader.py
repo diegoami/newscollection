@@ -2,7 +2,7 @@
 import logging
 from random import randint
 
-from technews_nlp_aggregator.common.util import extract_source_without_www
+from technews_nlp_aggregator.common.util import extract_source_without_www, extract_normpath
 
 
 class ArticleLoader:
@@ -25,6 +25,7 @@ class ArticleLoader:
         return article_row.index[0]
 
     def get_article_id_from_url(self, url):
+        url = extract_normpath(url)
         article_row = self.articlesDF[(self.articlesDF['url'] == url)]
         if (len(article_row) > 0):
             article_id = article_row.iloc[0]['article_id']

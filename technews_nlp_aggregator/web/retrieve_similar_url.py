@@ -53,18 +53,19 @@ def retrieve_similar_url():
             if (article is not None and len(article) > 0):
                 id = article['index']
                 url = article['url']
-
             else:
-                return render_template('search_url.html',
-                                       messages=[
-                                           'Could not find neither url nor id'])
+                if (len(url) > 0):
+                    messages = _.articleSpiderRepo.add_url_list([url])
+                else:
+                    messages = ['Could not find neither url nor id']
+                return render_template('search_url.html', messages=messages, search_url=url, article_id=article_id)
             if (id > _.tfidfFacade.docs_in_model() or id > _.doc2VecFacade.docs_in_model()):
                 return retrieve_from_article_id( article_id=article_id, n_articles=n_articles,    d_days=d_days, page_id = page_id)
             else:
                 return common_retrieve_id(  id, d_days, n_articles=n_articles, page_id = page_id, url=url, article_id=article_id)
         else:
             return render_template('search_url.html',
-                                       messages=['Please enter the URL of an article or an article id in the databasse'])
+                                       messages=['Please enter the URL of an article or an article id in the database'], search_url=url, article_id=article_id)
 
 
 def common_retrieve_id( id, d_days, n_articles=25,  page_id = 0, url=None, article_id=None):
