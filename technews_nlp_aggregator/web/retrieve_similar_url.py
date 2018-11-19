@@ -55,7 +55,7 @@ def retrieve_similar_url():
                 url = article['url']
             else:
                 if (len(url) > 0):
-                    messages = _.articleSpiderRepo.add_url_list([url])
+                    messages = _.articlesSpiderRepo.add_url_list([url])
                 else:
                     messages = ['Could not find neither url nor id']
                 return render_template('search_url.html', messages=messages, search_url=url, article_id=article_id)
