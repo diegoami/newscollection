@@ -25,8 +25,7 @@ class EngadgetSpider(TechControversySpider):
     def get_next_page(self):
         return 'https://www.engadget.com/all/page/'+str(self.pages_C)
 
-    def parse(self, response):
-        super().parse(response)
+    def parse_crawl(self, response):
         urls = response.xpath('//h2[contains(@class,"mt-10@tp+")]/a/@href | //div[contains(@class,"container@m")]/article[contains(@class,"o-hit")]/a/@href').extract()
         for url in urls:
             absolute_url = response.urljoin(url)

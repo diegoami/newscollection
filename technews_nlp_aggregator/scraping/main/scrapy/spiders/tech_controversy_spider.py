@@ -27,7 +27,11 @@ class TechControversySpider(scrapy.Spider):
                 yield Request(url, callback=self.parse_page,
                               meta={'URL': url})
         else:
-            pass
+            for r in self.parse_crawl(response):
+                yield r
+
+    def parse_crawl(self, response):
+        raise NotImplementedError()
 
     def parse_page(self):
         pass

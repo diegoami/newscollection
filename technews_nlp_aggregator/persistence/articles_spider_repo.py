@@ -1,7 +1,8 @@
 import traceback
 
 import dataset
-from technews_nlp_aggregator.common.util import extract_host, extract_normpath, extract_source_without_www
+from technews_nlp_aggregator.common.util import extract_host, extract_normpath, extract_source_without_www, extract_start_url
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import all_start_urls
 
 class ArticlesSpiderRepo:
 
@@ -29,16 +30,21 @@ class ArticlesSpiderRepo:
         messages = []
         for url in url_list:
             url = extract_normpath(url)
-            host = extract_source_without_www(url).lower().capitalize()
-            if url and host:
-                try:
-                    con.begin()
-                    con.query(sql_add_user , {"uta_spider": host, "uta_url": url.strip()})
-                    messages.append("Added {} : {}".format(host, url))
-                    con.commit()
-                except:
-                    con.rollback()
-                    traceback.print_stack()
+            start_url = extract_start_url(url)
+            if (start_url in all_start_urls):
+                host = extract_source_without_www(url).lower().capitalize()
+                if url and host:
+                    try:
+                        con.begin()
+                        con.query(sql_add_user , {"uta_spider": host, "uta_url": url.strip()})
+                        messages.append("Added {} : {}".format(host, url))
+                        con.commit()
+                    except:
+                        con.rollback()
+                        messages.append('Could not add add {}: {}'.format(host, url))
+                        traceback.print_stack()
+            else:
+                messages.append('Urls from {} cannot be parsed yet'.format(start_url))
         return messages
 
 

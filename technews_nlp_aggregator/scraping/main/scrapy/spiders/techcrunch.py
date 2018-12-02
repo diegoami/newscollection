@@ -22,8 +22,7 @@ class TechcrunchSpider(TechControversySpider):
     def get_next_page(self):
         return 'https://techcrunch.com/wp-json/tc/v1/magazine?page='+str(self.pages_C)
 
-    def parse(self, response):
-        super().parse(response)
+    def parse_crawl(self, response):
         if response.headers['Content-Type'] == b'application/json; charset=UTF-8':
             jsonresponse = json.loads(response.body_as_unicode())
 

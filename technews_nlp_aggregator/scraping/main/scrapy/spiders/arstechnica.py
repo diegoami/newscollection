@@ -27,9 +27,7 @@ class ArstechnicaSpider(TechControversySpider):
         super().__init__(article_repo, go_back_date, url_list )
 
 
-
-    def parse(self, response):
-        super().parse(response)
+    def parse_crawl(self, response):
         url1s = response.xpath('//a[@class="overlay"]/@href').extract()
         url2s = response.xpath('//h2/a/@href').extract()
 

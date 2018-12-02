@@ -23,8 +23,7 @@ class TechrepublicSpider(TechControversySpider):
     def get_next_page(self):
         return 'http://www.techrepublic.com/' + str(self.pages_C)
 
-    def parse(self, response):
-        super().parse(response)
+    def parse_crawl(self, response):
         urls = response.xpath('//h3[@class="title"]/a/@href').extract()
 
         for url in urls:

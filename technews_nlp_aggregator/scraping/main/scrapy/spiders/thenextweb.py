@@ -24,8 +24,7 @@ class ThenextwebSpider(TechControversySpider):
     def get_next_page(self):
         return 'https://thenextweb.com/latest/page/'+str(self.pages_C)
 
-    def parse(self, response):
-        super().parse(response)
+    def parse_crawl(self, response):
         urls = response.xpath('//h4[@class="story-title"]/a/@href').extract()
 
 
