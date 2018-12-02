@@ -1,5 +1,5 @@
 import traceback
-
+import logging
 import dataset
 from technews_nlp_aggregator.common.util import extract_host, extract_normpath, extract_source_without_www, extract_start_url
 from technews_nlp_aggregator.scraping.main.scrapy.spiders import all_start_urls
@@ -31,6 +31,7 @@ class ArticlesSpiderRepo:
         for url in url_list:
             url = extract_normpath(url)
             start_url = extract_start_url(url)
+            logging.info("Starting url: {}".format(start_url))
             if (start_url in all_start_urls):
                 host = extract_source_without_www(url).lower().capitalize()
                 if url and host:

@@ -36,3 +36,4 @@ all_spiders = [ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSp
 
 all_domains = [domain for spider in all_spiders for domain in spider.allowed_domains ]
 all_start_urls = [start_url for spider in all_spiders for start_url in spider.start_urls ]
+

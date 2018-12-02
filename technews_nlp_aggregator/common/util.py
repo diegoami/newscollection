@@ -36,7 +36,7 @@ def conv_From_(str_date):
 
 
 def extract_start_url( url):
-    start_url = str(urlparse(url)[0])+'://'+str(urlparse(url)[1])
+    start_url = str(urlparse(url)[0])+'://'+str(urlparse(url)[1])+'/'
     return start_url
 
 
