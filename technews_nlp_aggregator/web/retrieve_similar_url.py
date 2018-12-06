@@ -32,9 +32,9 @@ def show_similar(article_id, d_days):
     id = article['index']
     url = article['url']
     if (id > _.tfidfFacade.docs_in_model() or id > _.doc2VecFacade.docs_in_model()):
-        return retrieve_from_article_id(article_id=article_id, n_articles=25, d_days=d_days, page_id=0, search_url=url)
+        return retrieve_from_article_id(article_id=article_id, n_articles=25, d_days=d_days, page_id=0)
     else:
-        return common_retrieve_id(id, d_days, n_articles=25, page_id=0, article_id=article_id, search_url=url)
+        return common_retrieve_id(id, d_days, n_articles=25, page_id=0, article_id=article_id, url=url)
 
 @app.route('/retrieve_similar_url', methods=['POST'])
 def retrieve_similar_url():
