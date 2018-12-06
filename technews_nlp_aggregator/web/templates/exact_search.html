@@ -25,17 +25,7 @@
 
     </div>
  </FORM>
-<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
-    <p>
-    <input name="search_url" id="search_url" type="hidden" />
-    <input name="n_articles" id="n_articles" value="25" type="hidden" />
 
-
-    <INPUT type="hidden" id="article_id" name="article_id" value="" >
-
-
-    </p>
-</FORM>
 
 
 
@@ -57,7 +47,7 @@
                 <td><STRONG>{{_.SOURCE}} </STRONG><I>{{_.AIN_DATE}}</I>: <BR><!--suppress HtmlUnknownTarget -->
                     <A HREF="{{_.AIN_URL}}">{{_.AIN_TITLE}}</A></td>
                  <td class="icon">
-                    <A HREF="javascript:find_similar('{{_.AIN_ID}}')">
+                    <A HREF="/find_similar/{{_.AIN_ID}}/50" target="_blank">
                     <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
                     </A>
                 </td>

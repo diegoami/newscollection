@@ -30,18 +30,6 @@
 
     </div>
  </FORM>
-<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
-    <p>
-    <input name="search_url" id="search_url" type="hidden" />
-    <input name="n_articles" id="n_articles" value="25" type="hidden" />
-
-
-    <INPUT type="hidden" id="article_id" name="article_id" value="" >
-
-
-    </p>
-</FORM>
-
 
 
 
@@ -72,7 +60,7 @@
                 <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
 
                  <td class="icon">
-                    <A HREF="javascript:find_similar('{{_.article_id}}')">
+                    <A HREF="/find_similar/{{_.article_id}}/50" target="_blank">
 
                         <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
                         <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">

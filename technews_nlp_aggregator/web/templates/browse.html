@@ -10,14 +10,6 @@
 {% include 'header.html' %}
 
 
-
-    <!--suppress HtmlUnknownTarget -->
-<FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST">
-
-    <INPUT type="hidden" id="search_url" name="search_url" maxlength="200" size="70" value="">
-    <INPUT type="hidden" id="article_id" name="article_id" maxlength="200" size="70" value="">
-    </FORM>
-
 <div class="buttonrow surrond_form tooltip" >
     <!--suppress HtmlUnknownTarget -->
     <form action="/filterbrowse" method="POST">
@@ -54,7 +46,7 @@
                 <td><B>{{_.source}}</B> <I>{{_.date_p}}</I>:<BR><!--suppress HtmlUnknownTarget -->
                     <A HREF="{{_.url}}}">{{_.title}}</A></td>
                 <td class="icon">
-                           <A HREF="javascript:find_similar('{{_.article_id}}')">
+                           <A HREF="/find_similar/{{_.article_id}}/50" target="_blank">
                         <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
                                <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
                     </A>

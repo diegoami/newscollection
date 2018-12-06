@@ -10,6 +10,8 @@ def search():
 
     return render_template('search.html', end_s=app.application.latest_article_date)
 
+
+
 @app.route('/retrieve_similar', methods=['POST'])
 def retrieve_similar():
     _ = app.application

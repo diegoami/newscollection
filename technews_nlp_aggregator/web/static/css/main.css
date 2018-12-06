@@ -95,7 +95,12 @@ img {
     width: 28px;
     height: 28px;
     display:block;
+}
 
+.small-img-inline {
+    width: 28px;
+    height: 28px;
+    display:inline;
 }
 
 .logo {

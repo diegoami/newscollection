@@ -36,7 +36,14 @@
     <div class="metadata">
         <p>Source: <STRONG>{{A1.SOURCE}}</STRONG></p>
         <p>ID: <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
-            <A HREF="/statistics/{{A1.AIN_ID}}" target="_blank">{{A1.AIN_ID}}</A></p>
+            <span>
+                <A HREF="/statistics/{{A1.AIN_ID}}" target="_blank">{{A1.AIN_ID}}</A>
+                <A HREF="/find_similar/{{A1.AIN_ID}}/2" target="_blank">
+                    <IMG class="small-img-inline" SRC="{{ url_for('static', filename='images/find_similar.png') }}" TITLE="Find similar" ALT="Find similar" target="_blank">
+                </A>
+
+            </span>
+        </p>
         <p>Go to <!--suppress HtmlUnknownTarget -->
             <A HREF="{{A1.AIN_URL}}">original url</A> </p>
         <P>Date: {{A1.AIN_DATE}}</P>
@@ -53,7 +60,13 @@
     <div class="metadata">
        <p>Source: <STRONG>{{A2.SOURCE}}</STRONG></p>
       <p>ID: <!--suppress HtmlUnknownTarget, HtmlUnknownTarget -->
-          <A HREF="/statistics/{{A2.AIN_ID}}" target="_blank">{{A2.AIN_ID}}</A></p>
+         <span>
+              <A HREF="/statistics/{{A2.AIN_ID}}" target="_blank">{{A2.AIN_ID}}</A>
+              <A HREF="/find_similar/{{A2.AIN_ID}}/2" target="_blank">
+                    <IMG class="small-img-inline" SRC="{{ url_for('static', filename='images/find_similar.png') }}" TITLE="Find similar" ALT="Find similar" target="_blank">
+              </A>
+          </span>
+      </p>
       <p>Go to <!--suppress HtmlUnknownTarget -->
           <A HREF="{{A2.AIN_URL}}">original url</A> </p>
       <P>Date: {{A2.AIN_DATE}}</P>

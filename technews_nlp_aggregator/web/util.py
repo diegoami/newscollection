@@ -11,6 +11,8 @@ def extract_related_articles(articleLoader, scoresDF, ssusDF=None, sscsDF=None):
     merged_DF =  scoresDF.join(articleLoader.articlesDF)
     if (ssusDF is not None):
         merged_DF =  merged_DF.merge(ssusDF, on='article_id', how='left')
+    else:
+        merged_DF['u_score'] = -1
     if (sscsDF is not None):
         merged_DF =  merged_DF.merge(sscsDF, on='article_id', how='left')
     merged_DF = merged_DF.apply(score_row,axis=1)

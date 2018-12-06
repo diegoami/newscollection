@@ -20,7 +20,6 @@
 
     </P>
 
-</div>
     <P>
 
 <input class="main" type="submit" value="Submit"  />
@@ -28,12 +27,22 @@
 
 </p>
 </FORM>
+</div>
+
 {% if article_id: %}
 
 
      <div>
         <h2>{{A.AIN_TITLE}}</h2>
-         <p><I>ID:</I> {{A.AIN_ID}}</p>
+         <p>
+           <SPAN>
+             <I>ID:</I> {{A.AIN_ID}}
+
+             <A HREF="/find_similar/{{A.AIN_ID}}/2" target="_blank" >
+                    <IMG class="small-img-inline" SRC="{{ url_for('static', filename='images/find_similar.png') }}" TITLE="Find similar" ALT="Find similar">
+             </A>
+          </SPAN>
+        </p>
         <p><I>URL:</I> <!--suppress HtmlUnknownTarget -->
             <A HREF="{{A.AIN_URL}}">{{A.AIN_URL}}</A></p>
         <P><I>Date:</I> {{A.AIN_DATE}}</P>

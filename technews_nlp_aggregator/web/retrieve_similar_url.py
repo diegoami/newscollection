@@ -25,7 +25,16 @@ def random_url():
             url, article_id = article["url"], article["article_id"]
             return common_retrieve_id(id=index,  d_days=d_days, article_id=article["article_id"],  n_articles=n_articles, url=url )
 
-
+@app.route('/find_similar/<int:article_id>/<int:d_days>')
+def show_similar(article_id, d_days):
+    _ = app.application
+    article = _.articleLoader.get_article(article_id)
+    id = article['index']
+    url = article['url']
+    if (id > _.tfidfFacade.docs_in_model() or id > _.doc2VecFacade.docs_in_model()):
+        return retrieve_from_article_id(article_id=article_id, n_articles=25, d_days=d_days, page_id=0, search_url=url)
+    else:
+        return common_retrieve_id(id, d_days, n_articles=25, page_id=0, article_id=article_id, search_url=url)
 
 @app.route('/retrieve_similar_url', methods=['POST'])
 def retrieve_similar_url():
@@ -43,8 +52,6 @@ def retrieve_similar_url():
 
             if article_id:
                 article = _.articleLoader.get_article(article_id)
-
-
             elif url:
                 article_id = _.articleLoader.get_article_id_from_url(url)
                 if article_id is not None:
@@ -65,7 +72,7 @@ def retrieve_similar_url():
                 return common_retrieve_id(  id, d_days, n_articles=n_articles, page_id = page_id, url=url, article_id=article_id)
         else:
             return render_template('search_url.html',
-                                       messages=['Please enter the URL of an article or an article id in the database'], search_url=url, article_id=article_id)
+                                    messages=['Please enter the URL of an article or an article id in the database'])
 
 
 def common_retrieve_id( id, d_days, n_articles=25,  page_id = 0, url=None, article_id=None):
@@ -87,7 +94,6 @@ def retrieve_from_article_id( article_id, n_articles, d_days=30, page_id = 0):
         article = convert_summary(article_id)
 
         title, text, art_date, url = article['AIN_TITLE'], article['ATX_TEXT'], article['AIN_DATE'], article['AIN_URL']
-
 
         start, end = art_date - timedelta(d_days), art_date + timedelta(d_days)
         new_DF = _.classifierAggregator.retrieve_articles_for_text(text=article['ATX_TEXT'], start=start, end=end, n_articles=n_articles, title=article['AIN_TITLE'], page_id=page_id )
