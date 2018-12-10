@@ -2,7 +2,7 @@ import traceback
 import logging
 import dataset
 from technews_nlp_aggregator.common.util import extract_host, extract_normpath, extract_source_without_www, extract_start_url
-from technews_nlp_aggregator.scraping.main import do_crawl, create_spider_map
+from technews_nlp_aggregator.scraping.main import do_crawl_run, create_spider_map
 from technews_nlp_aggregator.scraping.main.scrapy.spiders import all_start_urls, all_spiders
 from technews_nlp_aggregator.scraping.main.scrapy.pipelines import Pipeline
 
@@ -48,7 +48,7 @@ class ArticlesSpiderRepo:
                         result = [(host, url)]
                         con.commit()
                         to_process = create_spider_map(result)
-                        do_crawl(articleDatasetRepo, to_process, stop_after_crawl=False)
+                        do_crawl_run(articleDatasetRepo, to_process)
                         items = Pipeline.items_added
 
                     except:
