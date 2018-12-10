@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from flask import render_template, request
-
+import logging
 from technews_nlp_aggregator.web.summary import convert_summary
 from . import app
 from .util import extract_related_articles
@@ -62,7 +62,23 @@ def retrieve_similar_url():
                 url = article['url']
             else:
                 if (len(url) > 0):
-                    messages = _.articlesSpiderRepo.add_url_list([url])
+                    messages, items = _.articlesSpiderRepo.add_url_list([url],_.articleDatasetRepo)
+                    if items:
+                        item = items[0]
+                        art_date = item["date"]
+                        start, end = art_date - timedelta(d_days), art_date + timedelta(d_days)
+                        new_DF = _.classifierAggregator.retrieve_articles_for_text(text=item["text"], start=start, end=end,
+                                                                                   n_articles=n_articles, title=item["title"],
+                                                                                   page_id=page_id)
+                        if (len(new_DF) == 0):
+                            messages.append('No results found')
+
+                        related_articles = extract_related_articles(_.articleLoader, new_DF)
+
+                        return render_template('search.html', articles=related_articles[:n_articles], search_text=item["title"]+'. \n'+item["text"],
+                                               n_articles=n_articles, start_s=start, end_s=end, page_id=page_id,
+                                               messages=messages)
+
                 else:
                     messages = ['Could not find neither url nor id']
                 return render_template('search_url.html', messages=messages, search_url=url, article_id=article_id)
