@@ -64,7 +64,7 @@ def retrieve_similar_url():
                 if (len(url) > 0):
                     messages, items = _.articlesSpiderRepo.add_url_list([url],_.articleDatasetRepo)
                     if items:
-                        item = items[-1]
+                        item = items[0]
                         art_date = item["date"]
                         start, end = art_date - timedelta(d_days), art_date + timedelta(d_days)
                         new_DF = _.classifierAggregator.retrieve_articles_for_text(text=item["text"], start=start, end=end,

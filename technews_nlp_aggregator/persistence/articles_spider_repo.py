@@ -31,7 +31,6 @@ class ArticlesSpiderRepo:
         sql_add_user = "INSERT INTO URLS_TO_ADD (UTA_SPIDER, UTA_URL) VALUES (:uta_spider, :uta_url) "
         con = self.get_connection()
         messages = []
-        items = []
         for url in url_list:
             url = extract_normpath(url)
             start_url = extract_start_url(url)
@@ -39,18 +38,16 @@ class ArticlesSpiderRepo:
             if (start_url in all_start_urls):
                 host = extract_source_without_www(url).lower().capitalize()
 
-
+                items = Pipeline.items_added
                 if url and host:
                     try:
                         con.begin()
                         con.query(sql_add_user , {"uta_spider": host, "uta_url": url.strip()})
                         messages.append("Added {} : {}".format(host, url))
                         result = [(host, url)]
-                        con.commit()
                         to_process = create_spider_map(result)
                         do_crawl(articleDatasetRepo, to_process, stop_after_crawl=False)
-                        items = Pipeline.items_added
-
+                        con.commit()
                     except:
                         con.rollback()
                         messages.append('Could not add add {}: {}'.format(host, url))
