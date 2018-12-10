@@ -10,7 +10,7 @@ from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.scraping.main.scrapy.pipelines import Pipeline
 
 from technews_nlp_aggregator.scraping.main.scrapy import settings
-def do_crawl(articleDatasetRepo, spidermap, stop_after_crawl=True):
+def do_crawl(articleDatasetRepo, spidermap):
 
 
     crawler_settings = Settings()
@@ -25,7 +25,7 @@ def do_crawl(articleDatasetRepo, spidermap, stop_after_crawl=True):
             process.crawl(spider, articleDatasetRepo, date.min, urls)
         else:
             logging.error("COULD NOT FIND SPIDER {}".format(spider_name))
-    process.start(stop_after_crawl=stop_after_crawl)
+    process.start()
 
 
 def create_spider_map(url_queued):
