@@ -37,20 +37,23 @@ class ArticlesSpiderRepo:
             logging.info("Starting url: {}".format(start_url))
             if (start_url in all_start_urls):
                 host = extract_source_without_www(url).lower().capitalize()
-                result = [(host, url)]
-                to_process = create_spider_map(result)
-                do_crawl(articleDatasetRepo, to_process)
+
                 items = Pipeline.items_added
                 if url and host:
                     try:
                         con.begin()
                         con.query(sql_add_user , {"uta_spider": host, "uta_url": url.strip()})
                         messages.append("Added {} : {}".format(host, url))
+                        result = [(host, url)]
+                        to_process = create_spider_map(result)
+                        do_crawl(articleDatasetRepo, to_process, stop_after_crawl=False)
                         con.commit()
                     except:
                         con.rollback()
                         messages.append('Could not add add {}: {}'.format(host, url))
                         traceback.print_stack()
+
+
             else:
                 messages.append('Urls from {} cannot be parsed yet'.format(start_url))
         return messages, items
