@@ -1,12 +1,45 @@
 import logging
+from datetime import date
 import sys
 import yaml
+from scrapy.crawler import CrawlerProcess
+from scrapy.settings import Settings
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import *
+
+
+from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.scraping.main.scrapy.pipelines import Pipeline
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
-from technews_nlp_aggregator.scraping.main import do_crawl, create_spider_map
+from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.common import load_config
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+def do_crawl(articleDatasetRepo, spidermap):
+
+
+    crawler_settings = Settings()
+    crawler_settings.setmodule(settings)
+    process = CrawlerProcess(settings=crawler_settings)
+
+    for spider_name in spidermap:
+        spider_class = spider_name+"Spider"
+        if spider_class in globals():
+            spider = globals()[spider_name+"Spider"]
+            urls = spidermap[spider_name]
+            process.crawl(spider, articleDatasetRepo, date.min, urls)
+        else:
+            logging.error("COULD NOT FIND SPIDER {}".format(spider_name))
+    process.start()
+
+
+def create_spider_map(url_queued):
+    to_process = {}
+    for spider, url in url_queued:
+        if spider and url:
+            list_to_process = to_process.get(spider, [])
+            list_to_process.append(url)
+            to_process[spider] = list_to_process
+    return to_process
 
 if __name__ == '__main__':
     config = load_config(sys.argv)
@@ -17,5 +50,8 @@ if __name__ == '__main__':
     url_queued = articleSpiderRepo.retrieve_urls_queued()
     result = [(row["UTA_SPIDER"], row["UTA_URL"].strip()) for row in url_queued]
     to_process = create_spider_map(result)
+
+
     do_crawl(articleDatasetRepo, to_process)
+
     print(Pipeline.successfully_crawled)

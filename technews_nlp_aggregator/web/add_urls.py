@@ -24,5 +24,5 @@ def add_urls():
         if form:
             urls = form["urls"]
             lines = urls.split('\n')
-            messages, items = _.articlesSpiderRepo.add_url_list(lines,_.articleDatasetRepo)
+            messages = _.articlesSpiderRepo.add_url_list(lines)
             return render_template('add_urls.html', messages=messages)

@@ -2,10 +2,7 @@ import traceback
 import logging
 import dataset
 from technews_nlp_aggregator.common.util import extract_host, extract_normpath, extract_source_without_www, extract_start_url
-from technews_nlp_aggregator.scraping.main import do_crawl, create_spider_map
-from technews_nlp_aggregator.scraping.main.scrapy.spiders import all_start_urls, all_spiders
-from technews_nlp_aggregator.scraping.main.scrapy.pipelines import Pipeline
-
+from technews_nlp_aggregator.scraping.main.scrapy.spiders import all_start_urls
 
 class ArticlesSpiderRepo:
 
@@ -27,7 +24,7 @@ class ArticlesSpiderRepo:
 
         return query_result
 
-    def add_url_list(self, url_list, articleDatasetRepo):
+    def add_url_list(self, url_list):
         sql_add_user = "INSERT INTO URLS_TO_ADD (UTA_SPIDER, UTA_URL) VALUES (:uta_spider, :uta_url) "
         con = self.get_connection()
         messages = []
@@ -37,10 +34,6 @@ class ArticlesSpiderRepo:
             logging.info("Starting url: {}".format(start_url))
             if (start_url in all_start_urls):
                 host = extract_source_without_www(url).lower().capitalize()
-                result = [(host, url)]
-                to_process = create_spider_map(result)
-                do_crawl(articleDatasetRepo, to_process)
-                items = Pipeline.items_added
                 if url and host:
                     try:
                         con.begin()
@@ -53,7 +46,7 @@ class ArticlesSpiderRepo:
                         traceback.print_stack()
             else:
                 messages.append('Urls from {} cannot be parsed yet'.format(start_url))
-        return messages, items
+        return messages
 
 
     def update_to_crawled(self, con=None):
