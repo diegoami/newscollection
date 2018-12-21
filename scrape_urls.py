@@ -1,5 +1,5 @@
 import logging
-from datetime import date
+from datetime import timedelta
 import sys
 import yaml
 from scrapy.crawler import CrawlerProcess
@@ -14,7 +14,7 @@ from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.common import load_config
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-def do_crawl(articleDatasetRepo, spidermap):
+def do_crawl(articleDatasetRepo, spidermap, go_back):
 
 
     crawler_settings = Settings()
@@ -26,7 +26,10 @@ def do_crawl(articleDatasetRepo, spidermap):
         if spider_class in globals():
             spider = globals()[spider_name+"Spider"]
             urls = spidermap[spider_name]
-            process.crawl(spider, articleDatasetRepo, date.min, urls)
+            max_date = articleDatasetRepo.get_latest_article_date()
+            go_back_date = max_date - timedelta(days=go_back)
+
+            process.crawl(spider, articleDatasetRepo, go_back_date, urls)
         else:
             logging.error("COULD NOT FIND SPIDER {}".format(spider_name))
     process.start()
@@ -43,6 +46,7 @@ def create_spider_map(url_queued):
 
 if __name__ == '__main__':
     config = load_config(sys.argv)
+    go_back = config["go_back"]
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
@@ -51,7 +55,6 @@ if __name__ == '__main__':
     result = [(row["UTA_SPIDER"], row["UTA_URL"].strip()) for row in url_queued]
     to_process = create_spider_map(result)
 
-
-    do_crawl(articleDatasetRepo, to_process)
+    do_crawl(articleDatasetRepo, to_process, go_back)
 
     print(Pipeline.successfully_crawled)
