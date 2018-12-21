@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /home/ubuntu/projects/newscollection/
-source /home/ubuntu/anaconda3/bin/activate tnaggregator-3
+source /home/ubuntu/anaconda3/bin/activate tnaggregator-4
 if [ -f nohup.out ] ; then
     rm $file
 fi
