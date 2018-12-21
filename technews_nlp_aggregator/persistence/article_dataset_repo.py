@@ -3,7 +3,7 @@ import traceback
 
 import dataset
 import pandas as pd
-from sqlalchemy import create_engine
+
 from sqlalchemy.orm import create_session
 
 from technews_nlp_aggregator.common.util import extract_date, extract_last_part, extract_host, remove_emojis, \
@@ -162,54 +162,63 @@ class ArticleDatasetRepo():
 
                     )
             authors = to_add.get("authors",[])
-            for author in authors:
-                if ("http" not in author):
-                    author = source+author
 
-                author_row = con['AUTHORS'].find_one(AUT_URL=author)
-                if not author_row:
-                    author_pk = con['AUTHORS'].insert(
-                        dict({
-                            "AUT_NAME": extract_last_part(author),
-                            "AUT_URL":   author,
+            try:
+                for author in authors:
+                    if ("http" not in author):
+                        author = source+author
 
-                        })
-                    )
-                else:
-                    author_pk = author_row["AUT_ID"]
-                if (author_pk and pk):
-                    if not con['ARTICLE_AUTHORS'].find_one(
-                            AAU_AIN_ID=str(pk), AAU_AUT_ID=str(author_pk)):
-                        con['ARTICLE_AUTHORS'].insert(
+                    author_row = con['AUTHORS'].find_one(AUT_URL=author)
+                    if not author_row:
+                        author_pk = con['AUTHORS'].insert(
                             dict({
-                                "AAU_AIN_ID": pk,
-                                "AAU_AUT_ID": author_pk
+                                "AUT_NAME": extract_last_part(author),
+                                "AUT_URL":   author,
+
                             })
-
                         )
-            tags = to_add.get("tags",[])
-            for tag in tags:
-                tag_row = con['TAGS'].find_one(TAG_URL=tag)
-                if not tag_row:
-                    tag_pk = con['TAGS'].insert(
-                        dict({
-                            "TAG_NAME": extract_last_part(tag),
-                            "TAG_URL": tag,
+                    else:
+                        author_pk = author_row["AUT_ID"]
+                    if (author_pk and pk):
+                        if not con['ARTICLE_AUTHORS'].find_one(
+                                AAU_AIN_ID=str(pk), AAU_AUT_ID=str(author_pk)):
+                            con['ARTICLE_AUTHORS'].insert(
+                                dict({
+                                    "AAU_AIN_ID": pk,
+                                    "AAU_AUT_ID": author_pk
+                                })
 
-                        })
-                    )
-                else:
-                    tag_pk = tag_row["TAG_ID"]
-                if (tag_pk and pk):
-                    if not con['ARTICLE_TAGS'].find_one(
-                            ATA_AIN_ID=str(pk), ATA_TAG_ID=str(tag_pk)):
-                        con['ARTICLE_TAGS'].insert(
+                            )
+            except:
+                traceback.print_stack()
+                logging.warn("Could not save authors")
+            try:
+                tags = to_add.get("tags",[])
+                for tag in tags:
+                    tag_row = con['TAGS'].find_one(TAG_URL=tag)
+                    if not tag_row:
+                        tag_pk = con['TAGS'].insert(
                             dict({
-                                "ATA_AIN_ID": pk,
-                                "ATA_TAG_ID": tag_pk
-                            })
+                                "TAG_NAME": extract_last_part(tag),
+                                "TAG_URL": tag,
 
+                            })
                         )
+                    else:
+                        tag_pk = tag_row["TAG_ID"]
+                    if (tag_pk and pk):
+                        if not con['ARTICLE_TAGS'].find_one(
+                                ATA_AIN_ID=str(pk), ATA_TAG_ID=str(tag_pk)):
+                            con['ARTICLE_TAGS'].insert(
+                                dict({
+                                    "ATA_AIN_ID": pk,
+                                    "ATA_TAG_ID": tag_pk
+                                })
+
+                            )
+            except:
+                traceback.print_stack()
+                logging.warn("Could not save tags")
             con.commit()
         except:
             traceback.print_exc()

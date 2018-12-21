@@ -37,6 +37,6 @@ class IncSpider(TechControversySpider):
         if (end_condition(article_date, self.go_back_date)):
 
             self.finished += 1
-        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": "", "date" :article_date, "filename" : "", "tags" : []}
+        yield {"title": article_title, "url" : url,  "text": all_paragraph_text, "authors": [], "date" :article_date, "filename" : "", "tags" : []}
 
 

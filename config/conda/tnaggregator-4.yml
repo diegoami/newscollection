@@ -11,7 +11,7 @@ python -m spacy download en
 ~/anaconda3/envs/tnaggregator-4/bin/pip install pyyaml dataset
 <FIX XGBOOST>
 ~/anaconda3/envs/tnaggregator-4/bin/pip install xgboost
-~/anaconda3/envs/tnaggregator-4/bin/pip install scikit-learn scipy matplotlib
+  ~/anaconda3/envs/tnaggregator-4/bin/pip install scikit-learn scipy matplotlib
 
 ~/anaconda3/envs/tnaggregator-4/bin/pip install mysqlclient
 
