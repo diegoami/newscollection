@@ -13,7 +13,7 @@ from technews_nlp_aggregator.common.util import extract_source_without_www
 similarArticlesSQL_select = \
 """
 SELECT * FROM P_SCORES 
-  WHERE P_SCORE > 0.3 
+  WHERE P_SCORE > 0.01 
 """
 
 similarArticlesSQL_orderby = \
