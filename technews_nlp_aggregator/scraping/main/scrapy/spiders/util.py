@@ -85,7 +85,9 @@ def build_text_from_paragraphs(all_paragraphs, punct_end = ".!?", punct_add_poin
     all_paragraph_text = ""
 
     for index, paragraph in enumerate(all_paragraphs):
-        if len(paragraph) == 0 or paragraph[0] == '\n':
+        while len(paragraph) > 0 and paragraph[0] == '\n':
+            paragraph = paragraph[1:]
+        if len(paragraph) == 0:
             continue
         if (paragraph[-1] in punct_add_point):
             paragraph = paragraph + "."
