@@ -22,8 +22,7 @@ def process_for_insertion(id, df, threshold, articleFilterDF):
 def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_days=2):
     logging.info("Searching articles : {} tf, {} doc, {} d_days".format(tf_threshold, doc_threshold, d_days))
     _ = application
-    articleFilterDF = _.articleLoader.articlesDF[:_.tfidfFacade.docs_in_model()]
-    articlesToProcessDF =  articleFilterDF [_.articleLoader.articlesDF['processed'].isnull()]
+    articlesToProcessDF =  _.articleLoader.articlesDF[_.articleLoader.articlesDF['processed'].isnull()]
     con = _.similarArticlesRepo.get_connection()
     logging.info("{} articles to process".format(len(articlesToProcessDF)))
 
