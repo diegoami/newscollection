@@ -12,7 +12,10 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 
 def predict(test_DF,  xboost_model_file, xboost_classif_file, predictions_df):
+    print("setting index....")
+
     test_DF.set_index(['SCO_AIN_ID_1', 'SCO_AIN_ID_2'], inplace=True)
+    print("removing already predicted....")
 
     merged_DF = test_DF[~test_DF.index.isin(predictions_df.index)]
     print("merged_df has {} rows".format(len(merged_DF )))
