@@ -36,10 +36,10 @@ def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_
         logging.info("Found {} tf, {} doc".format(len(tfidf_DF), len(doc2vec_DF)))
         try:
             con.begin()
-            for article1, article2, score in process_for_insertion(id, tfidf_DF, tf_threshold, articlesToProcessDF ):
+            for article1, article2, score in process_for_insertion(id, tfidf_DF, tf_threshold, _.articleLoader.articlesDF):
                 _.similarArticlesRepo.persist_association(con, article1, article2,  _.tfidfFacade.name, score)
 
-            for article1, article2, score in process_for_insertion(id, doc2vec_DF, doc_threshold,  articlesToProcessDF ):
+            for article1, article2, score in process_for_insertion(id, doc2vec_DF, doc_threshold,  _.articleLoader.articlesDF ):
                 _.similarArticlesRepo.persist_association(con, article1, article2, _.doc2VecFacade.name, score)
 
             _.similarArticlesRepo.update_to_processed(article_id, con)
