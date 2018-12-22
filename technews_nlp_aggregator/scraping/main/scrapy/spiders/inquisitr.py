@@ -30,7 +30,7 @@ class InquisitrSpider(TechControversySpider):
         all_paragraph_before = response.xpath("//div[contains(@h2, 'story--kicker')]//text()").extract()
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'entry-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
-        all_paragraph_text = build_text_from_paragraphs( all_paragraphs + all_paragraphs)
+        all_paragraph_text = build_text_from_paragraphs( all_paragraph_before + all_paragraphs)
         article_datetime_ts = response.xpath('//time/@datetime').extract_first()
 
         article_date = build_from_timestamp(article_datetime_ts)

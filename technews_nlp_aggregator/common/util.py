@@ -48,7 +48,7 @@ def extract_source_without_www( url):
     try:
         source = extract_source( url).upper()
         all_parts = source.split('.')
-        parts = [ x for x in all_parts if x not in['COM', 'WWW', 'UK', 'NET', 'ORG', 'CO']]
+        parts = [ x for x in all_parts if x not in['COM', 'WWW', 'UK', 'NET', 'ORG', 'CO', "FYI"]]
         return "".join(parts)
     except:
         return url

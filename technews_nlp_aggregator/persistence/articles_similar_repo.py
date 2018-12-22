@@ -267,10 +267,22 @@ class ArticlesSimilarRepo:
                 traceback.print_exc()
                 con.rollback()
 
+    def update_score(self, score, con=None):
+        con = con if con else self.get_connection()
+        try:
+            con.begin()
+            logging.info("Trying to update score : {}".format(score))
+            row = con['SCORES'].update(score,['SCO_ID'])
+            con.commit()
+        except:
+            traceback.print_exc()
+            con.rollback()
+
+
     def score_exists(self,  score, con):
-        found_row = con['SCORES'].find_one(SCO_AIN_ID_1=score["SCO_AIN_ID_1"], SCO_AIN_ID_2=score["SCO_AIN_ID_2"],
+        found_score = con['SCORES'].find_one(SCO_AIN_ID_1=score["SCO_AIN_ID_1"], SCO_AIN_ID_2=score["SCO_AIN_ID_2"],
                                            SCO_VERSION=score["SCO_VERSION"])
-        return found_row
+        return found_score
 
     def load_train_set(self, version):
         view_sql = "SELECT * FROM TRAIN_SCORES WHERE SCO_VERSION = "+str(version)

@@ -1,3 +1,4 @@
+from datetime import datetime
 import dataset
 import pandas as pd
 import traceback
@@ -38,3 +39,23 @@ class ModelRepo:
 
         return con['TRAINING_MODEL'].find(order_by=['-TMO_DATE'])
 
+    def save_feature_report(self, report_type, report_str):
+        found = False
+        con = self.get_connection()
+        try:
+            con.begin()
+            pk = con['FEATURE_REPORT'].insert(
+                {'FRE_DATE' : datetime.now(),
+                 'FRE_TYPE' : report_type,
+
+                 'FRE_REPORT' : report_str})
+            con.commit()
+            print("Saved feature report")
+        except:
+            traceback.print_exc()
+            con.rollback()
+
+    def load_feature_reports(self):
+        found = False
+        con = self.get_connection()
+        return con['FEATURE_REPORT'].find(order_by=['-FRE_DATE'])

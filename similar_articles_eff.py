@@ -19,7 +19,7 @@ def process_for_insertion(id, df, threshold, articleFilterDF):
 
 
 
-def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3):
+def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_days=3):
     _ = application
     articleFilterDF = _.articleLoader.articlesDF[:_.tfidfFacade.docs_in_model()]
     articlesToProcessDF =  articleFilterDF [_.articleLoader.articlesDF['processed'].isnull()]
@@ -29,8 +29,8 @@ def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3):
         article_date = row['date_p']
         logging.debug("Processing article : {}".format(article_id))
 
-        tfidf_DF= _.tfidfFacade.get_related_articles_for_id(id, 2)
-        doc2vec_DF = _.doc2VecFacade.get_related_articles_for_id(id,  2)
+        tfidf_DF= _.tfidfFacade.get_related_articles_for_id(id, d_days)
+        doc2vec_DF = _.doc2VecFacade.get_related_articles_for_id(id,  d_days)
 
         try:
             con.begin()
@@ -52,4 +52,5 @@ def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3):
 if __name__ == '__main__':
     config = load_config(sys.argv)
     application = Application(config, True)
-    eff_similar_articles(application, float(config['tf_threshold']), float(config['doc_threshold']) )
+    eff_similar_articles(application, float(config['tf_threshold']), float(config['doc_threshold']), float(config.get('d_days',3) ))
+

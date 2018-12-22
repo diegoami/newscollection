@@ -1,4 +1,5 @@
 import logging
+import numpy as np
 from .article_features import ArticleFeatures
 
 class FeatureFiller:
@@ -25,6 +26,12 @@ class FeatureFiller:
 
             return self.features_cache[id]
 
+    def calc_work_days(self, article_id1, article_id2):
+        id1, id2 = self.articleLoader.get_id_from_article_id(article_id1), self.articleLoader.get_id_from_article_id(
+            article_id2)
+        article1, article2 = self.articleLoader.articlesDF.iloc[id1], self.articleLoader.articlesDF.iloc[id2]
+        return abs(np.busday_count(article1['date_p'], article2['date_p']))
+
     def fill_score_map(self, article_id1, article_id2):
         id1, id2 = self.articleLoader.get_id_from_article_id(article_id1), self.articleLoader.get_id_from_article_id(
             article_id2)
@@ -41,6 +48,7 @@ class FeatureFiller:
         score["SCO_CW_TEXT"], score["SCO_CW_TITLE"], score["SCO_CW_SUMMARY"], score[
             "SCO_CW_SUMMARY_2"] = self.unique_words_diff(self.classifierAggregator, features_id1, features_id2)
         score["SCO_DAYS"] = abs((article2['date_p'] - article1['date_p']).days)
+        score["SCO_W_DAYS"] = np.busday_count(article1['date_p'], article2['date_p'])
         score["SCO_VERSION"] = self.version
         logging.info("TITLE : {} , DATE : {} ".format(article1['title'],article1['date_p'] ))
         logging.info("TITLE : {} , DATE : {} ".format(article2['title'], article2['date_p']))

@@ -24,11 +24,13 @@ def print_best_parameters( classifier):
 def create_regressor(train_DF, xboost_model_file, training_model):
     print(" ============= REGRESSOR ====================== ")
   # train_df = pd.read_csv(train_file, index_col=0)
-    relevant_columns = ['SCO_DAYS','SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
+    relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
 
     result_columns = 'SCO_USER'
     X_train = np.array(train_df[relevant_columns])
     y_train = np.array(train_df[result_columns])
+    training_model["TMO_YREG_MEAN"] = y_train.mean()
+
     xgbparams = {
         #'learning_rate':[ 0.001, 0.005, 0.01, 0.05, 0.1],
         #'n_estimators' : [100,200,500]
@@ -43,6 +45,9 @@ def create_regressor(train_DF, xboost_model_file, training_model):
 
 
     clf = XGBRegressor(max_depth=5, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
+    print("Regressor params")
+    print(clf.get_params())
+
     clf.fit(X_train, y_train)
    # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
     #print_best_parameters(clf)
@@ -57,17 +62,19 @@ def create_regressor(train_DF, xboost_model_file, training_model):
   #  print("Neg Log Loss: %0.8f (+/- %0.8f)" % (neg_log_loss.mean(), neg_log_loss.std() * 2))
 
     joblib.dump(clf, xboost_model_file)
-    return training_model
+    regr_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.feature_importances_)}
+    return training_model, regr_feature_report
 
 
 def create_classifier(train_DF, xboost_classifier_file, training_model):
     print(" ============= CLASSIFIER ===================== ")
   # train_df = pd.read_csv(train_file, index_col=0)
-    relevant_columns = ['SCO_DAYS','SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
+    relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
 
     result_columns = 'SCO_USER'
     X_train = np.array(train_df[relevant_columns])
     y_train = np.array(train_df[result_columns].map(lambda x: 1 if x > 0.8 else 0))
+    training_model["TMO_YCLF_MEAN"] = y_train.mean()
     xgbparams = {
         #'learning_rate':[ 0.001, 0.005, 0.01, 0.05, 0.1],
         #'n_estimators' : [100,200,500]
@@ -83,15 +90,13 @@ def create_classifier(train_DF, xboost_classifier_file, training_model):
 
 
     clf = XGBClassifier(max_depth=5, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
+    print("Classifier params")
+    print(clf.get_params())
 
-
-   # clf = XGBClassifier()
+    # clf = XGBClassifier()
 
     clf.fit(X_train, y_train)
    # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
-    f1 = cross_val_score(clf, X_train, y_train, cv=5, scoring='f1')
-
-
     f1 = cross_val_score(clf, X_train, y_train, cv=5, scoring='f1')
     training_model["TMO_F1"] = f1.mean()
     precision = cross_val_score(clf, X_train, y_train, cv=5, scoring='precision')
@@ -124,7 +129,9 @@ def create_classifier(train_DF, xboost_classifier_file, training_model):
 
 
     joblib.dump(clf, xboost_classifier_file )
-    return training_model
+    clf_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.feature_importances_)}
+    print("Feature import")
+    return training_model, clf_feature_report
 
 
 if __name__ == '__main__':
@@ -138,7 +145,9 @@ if __name__ == '__main__':
     xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
     xboost_classifier_file = config["root_dir"] + config["xgboost_classifier_file"]
     training_model["TMO_TRAINING_SET"] = len(train_df)
-    training_model = create_regressor(train_df,  xboost_model_file, training_model)
-    training_model = create_classifier(train_df, xboost_classifier_file, training_model)
+    training_model, regr_feature_report = create_regressor(train_df,  xboost_model_file, training_model)
+    training_model, clf_feature_report = create_classifier(train_df, xboost_classifier_file, training_model)
     training_model["TMO_DATE"] = datetime.now()
     modelRepo.save_model_performance(training_model)
+    modelRepo.save_feature_report('R', regr_feature_report)
+    modelRepo.save_feature_report('C', clf_feature_report)

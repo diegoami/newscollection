@@ -26,15 +26,19 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
 
         article_id1, article_id2= row['SST_AIN_ID_1'], row['SST_AIN_ID_2']
 
-        if not similarArticlesRepo.score_exists({
-                                                 "SCO_AIN_ID_1" : article_id1,
-                                                 "SCO_AIN_ID_2" : article_id2,
-                                                 "SCO_VERSION" : feature_filler.version  }, con):
+        found_score = similarArticlesRepo.score_exists({"SCO_AIN_ID_1": article_id1, "SCO_AIN_ID_2": article_id2,
+                                                        "SCO_VERSION": feature_filler.version}, con)
+        if not found_score:
             logging.info("Processing {}, {}".format(article_id1, article_id2))
 
             score = feature_filler.fill_score_map( article_id1, article_id2)
             similarArticlesRepo.insert_score(score, con)
             logging.info("Score : {}".format(score))
+        elif not found_score["SCO_W_DAYS"]:
+            found_score["SCO_W_DAYS"] = feature_filler.calc_work_days(article_id1, article_id2)
+            similarArticlesRepo.update_score(score, con)
+
+
 
 if __name__ == '__main__':
 

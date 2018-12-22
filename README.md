@@ -22,11 +22,11 @@ Currently the dataset includes technical articles from the year 2017 and 2018, m
 * [Tech Republic](http://www.techrepublic.com)
 * [Engadget](http://www.engadget.com)
 
-The database contains around 80.000 articles and is growing by the day. It is updated almost every day with the latest news.
+The database contains around 100.000 articles and is growing by the day. It is updated almost every day with the latest news.
 
 ## Currently deployed
 
-### Prototype
+### Web application
 
 The web application is currently accessible [here](http://www.techcontroversy.com).
 
@@ -42,6 +42,10 @@ Articles about the same stories can be found on the first page [aggregated here]
 [You can copy the text of a technical article into this text page](http://www.techcontroversy.com/search)  and find similar articles in the dataset, possibly limiting the search in a date interval.
 
 Alternatively, you can see how articles in the database related to each other [entering the url of an article in this page](http://www.techcontroversy.com/search_url).
+
+## Browser plugin
+
+Alternatively you can use browser plugins for [Chrome](https://chrome.google.com/webstore/detail/tech-controversy-companio/mpiecgnniielnaiapcopieglhiemadhg) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/tech-controversy-companion/)
 
 ## Video introduction
 

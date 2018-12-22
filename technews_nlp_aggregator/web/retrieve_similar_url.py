@@ -86,7 +86,7 @@ def common_retrieve_id( id, d_days, n_articles=25,  page_id = 0, url=None, artic
     if related_articles:
         return render_template('search_url.html', articles=related_articles, search_url=url, article=article, article_id=article_id, n_articles=n_articles,  d_days=d_days, page_id = page_id)
 
-def retrieve_from_article_id( article_id, n_articles, d_days=30, page_id = 0):
+def retrieve_from_article_id( article_id, n_articles, d_days=3, page_id = 0):
     _ = app.application
     if article_id is None:
         return render_template('search_url.html', messages=['Could not find the URL in the database'])

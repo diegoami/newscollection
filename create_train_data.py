@@ -21,14 +21,17 @@ def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
     con = similarArticlesRepo.get_connection()
     for index, row in enumerate(user_paired):
         article_id1, article_id2, similarity = row['SSU_AIN_ID_1'], row['SSU_AIN_ID_2'],  row['SSU_SIMILARITY']
-        if not similarArticlesRepo.score_exists({"SCO_AIN_ID_1": article_id1, "SCO_AIN_ID_2": article_id2,
-                                                 "SCO_VERSION": feature_filler.version}, con):
+        found_score = similarArticlesRepo.score_exists({"SCO_AIN_ID_1": article_id1, "SCO_AIN_ID_2": article_id2,
+                                                 "SCO_VERSION": feature_filler.version}, con)
+        if not found_score:
             score = feature_filler.fill_score_map( article_id1, article_id2)
             similarArticlesRepo.insert_score(score, con)
             logging.info("Score : {}".format(score))
-            if (index % 100 == 0):
-                logging.info("Processed {} rows".format(index))
-
+        elif not found_score["SCO_W_DAYS"]:
+            found_score["SCO_W_DAYS"] = feature_filler.calc_work_days(article_id1, article_id2)
+            similarArticlesRepo.update_score(found_score, con)
+        if (index % 100 == 1):
+            logging.info("Processed {} rows".format(index))
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
