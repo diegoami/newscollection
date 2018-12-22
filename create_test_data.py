@@ -36,7 +36,8 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
             similarArticlesRepo.insert_score(score, con)
             logging.info("Score : {}".format(score))
 
-
+        if (index % 100 == 1):
+            logging.info("Processed {} rows".format(index))
 
 
 if __name__ == '__main__':
