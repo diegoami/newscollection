@@ -27,7 +27,7 @@ def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
             score = feature_filler.fill_score_map( article_id1, article_id2)
             similarArticlesRepo.insert_score(score, con)
             logging.info("Score : {}".format(score))
-        elif not found_score["SCO_W_DAYS"]:
+        elif found_score["SCO_DAYS"] and not found_score["SCO_W_DAYS"]:
             found_score["SCO_W_DAYS"] = feature_filler.calc_work_days(article_id1, article_id2)
             similarArticlesRepo.update_score(found_score, con)
         if (index % 100 == 1):
