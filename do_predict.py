@@ -15,6 +15,7 @@ def predict(test_DF,  xboost_model_file, xboost_classif_file, predictions_df):
     test_DF.set_index(['SCO_AIN_ID_1', 'SCO_AIN_ID_2'], inplace=True)
 
     merged_DF = test_DF[~test_DF.index.isin(predictions_df.index)]
+    print("merged_df has {} rows".format(len(merged_DF )))
 
     relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
     result_columns = 'SCO_USER'
@@ -53,7 +54,11 @@ if __name__ == '__main__':
     xboost_classif_file = config["root_dir"] + config["xgboost_classifier_file"]
 
     test_df = similarArticlesRepo.load_test_set(version)
+    print("Test_df has {} rows".format(len(test_df)))
+
     predictions_df = similarArticlesRepo.load_predictions(version)
+    print("predictions_df has {} rows".format(len(predictions_df)))
+
     test_df_res = predict(test_df, xboost_model_file, xboost_classif_file, predictions_df)
 
     similarArticlesRepo.write_predictions(test_df_res, version)
