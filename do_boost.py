@@ -135,7 +135,10 @@ def create_classifier(train_DF, xboost_classifier_file, training_model):
 
 
 if __name__ == '__main__':
-    config = load_config(sys.argv)
+    config_file = sys.argv[1] if (len(sys.argv) > 1) else 'config.yml'
+    config = yaml.safe_load(open(config_file))
+
+    version = config["version"]
     db_config = yaml.safe_load(open(config["key_file"]))
     version = config["version"]
     db_url = db_config["db_url"]
