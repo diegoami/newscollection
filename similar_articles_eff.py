@@ -14,7 +14,7 @@ def process_for_insertion(id, df, threshold, articleFilterDF):
         score = row['score']
         if score >= threshold and score < 0.995:
             article_id, article_other_id = articleFilterDF.iloc[id]['article_id'], articleFilterDF.iloc[other_id]['article_id']
-            logging.debug("Yielding {}, {}, {}".format(article_id, article_other_id, score))
+            logging.info("Yielding {}, {}, {}".format(article_id, article_other_id, score))
             yield (article_id, article_other_id, score)
 
 
@@ -25,6 +25,8 @@ def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_
     articleFilterDF = _.articleLoader.articlesDF[:_.tfidfFacade.docs_in_model()]
     articlesToProcessDF =  articleFilterDF [_.articleLoader.articlesDF['processed'].isnull()]
     con = _.similarArticlesRepo.get_connection()
+    logging.info("{} articles to process".format(len(articlesToProcessDF)))
+
     for id, row in articlesToProcessDF.iterrows():
         article_id = row['article_id']
         article_date = row['date_p']

@@ -7,7 +7,7 @@ TFIDF_FILENAME        = 'tfidf'
 
 
 from datetime import timedelta, date
-
+import logging
 import numpy as np
 import pandas as pd
 from gensim import corpora, models, similarities
@@ -136,7 +136,9 @@ class TfidfFacade():
         start, end = get_start_and_end(url_date, d_days)
         interval_condition = (articlesDF['date_p'] >= start) & (articlesDF['date_p'] <= end)
         articlesFilteredDF = articlesDF[interval_condition]
+
         vec_lsi = self.get_vec_docid(id)
+        logging.info("TFIDF: Found {} articles similar to {} between {} and {} ".format(len(articlesFilteredDF),id, start, end))
         scores = self.matrix_wrapper[(vec_lsi, interval_condition)]
         args_scores = np.argsort(-scores)
         new_index = articlesFilteredDF.iloc[args_scores].index

@@ -114,6 +114,9 @@ class Doc2VecFacade():
         interval_condition = (articleDF['date_p'] >= start) & (articleDF['date_p'] <= end)
 
         articlesFilteredDF = articleDF[interval_condition]
+        logging.info(
+            "DOC2Vec: Found {} articles similar to {} between {} and {} ".format(len(articlesFilteredDF ), id, start, end))
+
         dindex = articlesFilteredDF.index
         indexer = DocVec2Indexer(self.model.docvecs, dindex)
         scores = self.model.docvecs.most_similar([id], topn=None, indexer=DocVec2Indexer(self.model.docvecs, dindex))
