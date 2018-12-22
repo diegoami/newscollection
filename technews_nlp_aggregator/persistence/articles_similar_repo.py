@@ -302,7 +302,7 @@ class ArticlesSimilarRepo:
         return viewDF
 
     def load_test_set(self, version):
-        view_sql =  "SELECT *  FROM TEST_SCORES WHERE SCO_VERSION = "+str(version)
+        view_sql =  "SELECT *  FROM TEST_SCORES WHERE SCO_W_DAYS IS NOT NULL AND SCO_VERSION = "+str(version)
 
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
