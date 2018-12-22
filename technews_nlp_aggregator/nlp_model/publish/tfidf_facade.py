@@ -15,6 +15,10 @@ from gensim import matutils
 from gensim.corpora import MmCorpus
 
 from .tfidf_matrix_wrapper import TfidfMatrixWrapper
+from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
+from technews_nlp_aggregator.common.util import get_start_and_end
+
+
 
 
 class TfidfFacade():
@@ -128,7 +132,8 @@ class TfidfFacade():
     def get_related_articles_for_id(self, id, d_days):
         articlesDF = self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
         url_date = articlesDF.iloc[id]['date_p']
-        start, end = url_date - timedelta(d_days) , url_date + timedelta(d_days)
+
+        start, end = get_start_and_end(url_date, d_days)
         interval_condition = (articlesDF['date_p'] >= start) & (articlesDF['date_p'] <= end)
         articlesFilteredDF = articlesDF[interval_condition]
         vec_lsi = self.get_vec_docid(id)

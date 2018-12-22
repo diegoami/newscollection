@@ -3,7 +3,7 @@ from gensim import matutils
 
 
 from technews_nlp_aggregator.nlp_model.common import defaultTokenizer
-
+from technews_nlp_aggregator.common.util import get_start_and_end
 MODEL_FILENAME = 'doc2vec'
 import pandas as pd
 
@@ -110,7 +110,7 @@ class Doc2VecFacade():
         url_date = articleDF.iloc[id]['date_p']
 
 
-        start, end = url_date - timedelta(d_days), url_date + timedelta(d_days)
+        start, end = get_start_and_end(url_date, d_days)
         interval_condition = (articleDF['date_p'] >= start) & (articleDF['date_p'] <= end)
 
         articlesFilteredDF = articleDF[interval_condition]

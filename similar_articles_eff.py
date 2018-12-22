@@ -19,7 +19,7 @@ def process_for_insertion(id, df, threshold, articleFilterDF):
 
 
 
-def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_days=3):
+def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_days=2):
     _ = application
     articleFilterDF = _.articleLoader.articlesDF[:_.tfidfFacade.docs_in_model()]
     articlesToProcessDF =  articleFilterDF [_.articleLoader.articlesDF['processed'].isnull()]
@@ -52,5 +52,5 @@ def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_
 if __name__ == '__main__':
     config = load_config(sys.argv)
     application = Application(config, True)
-    eff_similar_articles(application, float(config['tf_threshold']), float(config['doc_threshold']), float(config.get('d_days',3) ))
+    eff_similar_articles(application, float(config['tf_threshold']), float(config['doc_threshold']), float(config.get('d_days',2) ))
 

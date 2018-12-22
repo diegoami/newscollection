@@ -110,3 +110,12 @@ def load_config(argv):
     logging.info("Loading {}".format(config_file))
     config = yaml.safe_load(open(config_file))
     return config
+
+
+def get_start_and_end(url_date, d_days):
+    start, end = url_date - timedelta(d_days), url_date + timedelta(d_days)
+    if (start.weekday() == 5):
+        start = start - timedelta(1)
+    if (end.weekday() == 6):
+        end = end + timedelta(1)
+    return start, end
