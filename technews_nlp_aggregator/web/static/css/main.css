@@ -15,20 +15,20 @@ body {
 
 @media screen and (min-width:1000px) {
     body { font-size:120%; }
-
+    html { padding:0 4%; }
 }
 
 @media screen and (min-width:1200px) {
     body { font-size:110%; }
 }
 @media screen and (min-width:1400px) {
-    html { padding:0 15%; }
+    html { padding:0 8%; }
 }
 @media screen and (min-width:1600px) {
     body { font-size:125%; }
 }
 @media screen and (min-width:1800px) {
-    html { padding:0 5%; }
+    html { padding:0 10%; }
 }
 
 @media (max-width: 1000px) {

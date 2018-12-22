@@ -38,7 +38,7 @@ class ScrapeRepo:
         found = False
         con = self.get_connection()
 
-        return con['SPIDER_REPORT'].find(order_by=['-SRE_DATE'])
+        return con['SPIDER_REPORT'].find(order_by=['-SRE_DATE'], _limit=20)
 
 
 

@@ -37,7 +37,7 @@ class ModelRepo:
         found = False
         con = self.get_connection()
 
-        return con['TRAINING_MODEL'].find(order_by=['-TMO_DATE'])
+        return con['TRAINING_MODEL'].find(order_by=['-TMO_DATE'], _limit=20)
 
     def save_feature_report(self, report_type, report_str):
         found = False
@@ -58,4 +58,4 @@ class ModelRepo:
     def load_feature_reports(self):
         found = False
         con = self.get_connection()
-        return con['FEATURE_REPORT'].find(order_by=['-FRE_DATE'])
+        return con['FEATURE_REPORT'].find(order_by=['-FRE_DATE'], _limit=20)

@@ -16,4 +16,4 @@ def show_report():
     feature_reports = model_repo.load_feature_reports()
     urls_queued = articlesSpiderRepo.retrieve_urls_queued()
     return render_template('show_report.html', model_performances=model_performances, scrape_reports=scrape_reports,
-                           urls_queued=urls_queued)
+                           urls_queued=urls_queued, feature_reports=feature_reports)

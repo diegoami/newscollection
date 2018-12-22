@@ -18,7 +18,8 @@
         <th>PRECISION</th>
         <th>RECALL</th>
         <th>ACCURACY</th>
-
+        <th>CLF MEAN</th>
+        <th>REGR MEAN</th>
     </tr>
 
  {% for _ in model_performances: %}
@@ -30,6 +31,26 @@
             <td>{{_.TMO_PRECISION}}</td>
             <td>{{_.TMO_RECALL}}</td>
             <td>{{_.TMO_ACCURACY}}</td>
+            <td>{{_.TMO_YCLF_MEAN}}</td>
+            <td>{{_.TMO_YREG_MEAN}}</td>
+        </tr>
+
+ {% endfor %}
+</table>
+
+<h3>Features Report</h3>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Report</th>
+
+    </tr>
+
+ {% for _ in feature_reports: %}
+        <tr>
+            <td>{{_.FRE_TYPE}}</td>
+            <td>{{_.FRE_DATE}}</td>
+            <td>{{_.FRE_REPORT}}</td>
 
         </tr>
 
