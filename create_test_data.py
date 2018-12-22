@@ -14,6 +14,7 @@ from datetime import timedelta
 import sys
 
 def create_test_data( starting_date, feature_filler, similarArticlesRepo):
+    logging.info("Retrieving data starting from {}".format(starting_date))
     test_data = similarArticlesRepo.retrieve_similar_since( starting_date)
     logging.info("Retrieved {} ".format(len(test_data)))
     retrieves_test( test_data, feature_filler, similarArticlesRepo)
