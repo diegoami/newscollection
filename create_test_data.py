@@ -34,9 +34,7 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
             score = feature_filler.fill_score_map( article_id1, article_id2)
             similarArticlesRepo.insert_score(score, con)
             logging.info("Score : {}".format(score))
-        elif not found_score["SCO_W_DAYS"]:
-            found_score["SCO_W_DAYS"] = feature_filler.calc_work_days(article_id1, article_id2)
-            similarArticlesRepo.update_score(score, con)
+
 
 
 
