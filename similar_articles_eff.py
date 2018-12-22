@@ -20,6 +20,7 @@ def process_for_insertion(id, df, threshold, articleFilterDF):
 
 
 def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_days=2):
+    logging.info("Searching articles : {} tf, {} doc, {} d_days".format(tf_threshold, doc_threshold, d_days))
     _ = application
     articleFilterDF = _.articleLoader.articlesDF[:_.tfidfFacade.docs_in_model()]
     articlesToProcessDF =  articleFilterDF [_.articleLoader.articlesDF['processed'].isnull()]
@@ -27,11 +28,11 @@ def eff_similar_articles(application, tf_threshold=0.58, doc_threshold = 0.3, d_
     for id, row in articlesToProcessDF.iterrows():
         article_id = row['article_id']
         article_date = row['date_p']
-        logging.debug("Processing article : {}".format(article_id))
+        logging.info("Processing article : {}".format(article_id))
 
         tfidf_DF= _.tfidfFacade.get_related_articles_for_id(id, d_days)
         doc2vec_DF = _.doc2VecFacade.get_related_articles_for_id(id,  d_days)
-
+        logging.info("Found {} tf, {} doc".format(len(tfidf_DF), len(doc2vec_DF)))
         try:
             con.begin()
             for article1, article2, score in process_for_insertion(id, tfidf_DF, tf_threshold, articleFilterDF):
