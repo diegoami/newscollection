@@ -1,156 +1,33 @@
-import numpy as np
 import yaml
 from datetime import datetime
-from sklearn.externals import joblib
-from sklearn.model_selection import cross_val_score
-from xgboost import XGBRegressor, XGBClassifier
-from technews_nlp_aggregator.common import load_config
+import logging
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
 from technews_nlp_aggregator.persistence.model_repo import ModelRepo
+from technews_nlp_aggregator.prediction.model import create_classifier, create_regressor
 import sys
-
-from collections import namedtuple
-
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 training_model = {}
-
-
-def print_best_parameters( classifier):
-    if hasattr(classifier, "best_estimator_"):
-        best_parameters = classifier.best_estimator_.get_params()
-        for param_name in sorted(best_parameters.keys()):
-            print("\t%s: %r" % (param_name, best_parameters[param_name]))
-
-
-def create_regressor(train_DF, xboost_model_file, training_model):
-    print(" ============= REGRESSOR ====================== ")
-  # train_df = pd.read_csv(train_file, index_col=0)
-    relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
-
-    result_columns = 'SCO_USER'
-    X_train = np.array(train_df[relevant_columns])
-    y_train = np.array(train_df[result_columns])
-    training_model["TMO_YREG_MEAN"] = y_train.mean()
-
-    xgbparams = {
-        #'learning_rate':[ 0.001, 0.005, 0.01, 0.05, 0.1],
-        #'n_estimators' : [100,200,500]
-        #'max_depth' : [2,3,4], 'min_child_weight' : [5,6,7]
-        #'colsample_bytree' : [0.6, 0.7, 0.8]
-        #'reg_alpha' : [0, 0.1, 0.001, 0.0001]
-        #'learning_rate' : [0.1, 0.01], 'n_estimators' : [100,200]
-
-    }
-    #clf =  GridSearchCV(XGBRegressor(max_depth=3, min_child_weight=6, gamma=0,colsample_bytree=0.8,subsample=0.8, reg_alpha=0.01, learning_rate=0.1), xgbparams)
-    #clf =  GridSearchCV(XGBRegressor(max_depth=3, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001), xgbparams)
-
-
-    clf = XGBRegressor(max_depth=5, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
-    print("Regressor params")
-    print(clf.get_params())
-
-    clf.fit(X_train, y_train)
-   # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
-    #print_best_parameters(clf)
-    print("Training set : {} data points".format(len(X_train)))
-    neg_mean_squared_error = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_mean_squared_error')
-    print(neg_mean_squared_error )
-    training_model["TMO_NMSE"] = neg_mean_squared_error.mean()
-    print("Neg Mean Squared Error: %0.8f (+/- %0.8f)" % (neg_mean_squared_error.mean(), neg_mean_squared_error .std() * 2))
-
-    #neg_log_loss = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_log_loss')
-   # print(neg_log_loss)
-  #  print("Neg Log Loss: %0.8f (+/- %0.8f)" % (neg_log_loss.mean(), neg_log_loss.std() * 2))
-
-    joblib.dump(clf, xboost_model_file)
-    regr_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.feature_importances_)}
-    return training_model, regr_feature_report
-
-
-def create_classifier(train_DF, xboost_classifier_file, training_model):
-    print(" ============= CLASSIFIER ===================== ")
-  # train_df = pd.read_csv(train_file, index_col=0)
-    relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
-
-    result_columns = 'SCO_USER'
-    X_train = np.array(train_df[relevant_columns])
-    y_train = np.array(train_df[result_columns].map(lambda x: 1 if x > 0.8 else 0))
-    training_model["TMO_YCLF_MEAN"] = y_train.mean()
-    xgbparams = {
-        #'learning_rate':[ 0.001, 0.005, 0.01, 0.05, 0.1],
-        #'n_estimators' : [100,200,500]
-        #max_depth' : [2,3,4], 'min_child_weight' : [5,6,7]
-        # 'min_child_weight' : [2,3,4], 'min_child_weight' : [5,6,7]
-        #'colsample_bytree' : [0.6, 0.7, 0.8]
-        #'reg_alpha' : [0, 0.1, 0.001, 0.0001]
-        #'learning_rate' : [0.1, 0.01], 'n_estimators' : [100,200]
-
-    }
-    #clf =  GridSearchCV(XGBRegressor(max_depth=3, min_child_weight=6, gamma=0,colsample_bytree=0.8,subsample=0.8, reg_alpha=0.01, learning_rate=0.1), xgbparams)
-    #clf =  GridSearchCV(XGBClassifier(), xgbparams)
-
-
-    clf = XGBClassifier(max_depth=5, min_child_weight=6, subsample=0.7,colsample_bytree=0.6,reg_alpha=0.001)
-    print("Classifier params")
-    print(clf.get_params())
-
-    # clf = XGBClassifier()
-
-    clf.fit(X_train, y_train)
-   # clf = XGBRegressor(min_child_weight=1,max_depth=3).fit(X_train,y_train)
-    f1 = cross_val_score(clf, X_train, y_train, cv=5, scoring='f1')
-    training_model["TMO_F1"] = f1.mean()
-    precision = cross_val_score(clf, X_train, y_train, cv=5, scoring='precision')
-    training_model["TMO_PRECISION"] = precision.mean()
-    recall = cross_val_score(clf, X_train, y_train, cv=5, scoring='recall')
-    training_model["TMO_RECALL"] = recall.mean()
-
-    accuracy = cross_val_score(clf, X_train, y_train, cv=5, scoring='accuracy')
-    training_model["TMO_ACCURACY"] = accuracy.mean()
-    print_best_parameters(clf)
-    print("Training set : {} data points".format(len(X_train)))
-    print(f1)
-    print("F1: %0.8f (+/- %0.8f)" % (f1.mean(), f1.std() * 2))
-    print(precision)
-    print("Precision: %0.8f (+/- %0.8f)" % (precision.mean(), precision.std() * 2))
-    print(recall)
-    print("Recall: %0.8f (+/- %0.8f)" % (recall.mean(), recall.std() * 2))
-    print(accuracy)
-    print("Accuracy: %0.8f (+/- %0.8f)" % (accuracy.mean(), accuracy.std() * 2))
-
-    neg_log_loss = cross_val_score(clf, X_train, y_train, cv=5, scoring='neg_log_loss')
-    print(neg_log_loss)
-    training_model["TMO_LOG_LOSS"] = neg_log_loss.mean()
-    print("Neg Log Loss: %0.8f (+/- %0.8f)" % (neg_log_loss.mean(), neg_log_loss.std() * 2))
-
-
-    y_pred = clf.predict(X_train)
-
-    train_df['SCO_PRED'] = y_pred
-
-
-    joblib.dump(clf, xboost_classifier_file )
-    clf_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.feature_importances_)}
-    print("Feature import")
-    return training_model, clf_feature_report
 
 
 if __name__ == '__main__':
     config_file = sys.argv[1] if (len(sys.argv) > 1) else 'config.yml'
     config = yaml.safe_load(open(config_file))
 
-    version = config["version"]
     db_config = yaml.safe_load(open(config["key_file"]))
-    version = config["version"]
-    db_url = db_config["db_url"]
-    similarArticlesRepo = ArticlesSimilarRepo(db_url)
-    modelRepo = ModelRepo(db_url)
-    train_df = similarArticlesRepo.load_train_set(version)
+    similarArticlesRepo = ArticlesSimilarRepo(db_config["db_url"])
+    modelRepo = ModelRepo(db_config["db_url"])
     xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
     xboost_classifier_file = config["root_dir"] + config["xgboost_classifier_file"]
+    train_df = similarArticlesRepo.load_train_set(config["version"])
+
     training_model["TMO_TRAINING_SET"] = len(train_df)
-    training_model, regr_feature_report = create_regressor(train_df,  xboost_model_file, training_model)
-    training_model, clf_feature_report = create_classifier(train_df, xboost_classifier_file, training_model)
     training_model["TMO_DATE"] = datetime.now()
+
+    model_returned, clf_feature_report, clf_best_params  = create_classifier(train_df, xboost_classifier_file)
+    model_returned, regr_feature_report, regr_best_params = create_regressor(train_df, xboost_model_file)
+
+    training_model.update(model_returned)
+
     modelRepo.save_model_performance(training_model)
     modelRepo.save_feature_report('R', regr_feature_report)
     modelRepo.save_feature_report('C', clf_feature_report)
