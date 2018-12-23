@@ -43,7 +43,8 @@ class Application:
         self.tf2wv_mapper = Tf2WvMapper(self.gramFacade, self.tfidfFacade, self.doc2VecFacade)
         self.tf2wv_mapper.remap()
         self.summaryFacade = SummaryFacade(self.tfidfFacade, self.doc2VecFacade)
-        self.classifierAggregator = ClassifierAggregator(self.tokenizer, self.gramFacade, self.tfidfFacade, self.doc2VecFacade)
+        self.classifierAggregator = ClassifierAggregator(self.tokenizer, self.gramFacade, self.tfidfFacade,
+                                                         self.doc2VecFacade, self.tf2wv_mapper)
         last_article_date = self.articleDatasetRepo.get_latest_article_date()
 
         self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)

@@ -1,8 +1,10 @@
 from gensim import matutils
 import numpy as np
+import pandas as pd
 DOCS_NUMPY_ARRAY = 'docs_numpy_array'
 import logging
 from gensim.matutils import unitvec
+from .doc2vec_facade import DocVec2Indexer
 
 class Tf2WvMapper:
     def __init__(self, gram_facade, tfidf_facade, doc2vec_facade):
@@ -103,3 +105,23 @@ class Tf2WvMapper:
             return np.dot(docvec1, docvec2.T)[0][0]
         else:
             return 0
+
+    def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None):
+        infer_vector = self.get_weighted_vector(title+'\n'+doc)
+        articleModelDF = self.doc2vec_facade.article_loader.articlesDF.iloc[:self.doc2vec_facade.model.docvecs.doctag_syn0.shape[0]]
+        if (start and end):
+            interval_condition = (articleModelDF ['date_p'] >= start) & (articleModelDF ['date_p'] <= end)
+            articlesFilteredDF = articleModelDF [interval_condition]
+            dindex = articlesFilteredDF.index
+            indexer = DocVec2Indexer(self.model.docvecs,dindex )
+            scores = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
+
+        else:
+            scores = self.model.docvecs.most_similar([infer_vector], topn=None)
+            articlesFilteredDF = articleModelDF
+            dindex = articlesFilteredDF.index
+
+        args_scores = np.argsort(-scores)
+        new_index = articlesFilteredDF.iloc[args_scores].index
+        df = pd.DataFrame(scores[args_scores], index=new_index, columns=['score'])
+        return df

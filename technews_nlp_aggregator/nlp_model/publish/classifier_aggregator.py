@@ -4,16 +4,19 @@ from datetime import date
 
 class ClassifierAggregator():
 
-    def __init__(self, tokenizer, gramFacade, tfidfFacade, doc2VecFacade):
+    def __init__(self, tokenizer, gramFacade, tfidfFacade, doc2VecFacade, tf2wv_mapper):
         self.tokenizer = tokenizer
         self.gramFacade = gramFacade
         self.tfidfFacade = tfidfFacade
         self.doc2VecFacade = doc2VecFacade
+        self.tf2wv_mapper = tf2wv_mapper
 
 
     def retrieve_articles_for_text(self, text, start, end, n_articles, title, page_id):
         tdf_sims_map = self.retrieve_sims_map_with_dates(self.tfidfFacade, text=text, start=start, end=end,  title=title)
-        doc2vec_sims_map = self.retrieve_sims_map_with_dates(self.doc2VecFacade, text=text, start=start, end=end,  title=title)
+        #doc2vec_sims_map = self.retrieve_sims_map_with_dates(self.doc2VecFacade, text=text, start=start, end=end,  title=title)
+        doc2vec_sims_map = self.retrieve_sims_map_with_dates(self.tf2wv_mapper, text=text, start=start, end=end,
+                                                             title=title)
         related_articles = self.merge_sims_maps(tdf_sims_map, doc2vec_sims_map, n_articles=n_articles, page_id=page_id)
         return related_articles
 
