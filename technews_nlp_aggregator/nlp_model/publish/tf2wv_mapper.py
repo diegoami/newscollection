@@ -107,17 +107,20 @@ class Tf2WvMapper:
             return 0
 
     def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None):
-        infer_vector = self.get_weighted_vector(title+'\n'+doc)
+
+        tok_title = self.tfidf_facade.get_tokenized(doc=title)
+        tok_all = tok_title + self.tfidf_facade.get_tokenized(doc=doc)
+        infer_vector = self.get_weighted_vector(tok_all )
         articleModelDF = self.doc2vec_facade.article_loader.articlesDF.iloc[:self.doc2vec_facade.model.docvecs.doctag_syn0.shape[0]]
         if (start and end):
             interval_condition = (articleModelDF ['date_p'] >= start) & (articleModelDF ['date_p'] <= end)
             articlesFilteredDF = articleModelDF [interval_condition]
             dindex = articlesFilteredDF.index
-            indexer = DocVec2Indexer(self.model.docvecs,dindex )
-            scores = self.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
+            indexer = DocVec2Indexer(self.doc2vec_facade.model.docvecs,dindex )
+            scores = self.doc2vec_facade.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
 
         else:
-            scores = self.model.docvecs.most_similar([infer_vector], topn=None)
+            scores = self.doc2vec_facade.model.docvecs.most_similar([infer_vector], topn=None)
             articlesFilteredDF = articleModelDF
             dindex = articlesFilteredDF.index
 

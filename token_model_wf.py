@@ -43,7 +43,11 @@ def update_pickle(config, articleLoader, tokenizer):
         texts = pickle.load(f)
         logging.info("Loaded {} texts".format(len(texts)))
         logging.info("Articles loaded : {} ".format(len(articleLoader.articlesDF)))
+        last_texts = texts[-10:]
+        for index, last_text in last_texts:
+            print("=============== {} ===================".format(len(texts)-9+index))
 
+            print(last_text)
 
         articlesNewDF = articleLoader.articlesDF
         new_textsDF =  tokenizer.tokenize_ddf(articlesNewDF )
