@@ -29,11 +29,12 @@ from .cnbc import CnbcSpider
 from .cnet import CnetSpider
 from .forbes import ForbesSpider
 from .digit_fyi import DigitSpider
+from .techtimes import TechtimesSpider
 
 all_spiders = [ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider,
            WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider, DigitaltrendsSpider, TheguardianSpider,
            QzSpider, InquisitrSpider, RecodeSpider, ReutersSpider, TechdirtSpider, InverseSpider, BleepingcomputerSpider,
-           IncSpider, CnbcSpider, CnetSpider, ForbesSpider, DigitSpider]
+           IncSpider, CnbcSpider, CnetSpider, ForbesSpider, DigitSpider, TechtimesSpider]
 
 all_domains = [domain for spider in all_spiders for domain in spider.allowed_domains ]
 all_start_urls = [start_url for spider in all_spiders for start_url in spider.start_urls ]

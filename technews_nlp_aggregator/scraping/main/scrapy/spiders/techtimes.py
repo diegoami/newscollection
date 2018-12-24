@@ -21,7 +21,7 @@ class TechtimesSpider(TechControversySpider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath("//h1[contains(@itemprop, 'headline')]").extract()
+        article_title_parts = response.xpath("//h1[contains(@itemprop, 'headline')]//text()").extract()
         article_title = "".join(article_title_parts).strip()
         all_paragraphs = response.xpath(
             "//article[@class='bk-article']//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//h3) and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
