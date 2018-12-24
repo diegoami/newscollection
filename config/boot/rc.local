@@ -1,7 +1,8 @@
 echo "RC LOCAL STARTED"
 sleep 120
 echo "EXECUTION OF TECHCONTROVERSY BATCH STARTED"
-cp /media/diego/keys/db_coords.yml /media/diego/QData/techarticles/keys/db_coords.yml
+su -c "mkdir /media/diego/QData/techarticles/keys/" -s /bin/bash ubuntu
+su -c "cp /media/diego/keys/db_coords.yml /media/diego/QData/techarticles/keys/db_coords.yml" -s /bin/bash ubuntu
 su -c "/home/ubuntu/projects/newscollection/update_model.sh" -s /bin/bash ubuntu
 [ $? -eq 0 ] && su -c "/home/ubuntu/projects/newscollection/update_boost.sh" -s /bin/bash ubuntu
 [ $? -eq 0 ] && su -c "/home/ubuntu/projects/newscollection/pack_new_model.sh" -s /bin/bash ubuntu
@@ -9,4 +10,5 @@ su -c "/home/ubuntu/projects/newscollection/update_model.sh" -s /bin/bash ubuntu
 [ $? -eq 0 ] && su -c "/media/diego/scripts/copy_models_to_s3.sh" -s /bin/bash ubuntu
 [ $? -eq 0 ] && su -c "/home/ubuntu/projects/newscollection/deploy_new_model.sh" -s /bin/bash ubuntu
 exit $?
+~
 ~

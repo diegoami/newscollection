@@ -8,43 +8,29 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 from technews_nlp_aggregator.application import Application
 from technews_nlp_aggregator.prediction import FeatureFiller
 import argparse
-from technews_nlp_aggregator.common import load_config
-def direct_confront(feature_filler, similarArticlesRepo):
+
+def direct_confront(feature_filler, similarArticlesRepo, version):
 
 
-    user_paired = similarArticlesRepo.retrieve_user_paired()
+    user_paired = similarArticlesRepo.retrieve_user_paired(version=version, for_assignment=True)
     logging.info("Retrieved {} userpaired".format(len(user_paired)))
 
     retrieves_scores(user_paired, feature_filler, similarArticlesRepo)
 
 def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
     score_list = []
-    added, updated, untouched = 0, 0, 0
+    added = 0
     con = similarArticlesRepo.get_connection()
     for index, row in enumerate(user_paired):
         article_id1, article_id2, similarity = row['SSU_AIN_ID_1'], row['SSU_AIN_ID_2'],  row['SSU_SIMILARITY']
-        found_score = similarArticlesRepo.score_exists({"SCO_AIN_ID_1": article_id1, "SCO_AIN_ID_2": article_id2,
-                                                 "SCO_VERSION": feature_filler.version}, con)
-        if not found_score:
-            logging.debug("Adding score for {} {}".format(article_id1, article_id2))
-            added += 1
-            score = feature_filler.fill_score_map( article_id1, article_id2)
-            similarArticlesRepo.insert_score(score, con)
-            logging.info("Score : {}".format(score))
-        elif found_score["SCO_W_DAYS"] is None:
-            updated += 1
-            logging.debug("Updating score for {} {}".format(article_id1, article_id2))
+        score = feature_filler.fill_score_map( article_id1, article_id2)
+        similarArticlesRepo.insert_score(score, con)
 
-            found_score["SCO_W_DAYS"] = feature_filler.calc_work_days(article_id1, article_id2)
-            similarArticlesRepo.update_score(found_score, con)
-        else:
-            untouched += 1
-            logging.debug("Found score for {} {}".format(article_id1, article_id2))
-
+        logging.info("Adding score for {} {} : {}".format(article_id1, article_id2, score))
         if (index % 100 == 1):
             logging.info("Processed {} rows".format(index))
 
-    logging.info("Added: {}, Updated: {}, Untouched: {}".format(added, updated, untouched))
+    logging.info("Added: {} rows".format(added))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -59,7 +45,7 @@ if __name__ == '__main__':
                                    tf2wv_mapper=application.tf2wv_mapper, version=version)
     similarArticlesRepo = application.similarArticlesRepo
     application.gramFacade.load_phrases()
-    direct_confront( feature_filler, similarArticlesRepo)
+    direct_confront( feature_filler, similarArticlesRepo, version)
 
 
 

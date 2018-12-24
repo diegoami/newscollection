@@ -7,7 +7,7 @@ class ArticleSimilarLoader:
 
     def retrieve_groups(self, articleLoader, threshold):
         articlesDF = articleLoader.articlesDF
-        rows_U = self.articlesSimilarRepo.retrieve_user_paired()
+        rows_U = self.articlesSimilarRepo.retrieve_user_paired(self.version)
         drows = []
         for row in rows_U:
             if (row['SSU_SIMILARITY'] > 0.9):
