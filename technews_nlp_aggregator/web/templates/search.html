@@ -57,7 +57,12 @@
                     <A HREF="/statistics/{{_.article_id}}" target="_blank">{{_.article_id}}</A></td>
                 <td><STRONG>{{_.source}} </STRONG><I>{{_.date_p}}</I>: <BR><!--suppress HtmlUnknownTarget -->
                     <A HREF="{{_.url}}">{{_.title}}</A></td>
-                <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
+                {% if session['signed_in'] %}
+                    <td>{{'%0.3f'| format(_.similarity[0]|float)}} , {{'%0.3f'| format(_.similarity[1]|float)}}  </td>
+                {% else %}
+                    <td>{{'%0.3f'| format(_.score_sums|float)}}</td>
+                {% endif %}
+
 
                  <td class="icon">
                     <A HREF="/find_similar/{{_.article_id}}/50" target="_blank">

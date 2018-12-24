@@ -78,6 +78,7 @@ def create_classifier(train_df, xboost_classifier_file):
     joblib.dump(clf.best_estimator_, xboost_classifier_file )
     clf_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.best_estimator_.feature_importances_)}
     logging.info("Feature importances: {}".format(clf_feature_report ))
+    logging.info("Returning model metrics : {}".format(model_returned))
     return model_returned, clf_feature_report, clf.best_estimator_.get_params()
 
 
@@ -118,6 +119,7 @@ def create_regressor(train_df, xboost_model_file):
 
     joblib.dump(clf.best_estimator_, xboost_model_file)
     regr_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.best_estimator_.feature_importances_)}
+    logging.info("Returning model metrics : {}".format(model_returned))
     return model_returned, regr_feature_report, clf.best_estimator_.get_params()
 
 

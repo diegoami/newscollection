@@ -89,6 +89,8 @@ def build_text_from_paragraphs(all_paragraphs, punct_end = ".!?", punct_add_poin
             paragraph = paragraph[1:]
         if len(paragraph) == 0:
             continue
+        if paragraph.strip().lower().startswith("read more:"):
+            continue
         if (paragraph[-1] in punct_add_point):
             paragraph = paragraph + "."
         if (paragraph[-1] in punct_end):

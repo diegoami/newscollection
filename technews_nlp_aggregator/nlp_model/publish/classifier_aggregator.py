@@ -28,7 +28,7 @@ class ClassifierAggregator():
 
     def merge_sims_maps(self,tdf_DF, doc2vec_DF, n_articles=100, page_id = 0):
         new_DF = tdf_DF.join(doc2vec_DF, lsuffix='_t', rsuffix='_d')
-        new_DF['score_sums'] = new_DF['score_t'] + new_DF['score_d']
+        new_DF['score_sums'] = ( new_DF['score_t'] + new_DF['score_d'] ) / 2
         new_DF.sort_values(by='score_sums', inplace=True, ascending=False)
         start, end = page_id * n_articles, (page_id + 1) * n_articles
         if (len(new_DF) > start):

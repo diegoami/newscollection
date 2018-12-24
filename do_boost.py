@@ -23,10 +23,11 @@ if __name__ == '__main__':
     training_model["TMO_TRAINING_SET"] = len(train_df)
     training_model["TMO_DATE"] = datetime.now()
 
-    model_returned, clf_feature_report, clf_best_params  = create_classifier(train_df, xboost_classifier_file)
-    model_returned, regr_feature_report, regr_best_params = create_regressor(train_df, xboost_model_file)
+    clf_model_returned, clf_feature_report, clf_best_params  = create_classifier(train_df, xboost_classifier_file)
+    regr_model_returned, regr_feature_report, regr_best_params = create_regressor(train_df, xboost_model_file)
 
-    training_model.update(model_returned)
+    training_model.update(clf_model_returned)
+    training_model.update(regr_model_returned)
 
     modelRepo.save_model_performance(training_model)
     modelRepo.save_feature_report('R', regr_feature_report)

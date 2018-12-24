@@ -1,5 +1,6 @@
 from datetime import datetime
 import dataset
+import logging
 import pandas as pd
 import traceback
 from sqlalchemy import create_engine
@@ -19,7 +20,7 @@ class ModelRepo:
 
 
     def save_model_performance(self, training_model):
-
+        logging.info("Saving model performance: {}".format(training_model))
         found = False
         con = self.get_connection()
         try:
