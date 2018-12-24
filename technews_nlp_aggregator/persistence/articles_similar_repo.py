@@ -318,7 +318,8 @@ class ArticlesSimilarRepo:
         con.begin()
         for index, row in test_df.iterrows():
             con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'regr' : row['SCO_REGR'], 'proba' : row['SCO_PROBA'], 'ver' : version})
-            if (count % 1000 == 0):
+            if (count % 100 == 0):
                 logging.info("At {} predictions".format(count))
             count = count + 1
         con.commit()
+        return count

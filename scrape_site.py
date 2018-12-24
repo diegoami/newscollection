@@ -35,6 +35,7 @@ if __name__ == '__main__':
     go_back = config["go_back"]
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
+    logging.info("DB_URL: {}".format(db_url))
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     scrapeRepo = ScrapeRepo(db_config.get("db_url"))
     do_crawl(articleDatasetRepo, go_back)

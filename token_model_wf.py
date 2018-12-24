@@ -44,10 +44,9 @@ def update_pickle(config, articleLoader, tokenizer):
         logging.info("Loaded {} texts".format(len(texts)))
         logging.info("Articles loaded : {} ".format(len(articleLoader.articlesDF)))
         last_texts = texts[-10:]
-        for index, last_text in last_texts:
-            print("=============== {} ===================".format(len(texts)-9+index))
-
-            print(last_text)
+        for index, last_text in enumerate(last_texts):
+            logging.info("=============== {} ===================".format(len(texts)-9+index))
+            logging.info(last_text)
 
         articlesNewDF = articleLoader.articlesDF
         new_textsDF =  tokenizer.tokenize_ddf(articlesNewDF )
@@ -64,6 +63,7 @@ if __name__ == '__main__':
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
+    logging.info("DB_URL: {}".format(db_config.get("db_url")))
     articleLoader = ArticleLoader(articleDatasetRepo)
     logging.info("Loading articles....")
 

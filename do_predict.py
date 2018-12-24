@@ -29,5 +29,6 @@ if __name__ == '__main__':
 
     test_df_res = predict(test_df, xboost_model_file, xboost_classif_file, predictions_df)
 
-    similarArticlesRepo.write_predictions(test_df_res, config["version"])
+    num_predictions = similarArticlesRepo.write_predictions(test_df_res, config["version"])
+    logging.info("{} predictions done".format(num_predictions))
 

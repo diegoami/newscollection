@@ -1,18 +1,12 @@
-#!/bin/bash
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
-sleep 1
+echo "RC LOCAL STARTED"
+sleep 120
+echo "EXECUTION OF TECHCONTROVERSY BATCH STARTED"
+cp /media/diego/keys/db_coords.yml /media/diego/QData/techarticles/keys/db_coords.yml
 su -c "/home/ubuntu/projects/newscollection/update_model.sh" -s /bin/bash ubuntu
-su -c "/home/ubuntu/projects/newscollection/update_boost.sh" -s /bin/bash ubuntu
-su -c "/home/ubuntu/projects/newscollection/pack_new_model.sh" -s /bin/bash ubuntu
-su -c "/home/ubuntu/projects/newscollection/deploy_new_model.sh" -s /bin/bash ubuntu
-exit 0
+[ $? -eq 0 ] && su -c "/home/ubuntu/projects/newscollection/update_boost.sh" -s /bin/bash ubuntu
+[ $? -eq 0 ] && su -c "/home/ubuntu/projects/newscollection/pack_new_model.sh" -s /bin/bash ubuntu
+[ $? -eq 0 ] && su -c "/media/diego/scripts/dump_db_tnagg.sh" -s /bin/bash ubuntu
+[ $? -eq 0 ] && su -c "/media/diego/scripts/copy_models_to_s3.sh" -s /bin/bash ubuntu
+[ $? -eq 0 ] && su -c "/home/ubuntu/projects/newscollection/deploy_new_model.sh" -s /bin/bash ubuntu
+exit $?
+~

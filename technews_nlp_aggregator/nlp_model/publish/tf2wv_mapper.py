@@ -48,13 +48,10 @@ class Tf2WvMapper:
 
                 vec = self.get_wv(token)
                 vec_sum = vec_sum + (token_count * idf) * vec
-          #      logging.info(
-           #         "Processed token {} with tf frequency {} ".format(token, self.tfidf_facade.dictionary.dfs.get(
-            #                                                                              token_id, 0)))
 
             except KeyError:
                 logging.info("Ignoring token {} with tf frequency {} - not found in WV".format(token,
-                               self.tfidf_facade.dictionary.dfs.get(token, 0) ))
+                               self.tfidf_facade.dictionary.dfs.get(token_id, 0) ))
 
                 continue
         vec_norm = unitvec(vec_sum )
@@ -106,25 +103,28 @@ class Tf2WvMapper:
         else:
             return 0
 
-    def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None):
-
-        tok_title = self.tfidf_facade.get_tokenized(doc=title)
-        tok_all = tok_title + self.tfidf_facade.get_tokenized(doc=doc)
-        infer_vector = self.get_weighted_vector(tok_all )
-        articleModelDF = self.doc2vec_facade.article_loader.articlesDF.iloc[:self.doc2vec_facade.model.docvecs.doctag_syn0.shape[0]]
-        if (start and end):
-            interval_condition = (articleModelDF ['date_p'] >= start) & (articleModelDF ['date_p'] <= end)
-            articlesFilteredDF = articleModelDF [interval_condition]
-            dindex = articlesFilteredDF.index
-            indexer = DocVec2Indexer(self.doc2vec_facade.model.docvecs,dindex )
-            scores = self.doc2vec_facade.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
-
-        else:
-            scores = self.doc2vec_facade.model.docvecs.most_similar([infer_vector], topn=None)
-            articlesFilteredDF = articleModelDF
-            dindex = articlesFilteredDF.index
-
-        args_scores = np.argsort(-scores)
-        new_index = articlesFilteredDF.iloc[args_scores].index
-        df = pd.DataFrame(scores[args_scores], index=new_index, columns=['score'])
-        return df
+    # TODO : This does not work yet
+    # def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None):
+    #     logging.info("TF2WV: Getting related articles for doc={}, title={}, start={} ,end={}".format(doc, title, start, end))
+    #     tok_title = self.tfidf_facade.get_tokenized(doc=title)
+    #     tok_all = tok_title + self.tfidf_facade.get_tokenized(doc=doc)
+    #     infer_vector = self.get_weighted_vector(tok_all ).T
+    #     logging.info("Infer vector {} has shape {}".format(infer_vector, infer_vector.shape))
+    #     articleModelDF = self.doc2vec_facade.article_loader.articlesDF.iloc[:self.doc2vec_facade.model.docvecs.doctag_syn0.shape[0]]
+    #     if (start and end):
+    #         interval_condition = (articleModelDF ['date_p'] >= start) & (articleModelDF ['date_p'] <= end)
+    #         articlesFilteredDF = articleModelDF [interval_condition]
+    #         dindex = articlesFilteredDF.index
+    #         indexer = DocVec2Indexer(self.doc2vec_facade.model.docvecs,dindex )
+    #         scores = self.doc2vec_facade.model.docvecs.most_similar([infer_vector], topn=None, indexer=indexer)
+    #
+    #     else:
+    #         scores = self.doc2vec_facade.model.docvecs.most_similar([infer_vector], topn=None)
+    #         articlesFilteredDF = articleModelDF
+    #         dindex = articlesFilteredDF.index
+    #
+    #     args_scores = np.argsort(-scores)
+    #     logging.info("Args_scores returned {} with shape {}".format(args_scores, args_scores.shape))
+    #     new_index = articlesFilteredDF.iloc[args_scores].index
+    #     df = pd.DataFrame(scores[args_scores], index=new_index, columns=['score'])
+    #     return df

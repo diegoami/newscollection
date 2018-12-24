@@ -49,6 +49,7 @@ if __name__ == '__main__':
     go_back = config["go_back"]
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
+    logging.info("DB_URL: {}".format(db_url))
     articleDatasetRepo = ArticleDatasetRepo(db_config.get("db_url"))
     articleSpiderRepo = ArticlesSpiderRepo(db_config.get("db_url"))
     url_queued = articleSpiderRepo.retrieve_urls_queued()

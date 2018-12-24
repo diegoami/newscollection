@@ -55,7 +55,8 @@ class Doc2VecFacade():
 
 
     def get_vector_from_tokenized(self, tokenized):
-        infer_vector = self.model.infer_vector(tokenized)
+        infer_vector = self.model.infer_vector(tokenized, epochs=self.epochs, alpha=self.alpha)
+        logging.info("DOC2VEC: infer_vector {} has shape {}".format(infer_vector, infer_vector.shape))
         return infer_vector
 
 
