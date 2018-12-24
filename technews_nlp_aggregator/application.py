@@ -20,6 +20,7 @@ class Application:
         self.version = config['version']
         self.db_config = yaml.safe_load(open(config["key_file"]))
         self.db_url = self.db_config["db_url"]
+        logging.info("DB_URL: {}".format(self.db_url ))
         self.load_text = load_text
         self.articleDatasetRepo = ArticleDatasetRepo(self.db_config.get("db_url"))
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)

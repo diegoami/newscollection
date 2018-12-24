@@ -24,6 +24,20 @@ GRANT CREATE ON tnaggregator TO 'diegoami'@'%';
 FLUSH PRIVILEGES;
 ~~~~
 
+The mysql URL will be the following 
+
+# Reinstalling the data
+
+If it is necessary to reinstall the database, execute this commands
+
+~~~~
+
+ALTER USER 'diegoami'@'localhost' IDENTIFIED by 'amicabile2'
+ALTER USER 'diegoami'@'localhost' PASSWORD EXPIRE NEVER;
+FLUSH PRIVILEGES;
+COMMIT;
+~~~~
+
 # Retrieving the models
 
 Retrieve the latest tech articles models collection from https://s3.console.aws.amazon.com/s3/buckets/techcontroversy/ (_techarticles.tgz_)
