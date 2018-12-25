@@ -38,8 +38,11 @@ class TfidfFacade():
         self.matrix_wrapper = TfidfMatrixWrapper(similarities.MatrixSimilarity.load(self.model_dir + '/'+ INDEX_FILENAME))  # transform corpus to LSI space and
         self.tfidf = models.TfidfModel.load(self.model_dir + '/'+ TFIDF_FILENAME)
 
-    def get_vec(self, doc, title=''):
+    def get_vec(self, doc, title='',merge_unlemmaed=False):
         tokenized_doc = self.get_tokenized(doc=doc, title=title)
+        if merge_unlemmaed:
+            tokenized_doc += self.get_tokenized(doc=doc, title=title, do_lemma=False)
+        logging.debug("tfidf_facade.get_vec returns {}".format(tokenized_doc))
         return self.get_vec_from_tokenized(tokenized_doc)
 
     def get_vec_from_tokenized(self, tokenized_doc):
@@ -57,9 +60,10 @@ class TfidfFacade():
         return abs_words
 
 
-    def get_tokenized(self, doc, title=''):
-        words = self.tokenizer.tokenize_doc( doc=doc, title=title)
+    def get_tokenized(self, doc, title='', do_lemma=True):
+        words = self.tokenizer.tokenize_doc( doc=doc, title=title,do_lemma=do_lemma)
         p_words = self.gramFacade.phrase(words)
+        logging.debug("{} after tokenization {}".format(doc, p_words))
         return p_words
 
     def get_vec_docid(self, id):
@@ -70,9 +74,9 @@ class TfidfFacade():
     def docs_in_model(self):
         return self.corpus.num_docs
 
-    def get_related_articles_and_score_doc(self, doc, start=None, end=None, title=''):
+    def get_related_articles_and_score_doc(self, doc, start=None, end=None, title='', merge_unlemmaed=False):
         articlesModelDF = self.article_loader.articlesDF.iloc[:self.corpus.num_docs]
-        vec_lsi = self.get_vec(doc=doc, title=title)
+        vec_lsi = self.get_vec(doc=doc, title=title,merge_unlemmaed=merge_unlemmaed)
         if (start and end):
             interval_condition = (articlesModelDF ['date_p'] >= start) & (articlesModelDF ['date_p'] <= end)
             scores = self.matrix_wrapper[(vec_lsi, interval_condition) ]

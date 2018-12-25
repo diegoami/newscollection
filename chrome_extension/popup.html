@@ -2,15 +2,15 @@
 <html>
 
   <head>
-    <title>Link Formatter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 
   <body>
-   <form name="url_input" id="url_input" action="http://www.techcontroversy.com/retrieve_similar_url" method="post" target="_blank">
+   <form name="url_input" id="url_input" action="http://techcontroversy.com/retrieve_similar_url" method="POST" target="_blank" >
      <input type="text" id="search_url" name="search_url" >
-
+       <input type="hidden" id="from_plugin" name="from_plugin" value="1" >
+     <input id="submitButton" type="submit" value="Submit" formmethod="post" />
    </form>
   <script src="js/popup.js"></script>
   </body>

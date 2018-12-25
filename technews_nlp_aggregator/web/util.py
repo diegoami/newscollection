@@ -25,7 +25,7 @@ def extract_related_articles(articleLoader, scoresDF, ssusDF=None, sscsDF=None):
 def read_int_from_form(form, id, default_value="50"):
     intv_str = form.get(id, default_value)
     if (intv_str):
-        intv_str = intv_str.strip()
+        intv_str = str(intv_str).strip()
     else:
         intv_str = default_value
     if intv_str:

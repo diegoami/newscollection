@@ -38,6 +38,10 @@ FLUSH PRIVILEGES;
 COMMIT;
 ~~~~
 
+# Pointing to an alternative DB
+
+Alternatively, restore a database from a snapshot and make it point there. The model can be older than the database, but not the other way round.
+
 # Retrieving the models
 
 Retrieve the latest tech articles models collection from https://s3.console.aws.amazon.com/s3/buckets/techcontroversy/ (_techarticles.tgz_)

@@ -43,14 +43,22 @@ class TechArticlesWordTokenizer:
         tok_doc = spacy_nlp(doc.lower())
         return [token.text for token in tok_doc]
 
-    def tokenize_fulldoc(self, doc):
+    def tokenize_fulldoc(self, doc, do_lemma=True):
         if self.preprocessor:
             doc = self.preprocessor.process(doc)
         tok_doc = spacy_nlp(doc)
         self.count += 1
         if (self.count % 100 == 0):
             logging.info("Processed {} documents ".format(self.count))
-        return [word.lemma_ for word in tok_doc if not word.is_stop and not word.is_space ]
+        if do_lemma:
+            lemmatized = [word.lemma_ for word in tok_doc if not word.is_stop and not word.is_space ]
+            logging.debug("{} after lemmatization becomes {}".format(tok_doc, lemmatized))
+            return lemmatized
+        else:
+            unlemmatized = [word.lower_ for word in tok_doc if not word.is_stop and not word.is_space]
+            logging.debug("Not lemmatizing {}".format(unlemmatized ))
+            return unlemmatized
+
 
     def tokenize_doc(self, title, document):
         return self.tokenize_fulldoc(title+".\n"+document)

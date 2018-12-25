@@ -8,51 +8,54 @@
  </head>
 <body onload="select_header('topnav_search_url'); ">
 {% include 'header.html' %}
-<div class="surrond_form">
-    <!--suppress HtmlUnknownTarget -->
-    <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST" >
+{% if not from_plugin: %}
+
+    <div class="surrond_form">
+        <!--suppress HtmlUnknownTarget -->
+        <FORM id="mainForm" ACTION="/retrieve_similar_url" METHOD="POST" >
+            <P>
+        <label for="article_id">Article Id: </label><INPUT id="article_id" name="article_id" maxlength="64" size="10" value="{{article_id | default('')}}">
+
+        </P>
         <P>
-    <label for="article_id">Article Id: </label><INPUT id="article_id" name="article_id" maxlength="64" size="10" value="{{article_id | default('')}}">
+        <label for="search_url">Url in database: </label><INPUT class="textarea" id="search_url" name="search_url" maxlength="200"  value="{{search_url | default('')}}">
 
-    </P>
-    <P>
-    <label for="search_url">Url in database: </label><INPUT class="textarea" id="search_url" name="search_url" maxlength="200"  value="{{search_url | default('')}}">
+        </P>
+        <P>
+        <label for="n_articles">N articles: </label><input type="text" id="n_articles" name="n_articles" size="10" value="{{n_articles | default(25) }}"><br/></P>
 
-    </P>
-    <P>
-    <label for="n_articles">N articles: </label><input type="text" id="n_articles" name="n_articles" size="10" value="{{n_articles | default(25) }}"><br/></P>
+        <p>
+        <P>
+        <label for="d_days">Date range in days</label><input type="text" id="d_days" name="d_days" size="10" value="{{d_days | default(3) }}"><br/></P>
 
-    <p>
-    <P>
-    <label for="d_days">Date range in days</label><input type="text" id="d_days" name="d_days" size="10" value="{{d_days | default(3) }}"><br/></P>
+        <p>
+        <input id="page_id" name="page_id"  type="hidden" value="0"  />
 
-    <p>
-    <input id="page_id" name="page_id"  type="hidden" value="0"  />
+        <input class="main" type="submit" value="Submit"  />
 
-    <input class="main" type="submit" value="Submit"  />
-
-    <input class="main" type="submit" value="Random" onclick="random_url();"  />
-    </p>
-    </FORM>
-</div>
-<BR>
-{% if article: %}
-<div class="surrond_form">
-
-         <div class="metadata">
-
-             <p><I>ID:</I> {{article.AIN_ID}}</p>
-             <p><I>URL:</I> <!--suppress HtmlUnknownTarget -->
-                 <A HREF="{{article.AIN_URL}}">{{article.AIN_URL}}</A></p>
-             <P><I>Date:</I> {{article.AIN_DATE}}</P>
-         </div>
-         <div class="article_text">
-             <h3>{{article.AIN_TITLE}}</h3>
-             <p>{{article.ATX_TEXT | safe}}</p>
-         </div>
+        <input class="main" type="submit" value="Random" onclick="random_url();"  />
+        </p>
+        </FORM>
+    </div>
     <BR>
-</div>
-<HR>
+    {% if article: %}
+    <div class="surrond_form">
+
+             <div class="metadata">
+
+                 <p><I>ID:</I> {{article.AIN_ID}}</p>
+                 <p><I>URL:</I> <!--suppress HtmlUnknownTarget -->
+                     <A HREF="{{article.AIN_URL}}">{{article.AIN_URL}}</A></p>
+                 <P><I>Date:</I> {{article.AIN_DATE}}</P>
+             </div>
+             <div class="article_text">
+                 <h3>{{article.AIN_TITLE}}</h3>
+                 <p>{{article.ATX_TEXT | safe}}</p>
+             </div>
+        <BR>
+    </div>
+    <HR>
+    {% endif %}
 {% endif %}
 
 {% if articles: %}
@@ -70,8 +73,10 @@
 
         <th>Score</th>
 
-        <th class="icon"><span class="hide-1000">Similar</span></th>
-        <th class="icon"><span class="hide-1000">Compare</span></th>
+        {%  if not from_plugin: %}
+            <th class="icon"><span class="hide-1000">Similar</span></th>
+            <th class="icon"><span class="hide-1000">Compare</span></th>
+        {% endif %}
       </tr>
 
         {% for _ in articles: %}
@@ -114,21 +119,23 @@
                 {% else %}
                     <td>{{'%0.3f'| format(_.score_sums|float)}}</td>
                 {% endif %}
+                {%  if not from_plugin: %}
 
-                <td class="icon">
-                    <A HREF="javascript:find_similar('{{_.article_id}}')" >
-                        <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
-                    </A>
-                </td>
-                <td>
-                    {% if _article_id != _.article_id: %}
-
-                                        <A HREF="/compare/{{article_id}}/{{_.article_id}}" target="_blank">
-                        <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare side-by-side" TITLE="Compare side-by-side">
+                    <td class="icon">
+                        <A HREF="javascript:find_similar('{{_.article_id}}')" >
+                            <IMG SRC="{{ url_for('static', filename='images/find_similar.png') }}" ALT="Find similar" TITLE="Find similar">
                         </A>
-                    {% endif %}
-                </td>
+                    </td>
 
+                    <td>
+                        {% if _article_id != _.article_id: %}
+
+                                            <A HREF="/compare/{{article_id}}/{{_.article_id}}" target="_blank">
+                            <IMG SRC="{{ url_for('static', filename='images/compare_analyze.jpg') }}" ALT="Compare side-by-side" TITLE="Compare side-by-side">
+                            </A>
+                        {% endif %}
+                    </td>
+                {% endif %}
             </tr>
 
 

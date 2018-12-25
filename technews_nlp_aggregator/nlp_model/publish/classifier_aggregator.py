@@ -12,9 +12,15 @@ class ClassifierAggregator():
         self.tf2wv_mapper = tf2wv_mapper
 
 
-    def retrieve_articles_for_text(self, text, start, end, n_articles, title, page_id):
-        tdf_sims_map = self.retrieve_sims_map_with_dates(self.tfidfFacade, text=text, start=start, end=end,  title=title)
-        doc2vec_sims_map = self.retrieve_sims_map_with_dates(self.doc2VecFacade, text=text, start=start, end=end,  title=title)
+    def retrieve_articles_for_text(self, text, start, end, n_articles, title, page_id, text_search=False):
+        merge_unlemmaed = False
+        if text_search:
+            all_sents = self.tokenizer.sentence_tokenizer.sent_tokenize(text)
+            if len(all_sents) == 1:
+                merge_unlemmaed =True
+
+        tdf_sims_map = self.retrieve_sims_map_with_dates(self.tfidfFacade, text=text, start=start, end=end,  title=title, merge_unlemmaed=merge_unlemmaed)
+        doc2vec_sims_map = self.retrieve_sims_map_with_dates(self.doc2VecFacade, text=text, start=start, end=end,  title=title, merge_unlemmaed=merge_unlemmaed)
         #doc2vec_sims_map = self.retrieve_sims_map_with_dates(self.tf2wv_mapper, text=text, start=start, end=end, title=title)
         related_articles = self.merge_sims_maps(tdf_sims_map, doc2vec_sims_map, n_articles=n_articles, page_id=page_id)
         return related_articles
@@ -41,8 +47,8 @@ class ClassifierAggregator():
 
 
 
-    def retrieve_sims_map_with_dates(self, classifier, text, start=date.min, end=date.max,  title=''):
-        scoresDF = classifier.get_related_articles_and_score_doc(doc=text, start=start, end=end, title=title)
+    def retrieve_sims_map_with_dates(self, classifier, text, start=date.min, end=date.max,  title='', merge_unlemmaed=False):
+        scoresDF = classifier.get_related_articles_and_score_doc(doc=text, start=start, end=end, title=title, merge_unlemmaed=merge_unlemmaed)
 
         return scoresDF
 

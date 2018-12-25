@@ -38,7 +38,7 @@ def retrieve_similar():
                 return render_template('search.html', messages=messages)
             else:
                 end, start = extract_start_end(start_s, end_s)
-                new_DF = _.classifierAggregator.retrieve_articles_for_text(text=text, start=start, end=end, n_articles=n_articles, title='', page_id=page_id)
+                new_DF = _.classifierAggregator.retrieve_articles_for_text(text=text, start=start, end=end, n_articles=n_articles, title='', page_id=page_id, text_search=True)
                 if (len(new_DF ) == 0):
                     messages.append('No results found')
 

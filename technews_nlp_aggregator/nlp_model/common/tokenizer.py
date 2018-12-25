@@ -45,14 +45,14 @@ class DefaultTokenizer:
 
         return articleDF['article_tokens']
 
-    def tokenize_doc(self, title, doc):
+    def tokenize_doc(self, title, doc, do_lemma=True):
         if title:
-            return self.tokenize_fulldoc(title + ". \n" + doc)
+            return self.tokenize_fulldoc(title + ". \n" + doc, do_lemma=do_lemma)
         else:
-            return self.tokenize_fulldoc(doc)
+            return self.tokenize_fulldoc(doc, do_lemma=do_lemma)
 
-    def tokenize_fulldoc(self, all_doc):
-        words = self.word_tokenizer.tokenize_fulldoc(all_doc)
+    def tokenize_fulldoc(self, all_doc, do_lemma=True):
+        words = self.word_tokenizer.tokenize_fulldoc(all_doc, do_lemma=do_lemma)
 
         return words
 

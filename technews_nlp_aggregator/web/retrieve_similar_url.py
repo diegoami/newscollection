@@ -18,8 +18,8 @@ def random_url():
     if request.method == 'POST':
         form = request.form
         if form:
-            n_articles = read_int_from_form(form, 'n_articles')
-            d_days = read_int_from_form(form, 'd_days')
+            n_articles = read_int_from_form(form, 'n_articles', "25")
+            d_days = read_int_from_form(form, 'd_days', "3")
 
             index, article = app.application.articleLoader.get_random_article()
             url, article_id = article["url"], article["article_id"]
@@ -45,10 +45,11 @@ def retrieve_similar_url():
             article = None
             url = form.get("search_url",None)
             article_id = read_int_from_form(form, 'article_id', None)
-            n_articles = read_int_from_form(form, 'n_articles')
+            n_articles = read_int_from_form(form, 'n_articles', "25")
             page_id = read_int_from_form(form, 'page_id', "0")
+            from_plugin = read_int_from_form(form, 'from_plugin', "0")
 
-            d_days = read_int_from_form(form, 'd_days')
+            d_days = read_int_from_form(form, 'd_days', "3")
 
             if article_id:
                 article = _.articleLoader.get_article(article_id)
@@ -65,17 +66,17 @@ def retrieve_similar_url():
                     messages = _.articlesSpiderRepo.add_url_list([url])
                 else:
                     messages = ['Could not find neither url nor id']
-                return render_template('search_url.html', messages=messages, search_url=url, article_id=article_id)
+                return render_template('search_url.html', messages=messages, search_url=url, article_id=article_id, from_plugin=from_plugin)
             if (id > _.tfidfFacade.docs_in_model() or id > _.doc2VecFacade.docs_in_model()):
-                return retrieve_from_article_id( article_id=article_id, n_articles=n_articles,    d_days=d_days, page_id = page_id)
+                return retrieve_from_article_id( article_id=article_id, n_articles=n_articles,    d_days=d_days, page_id = page_id, from_plugin=from_plugin)
             else:
-                return common_retrieve_id(  id, d_days, n_articles=n_articles, page_id = page_id, url=url, article_id=article_id)
+                return common_retrieve_id(  id, d_days, n_articles=n_articles, page_id = page_id, url=url, article_id=article_id, from_plugin=from_plugin)
         else:
             return render_template('search_url.html',
                                     messages=['Please enter the URL of an article or an article id in the database'])
 
 
-def common_retrieve_id( id, d_days, n_articles=25,  page_id = 0, url=None, article_id=None):
+def common_retrieve_id( id, d_days=3, n_articles=25,  page_id = 0, url=None, article_id=None, from_plugin=0):
     _ = app.application
     new_DF = _.classifierAggregator.retrieve_articles_for_id(id=id, d_days=d_days, n_articles=n_articles, page_id=page_id)
 
@@ -84,12 +85,12 @@ def common_retrieve_id( id, d_days, n_articles=25,  page_id = 0, url=None, artic
 
     article = convert_summary(article_id)
     if related_articles:
-        return render_template('search_url.html', articles=related_articles, search_url=url, article=article, article_id=article_id, n_articles=n_articles,  d_days=d_days, page_id = page_id)
+        return render_template('search_url.html', articles=related_articles, search_url=url, article=article, article_id=article_id, n_articles=n_articles,  d_days=d_days, page_id = page_id, from_plugin = from_plugin)
 
-def retrieve_from_article_id( article_id, n_articles, d_days=3, page_id = 0):
+def retrieve_from_article_id( article_id, n_articles = 25, d_days=3, page_id = 0, from_plugin = 0):
     _ = app.application
     if article_id is None:
-        return render_template('search_url.html', messages=['Could not find the URL in the database'])
+        return render_template('search_url.html', messages=['Could not find the URL in the database'], from_plugin=from_plugin)
     else:
         article = convert_summary(article_id)
 
@@ -100,7 +101,7 @@ def retrieve_from_article_id( article_id, n_articles, d_days=3, page_id = 0):
         related_articles = extract_related_articles(_.articleLoader, new_DF)
         start_s, end_s =  str(start.year)+'-'+str(start.month)+'-'+str(start.day), str(end.year)+'-'+str(end.month)+'-'+str(end.day)
         return render_template('search_url.html', articles=related_articles[:n_articles], search_text=text, article=article,
-                               n_articles=n_articles, start_s=start_s, end_s=end_s, search_url=url, article_id=article_id, page_id=page_id)
+                               n_articles=n_articles, start_s=start_s, end_s=end_s, search_url=url, article_id=article_id, page_id=page_id, from_plugin=from_plugin)
 
 
 

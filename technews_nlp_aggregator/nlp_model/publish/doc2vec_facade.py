@@ -49,8 +49,8 @@ class Doc2VecFacade():
         model_filename = self.model_dir+'/'+MODEL_FILENAME
         self.model = Doc2Vec.load(model_filename)
 
-    def get_vector(self, doc, title=''):
-        tokenized_doc = self.get_tokenized(doc=doc, title=title)
+    def get_vector(self, doc, title='', merge_unlemmaed=False):
+        tokenized_doc = self.get_tokenized(doc=doc, title=title, merge_unlemmaed=merge_unlemmaed)
         return self.get_vector_from_tokenized(tokenized_doc)
 
 
@@ -81,13 +81,16 @@ class Doc2VecFacade():
         else:
             return 0
 
-    def get_tokenized(self, doc, title):
-        wtok = self.tokenizer.tokenize_doc(title=title, doc=doc)
+    def get_tokenized(self, doc, title, merge_unlemmaed=False):
+        wtok = self.tokenizer.tokenize_doc(title=title, doc=doc, do_lemma=True)
+        if merge_unlemmaed:
+            wtok += self.tokenizer.tokenize_doc(title=title, doc=doc, do_lemma=False)
         p_wtok = self.gramFacade.phrase(wtok)
+        logging.debug("doc2vec_facade.get_tokenized returns {}".format(p_wtok))
         return p_wtok
 
-    def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None):
-        infer_vector = self.get_vector(doc, title)
+    def get_related_articles_and_score_doc(self, doc, title= '',  start=None, end=None, merge_unlemmaed=False):
+        infer_vector = self.get_vector(doc, title, merge_unlemmaed=merge_unlemmaed)
         articleModelDF = self.article_loader.articlesDF.iloc[:self.model.docvecs.doctag_syn0.shape[0]]
         if (start and end):
             interval_condition = (articleModelDF ['date_p'] >= start) & (articleModelDF ['date_p'] <= end)
