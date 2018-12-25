@@ -20,5 +20,6 @@ score_go_back : 60
 tf_threshold : 0.59
 doc_threshold : 0.31
 tok_action : append
+version_dir : /media/diego/QData/techarticles/version/
 
 

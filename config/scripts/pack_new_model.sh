@@ -6,6 +6,8 @@ find /media/diego/QData/techarticles/models/phrases -mmin +240 -type d | xargs r
 rm /media/diego/QData/techarticles/pickle/bigrams*
 rm /media/diego/QData/techarticles/pickle/trigrams*
 rm -rf /media/diego/QData/techarticles/keys/
+mkdir -p /media/diego/QData/techarticles/version
+echo $(git log -n1 --pretty='%h') > /media/diego/QData/techarticles/version/model_version.txt
 find /media/diego/QData/techarticles/pickle/ -name texts_*.p -mmin +240 | xargs -n1 rm
 rm /media/diego/QData/techarticles.tgz
 pushd /media/diego/QData/

@@ -5,6 +5,8 @@ if [ -f nohup.out ] ; then
     rm $file
 fi
 git pull origin master
+mkdir -p /media/diego/QData/techarticles/version
+echo $(git log -n1 --pretty='%h') > /media/diego/QData/techarticles/version/model_version.txt
 [ $? -eq 0 ] &&  python scrape_site.py
 [ $? -eq 0 ] &&  python scrape_urls.py
 [ $? -eq 0 ] &&  python token_model_wf.py

@@ -1,7 +1,7 @@
 import logging
 
 import yaml
-
+import os
 from technews_nlp_aggregator.nlp_model.common import ArticleLoader, defaultTokenizer, ArticleSimilarLoader
 from technews_nlp_aggregator.nlp_model.publish import Doc2VecFacade, TfidfFacade, LsiInfo, TokenizeInfo, Doc2VecInfo, \
     GramFacade, ClassifierAggregator, Tf2WvMapper
@@ -54,6 +54,7 @@ class Application:
         self.model_repo = ModelRepo(self.db_url)
         self.scrape_repo = ScrapeRepo(self.db_url)
         logging.debug("Log in debug mode")
+        self.load_versions(config['version_dir'])
 
     def reload(self):
         self.articleLoader.load_all_articles(load_text=True)
@@ -82,3 +83,16 @@ class Application:
                 {"articles": articles, "article_list": "-".join([str(article["article_id"]) for article in articles]), "index" : index})
         self.article_groups.sort(key=lambda article_group: article_group["articles"][0]["date"], reverse=True)
 
+    def load_versions(self, version_dir):
+        try:
+            with open(os.path.join(version_dir, 'model_version.txt')) as mdv_h:
+                self.model_version = mdv_h.readline()
+        except:
+            logging.warning("Could not retrieve tag for model")
+            self.model_version = "UNKNOWN"
+        try:
+            with open(os.path.join(version_dir, 'frontend_version.txt')) as mdv_h:
+                self.frontend_version = mdv_h.readline()
+        except:
+            logging.warning("Could not retrieve tag for frontend")
+            self.frontend_version = "UNKNOWN"
