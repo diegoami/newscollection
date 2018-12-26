@@ -29,7 +29,6 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
 
 
         score = feature_filler.fill_score_map( article_id1, article_id2)
-        logging.info("Inserting {}, {}: {}".format(article_id1, article_id2, score))
         similarArticlesRepo.insert_score(score, con)
 
         if (index % 100 == 1):

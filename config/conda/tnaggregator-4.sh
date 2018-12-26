@@ -16,7 +16,7 @@ python -m spacy download en
 
 ~/anaconda3/envs/tnaggregator-4/bin/pip install mysqlclient
 ~/anaconda3/envs/tnaggregator-4/bin/pip install ansible
-ansible-galaxy install andrewrothstein.miniconda
+
 
 
 
