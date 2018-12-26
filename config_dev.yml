@@ -12,6 +12,7 @@ trigrams_pickle_file     : pickle/trigrams.p
 phrases_model_dir_base    : models/phrases/phrases__
 phrases_model_dir_link     : models/phrases/15_phrases_model
 xgboost_model_file        : models/xgboost/xgboost_model
+xgboost_model_dir        : models/xgboost/
 xgboost_classifier_file        : models/xgboost/xgboost_classifier
 version                   : 101
 threshold         : 0.88

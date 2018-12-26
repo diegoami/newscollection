@@ -1,6 +1,7 @@
 import yaml
 from datetime import datetime
 import logging
+import os
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
 from technews_nlp_aggregator.persistence.model_repo import ModelRepo
 from technews_nlp_aggregator.prediction.model import create_classifier, create_regressor
@@ -17,6 +18,8 @@ if __name__ == '__main__':
     similarArticlesRepo = ArticlesSimilarRepo(db_config["db_url"], group_limit=config.get("group_limit",20000),
                                               list_limit=config.get("list_limit",5000))
     modelRepo = ModelRepo(db_config["db_url"])
+    os.makedirs(config["root_dir"] + config["xgboost_model_dir"], exist_ok=True)
+
     xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
     xboost_classifier_file = config["root_dir"] + config["xgboost_classifier_file"]
     train_df = similarArticlesRepo.load_train_set(config["version"])
