@@ -2,6 +2,7 @@ import logging
 import traceback
 
 import dataset
+from datetime import date
 import pandas as pd
 
 from sqlalchemy.orm import create_session
@@ -53,8 +54,8 @@ class ArticleDatasetRepo():
         max_date_sql = "SELECT MAX(AIN_DATE) AS MAX_AIN_DATE FROM ARTICLE_INFO"
         con = self.get_connection()
         max_date_query = con.query(max_date_sql)
-        max_date = next(max_date_query, None)
-        return max_date["MAX_AIN_DATE"]
+        max_date = next(max_date_query, date.min)
+        return max_date["MAX_AIN_DATE"] if max_date["MAX_AIN_DATE"] else date.today()
 
 
     def update_article(self, to_add):

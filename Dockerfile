@@ -12,12 +12,15 @@ RUN apt-get install -y git
 RUN python3.6 -m pip install pip --upgrade
 RUN python3.6 -m pip install wheel
 
-RUN apt-get install -y build-essential gcc libmysqlclient-dev mysql-server mysql-client
-
-
+RUN apt-get install -y build-essential gcc libmysqlclient-dev mysql-client
 COPY . /app
 WORKDIR /app
 
 
 RUN pip install -r requirements.txt
-RUN python -m spacy download en
+RUN python3.6 -m spacy download en
+
+
+
+
+

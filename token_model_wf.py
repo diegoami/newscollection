@@ -39,21 +39,26 @@ def save_picke_file(config, texts):
 def update_pickle(config, articleLoader, tokenizer):
 
     pickle_file = config["root_dir"]+config["text_pickle_file"]
+    texts = []
+    if not os.path.isfile(pickle_file):
+        logging.error("File {} not found".format(pickle_file))
+        logging.error("Change action to create")
+        exit(1)
     with open(pickle_file, 'rb') as f:
         texts = pickle.load(f)
-        logging.info("Loaded {} texts".format(len(texts)))
-        logging.info("Articles loaded : {} ".format(len(articleLoader.articlesDF)))
-        last_texts = texts[-10:]
-        for index, last_text in enumerate(last_texts):
-            logging.info("=============== {} ===================".format(len(texts)-9+index))
-            logging.info(last_text)
+    logging.info("Loaded {} texts".format(len(texts)))
+    logging.info("Articles loaded : {} ".format(len(articleLoader.articlesDF)))
+    last_texts = texts[-10:]
+    for index, last_text in enumerate(last_texts):
+        logging.info("=============== {} ===================".format(len(texts)-9+index))
+        logging.info(last_text)
 
-        articlesNewDF = articleLoader.articlesDF
-        new_textsDF =  tokenizer.tokenize_ddf(articlesNewDF )
-        new_texts = new_textsDF.tolist()
+    articlesNewDF = articleLoader.articlesDF
+    new_textsDF =  tokenizer.tokenize_ddf(articlesNewDF )
+    new_texts = new_textsDF.tolist()
 
-        texts = texts + new_texts
-        save_picke_file(config, texts)
+    texts = texts + new_texts
+    save_picke_file(config, texts)
 
 
 if __name__ == '__main__':
@@ -66,6 +71,8 @@ if __name__ == '__main__':
     logging.info("DB_URL: {}".format(db_config.get("db_url")))
     articleLoader = ArticleLoader(articleDatasetRepo)
     logging.info("Loading articles....")
+    if not os.path.isdir(config["root_dir"] + config["pickle_dir"]):
+        os.mkdir(config["root_dir"] + config["pickle_dir"])
 
     if (action == 'append'):
         logging.info("Appending....")

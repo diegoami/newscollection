@@ -220,6 +220,7 @@ create table SCORES
 	SCO_D_SUMMARY_2 float null,
 	SCO_CW_SUMMARY_2 float null,
 	SCO_W_DAYS int null,
+	SCO_VERSION int not null,
 
 	constraint SCORES_SCO_ID_uindex
 		unique (SCO_ID)
@@ -272,6 +273,20 @@ CREATE TABLE `FEATURE_REPORT` (
 );
 
 
+
+create table PREDICTIONS
+(
+	PRED_AIN_ID_1 int null,
+	PRED_AIN_ID_2 int null,
+	PRED_PROBA float null,
+	PRED_VERSION int null,
+	PRED_CAT tinyint null,
+	PRED_REGR float null,
+	constraint PREDICTIONS_ARTICLE_INFO_AIN_ID_1_fk
+		foreign key (PRED_AIN_ID_1) references ARTICLE_INFO (AIN_ID),
+	constraint PREDICTIONS_ARTICLE_INFO_AIN_ID_2_fk
+		foreign key (PRED_AIN_ID_2) references ARTICLE_INFO (AIN_ID)
+);
 
 
 

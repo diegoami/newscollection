@@ -1,26 +1,3 @@
-create or replace view CONTROVERSIAL_ARTICLES as
-SELECT
-    `S`.`ID`         AS `ID`,
-    `S`.`DATE`       AS `DATE`,
-    `S`.`TITLE`      AS `TITLE`,
-    `S`.`URL`        AS `URL`,
-    sum(`S`.`SCORE`) AS `SUM_SCORE`
-  FROM (SELECT
-          `TFIDF_SCORE`.`ID_1`       AS `ID`,
-          `TFIDF_SCORE`.`DATE_1`     AS `DATE`,
-          `TFIDF_SCORE`.`TITLE_1`    AS `TITLE`,
-          `TFIDF_SCORE`.`URL_1`      AS `URL`,
-          `TFIDF_SCORE`.`SIMILARITY` AS `SCORE`
-        FROM `TFIDF_SCORE`
-        UNION SELECT
-                `TFIDF_SCORE`.`ID_2`       AS `ID`,
-                `TFIDF_SCORE`.`DATE_2`     AS `DATE`,
-                `TFIDF_SCORE`.`TITLE_2`    AS `TITLE`,
-                `TFIDF_SCORE`.`URL_2`      AS `URL`,
-                `TFIDF_SCORE`.`SIMILARITY` AS `SCORE`
-              FROM `TFIDF_SCORE`) `S`
-  GROUP BY `S`.`ID`, `S`.`DATE`, `S`.`TITLE`, `S`.`URL`
-  ORDER BY `S`.`DATE` DESC, `SUM_SCORE` DESC;
 
 create or replace view DOC2VEC_SCORE as
 SELECT
@@ -74,7 +51,7 @@ SELECT
                 `DOC2VEC_SCORE`.`SIMILARITY` AS `SCORE`
               FROM `DOC2VEC_SCORE`) `S`;
 
-create view P_SCORES as
+create or replace view P_SCORES as
 SELECT
     `P`.`PRED_AIN_ID_1` AS `ID_1`,
     `P`.`PRED_AIN_ID_2` AS `ID_2`,
@@ -217,3 +194,26 @@ SELECT
   WHERE ((`SCORES`.`SCO_AIN_ID_1` = `SAME_STORY_USER_GRP`.`SSU_AIN_ID_1`) AND
          (`SCORES`.`SCO_AIN_ID_2` = `SAME_STORY_USER_GRP`.`SSU_AIN_ID_2`));
 
+create or replace view CONTROVERSIAL_ARTICLES as
+SELECT
+    `S`.`ID`         AS `ID`,
+    `S`.`DATE`       AS `DATE`,
+    `S`.`TITLE`      AS `TITLE`,
+    `S`.`URL`        AS `URL`,
+    sum(`S`.`SCORE`) AS `SUM_SCORE`
+  FROM (SELECT
+          `TFIDF_SCORE`.`ID_1`       AS `ID`,
+          `TFIDF_SCORE`.`DATE_1`     AS `DATE`,
+          `TFIDF_SCORE`.`TITLE_1`    AS `TITLE`,
+          `TFIDF_SCORE`.`URL_1`      AS `URL`,
+          `TFIDF_SCORE`.`SIMILARITY` AS `SCORE`
+        FROM `TFIDF_SCORE`
+        UNION SELECT
+                `TFIDF_SCORE`.`ID_2`       AS `ID`,
+                `TFIDF_SCORE`.`DATE_2`     AS `DATE`,
+                `TFIDF_SCORE`.`TITLE_2`    AS `TITLE`,
+                `TFIDF_SCORE`.`URL_2`      AS `URL`,
+                `TFIDF_SCORE`.`SIMILARITY` AS `SCORE`
+              FROM `TFIDF_SCORE`) `S`
+  GROUP BY `S`.`ID`, `S`.`DATE`, `S`.`TITLE`, `S`.`URL`
+  ORDER BY `S`.`DATE` DESC, `SUM_SCORE` DESC;
