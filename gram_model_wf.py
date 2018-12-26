@@ -16,7 +16,8 @@ import sys
 def generate_model(config, param_config ):
 
     models_dir =  config["root_dir"]+config["phrases_model_dir_base"] + datetime.now().isoformat() + '/'
-    os.mkdir(models_dir)
+
+    os.makedirs(models_dir, exist_ok=True)
 
 
     pickle_file = config["root_dir"]+config["text_pickle_file"]

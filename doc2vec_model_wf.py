@@ -14,7 +14,7 @@ def create_doc2vec_model(config, param_config):
     pickle_dir = config["root_dir"]+config["pickle_dir"]
 
     models_dir = config["root_dir"]+config["doc2vec_models_dir_base"] + datetime.now().isoformat()+'/'
-    os.mkdir(models_dir)
+    os.makedirs(models_dir, exist_ok=True)
 
     pickle_file = config["root_dir"]+config["trigrams_pickle_file"]
     with open(pickle_file, 'rb') as f:
