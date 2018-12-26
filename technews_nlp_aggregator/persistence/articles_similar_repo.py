@@ -28,14 +28,16 @@ class ArticlesSimilarRepo:
     def get_connection(self):
         return self.dataset_connection
 
-    def     __init__(self, db_connection):
+    def     __init__(self, db_connection, group_limit, list_limit):
         self.db_connection = db_connection
 
         self.dataset_connection = dataset.connect(self.db_connection, engine_kwargs={
             'connect_args': {'charset': 'utf8'}
         })
         self.engine = self.dataset_connection.engine
+        self.group_limit = group_limit
 
+        self.list_limit = list_limit
 
     def association_exists(self, con, first_id, second_id, agent):
 
@@ -174,7 +176,7 @@ class ArticlesSimilarRepo:
         similarArticlesSQL_having_version = " AND VERSION = "+str(version)
 
         similarArticlesSQL_having_cond =  ( " AND ( " + filter_criteria +" ) " )  if self.verify_having_condition(filter_criteria) else ""
-        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_version + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT 10000"
+        similarArticlesSQL = similarArticlesSQL_select + similarArticlesSQL_having_version + similarArticlesSQL_having_cond + similarArticlesSQL_orderby+ " LIMIT "+str(self.list_limit)
         similarArticlesDF = pd.read_sql(similarArticlesSQL , econ)
         similarArticlesDF["SOURCE_1"] = similarArticlesDF["URL_1"].map(extract_source_without_www)
         similarArticlesDF["SOURCE_2"] = similarArticlesDF["URL_2"].map(extract_source_without_www)
@@ -229,7 +231,9 @@ class ArticlesSimilarRepo:
 
 
     def retrieve_classif_paired(self, threshold, version):
-        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE (PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) OR (PRED_AIN_ID_1 = SSU_AIN_ID_2 AND PRED_AIN_ID_2 = SSU_AIN_ID_1) ) AND PRED_PROBA >= :threshold AND PRED_VERSION = :version"
+        #sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE (PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) OR (PRED_AIN_ID_1 = SSU_AIN_ID_2 AND PRED_AIN_ID_2 = SSU_AIN_ID_1) ) AND PRED_PROBA >= :threshold AND PRED_VERSION = :version ORDER BY PRED_AIN_ID_1 DESC, PRED_AIN_ID_2 DESC LIMIT "+str(self.limit)
+        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2 FROM PREDICTIONS WHERE PRED_PROBA >= :threshold AND PRED_VERSION = :version ORDER BY PRED_AIN_ID_1 DESC, PRED_AIN_ID_2 DESC LIMIT " + str(self.group_limit)
+
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_classif_found, {"threshold": threshold, "version" : version})
@@ -286,10 +290,10 @@ class ArticlesSimilarRepo:
         return found_score
 
 
-    def prediction_exists(self,  prediction, con):
-        found_prediction = con['PREDICTIONS'].find_one(PRED_AIN_ID_1=prediction["PRED_AIN_ID_1"], PRED_AIN_ID_2=prediction["PRED_AIN_ID_2"],
-                                           PRED_VERSION=prediction["PRED_VERSION"])
-        return prediction
+    def prediction_exists(self,  id1, id2, version, con):
+        found_prediction = con['PREDICTIONS'].find_one(PRED_AIN_ID_1=id1, PRED_AIN_ID_2=id2,
+                                           PRED_VERSION=version)
+        return found_prediction
 
     def load_train_set(self, version):
         view_sql = "SELECT * FROM TRAIN_SCORES WHERE SCO_VERSION = "+str(version)
@@ -323,7 +327,7 @@ class ArticlesSimilarRepo:
 #        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
         con.begin()
         for index, row in test_df.iterrows():
-            found_row = self.prediction_exists(row, con)
+            found_row = self.prediction_exists(row['SCO_AIN_ID_1'], row['SCO_AIN_ID_2'], version, con)
             if found_row:
                 logging.info("Found prediction for {}".format(row))
             else:

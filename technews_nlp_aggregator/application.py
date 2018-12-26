@@ -16,7 +16,7 @@ from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 
 
 class Application:
-    def __init__(self, config, load_text=False):
+    def __init__(self, config, load_text=False, load_similar=False):
         self.version = config['version']
         self.db_config = yaml.safe_load(open(config["key_file"]))
         self.db_url = self.db_config["db_url"]
@@ -25,9 +25,9 @@ class Application:
         self.articleDatasetRepo = ArticleDatasetRepo(self.db_config.get("db_url"))
         self.articleLoader = ArticleLoader(self.articleDatasetRepo)
         self.articleLoader.load_all_articles(load_text=load_text)
-        self.similarArticlesRepo = ArticlesSimilarRepo(self.db_url)
+        self.similarArticlesRepo = ArticlesSimilarRepo(self.db_url, group_limit=config.get("group_limit",20000),
+                                                                    list_limit=config.get("list_limit",5000))
         self.articlesSpiderRepo = ArticlesSpiderRepo(self.db_url)
-        self.articleSimilarLoader = ArticleSimilarLoader(self.similarArticlesRepo, self.version)
         self.tokenizer = defaultTokenizer
         self.gramFacade = GramFacade(config["root_dir"]+config["phrases_model_dir_link"])
         self.gramFacade.load_models()
@@ -50,11 +50,14 @@ class Application:
 
         self.latest_article_date = str(last_article_date.year) + '-' + str(last_article_date.month) + '-' + str(last_article_date.day)
         self.threshold = config["threshold"]
-        self.refresh_groups()
         self.model_repo = ModelRepo(self.db_url)
         self.scrape_repo = ScrapeRepo(self.db_url)
         logging.debug("Log in debug mode")
         self.load_versions(config['version_dir'])
+        if load_similar:
+            self.articleSimilarLoader = ArticleSimilarLoader(self.similarArticlesRepo, self.version,
+                                                             config["threshold"])
+            self.refresh_groups()
 
     def reload(self):
         self.articleLoader.load_all_articles(load_text=True)

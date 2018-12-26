@@ -37,25 +37,7 @@
         </p>
         </FORM>
     </div>
-    <BR>
-    {% if article: %}
-    <div class="surrond_form">
 
-             <div class="metadata">
-
-                 <p><I>ID:</I> {{article.AIN_ID}}</p>
-                 <p><I>URL:</I> <!--suppress HtmlUnknownTarget -->
-                     <A HREF="{{article.AIN_URL}}" target="_blank">{{article.AIN_URL}}</A></p>
-                 <P><I>Date:</I> {{article.AIN_DATE}}</P>
-             </div>
-             <div class="article_text">
-                 <h3>{{article.AIN_TITLE}}</h3>
-                 <p>{{article.ATX_TEXT | safe}}</p>
-             </div>
-        <BR>
-    </div>
-    <HR>
-    {% endif %}
 {% endif %}
 
 {% if articles: %}
@@ -160,6 +142,27 @@
 
 
     </div>
+{% endif %}
+<BR>
+{% if not from_plugin: %}
+    {% if article: %}
+    <div class="surrond_form">
+
+             <div class="metadata">
+
+                 <p><I>ID:</I> {{article.AIN_ID}}</p>
+                 <p><I>URL:</I> <!--suppress HtmlUnknownTarget -->
+                     <A HREF="{{article.AIN_URL}}" target="_blank">{{article.AIN_URL}}</A></p>
+                 <P><I>Date:</I> {{article.AIN_DATE}}</P>
+             </div>
+             <div class="article_text">
+                 <h3>{{article.AIN_TITLE}}</h3>
+                 <p>{{article.ATX_TEXT | safe}}</p>
+             </div>
+        <BR>
+    </div>
+    <HR>
+    {% endif %}
 {% endif %}
 {% include 'footer.html' %}
 

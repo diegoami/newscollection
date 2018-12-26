@@ -21,5 +21,7 @@ tf_threshold : 0.59
 doc_threshold : 0.31
 tok_action : append
 version_dir : /media/diego/QData/techarticles/version/
+list_limit : 5000
+group_limit : 20000
 
 

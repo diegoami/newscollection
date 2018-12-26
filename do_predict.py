@@ -16,7 +16,8 @@ if __name__ == '__main__':
 
 
     db_config = yaml.safe_load(open(config["key_file"]))
-    similarArticlesRepo = ArticlesSimilarRepo(db_config["db_url"])
+    similarArticlesRepo = ArticlesSimilarRepo(db_config["db_url"], group_limit=config.get("group_limit",20000),
+                                              list_limit=config.get("list_limit",5000))
 
     xboost_model_file = config["root_dir"] + config["xgboost_model_file"]
     xboost_classif_file = config["root_dir"] + config["xgboost_classifier_file"]
