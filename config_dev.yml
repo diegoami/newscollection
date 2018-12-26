@@ -13,12 +13,12 @@ phrases_model_dir_base    : models/phrases/phrases__
 phrases_model_dir_link     : models/phrases/15_phrases_model
 xgboost_model_file        : models/xgboost/xgboost_model
 xgboost_classifier_file        : models/xgboost/xgboost_classifier
-version                   : 15
+version                   : 101
 threshold         : 0.88
 go_back  : 5
 score_go_back : 10
 tf_threshold : 0.59
-doc_threshold : 0.31
+doc_threshold : 0.35
 tok_action : create
 version_dir : /media/diego/QData/techarticles/version/
 list_limit : 5000

@@ -262,15 +262,18 @@ class ArticlesSimilarRepo:
         found_row = self.score_exists(score, con)
         if found_row:
             logging.info("Found row for score : {}".format(score))
+            return 0
         else:
             try:
                 con.begin()
                 logging.info("Trying to insert score : {}".format(score))
                 row = con['SCORES'].insert(score)
                 con.commit()
+                return 1
             except:
                 traceback.print_exc()
                 con.rollback()
+                return 0
 
     def update_score(self, score, con=None):
         con = con if con else self.get_connection()

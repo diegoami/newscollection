@@ -1,6 +1,7 @@
 from datetime import timedelta
 import logging
 import yaml
+import os
 import sys
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
@@ -33,6 +34,9 @@ def do_remove_uninteresting(articleDatasetRepo):
 if __name__ == '__main__':
     config = load_config(sys.argv)
     go_back = config["go_back"]
+    #if os.environ("DB_URL"):
+    #    db_url = os.environ("DB_URL")
+    #else:
     db_config = yaml.safe_load(open(config["key_file"]))
     db_url = db_config["db_url"]
     logging.info("DB_URL: {}".format(db_url))

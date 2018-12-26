@@ -33,9 +33,6 @@ def retrieves_scores(user_paired, feature_filler, similarArticlesRepo):
     logging.info("Added: {} rows".format(added))
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-
-    args = parser.parse_args()
     config_file = sys.argv[1] if (len(sys.argv) > 1) else 'config.yml'
     config = yaml.safe_load(open(config_file))
 

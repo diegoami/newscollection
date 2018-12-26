@@ -12,6 +12,7 @@ from technews_nlp_aggregator.common import load_config
 import argparse
 from datetime import timedelta
 import sys
+MAX_SCORES = 100
 
 def create_test_data( starting_date, feature_filler, similarArticlesRepo, version):
     logging.info("Retrieving data starting from {}".format(starting_date))
@@ -23,17 +24,20 @@ def create_test_data( starting_date, feature_filler, similarArticlesRepo, versio
 def retrieves_test(test_data, feature_filler, similarArticlesRepo ):
 
     con = similarArticlesRepo.get_connection()
+    scores_found = 0
     for index, row in enumerate(test_data):
 
         article_id1, article_id2= row['SST_AIN_ID_1'], row['SST_AIN_ID_2']
 
 
         score = feature_filler.fill_score_map( article_id1, article_id2)
-        similarArticlesRepo.insert_score(score, con)
+        scores_found =+ similarArticlesRepo.insert_score(score, con)
+
 
         if (index % 100 == 1):
             logging.info("Processed {} rows".format(index))
-
+        if scores_found > MAX_SCORES:
+            break
 
 if __name__ == '__main__':
     config_file = sys.argv[1] if (len(sys.argv) > 1) else 'config.yml'
