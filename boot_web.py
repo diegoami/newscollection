@@ -7,7 +7,7 @@ from technews_nlp_aggregator.common import load_config
 
 from werkzeug.contrib.fixers import ProxyFix
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
 app.wsgi_app = ProxyFix(app.wsgi_app)

@@ -190,7 +190,7 @@ class ArticlesSimilarRepo:
         return max_date["AIN_DATE"]
 
     def retrieve_user_paired(self, version, for_assignment =False):
-        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER " + (" WHERE NOT EXISTS ( SELECT SCO_AIN_ID_1, SCO_AIN_ID_2 FROM SCORES WHERE SCO_VERSION = :version AND SCO_AIN_ID_1 = SSU_AIN_ID_1 AND SCO_AIN_ID_2 = SSU_AIN_ID_2 ) " if for_assignment else "") + " GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2"
+        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER " + (" WHERE NOT EXISTS ( SELECT SCO_AIN_ID_1, SCO_AIN_ID_2 FROM SCORES WHERE SCO_VERSION = :version AND ( ( SCO_AIN_ID_1 = SSU_AIN_ID_1 AND SCO_AIN_ID_2 = SSU_AIN_ID_2) OR (SCO_AIN_ID_1 = SSU_AIN_ID_2 AND SCO_AIN_ID_2 = SSU_AIN_ID_1) )  ) " if for_assignment else "") + " GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2"
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar, ({"version": version} if for_assignment else {}))
@@ -198,7 +198,7 @@ class ArticlesSimilarRepo:
         return result
 
     def retrieve_ssus_for_id(self, id):
-        sql_user_similar = "SELECT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER WHERE SSU_AIN_ID_1 = :id OR SSU_AIN_ID_2 = :id GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2"
+        sql_user_similar = "SELECT DISTINCT SSU_AIN_ID_1, SSU_AIN_ID_2, AVG(SSU_SIMILARITY) AS SSU_SIMILARITY FROM SAME_STORY_USER WHERE SSU_AIN_ID_1 = :id OR SSU_AIN_ID_2 = :id GROUP BY SSU_AIN_ID_1, SSU_AIN_ID_2  ORDER BY  SSU_AIN_ID_1, SSU_AIN_ID_2"
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_user_similar,  {"id": id})
@@ -213,7 +213,7 @@ class ArticlesSimilarRepo:
         return result
 
     def retrieve_sscs_for_id(self, id, version):
-        sql_classif_similar = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA FROM PREDICTIONS WHERE ( PRED_AIN_ID_1=:id OR PRED_AIN_ID_2=:id ) AND PRED_VERSION = :version"
+        sql_classif_similar = "SELECT DISTINCT PRED_AIN_ID_1, PRED_AIN_ID_2, PRED_PROBA FROM PREDICTIONS WHERE ( PRED_AIN_ID_1=:id OR PRED_AIN_ID_2=:id ) AND PRED_VERSION = :version"
         similar_stories = []
         con = self.get_connection()
         query_result = con.query(sql_classif_similar , {"id": id, "version" : version})
@@ -229,7 +229,7 @@ class ArticlesSimilarRepo:
 
 
     def retrieve_classif_paired(self, threshold, version):
-        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) AND PRED_PROBA >= :threshold AND PRED_VERSION = :version"
+        sql_classif_found = "SELECT PRED_AIN_ID_1, PRED_AIN_ID_2, 1 FROM PREDICTIONS WHERE NOT EXISTS (SELECT SSU_AIN_ID_1, SSU_AIN_ID_2 FROM SAME_STORY_USER WHERE (PRED_AIN_ID_1 = SSU_AIN_ID_1 AND PRED_AIN_ID_2 = SSU_AIN_ID_2) OR (PRED_AIN_ID_1 = SSU_AIN_ID_2 AND PRED_AIN_ID_2 = SSU_AIN_ID_1) ) AND PRED_PROBA >= :threshold AND PRED_VERSION = :version"
         similar_stories = []
         con = self.get_connection()
         query_result= con.query(sql_classif_found, {"threshold": threshold, "version" : version})
@@ -244,7 +244,7 @@ class ArticlesSimilarRepo:
 
     def retrieve_similar_since(self, dateArg, version):
         logging.info("Excuting retrieve_similar_since({})".format(dateArg))
-        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID AND AIN_DATE >= ( :dateArg ) AND NOT EXISTS ( SELECT SCO_AIN_ID_1, SCO_AIN_ID_2 FROM SCORES WHERE SCO_VERSION = :version AND SCO_AIN_ID_1 = SST_AIN_ID_1 AND SCO_AIN_ID_2 = SST_AIN_ID_2 ) ORDER BY AIN_DATE DESC"
+        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID AND AIN_DATE >= ( :dateArg ) AND NOT EXISTS ( SELECT SCO_AIN_ID_1, SCO_AIN_ID_2 FROM SCORES WHERE SCO_VERSION = :version AND  ( (SCO_AIN_ID_1 = SST_AIN_ID_1 AND SCO_AIN_ID_2 = SST_AIN_ID_2) OR (SCO_AIN_ID_1 = SST_AIN_ID_2 AND SCO_AIN_ID_2 = SST_AIN_ID_1) )  ) ORDER BY AIN_DATE DESC"
         con = self.get_connection()
         query_result = con.query(sqlSimilarSince, {"dateArg": dateArg, "version": version})
         result = [row for row in query_result]
@@ -255,14 +255,18 @@ class ArticlesSimilarRepo:
 
     def insert_score(self, score, con=None):
         con = con if con else self.get_connection()
-        try:
-            con.begin()
-            logging.info("Trying to insert score : {}".format(score))
-            row = con['SCORES'].insert(score)
-            con.commit()
-        except:
-            traceback.print_exc()
-            con.rollback()
+        found_row = self.score_exists(score, con)
+        if found_row:
+            logging.info("Found row for score : {}".format(score))
+        else:
+            try:
+                con.begin()
+                logging.info("Trying to insert score : {}".format(score))
+                row = con['SCORES'].insert(score)
+                con.commit()
+            except:
+                traceback.print_exc()
+                con.rollback()
 
     def update_score(self, score, con=None):
         con = con if con else self.get_connection()
@@ -280,6 +284,12 @@ class ArticlesSimilarRepo:
         found_score = con['SCORES'].find_one(SCO_AIN_ID_1=score["SCO_AIN_ID_1"], SCO_AIN_ID_2=score["SCO_AIN_ID_2"],
                                            SCO_VERSION=score["SCO_VERSION"])
         return found_score
+
+
+    def prediction_exists(self,  prediction, con):
+        found_prediction = con['PREDICTIONS'].find_one(PRED_AIN_ID_1=prediction["PRED_AIN_ID_1"], PRED_AIN_ID_2=prediction["PRED_AIN_ID_2"],
+                                           PRED_VERSION=prediction["PRED_VERSION"])
+        return prediction
 
     def load_train_set(self, version):
         view_sql = "SELECT * FROM TRAIN_SCORES WHERE SCO_VERSION = "+str(version)
@@ -313,9 +323,13 @@ class ArticlesSimilarRepo:
 #        exist_sql = 'SELECT FROM PREDICTION WHERE PRED_AIN_ID_1=:pred1 AND PRED_AIN_ID_2=:pred2 AND PRED_VERSION:ver, '
         con.begin()
         for index, row in test_df.iterrows():
-            con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'regr' : row['SCO_REGR'], 'proba' : row['SCO_PROBA'], 'ver' : version})
-            if (count % 100 == 0):
-                logging.info("At {} predictions".format(count))
-            count = count + 1
+            found_row = self.prediction_exists(row, con)
+            if found_row:
+                logging.info("Found prediction for {}".format(row))
+            else:
+                con.query(replace_sql, {'pred1' : row['SCO_AIN_ID_1'], 'pred2' : row['SCO_AIN_ID_2'], 'regr' : row['SCO_REGR'], 'proba' : row['SCO_PROBA'], 'ver' : version})
+                if (count % 100 == 0):
+                    logging.info("At {} predictions".format(count))
+                count = count + 1
         con.commit()
         return count
