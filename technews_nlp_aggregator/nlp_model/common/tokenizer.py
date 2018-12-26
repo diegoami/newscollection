@@ -40,7 +40,7 @@ class DefaultTokenizer:
         logging.info("ArticleDF has {} rows ".format(len(articleDF)))
 
         articleDF['article_txt'] = articleDF['title'].map(str)+".\n"+ articleDF['text']
-        articleDF['article_tokens'] = articleDF['article_txt'].map(self.tokenize_fulldoc)
+        articleDF['article_tokens'] = articleDF['article_txt'].apply(lambda x: self.tokenize_fulldoc(x, do_log=True))
 
 
         return articleDF['article_tokens']
@@ -51,8 +51,8 @@ class DefaultTokenizer:
         else:
             return self.tokenize_fulldoc(doc, do_lemma=do_lemma)
 
-    def tokenize_fulldoc(self, all_doc, do_lemma=True):
-        words = self.word_tokenizer.tokenize_fulldoc(all_doc, do_lemma=do_lemma)
+    def tokenize_fulldoc(self, all_doc, do_lemma=True, do_log=False):
+        words = self.word_tokenizer.tokenize_fulldoc(all_doc, do_lemma=do_lemma, do_log=do_log)
 
         return words
 

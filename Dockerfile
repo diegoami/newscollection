@@ -20,6 +20,11 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 RUN python3.6 -m spacy download en
 
+RUN mkdir -p /media/diego/QData/techarticles/keys/
+RUN cat db_url : $DB_URL >> /media/diego/QData/techarticles/keys/db_coords.yml
+RUN cat secret_key : $SECRET_KEY >> /media/diego/QData/techarticles/keys/db_coords.yml
+RUN cat secret_key : $SECRET_KEY >> /media/diego/QData/techarticles/keys/db_coords.yml
+
 
 
 

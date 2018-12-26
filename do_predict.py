@@ -23,13 +23,13 @@ if __name__ == '__main__':
     xboost_classif_file = config["root_dir"] + config["xgboost_classifier_file"]
 
     test_df = similarArticlesRepo.load_test_set(version = config["version"])
-    print("Test_df has {} rows".format(len(test_df)))
+    logging.info("Test_df has {} rows".format(len(test_df)))
 
     predictions_df = similarArticlesRepo.load_predictions(config["version"])
-    print("predictions_df has {} rows".format(len(predictions_df)))
+    logging.info("predictions_df has {} rows".format(len(predictions_df)))
 
     test_df_res = predict(test_df, xboost_model_file, xboost_classif_file, predictions_df)
-
+    logging.info("Preparing to write {} predictions".format(test_df_res))
     num_predictions = similarArticlesRepo.write_predictions(test_df_res, config["version"])
     logging.info("{} predictions done".format(num_predictions))
 

@@ -16,11 +16,13 @@ xgboost_model_dir        : models/xgboost/
 xgboost_classifier_file        : models/xgboost/xgboost_classifier
 version                   : 101
 threshold         : 0.88
-go_back  : 5
-score_go_back : 10
+go_back  : 8
+score_go_back : 8
 tf_threshold : 0.59
-doc_threshold : 0.35
+doc_threshold : 0.38
 tok_action : create
 version_dir : /media/diego/QData/techarticles/version/
 list_limit : 5000
 group_limit : 20000
+
+max_skipped : 50

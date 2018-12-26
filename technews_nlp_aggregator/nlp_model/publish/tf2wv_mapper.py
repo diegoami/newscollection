@@ -50,7 +50,7 @@ class Tf2WvMapper:
                 vec_sum = vec_sum + (token_count * idf) * vec
 
             except KeyError:
-                logging.info("Ignoring token {} with tf frequency {} - not found in WV".format(token,
+                logging.debug("Ignoring token {} with tf frequency {} - not found in WV".format(token,
                                self.tfidf_facade.dictionary.dfs.get(token_id, 0) ))
 
                 continue
@@ -73,7 +73,7 @@ class Tf2WvMapper:
                 if (idf > 0 ):
                     vec_list.append(vec_weight_tuple )
             except KeyError:
-                logging.info("Ignoring token {} - not found in WV".format(token))
+                logging.debug("Ignoring token {} - not found in WV".format(token))
                 continue
         return vec_list
 
