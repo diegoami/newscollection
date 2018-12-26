@@ -10,7 +10,10 @@ from . import TechControversySpider
 class TechrepublicSpider(TechControversySpider):
     name = "techrepublic"
     pages_V = set()
+    finished = 0
     pages_C = 0
+    skipped = 0
+
     urls_V = set()
     allowed_domains = ["techrepublic.com" ]
     start_urls = (
@@ -42,7 +45,8 @@ class TechrepublicSpider(TechControversySpider):
                         self.finished += 1
                     else:
                         self.skipped += 1
-
+                else:
+                    self.skipped += 1
         if self.crawl_allowed():
             yield self.request_for_next_page()
 

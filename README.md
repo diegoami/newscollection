@@ -47,6 +47,14 @@ Alternatively, you can see how articles in the database related to each other [e
 
 Alternatively you can use browser plugins for [Chrome](https://chrome.google.com/webstore/detail/tech-controversy-companio/mpiecgnniielnaiapcopieglhiemadhg) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/tech-controversy-companion/)
 
+### Description
+
+This plugin adds a button on your toolbar. When you find an article on a tech news portal, such as Techcrunch, click on the extension's icon on the toolbar to open a tab showing a list of articles related to the same story, gathered from other tech news portals on the site http://techcontroversy.com. 
+If the article cannot be found in Techcontroversy's database, it will be submitted for processing by the nightly batch - come on the next day to get results.
+The following tech news portals are supported:
+Arstechnica, Techcrunch, Thenextweb, Theverge, Venturebeat, Techrepublic, Wired, Engadget, Gizmodo, Mashable, Zdnet, Digitaltrends, Theguardian,
+Qz, Inquisitr, Recode, Reuters, Techdirt, Inverse, Bleepingcomputer, Inc, Cnbc, Cnet, Forbes, Digit, Techtimes.
+
 ## Video introduction
 
 A video introduction to this project can be found on my [Youtube channel](https://www.youtube.com/channel/UCHf5Uk_0nawvJDx3oA7WziA/).

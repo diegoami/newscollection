@@ -10,7 +10,10 @@ from . import TechControversySpider
 
 class ReutersSpider(TechControversySpider):
     name = "reuters"
-    pages_C =  0
+    finished = 0
+    pages_C = 0
+    skipped = 0
+
     urls_V = set()
     pages_V = set()
     allowed_domains = ["reuters.com"]

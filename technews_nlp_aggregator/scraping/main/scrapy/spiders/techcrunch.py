@@ -9,7 +9,10 @@ from . import TechControversySpider
 class TechcrunchSpider(TechControversySpider):
     name = "techcrunch"
     pages_V = set()
+    finished = 0
     pages_C = 0
+    skipped = 0
+
     urls_V = set()
     allowed_domains = ["techcrunch.com"]
     start_urls = (

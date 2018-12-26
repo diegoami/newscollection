@@ -9,7 +9,10 @@ from . import end_condition, build_text_from_paragraphs, get_date_from_string, g
 from . import TechControversySpider
 class TechdirtSpider(TechControversySpider):
     name = "techdirt"
-    pages_C =  0
+    finished = 0
+    pages_C = 0
+    skipped = 0
+
     urls_V = set()
     pages_V = set()
     allowed_domains = ["techdirt.com"]

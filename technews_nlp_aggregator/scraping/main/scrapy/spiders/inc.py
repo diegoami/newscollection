@@ -11,7 +11,10 @@ from . import extract_date, end_condition, build_text_from_paragraphs, already_c
 from . import TechControversySpider
 class IncSpider(TechControversySpider):
     name = "inc"
-    pages_C =  0
+    finished = 0
+    pages_C = 0
+    skipped = 0
+
     urls_V = set()
     pages_V = set()
     allowed_domains = ["inc.com"]

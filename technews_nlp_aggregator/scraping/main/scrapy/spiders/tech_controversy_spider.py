@@ -8,17 +8,16 @@ from scrapy import Request
 from . import end_condition, build_text_from_paragraphs, get_date_from_string
 
 class TechControversySpider(scrapy.Spider):
-
+    finished = 0
+    pages_C = 0
+    skipped = 0
 
 
     def __init__(self, article_repo, go_back_date, url_list = None):
         super().__init__()
         self.article_repo = article_repo
         self.go_back_date = go_back_date
-
-        self.finished = 0
         self.url_list = url_list
-        self.skipped = 0
 
 
     def parse(self, response):
@@ -38,7 +37,10 @@ class TechControversySpider(scrapy.Spider):
 
 
     def crawl_allowed(self):
-        return self.finished < 5 and self.pages_C < 200 and self.skipped < 500
+        allowed = self.finished < 5 and self.pages_C < 150 and self.skipped < 250
+        logging.info("{}: Crawl allowed: {} ( {} finished < 5, {} pages_C < 150, {} skipped < 250".format(self.__class__.__name__, allowed,  self.finished, self.pages_C, self.skipped))
+        return allowed
+
 
     def request_for_next_page(self):
         absolute_page = self.get_next_page()

@@ -15,7 +15,10 @@ class ArstechnicaSpider(TechControversySpider):
     name = "arstechnica"
     pages_V = set()
     urls_V = set()
+    finished = 0
     pages_C = 0
+    skipped = 0
+
     allowed_domains = ["arstechnica.com"]
     start_urls = (
         'https://arstechnica.com/','http://arstechnica.com/'

@@ -9,7 +9,10 @@ from . import extract_date, end_condition, build_text_from_paragraphs, build_fro
 from . import TechControversySpider
 class DigitSpider(TechControversySpider):
     name = "digit"
-    pages_C =  0
+    finished = 0
+    pages_C = 0
+    skipped = 0
+
     urls_V = set()
     pages_V = set()
     allowed_domains = ["digit.fyi"]
