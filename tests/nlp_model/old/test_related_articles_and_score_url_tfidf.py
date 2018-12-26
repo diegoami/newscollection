@@ -7,7 +7,7 @@ from technews_nlp_aggregator.application import Application
 def show_related_articles_random_docs(application, n_articles=20):
     _ = application
 
-    def show_related_articles(_, facade, text, d_days = 90):
+    def show_related_articles(_, facade, text, d_days = 3):
 
         articles_indices, scores = facade.get_related_articles_and_score_doc(text, d_days )
 
