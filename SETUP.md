@@ -60,9 +60,16 @@ By default, database connection info should be setup into _/media/diego/keys/db_
 Switch to the conda environment you created and from the main directory execute _python boot_web.py_ . You should be able to access the site from http://localhost:8081
 
 
+# Set up docker
 
+~~~~
+docker build --build-arg DB_URL=... --build-arg SECRET_KEY=... --build-arg SIGNIN_KEY=... --build-arg ARCHIVE_NAME=... --build-arg AWS_ACCESS_KEY_ID=... --build-arg AWS_SECRET_ACCESS_KEY=... --tag techcontroversy .
 
+docker run -p 8080:8080 -p 8081:8081
 
+gunicorn boot_web:app --timeout 480 --bind=0.0.0.0:8080 -w 1 --error-logfile=gunicorn-error.log --access-logfile=gunicorn-access.log
+
+~~~~
 
 
 

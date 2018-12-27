@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [ $(find /media/diego/QData/techarticles/pickle/ -name "texts_*.p" -mmin -240 | wc -l) -ge 0 ]; then
+if [ $(find /media/diego/QData/techarticles/pickle/ -name "texts_*.p" -mmin -240 | wc -l) -gt 0 ]; then
     cd ~/PycharmProjects/newscollection/
 
     find /media/diego/QData/techarticles/models/doc2vec -mmin +240  -type d | xargs rm -f -r

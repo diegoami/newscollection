@@ -28,16 +28,11 @@ def create_classifier(train_df, xboost_classifier_file):
 
     weight = float(len(y_train[y_train == 0]))/float(len(y_train[y_train == 1]))
     #w1 = np.ndarray(shape=(len(y_train)), dtype=float, order='F')
-    logging.info("Weights: {}, {}".format(weight, 1-weight))
+    logging.info("Weights: 0 : {}, 1: {}".format(weight, 1-weight))
 
     w1 = np.array([1.0] * y_train.shape[0])
     w1[y_train==1] = 1.0-weight
     w1[y_train==0] = weight
-
-
-    logging.info("Weights: {}, {}".format(w1.mean(), w1.sum()))
-
-
 
     model_returned["TMO_YCLF_MEAN"] = y_train.mean()
     xgb_clfr_params = {

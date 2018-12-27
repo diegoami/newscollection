@@ -2,6 +2,7 @@ alembic==1.0.5
 asn1crypto==0.24.0
 attrs==18.2.0
 automat==0.7.0
+awscli==1.13.0
 banal==0.4.0
 bcrypt==3.1.5
 boto==2.49.0
