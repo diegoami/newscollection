@@ -248,12 +248,17 @@ class ArticlesSimilarRepo:
 
     def retrieve_similar_since(self, dateArg, version):
         logging.info("Excuting retrieve_similar_since({})".format(dateArg))
-        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID AND AIN_DATE >= ( :dateArg )  ORDER BY AIN_DATE DESC"
+        sqlSimilarSince = "SELECT SST_AIN_ID_1, SST_AIN_ID_2 FROM SAME_STORY, ARTICLE_INFO WHERE SST_AIN_ID_1 = AIN_ID AND AIN_DATE >= ( "+dateArg +")  ORDER BY AIN_DATE DESC"
         con = self.get_connection()
-        query_result = con.query(sqlSimilarSince, {"dateArg": dateArg})
-        result = [row for row in query_result]
-        logging.info("retrieve_similar_since returns {} rows".format(len(result)))
-        return result
+
+        econ = self.engine.connect()
+        similarDF = pd.read_sql(sqlSimilarSince, econ)
+        econ.close()
+        similarDF.set_index(["SST_AIN_ID_1", "SST_AIN_ID_2"], inplace=True)
+
+
+        logging.info("retrieve_similar_since returns {} rows".format(len(similarDF)))
+        return similarDF
 
 
 
@@ -320,6 +325,7 @@ class ArticlesSimilarRepo:
         econ = self.engine.connect()
         viewDF = pd.read_sql(view_sql, econ)
         econ.close()
+        viewDF.set_index(['SCO_AIN_ID_1', 'SCO_AIN_ID_2'], inplace=True)
         return viewDF
 
     def write_predictions(self, test_df, version):

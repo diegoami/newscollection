@@ -125,9 +125,6 @@ def create_regressor(train_df, xboost_model_file):
 
 
 def predict(test_df,  xboost_model_file, xboost_classif_file, predictions_df):
-    logging.info("setting index....")
-
-    test_df.set_index(['SCO_AIN_ID_1', 'SCO_AIN_ID_2'], inplace=True)
     logging.info("removing already predicted....")
 
     merged_DF = test_df[~test_df.index.isin(predictions_df.index)]

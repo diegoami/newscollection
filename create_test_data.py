@@ -13,25 +13,26 @@ import argparse
 from datetime import timedelta
 import sys
 
-def create_test_data( starting_date, feature_filler, similarArticlesRepo, version):
+def create_test_data( starting_date, feature_filler, similarArticlesRepo, version, max_skipped=100):
     logging.info("Retrieving data starting from {}".format(starting_date))
-    test_data = similarArticlesRepo.retrieve_similar_since( starting_date, version)
-    logging.info("Retrieved {} ".format(len(test_data)))
-    # TODO : should remove test data from here
-    similarArticlesRepo
-    merged_DF = test_df[~test_df.index.isin(predictions_df.index)]
+    similarDF = similarArticlesRepo.retrieve_similar_since( starting_date, version)
+    logging.info("Retrieved {} ".format(len(similarDF )))
 
-    retrieves_test( test_data, feature_filler, similarArticlesRepo)
+    testDF = similarArticlesRepo.load_test_set(version=config["version"])
+    logging.info("Test_df has {} rows".format(len(testDF)))
+    mergedDF = similarDF[~similarDF.index.isin(testDF.index)]
+    logging.info("merged_df has {} rows".format(len(mergedDF )))
+
+    retrieves_test( mergedDF, feature_filler, similarArticlesRepo, max_skipped=max_skipped)
 
 
-def retrieves_test(test_data, feature_filler, similarArticlesRepo, max_skipped=100 ):
+def retrieves_test( merged_DF, feature_filler, similarArticlesRepo, max_skipped=100 ):
 
     con = similarArticlesRepo.get_connection()
     skipped, added = 0, 0
-    for index, row in enumerate(test_data):
+    for index, row in merged_DF.iterrows():
 
-        article_id1, article_id2= row['SST_AIN_ID_1'], row['SST_AIN_ID_2']
-
+        article_id1, article_id2 = index[0], index[1]
 
         score = feature_filler.fill_score_map( article_id1, article_id2)
         scores_found = similarArticlesRepo.insert_score(score, con)
@@ -40,8 +41,8 @@ def retrieves_test(test_data, feature_filler, similarArticlesRepo, max_skipped=1
         else:
             added += 1
 
-        if (index % 10 == 0):
-            logging.info("Processed {}, added {}, skipped {} rows".format(index, added, skipped))
+        if ((added+skipped) % 50 == 0):
+            logging.info("Added {}, skipped {} rows".format(added, skipped))
         if skipped > max_skipped:
             logging.info("Skipped {} rows, leaving".format(skipped))
             break
