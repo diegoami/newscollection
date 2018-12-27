@@ -24,7 +24,7 @@ RUN mkdir -p /media/diego/QData/techarticles/keys/
 RUN cat db_url : $DB_URL >> /media/diego/QData/techarticles/keys/db_coords.yml
 RUN cat secret_key : $SECRET_KEY >> /media/diego/QData/techarticles/keys/db_coords.yml
 RUN cat secret_key : $SECRET_KEY >> /media/diego/QData/techarticles/keys/db_coords.yml
-
+RUN cat db_url : $DB_URL
 
 
 

@@ -43,8 +43,8 @@ def retrieves_test( merged_DF, feature_filler, similarArticlesRepo, max_skipped=
 
         if ((added+skipped) % 50 == 0):
             logging.info("Added {}, skipped {} rows".format(added, skipped))
-        if skipped > max_skipped:
-            logging.info("Skipped {} rows, leaving".format(skipped))
+        if skipped > max_skipped or added > max_skipped * 3:
+            logging.info("Skipped {}, Added rows, leaving".format(skipped, added))
             break
     logging.info("Added {}, skipped {} rows".format(added, skipped))
 

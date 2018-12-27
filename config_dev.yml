@@ -20,7 +20,7 @@ go_back  : 8
 score_go_back : 8
 tf_threshold : 0.59
 doc_threshold : 0.38
-tok_action : create
+tok_action : append
 version_dir : /media/diego/QData/techarticles/version/
 list_limit : 5000
 group_limit : 20000
