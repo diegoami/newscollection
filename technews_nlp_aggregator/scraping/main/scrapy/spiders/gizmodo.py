@@ -29,10 +29,10 @@ class GizmodoSpider(TechControversySpider):
     def parse_page(self, response):
         url = response.meta.get('URL')
 
-        article_title_parts = response.xpath("//h1[contains(@class, 'entry-title')]/a/text()").extract()
+        article_title_parts = response.xpath("//h1[contains(@class, 'headline')]/a/text()").extract()
         article_title = "".join(article_title_parts ).strip()
         all_paragraphs = response.xpath(
-            "//div[contains(@class, 'entry-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
+            "//div[contains(@class, 'post-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
 
 
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)

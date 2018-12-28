@@ -24,7 +24,7 @@ class CnbcSpider(TechControversySpider):
         article_title = "".join(article_title_parts).strip()
         all_paragraph_before = response.xpath("//div[@id='article_deck']//li/text()").extract()
         all_paragraphs = response.xpath(
-            "//div[@id='article_body']//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
+            "//div[contains(@class, 'group-container')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
 
         article_authors = response.xpath('//a[@rel="author"]/@href').extract_first()
         all_paragraph_text = build_text_from_paragraphs( all_paragraph_before + all_paragraphs)
