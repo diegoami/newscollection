@@ -42,7 +42,7 @@ class ArticlesSpiderRepo:
                         con.commit()
                     except:
                         con.rollback()
-                        messages.append('Could not add add {}: {}'.format(host, url))
+                        messages.append('Could not add {}: {}'.format(host, url))
                         traceback.print_stack()
             else:
                 messages.append('Urls from {} cannot be parsed yet'.format(start_url))
