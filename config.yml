@@ -25,4 +25,4 @@ version_dir : /media/diego/QData/techarticles/version/
 list_limit : 5000
 group_limit : 20000
 
-max_skipped : 50
+max_skipped : 250
