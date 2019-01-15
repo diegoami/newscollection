@@ -1,9 +1,23 @@
 import numpy as np
 import logging
+import os
 from sklearn.externals import joblib
-from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.model_selection import cross_val_score, GridSearchCV, cross_val_predict
 from xgboost import XGBRegressor, XGBClassifier
+import matplotlib
+import matplotlib.pyplot as plt
+from sklearn.metrics import precision_recall_curve, precision_score, recall_score, f1_score
+PROJECT_ROOT_DIR = "."
 
+
+def save_fig(fig_id, tight_layout=True):
+    path = os.path.join(PROJECT_ROOT_DIR, "images", fig_id + ".png")
+    print("Saving figure", fig_id)
+    if tight_layout:
+        plt.tight_layout()
+    plt.savefig(path, format='png', dpi=300)
+
+RELEVANT_COLUMNS = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
 
 def print_best_parameters( classifier):
     if hasattr(classifier, "best_estimator_"):
@@ -18,16 +32,14 @@ def create_classifier(train_df, xboost_classifier_file):
     model_returned = {}
     logging.info(" ============= CLASSIFIER ===================== ")
     logging.info("train_df has {} rows".format(len(train_df)))
-    relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
 
-    result_columns = 'SCO_USER'
-    X_train = np.array(train_df[relevant_columns])
-    y_train = np.array(train_df[result_columns].map(lambda x: 1 if x > 0.8 else 0))
+    X_train, y_train = retrieve_X_y_clf(train_df)
 
     logging.info("X_train: shape {}, y_train: shape {}".format(X_train.shape, y_train.shape))
 
     weight = float(len(y_train[y_train == 0]))/float(len(y_train[y_train == 1]))
     #w1 = np.ndarray(shape=(len(y_train)), dtype=float, order='F')
+
     logging.info("Weights: 0 : {}, 1: {}".format(weight, 1-weight))
 
     w1 = np.array([1.0] * y_train.shape[0])
@@ -71,10 +83,44 @@ def create_classifier(train_df, xboost_classifier_file):
     y_pred = clf.best_estimator_.predict(X_train)
     train_df['SCO_PRED'] = y_pred
     joblib.dump(clf.best_estimator_, xboost_classifier_file )
-    clf_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.best_estimator_.feature_importances_)}
+    clf_feature_report = {column: feature_imp for column, feature_imp in zip(RELEVANT_COLUMNS, clf.best_estimator_.feature_importances_)}
     logging.info("Feature importances: {}".format(clf_feature_report ))
     logging.info("Returning model metrics : {}".format(model_returned))
-    return model_returned, clf_feature_report, clf.best_estimator_.get_params()
+    return clf, model_returned, clf_feature_report, clf.best_estimator_.get_params()
+
+
+def retrieve_X_y_clf(train_df):
+    result_columns = 'SCO_USER'
+    X_train = np.array(train_df[RELEVANT_COLUMNS])
+    y_train = np.array(train_df[result_columns].map(lambda x: 1 if x > 0.8 else 0))
+    return X_train, y_train
+
+
+def map_threshold(train_df, clf):
+
+    X_train, y_train = retrieve_X_y_clf(train_df)
+    y_scores = cross_val_predict(clf, X_train, y_train, cv=5, method="predict_proba")
+    threshold_range = [0.6 + x * 0.01 for x in range(0, 35)]
+
+    for threshold in threshold_range:
+        logging.info("Precision {}, recall {}, F1 {}, for threshold {}".format(precision_score(y_train,  y_scores[:,1] > threshold ),
+            recall_score(y_train, y_scores[:, 1] > threshold), f1_score(y_train, y_scores[:, 1] > threshold),
+                                                                       threshold ))
+
+    precisions, recalls, thresholds = precision_recall_curve(y_train, y_scores[:,1])
+
+    def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+        plt.plot(thresholds, precisions[:-1], "b--", label="Precision", linewidth=2)
+        plt.plot(thresholds, recalls[:-1], "g-", label="Recall", linewidth=2)
+        plt.xlabel("Threshold", fontsize=16)
+        plt.legend(loc="upper left", fontsize=16)
+        plt.ylim([0, 1])
+
+    #plt.figure(figsize=(8, 4))
+    #plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+
+    #save_fig("precision_recall_vs_threshold_plot")
+    #plt.show()
 
 
 def create_regressor(train_df, xboost_model_file):
@@ -83,10 +129,10 @@ def create_regressor(train_df, xboost_model_file):
     logging.info("train_df has {} rows".format(len(train_df)))
 
     # train_df = pd.read_csv(train_file, index_col=0)
-    relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
+
 
     result_columns = 'SCO_USER'
-    X_train = np.array(train_df[relevant_columns])
+    X_train = np.array(train_df[RELEVANT_COLUMNS])
     y_train = np.array(train_df[result_columns])
     logging.info("X_train: shape {}, y_train: shape {}".format(X_train.shape, y_train.shape))
     model_returned["TMO_YREG_MEAN"] = y_train.mean()
@@ -113,9 +159,9 @@ def create_regressor(train_df, xboost_model_file):
     logging.info("Neg Mean Squared Error: %0.8f (+/- %0.8f)" % (neg_mean_squared_error.mean(), neg_mean_squared_error .std() * 2))
 
     joblib.dump(clf.best_estimator_, xboost_model_file)
-    regr_feature_report = {column: feature_imp for column, feature_imp in zip(relevant_columns, clf.best_estimator_.feature_importances_)}
+    regr_feature_report = {column: feature_imp for column, feature_imp in zip(RELEVANT_COLUMNS, clf.best_estimator_.feature_importances_)}
     logging.info("Returning model metrics : {}".format(model_returned))
-    return model_returned, regr_feature_report, clf.best_estimator_.get_params()
+    return clf, model_returned, regr_feature_report, clf.best_estimator_.get_params()
 
 
 
@@ -125,9 +171,9 @@ def predict(test_df,  xboost_model_file, xboost_classif_file, predictions_df):
     merged_DF = test_df[~test_df.index.isin(predictions_df.index)]
     logging.info("merged_df has {} rows".format(len(merged_DF )))
 
-    relevant_columns = ['SCO_DAYS', 'SCO_W_DAYS', 'SCO_D_TEXT', 'SCO_T_TEXT','SCO_D_TITLE',  'SCO_T_TITLE', 'SCO_T_SUMMARY', 'SCO_D_SUMMARY', 'SCO_T_SUMMARY_2', 'SCO_D_SUMMARY_2', 'SCO_CW_TITLE',  'SCO_CW_TEXT', 'SCO_CW_SUMMARY', 'SCO_CW_SUMMARY_2' ]
+
     result_columns = 'SCO_USER'
-    X_test = np.array(merged_DF[relevant_columns])
+    X_test = np.array(merged_DF[RELEVANT_COLUMNS])
     clf = joblib.load(xboost_model_file)
     logging.info("Regressor params")
     logging.info(clf.get_params())

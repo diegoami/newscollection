@@ -4,8 +4,9 @@ import logging
 import os
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
 from technews_nlp_aggregator.persistence.model_repo import ModelRepo
-from technews_nlp_aggregator.prediction.model import create_classifier, create_regressor
+from technews_nlp_aggregator.prediction.model import create_classifier, create_regressor, map_threshold
 import sys
+
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 training_model = {}
 
@@ -27,8 +28,10 @@ if __name__ == '__main__':
     training_model["TMO_TRAINING_SET"] = len(train_df)
     training_model["TMO_DATE"] = datetime.now()
 
-    clf_model_returned, clf_feature_report, clf_best_params  = create_classifier(train_df, xboost_classifier_file)
-    regr_model_returned, regr_feature_report, regr_best_params = create_regressor(train_df, xboost_model_file)
+    clf, clf_model_returned, clf_feature_report, clf_best_params  = create_classifier(train_df, xboost_classifier_file)
+    map_threshold(train_df, clf)
+    clf, regr_model_returned, regr_feature_report, regr_best_params = create_regressor(train_df, xboost_model_file)
+
 
     training_model.update(clf_model_returned)
     training_model.update(regr_model_returned)

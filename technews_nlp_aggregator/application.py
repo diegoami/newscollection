@@ -18,6 +18,7 @@ from technews_nlp_aggregator.summary.summary_facade import SummaryFacade
 class Application:
     def __init__(self, config, load_text=False, load_similar=False):
         self.version = config['version']
+        self.threshold = config['threshold']
         self.db_config = yaml.safe_load(open(config["key_file"]))
         self.db_url = self.db_config["db_url"]
         logging.info("DB_URL: {}".format(self.db_url ))

@@ -7,7 +7,6 @@ from . import app
 
 #
 
-DEFAULT_FILTER_CRITERIA = 'P_SCORE > 0.7  AND ( U_SCORE IS NULL)'
 
 @app.route('/filterduplicates', methods=['POST'])
 def filterduplicates():
@@ -22,7 +21,7 @@ def filterduplicates():
 @app.route('/duplicates/<int:page_id>')
 def duplicates(page_id=1):
     _ = app.application
-    filter_criteria = session.get('filterCriteria', DEFAULT_FILTER_CRITERIA )
+    filter_criteria = "P_SCORE > {}  AND ( U_SCORE IS NULL)".format(_.threshold)
     messages = []
     paging_rate = 50
     back_forth = 6
