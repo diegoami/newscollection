@@ -8,3 +8,11 @@ def retrieve_X_y_clf(train_df, threshold=0.65):
     X_train = np.array(train_df[RELEVANT_COLUMNS])
     y_train = np.array(train_df[result_columns].map(lambda x: 1 if x > threshold else 0))
     return X_train, y_train
+
+
+def retrieve_X_y_regr(train_df):
+    result_columns = 'SCO_USER'
+    X_train = np.array(train_df[RELEVANT_COLUMNS])
+    y_train = np.array(train_df[result_columns])
+    return X_train, y_train
+

@@ -4,7 +4,7 @@ import logging
 
 from sklearn.model_selection import cross_val_score, GridSearchCV, cross_val_predict
 from xgboost import XGBRegressor, XGBClassifier
-from .common import retrieve_X_y_clf, RELEVANT_COLUMNS
+from .common import retrieve_X_y_clf, retrieve_X_y_regr
 from .scoring import print_best_parameters
 
 xgb_clfr_params = {
@@ -54,10 +54,7 @@ def create_regressor(train_df):
     logging.info(" ============= REGRESSOR ====================== ")
     logging.info("train_df has {} rows".format(len(train_df)))
 
-    result_columns = 'SCO_USER'
-    X_train = np.array(train_df[RELEVANT_COLUMNS])
-    y_train = np.array(train_df[result_columns])
-
+    X_train, y_train = retrieve_X_y_regr(train_df)
 
     clf =  GridSearchCV(XGBRegressor(), xgb_regr_params, cv=5, scoring='neg_mean_squared_error')
 
@@ -66,8 +63,8 @@ def create_regressor(train_df):
 
     clf.fit(X_train, y_train)
     print_best_parameters(clf)
-    logging.info("Returning model metrics : {}".format(model_returned))
     return clf
+
 
 
 

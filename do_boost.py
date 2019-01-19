@@ -5,7 +5,9 @@ import os
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
 from technews_nlp_aggregator.persistence.model_repo import ModelRepo
 from technews_nlp_aggregator.model.xgboost_fit import create_classifier, create_regressor
-from technews_nlp_aggregator.model.scoring import threshold_scores_clf, cross_val_score_clf, cross_val_score_regr, feature_importances
+from technews_nlp_aggregator.model.scoring import threshold_scores_clf, cross_val_score_clf, cross_val_score_regr, \
+    feature_importances, mean_scores_clf, mean_scores_regr, loop_threshold_scores
+from technews_nlp_aggregator.model.visualization import map_threshold
 
 import sys
 from sklearn.externals import joblib
@@ -38,11 +40,21 @@ if __name__ == '__main__':
     regressor = create_regressor(train_df)
     joblib.dump(clf, xboost_model_file)
 
-    training_model.update(cross_val_score_clf(clf, train_df))
-    training_model.update(cross_val_score_regr(clf, train_df))
+    clf_scores = cross_val_score_clf(clf, train_df)
+    regr_scores = cross_val_score_regr(regressor, train_df)
+    threshold_scores = threshold_scores_clf(clf, train_df, threshold=threshold)
+
+    training_model.update(threshold_scores)
+    training_model.update(regr_scores )
+
+    training_model["TMO_YCLF_MEAN"] = mean_scores_clf(train_df)
+    training_model["TMO_YREG_MEAN"] = mean_scores_regr(train_df)
+
 
     modelRepo.save_model_performance(training_model)
     modelRepo.save_feature_report('R', feature_importances(clf ))
     modelRepo.save_feature_report('C', feature_importances(regressor ))
 
-    #map_threshold(train_df, clf)
+    loop_threshold_scores(train_df, clf)
+
+    map_threshold(train_df, clf)
