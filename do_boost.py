@@ -38,7 +38,7 @@ if __name__ == '__main__':
     joblib.dump(clf, xboost_classifier_file)
 
     regressor = create_regressor(train_df)
-    joblib.dump(clf, xboost_model_file)
+    joblib.dump(regressor, xboost_model_file)
 
     clf_scores = cross_val_score_clf(clf, train_df)
     regr_scores = cross_val_score_regr(regressor, train_df)
