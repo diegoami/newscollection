@@ -13,7 +13,7 @@ import sys
 from sklearn.externals import joblib
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-training_model = {}
+
 
 
 if __name__ == '__main__':
@@ -31,30 +31,34 @@ if __name__ == '__main__':
     xboost_classifier_file = config["root_dir"] + config["xgboost_classifier_file"]
     train_df = similarArticlesRepo.load_train_set(config["version"])
 
-    training_model["TMO_TRAINING_SET"] = len(train_df)
-    training_model["TMO_DATE"] = datetime.now()
-
     clf  = create_classifier(train_df)
-    joblib.dump(clf, xboost_classifier_file)
+
 
     regressor = create_regressor(train_df)
-    joblib.dump(clf, xboost_model_file)
+
 
     clf_scores = cross_val_score_clf(clf, train_df)
     regr_scores = cross_val_score_regr(regressor, train_df)
     threshold_scores = threshold_scores_clf(clf, train_df, threshold=threshold)
 
-    training_model.update(threshold_scores)
-    training_model.update(regr_scores )
+    joblib.dump(clf, xboost_classifier_file)
+    joblib.dump(regressor, xboost_model_file)
 
-    training_model["TMO_YCLF_MEAN"] = mean_scores_clf(train_df)
-    training_model["TMO_YREG_MEAN"] = mean_scores_regr(train_df)
-
-
-    modelRepo.save_model_performance(training_model)
-    modelRepo.save_feature_report('R', feature_importances(clf ))
-    modelRepo.save_feature_report('C', feature_importances(regressor ))
 
     loop_threshold_scores(train_df, clf)
 
     map_threshold(train_df, clf)
+
+    training_model = {}
+    training_model["TMO_TRAINING_SET"] = len(train_df)
+    training_model["TMO_DATE"] = datetime.now()
+
+    training_model.update(threshold_scores)
+    training_model.update(regr_scores)
+
+    training_model["TMO_YCLF_MEAN"] = mean_scores_clf(train_df)
+    training_model["TMO_YREG_MEAN"] = mean_scores_regr(train_df)
+
+    modelRepo.save_model_performance(training_model)
+    modelRepo.save_feature_report('R', feature_importances(clf ))
+    modelRepo.save_feature_report('C', feature_importances(regressor ))
