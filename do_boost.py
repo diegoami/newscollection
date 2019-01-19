@@ -4,8 +4,11 @@ import logging
 import os
 from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSimilarRepo
 from technews_nlp_aggregator.persistence.model_repo import ModelRepo
-from technews_nlp_aggregator.prediction.model import create_classifier, create_regressor, map_threshold
+from technews_nlp_aggregator.model.xgboost_fit import create_classifier, create_regressor
+from technews_nlp_aggregator.model.scoring import threshold_scores_clf, cross_val_score_clf, cross_val_score_regr, feature_importances
+
 import sys
+from sklearn.externals import joblib
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 training_model = {}
@@ -16,6 +19,7 @@ if __name__ == '__main__':
     config = yaml.safe_load(open(config_file))
 
     db_config = yaml.safe_load(open(config["key_file"]))
+    threshold = config.get("threshold", 0.65)
     similarArticlesRepo = ArticlesSimilarRepo(db_config["db_url"], group_limit=config.get("group_limit",20000),
                                               list_limit=config.get("list_limit",5000))
     modelRepo = ModelRepo(db_config["db_url"])
@@ -28,14 +32,17 @@ if __name__ == '__main__':
     training_model["TMO_TRAINING_SET"] = len(train_df)
     training_model["TMO_DATE"] = datetime.now()
 
-    clf, clf_model_returned, clf_feature_report, clf_best_params  = create_classifier(train_df, xboost_classifier_file)
-    map_threshold(train_df, clf)
-    clf, regr_model_returned, regr_feature_report, regr_best_params = create_regressor(train_df, xboost_model_file)
+    clf  = create_classifier(train_df)
+    joblib.dump(clf, xboost_classifier_file)
 
+    regressor = create_regressor(train_df)
+    joblib.dump(clf, xboost_model_file)
 
-    training_model.update(clf_model_returned)
-    training_model.update(regr_model_returned)
+    training_model.update(cross_val_score_clf(clf, train_df))
+    training_model.update(cross_val_score_regr(clf, train_df))
 
     modelRepo.save_model_performance(training_model)
-    modelRepo.save_feature_report('R', regr_feature_report)
-    modelRepo.save_feature_report('C', clf_feature_report)
+    modelRepo.save_feature_report('R', feature_importances(clf ))
+    modelRepo.save_feature_report('C', feature_importances(regressor ))
+
+    #map_threshold(train_df, clf)
