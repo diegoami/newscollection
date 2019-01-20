@@ -1,13 +1,13 @@
 
 
 import yaml
-import pandas as pd
+
 import sys
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 from technews_nlp_aggregator.application import Application
-from technews_nlp_aggregator.prediction import FeatureFiller
-import argparse
+from technews_nlp_aggregator.model import FeatureFiller
+
 
 def direct_confront(feature_filler, similarArticlesRepo, version):
 
