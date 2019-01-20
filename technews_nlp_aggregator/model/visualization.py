@@ -48,13 +48,13 @@ def plot_precision_vs_recall(precisions, recalls, model_name):
     plt.clf()
 
 
-def map_threshold(train_df, clf):
+def map_threshold(train_df, clf, model_name):
 
     X_train, y_train = retrieve_X_y_clf(train_df)
     y_scores = cross_val_predict(clf, X_train, y_train, cv=5, method="predict_proba")
 
     precisions, recalls, thresholds = precision_recall_curve(y_train, y_scores[:,1])
     fpr, tpr, thresholds_r = roc_curve(y_train, y_scores[:, 1])
-    plot_precision_recall_vs_threshold(precisions, recalls, thresholds )
-    plot_precision_vs_recall(precisions, recalls)
-    plot_roc_curve(fpr, tpr)
+    plot_precision_recall_vs_threshold(precisions, recalls, thresholds, model_name )
+    plot_precision_vs_recall(precisions, recalls, model_name)
+    plot_roc_curve(fpr, tpr, model_name)

@@ -3,7 +3,7 @@
 import yaml
 import sys
 from technews_nlp_aggregator.persistence.articles_similar_repo import  ArticlesSimilarRepo
-from technews_nlp_aggregator.prediction.xgboost_fit import predict
+from technews_nlp_aggregator.model.prediction import predict
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
