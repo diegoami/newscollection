@@ -26,3 +26,9 @@ list_limit : 10000
 group_limit : 30000
 
 max_skipped : 250
+rtf_model_dir        : models/rtf/
+rtf_model_file        : models/rtf/rtf_model
+rtf_classifier_file        : models/rtf/rtf_classifier
+sgd_model_dir        : models/sgd/
+sgd_model_file        : models/sgd/sgd_model
+sgd_classifier_file        : models/sgd/sgd_classifier

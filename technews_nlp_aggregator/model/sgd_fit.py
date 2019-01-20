@@ -3,22 +3,24 @@ import logging
 
 
 from sklearn.model_selection import cross_val_score, GridSearchCV, cross_val_predict
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.linear_model import SGDClassifier, SGDRegressor
 from .common import retrieve_X_y_clf, retrieve_X_y_regr
 from .scoring import print_best_parameters
 
-rtf_clfr_params = {
-        'min_samples_split': np.linspace(0.1, 0.4, 4, endpoint=True),
-        'max_depth' : [5,7],
-        'min_samples_leaf' : np.linspace(0.1, 0.3, 3, endpoint=True),
-        'n_estimators' : [50]
+sgd_clfr_params = {
+
+'alpha': [1e-4, 1e-3, 1e-2, 1e-1], # learning rate
+        'n_iter': [1000], # number of epochs
+    'loss': ['log'], # logistic regression,
+    'penalty': ['l2'],
+'n_jobs': [-1]
     }
 
-rtf_regr_params = {
-    'min_samples_split': np.linspace(0.1, 0.3, 3, endpoint=True),
-    'max_depth': [4, 5],
-    'min_samples_leaf': np.linspace(0.1, 0.3, 3, endpoint=True),
-    'n_estimators' : [50]
+sgd_regr_params = {
+
+'alpha': [1e-4, 1e-3, 1e-2, 1e-1], # learning rate
+
+
 
 }
 
@@ -40,7 +42,7 @@ def create_classifier(train_df):
     w1[y_train==0] = weight
 
 
-    clf =  GridSearchCV(RandomForestClassifier(), rtf_clfr_params, cv=5, scoring='f1')
+    clf =  GridSearchCV(SGDClassifier(), sgd_clfr_params, cv=5, scoring='f1')
     clf.fit(X_train, y_train, sample_weight=w1)
     print_best_parameters(clf)
     return clf.best_estimator_
@@ -52,7 +54,7 @@ def create_regressor(train_df):
 
     X_train, y_train = retrieve_X_y_regr(train_df)
 
-    clf =  GridSearchCV(RandomForestRegressor(), rtf_regr_params, cv=5, scoring='neg_mean_squared_error')
+    clf =  GridSearchCV(SGDRegressor(), sgd_regr_params, cv=5, scoring='neg_mean_squared_error')
 
     logging.info("Regressor params")
     print_best_parameters(clf)

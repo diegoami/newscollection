@@ -6,6 +6,11 @@ from technews_nlp_aggregator.persistence.articles_similar_repo import ArticlesSi
 from technews_nlp_aggregator.persistence.model_repo import ModelRepo
 from technews_nlp_aggregator.model.xgboost_fit import create_classifier as xgb_create_classifier
 from technews_nlp_aggregator.model.xgboost_fit import create_regressor as xgb_create_regressor
+from technews_nlp_aggregator.model.rtf_fit import create_classifier as rtf_create_classifier
+from technews_nlp_aggregator.model.rtf_fit import create_regressor as rtf_create_regressor
+from technews_nlp_aggregator.model.sgd_fit import create_classifier as sgd_create_classifier
+from technews_nlp_aggregator.model.sgd_fit import create_regressor as sgd_create_regressor
+
 from technews_nlp_aggregator.model.scoring import threshold_scores_clf, cross_val_score_clf, cross_val_score_regr, \
     feature_importances, mean_scores_clf, mean_scores_regr, loop_threshold_scores
 from technews_nlp_aggregator.model.visualization import map_threshold
@@ -17,13 +22,13 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 def model_workflow(model_name, db_config, train_df, threshold, clf_method, regr_method):
 
-    def calc_scoring(df, clf, reg, threshold):
+    def calc_scoring(df, clf, reg, threshold, model_name):
 
         clf_scores = cross_val_score_clf(clf, df)
         regr_scores = cross_val_score_regr(reg, df)
         threshold_scores = threshold_scores_clf(clf, df, threshold=threshold)
         loop_threshold_scores(df, clf)
-        map_threshold(df, clf, model_name='xgboost')
+        map_threshold(df, clf, model_name=model_name)
         return  {"clf": clf_scores, "regr" : regr_scores, "threshold" : threshold_scores }
 
 
@@ -58,7 +63,7 @@ def model_workflow(model_name, db_config, train_df, threshold, clf_method, regr_
     logging.info("======================================================")
     clf = clf_method(train_df)
     reg = regr_method(train_df)
-    scores = calc_scoring(df=train_df, clf=clf, reg=reg, threshold=threshold)
+    scores = calc_scoring(df=train_df, clf=clf, reg=reg, threshold=threshold, model_name=model_name)
     training_model = fill_model(scores)
     model_repo = ModelRepo(db_config["db_url"])
     save_to_model(model_repo, training_model, clf, reg)
@@ -77,4 +82,6 @@ if __name__ == '__main__':
     threshold = config.get("threshold", 0.65)
 
 
-    model_workflow("xgboost", db_config, train_df, threshold, xgb_create_classifier, xgb_create_regressor)
+    #model_workflow("xgboost", db_config, train_df, threshold, xgb_create_classifier, xgb_create_regressor)
+    #model_workflow("rtf", db_config, train_df.fillna(0), threshold, rtf_create_classifier, rtf_create_regressor)
+    model_workflow("sgd", db_config, train_df.fillna(0), threshold, sgd_create_classifier, sgd_create_regressor)
