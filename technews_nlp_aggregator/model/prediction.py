@@ -1,6 +1,7 @@
 import logging
 import numpy as np
 from sklearn.externals import joblib
+from .common import RELEVANT_COLUMNS
 
 def predict(test_df,  xboost_model_file, xboost_classif_file, predictions_df, threshold=0.65):
     logging.info("removing already predicted....")

@@ -86,8 +86,8 @@ def cross_val_score_regr(clf, train_df):
 
 
 def feature_importances(clf):
-    clf = getattr(clf, 'best_estimator_', clf)
-    if hasattr(clf, 'feature_importance_'):
+    #clf = getattr(clf, 'best_estimator_', clf)
+    if hasattr(clf, 'feature_importances_'):
         feature_report = {column: feature_imp for column, feature_imp in
                                zip(RELEVANT_COLUMNS, clf.feature_importances_)}
 
