@@ -61,9 +61,12 @@ class TechrepublicSpider(TechControversySpider):
         all_paragraphs = all_paragraphs_r.extract()
         article_authors = response.xpath('//a[@rel="author"]/@href').extract()
         article_tags = response.xpath("//p[contains(@class, 'categories')]/a/@href").extract()
-        article_date_str = response.xpath("//span[@class='date']//text()").extract_first()
-
-        article_date = get_date_from_string(article_date_str)
+        article_date_tags = response.xpath("//span[@class='byline-item']//text()").extract()
+        article_date_l =  [x.strip() for x in article_date_tags if x.strip().startswith("on")]
+        if len(article_date_l) > 0:
+            article_date = get_date_from_string(article_date_l[0])
+        else:
+            article_date = None
 
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs, punct_add_point=")")
 
