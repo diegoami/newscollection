@@ -31,7 +31,7 @@ class TechdirtSpider(TechControversySpider):
         all_paragraphs = response.xpath(
             "//div[contains(@class, 'postbody')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
         all_paragraph_text = build_text_from_paragraphs(all_paragraphs)
-        article_date_str_t = response.xpath("//p[contains(@class, 'storydate')]//text()").extract_first()
+        article_date_str_t = response.xpath("//span[contains(@class, 'pub_date')]//text()").extract_first()
         article_date = get_date_from_string_mdy(article_date_str_t)
         if (end_condition(article_date, self.go_back_date)):
             self.finished += 1
