@@ -16,8 +16,8 @@ xgboost_model_file        : models/xgboost/xgboost_model
 xgboost_classifier_file        : models/xgboost/xgboost_classifier
 version                   : 15
 threshold         : 0.65
-go_back  : 20
-score_go_back : 20
+go_back  : 80
+score_go_back : 80
 tf_threshold : 0.60
 doc_threshold : 0.36
 tok_action : append
