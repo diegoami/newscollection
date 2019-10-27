@@ -77,3 +77,5 @@ class EngadgetSpider(scrapy.spiders.SitemapSpider):
                             logging.info("Adding {}".format(loc))
                             yield Request(loc, meta={'URL': loc, 'dont_redirect': True,"handle_httpstatus_list": [302, 307]}, callback=self.parse_page)
                             break
+                        else:
+                            logging.info("Already crawled {}".format(loc))
