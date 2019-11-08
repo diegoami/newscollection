@@ -38,7 +38,11 @@ class EngadgetSpider(scrapy.spiders.SitemapSpider):
 
     def start_requests(self):
         for url in self.sitemap_urls:
-            yield Request(url,  meta={'dont_redirect': True,"handle_httpstatus_list": [302, 307]}, callback=self._parse_sitemap)
+            yield Request(url,  meta={'dont_redirect': True,"handle_httpstatus_list": [302, 307],
+                                      'dont_merge_cookies': True, 'dont_cache': True, 'dont_proxy': True,},
+                          headers={"Accept": "*/*"},
+            callback=self._parse_sitemap)
+            # yield Request(url, meta={'URL': url}, callback=self._parse_sitemap)
 
     def parse_page(self, response):
         url = response.meta.get('URL')
@@ -75,7 +79,8 @@ class EngadgetSpider(scrapy.spiders.SitemapSpider):
                     if not (end_condition(article_date, self.go_back_date)):
                         if not already_crawled(self.article_repo, loc):
                             logging.info("Adding {}".format(loc))
-                            yield Request(loc, meta={'URL': loc, 'dont_redirect': True,"handle_httpstatus_list": [302, 307]}, callback=self.parse_page)
+                            yield Request(loc, meta={'URL': loc, 'dont_merge_cookies': True, 'dont_cache': True, 'dont_proxy': True}, headers={"Accept": "*/*"}, callback=self.parse_page)
+                            # yield Request(loc, meta={'URL': loc}, callback=self.parse_page)
                             break
                         else:
                             logging.info("Already crawled {}".format(loc))

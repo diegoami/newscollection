@@ -19,7 +19,7 @@ def do_crawl(articleDatasetRepo,go_back=15):
 
     spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechcrunchSpider, TechrepublicSpider, EngadgetSpider])
 
-    # spiders = ([EngadgetSpider])
+    #spiders = ([EngadgetSpider])
 
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
