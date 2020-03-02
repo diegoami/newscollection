@@ -30,7 +30,7 @@ class VenturebeatSpider(TechControversySpider):
         return 'https://venturebeat.com/page/'+str(self.pages_C)
 
     def parse_crawl(self, response):
-        urls = response.xpath('//h2[@class="article-title"]/a/@href').extract()
+        urls = response.xpath('//h2[@class="ArticleListing__title"]/a/@href').extract()
         for url in urls:
             absolute_url = response.urljoin(url)
             article_date = extract_date(url)
