@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#[ $? -eq 0 ] &&  python scrape_site.py $1
-#[ $? -eq 0 ] &&  python scrape_urls.py $1 
+[ $? -eq 0 ] &&  python scrape_site.py $1
+[ $? -eq 0 ] &&  python scrape_urls.py $1 
 [ $? -eq 0 ] &&  python token_model_wf.py $1
 [ $? -eq 0 ] &&  python gram_model_wf.py $1
 [ $? -eq 0 ] &&  python gram_export_wf.py $1
