@@ -24,7 +24,7 @@ class ZdnetSpider(TechControversySpider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@itemprop="headline"]//text()').extract()
+        article_title_parts = response.xpath('//h1//text()').extract()
         article_title = "".join(article_title_parts).strip()
         all_paragraph_before = response.xpath("//p[contains(@class, 'summary')]//text()").extract()
         all_paragraphs = response.xpath(

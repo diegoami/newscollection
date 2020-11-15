@@ -5,7 +5,6 @@
 from .util import extract_date, end_condition, build_text_from_paragraphs, get_date_from_string, already_crawled, build_from_timestamp, get_date_from_string_mdy, get_simple_date
 from .tech_controversy_spider import TechControversySpider
 from .arstechnica import ArstechnicaSpider
-from .techcrunch import TechcrunchSpider
 from .thenextweb import ThenextwebSpider
 from .theverge import ThevergeSpider
 from .venturebeat import VenturebeatSpider
@@ -32,7 +31,7 @@ from .digit_fyi import DigitSpider
 from .techtimes import TechtimesSpider
 from .technicalhint import TechnicalhintSpider
 
-all_spiders = [ArstechnicaSpider, TechcrunchSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider,
+all_spiders = [ArstechnicaSpider, ThenextwebSpider, ThevergeSpider, VenturebeatSpider, TechrepublicSpider,
            WiredSpider, EngadgetSpider, GizmodoSpider, MashableSpider, ZdnetSpider, DigitaltrendsSpider, TheguardianSpider,
            QzSpider, InquisitrSpider, RecodeSpider, ReutersSpider, TechdirtSpider, InverseSpider, BleepingcomputerSpider,
            IncSpider, CnbcSpider, CnetSpider, ForbesSpider, DigitSpider, TechtimesSpider, TechnicalhintSpider]

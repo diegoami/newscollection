@@ -6,7 +6,6 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 from technews_nlp_aggregator.scraping.main.scrapy.spiders import *
 
-
 from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.scraping.main.scrapy.pipelines import Pipeline
 from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ArticlesSpiderRepo
@@ -28,7 +27,7 @@ def do_crawl(articleDatasetRepo, spidermap, go_back):
             urls = spidermap[spider_name]
             max_date = articleDatasetRepo.get_latest_article_date()
             go_back_date = max_date - timedelta(days=go_back)
-
+            spider.start_urls = urls
             process.crawl(spider, articleDatasetRepo, go_back_date, urls)
         else:
             logging.error("COULD NOT FIND SPIDER {}".format(spider_name))

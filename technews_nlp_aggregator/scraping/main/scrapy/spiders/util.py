@@ -22,37 +22,43 @@ def extract_date(url):
 month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-def get_simple_date(date_str):
+def get_simple_date(date_str_arg):
+    if (' ' in date_str_arg):
+        date_str = [x for x in date_str_arg.split(' ') if '.' in x][0]
+    else:
+        date_str = date_str_arg
     month, day, year = map(int, date_str.split('.'))
-    year = year + 2000
+    year = (year + 2000) if year < 2000 else year
     return date(year, month, day)
 
 def get_date_from_string(date_str):
-    result = None
     if (date_str):
-        date_str_l = date_str.split(',')
-        month_and_day, year, month_index = None, None, 1
-        if (len(date_str_l) == 3):
-            month_and_day, year, time = date_str.split(',')
-        if (len(date_str_l) == 2):
-            month_and_day, year = date_str.split(',')
-        if (len(date_str_l) == 1):
-            month_and_day, year = date_str_l[0], datetime.now().year
-        if (month_and_day and year):
-            month, day = None, None
-            month_and_day_l = month_and_day.split()
-            if (len(month_and_day_l ) == 2):
-                month, day = month_and_day.split()
-            elif (len(month_and_day_l ) == 3):
-                on, month, day = month_and_day.split()
-            if month and day:
-                if month in month_names:
-                    month_index = month_names.index(month) + 1
-                if month in month_names_short:
-                    month_index = month_names_short.index(month) + 1
-                if month_index:
-                    article_date = date(int(year), month_index , int(day))
-                    result = article_date
+        if 'ago' in date_str:
+            result = date.today()
+        else:
+            date_str_l = date_str.split(',')
+            month_and_day, year, month_index = None, None, 1
+            if (len(date_str_l) == 3):
+                month_and_day, year, time = date_str.split(',')
+            if (len(date_str_l) == 2):
+                month_and_day, year = date_str.split(',')
+            if (len(date_str_l) == 1):
+                month_and_day, year = date_str_l[0], datetime.now().year
+            if (month_and_day and year):
+                month, day = None, None
+                month_and_day_l = month_and_day.split()
+                if (len(month_and_day_l ) == 2):
+                    month, day = month_and_day.split()
+                elif (len(month_and_day_l ) == 3):
+                    on, month, day = month_and_day.split()
+                if month and day:
+                    if month in month_names:
+                        month_index = month_names.index(month) + 1
+                    if month in month_names_short:
+                        month_index = month_names_short.index(month) + 1
+                    if month_index:
+                        article_date = date(int(year), month_index , int(day))
+                        result = article_date
     return result
 
 def get_date_from_string_mdy(date_str, split_c=','):

@@ -38,6 +38,11 @@ FLUSH PRIVILEGES;
 COMMIT;
 ~~~~
 
+# Dropping database
+~~~~
+sudo mysql_secure_installation
+sudo mysql -u root -p
+~~~~
 # Pointing to an alternative DB
 
 Alternatively, restore a database from a snapshot and make it point there. The model can be older than the database, but not the other way round.

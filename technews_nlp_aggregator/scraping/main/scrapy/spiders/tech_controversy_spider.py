@@ -24,7 +24,8 @@ class TechControversySpider(scrapy.Spider):
         if self.url_list:
             for url in self.url_list:
                 yield Request(url, callback=self.parse_page,
-                              meta={'URL': url})
+                              meta={'URL': url,  'dont_redirect': True,
+                                    'handle_httpstatus_list': [301,302,307]})
         else:
             for r in self.parse_crawl(response):
                 yield r

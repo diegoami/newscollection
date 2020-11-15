@@ -28,7 +28,7 @@ class ForbesSpider(TechControversySpider):
         article_title = "".join(article_title_parts).strip()
 
         all_paragraphs = response.xpath(
-            "//article-body-container[contains(@class, 'article-body')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
+            "//div[contains(@class, 'article-body')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure) and not(.//h2)  and not(.//script) and not(.//div[@class=mid-banner-wrap])]//text()").extract()
         article_date_str_t = response.xpath("//time//text()").extract_first()
         article_date = get_date_from_string(article_date_str_t)
 

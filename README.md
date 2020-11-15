@@ -14,7 +14,6 @@ The idea is to build a technology news portal aggregating tech news from several
 
 Currently the dataset includes technical articles from the year 2017 and 2018, mainly from these source
 
-* [Techcrunch](http://www.techcrunch.com)
 * [The Verge](http://www.theverge.com)
 * [The next web](http://www.thenextweb.com)
 * [Venture beat](http://www.venturebeat.com)
@@ -49,10 +48,10 @@ Alternatively you can use browser plugins for [Chrome](https://chrome.google.com
 
 ### Description
 
-This plugin adds a button on your toolbar. When you find an article on a tech news portal, such as Techcrunch, click on the extension's icon on the toolbar to open a tab showing a list of articles related to the same story, gathered from other tech news portals on the site http://techcontroversy.com. 
+This plugin adds a button on your toolbar. When you find an article on a tech news portal, click on the extension's icon on the toolbar to open a tab showing a list of articles related to the same story, gathered from other tech news portals on the site http://techcontroversy.com. 
 If the article cannot be found in Techcontroversy's database, it will be submitted for processing by the nightly batch - come on the next day to get results.
 The following tech news portals are supported:
-Arstechnica, Techcrunch, Thenextweb, Theverge, Venturebeat, Techrepublic, Wired, Engadget, Gizmodo, Mashable, Zdnet, Digitaltrends, Theguardian,
+Arstechnica, Thenextweb, Theverge, Venturebeat, Techrepublic, Wired, Engadget, Gizmodo, Mashable, Zdnet, Digitaltrends, Theguardian,
 Qz, Inquisitr, Recode, Reuters, Techdirt, Inverse, Bleepingcomputer, Inc, Cnbc, Cnet, Forbes, Digit, Techtimes.
 
 ## Video introduction

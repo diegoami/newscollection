@@ -52,11 +52,13 @@ class ThenextwebSpider(TechControversySpider):
 
     def parse_page(self, response):
         url = response.meta.get('URL')
-        article_title_parts = response.xpath('//h1[@class="u-m-0_25"]//text()').extract()
+        article_title_parts = response.xpath('//h1//text()').extract()
         article_title = "".join(article_title_parts).strip()
-
-        all_paragraphs = response.xpath(
+        all_paragraphs = response.xpath("//h5//text()").extract()
+        all_paragraphs += response.xpath(
             "//div[contains(@class, 'post-body')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)  and not(.//script) ]//text()").extract()
+        all_paragraphs += response.xpath(
+            "//div[contains(@class, 'c-post-content')]//p[not(.//aside) and not(.//twitterwidget) and not(.//figure)  and not(.//script) ]//text()").extract()
         article_authors = response.xpath('//a[@class="post-authorName"]/@href').extract()
         article_tags = response.xpath("//span[contains(@class, 'tag')]/a/@href").extract()
 
