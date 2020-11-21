@@ -10,14 +10,16 @@ from technews_nlp_aggregator.persistence import ArticleDatasetRepo, ScrapeRepo
 from technews_nlp_aggregator.scraping.main.scrapy import settings
 from technews_nlp_aggregator.scraping.main.scrapy.pipelines import Pipeline
 from technews_nlp_aggregator.scraping.main.scrapy.spiders import ArstechnicaSpider, ThenextwebSpider, \
-    ThevergeSpider, VenturebeatSpider, TechrepublicSpider, EngadgetSpider
+    ThevergeSpider, VenturebeatSpider, TechrepublicSpider, EngadgetSpider, ZdnetSpider
+
+
 
 from technews_nlp_aggregator.common import load_config
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 def do_crawl(articleDatasetRepo,go_back=15):
 
-    spiders = ([ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechrepublicSpider, EngadgetSpider])
+    spiders = [ThenextwebSpider, ThevergeSpider, VenturebeatSpider, ArstechnicaSpider, TechrepublicSpider, EngadgetSpider, ZdnetSpider]
 
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)

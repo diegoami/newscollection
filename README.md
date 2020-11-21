@@ -20,8 +20,9 @@ Currently the dataset includes technical articles from the year 2017 and 2018, m
 * [Ars Technica](http://www.arstechnica.com)
 * [Tech Republic](http://www.techrepublic.com)
 * [Engadget](http://www.engadget.com)
+* [Zdnet](http://www.zdnet.com)
 
-The database contains around 100.000 articles and is growing by the day. It is updated almost every day with the latest news.
+The database contains around 200.000 articles and is growing by the week. It is updated every week with the latest tech news.
 
 ## Currently deployed
 

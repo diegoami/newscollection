@@ -38,7 +38,7 @@ class TechControversySpider(scrapy.Spider):
 
 
     def crawl_allowed(self):
-        allowed = self.finished < 5 and self.pages_C < 150 and self.skipped < 250
+        allowed = self.finished < 20 and self.pages_C < 150 and self.skipped < 250
         logging.info("{}: Crawl allowed: {} ( {} finished < 5, {} pages_C < 150, {} skipped < 250".format(self.__class__.__name__, allowed,  self.finished, self.pages_C, self.skipped))
         return allowed
 
