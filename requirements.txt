@@ -38,6 +38,7 @@ incremental==17.5.0
 itsdangerous==1.1.0
 Jinja2==2.10
 jmespath==0.9.3
+kafka-python==2.0.2
 kiwisolver==1.0.1
 lxml==4.4.1
 Mako==1.0.7
@@ -76,6 +77,7 @@ PySocks==1.7.1
 pytest==5.2.2
 pytest-runner==5.1
 python-dateutil==2.7.5
+python-dotenv==0.15.0
 python-editor==1.0.3
 pytz==2018.7
 PyYAML==3.13
