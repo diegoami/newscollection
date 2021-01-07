@@ -40,7 +40,7 @@ Jinja2==2.10
 jmespath==0.9.3
 kafka-python==2.0.2
 kiwisolver==1.0.1
-lxml==4.4.1
+lxml==4.6.2
 Mako==1.0.7
 MarkupSafe==1.1.0
 matplotlib==3.0.2
