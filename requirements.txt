@@ -80,7 +80,7 @@ python-dateutil==2.7.5
 python-dotenv==0.15.0
 python-editor==1.0.3
 pytz==2018.7
-PyYAML==3.13
+PyYAML==5.4
 query-string==2019.4.13
 queuelib==1.5.0
 readme-renderer==24.0
