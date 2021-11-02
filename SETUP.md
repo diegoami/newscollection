@@ -14,7 +14,7 @@ Retrieve the latest dump from https://s3.console.aws.amazon.com/s3/buckets/techc
 Import the dump into a mysql user called 'tnaggregator'. From the mysql prompt execute
 
 ~~~~
-CREATE USER 'diegoami'@'%' IDENTIFYED by <password>;
+CREATE USER 'diegoami'@'%' IDENTIFIED by '<password>';
 
 SET AUTOCOMMIT=0;
 source <dumpfile>.sql;
@@ -24,7 +24,7 @@ GRANT CREATE ON tnaggregator TO 'diegoami'@'%';
 FLUSH PRIVILEGES;
 ~~~~
 
-The mysql URL will be the following 
+The mysql URL will be the following mysql://diegoami:<password>@localhost:3306/tnaggregator?charset=utf8
 
 # Reinstalling the data
 
@@ -55,6 +55,13 @@ The default configuration assumes that they are deployed under _/media/diego/QDa
 # Setting up Python
 
 It is assumed that you use Python and Anaconda. Get the latest definition file from config/conda/ and create a conda environment from it. This is where you will run your application.
+
+```
+conda create -n tnaggregator python=3.7
+conda activate tnaggregator
+python -m pip install -r requirements.txt python -m spacy download en_core_web_md
+python -m spacy link en_core_web_md en
+```
 
 # Configuring for local environment
 
