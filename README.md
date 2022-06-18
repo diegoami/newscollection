@@ -12,7 +12,7 @@ The idea is to build a technology news portal aggregating tech news from several
 ## Dataset
 
 
-Currently the dataset includes technical articles from the year 2017 and 2018, mainly from these source
+Currently the dataset includes technical articles from the year 2017 to the year 2022, mainly from these source
 
 * [The Verge](http://www.theverge.com)
 * [The next web](http://www.thenextweb.com)
@@ -21,8 +21,9 @@ Currently the dataset includes technical articles from the year 2017 and 2018, m
 * [Tech Republic](http://www.techrepublic.com)
 * [Engadget](http://www.engadget.com)
 * [Zdnet](http://www.zdnet.com)
+* [Techcrunch](https://techcrunch.com/)
 
-The database contains around 200.000 articles and is growing by the week. It is updated every week with the latest tech news.
+The database contains around 300.000 articles. It has been updated every week with the latest tech news until July 2022.
 
 ## Currently deployed
 

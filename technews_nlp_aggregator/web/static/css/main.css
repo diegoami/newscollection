@@ -112,6 +112,11 @@ img {
 
 .logotext {
     margin-top: 8px;
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    font-size: 2em;
+    font-family: Verdana;
 }
 
 
